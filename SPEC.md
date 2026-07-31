@@ -83,10 +83,13 @@ Die Titelseite ist die Landingpage: Sie hat genau **eine** Aufgabe — den Grati
 ### 3.1 Startseite (`data-step="home"`)
 - Seitenkopf mit tageszeitabhängiger Begrüssung (`begruessung()` + Symbol) und rundem Profil-Knopf.
 - Grosses Insel-Foto (randlos, ~38vh) als Stimmungsbild.
-- **"Dein heutiger Fokus"** — solange der Kompass noch nicht bewegt wurde (`kompassBenutzt === false`), steht hier wie in der Vorlage die leere Karte "Finde deine heutige Meditation über den Kompass." mit der Taste "Zum Kompass →". Danach die aktuell beste Empfehlung aus `empfehlungen()` (Name, Dauer, Nutzen, Play-Taste); Antippen startet direkt.
+- **"Dein heutiger Fokus"** — **eine** Karte statt eines Nebeneinanders von Rückblick und Vorschlag (so wie bei Calm, Headspace & Co., nie beides gleichzeitig). Drei Zustände, je nachdem was zutrifft:
+  1. **Noch keine Empfehlung gebaut** (`empfehlung.length === 0` — weder Kompass benutzt noch "Meditationen empfehlen" angetippt): die leere Karte "Finde deine heutige Meditation über den Kompass." mit der Taste "Zum Kompass →".
+  2. **Empfehlung da, heute aber noch nichts gehört** (`heutigeMeditationen().length === 0`): ein kurzer Satz darüber ("Dein Kompass zeigt: **Eher unruhig** – das empfehlen wir dir jetzt.", `.focus-kicker`) und darunter die **eine** Top-Empfehlung als startbare Karte (`medZeile()`, Play-Taste). Bei mehreren Empfehlungen (Trainingsprogramm-Modus) zusätzlich "Weitere Empfehlungen ansehen →" zur Training-Seite — die Liste selbst lebt dort, nicht doppelt auf der Startseite.
+  3. **Heute schon etwas gehört** (`heutigeMeditationen()`, aus dem echten Verlauf): die heute abgeschlossenen Übungen mit Uhrzeit, Dauer und Bereich, statt denselben Vorschlag noch einmal danebenzustellen. Darunter "Noch eine Meditation? →" zur Training-Seite.
+  Die frühere getrennte Sektion "Auch gut für dich" / "Empfehlung für dich" ist damit entfallen — zwei parallele Blöcke mit derselben Information (Zustand + Vorschlag) waren Redundanz ohne Zusatznutzen, nicht Ergänzung.
 - **"Dein Zustand"** — Karte mit dem aktuellen Kompass-Satz (`moodSatz(compassBefore)`), Taste "Zum Kompass →" und einem **kleinen, mitlaufenden Kompass** (`#compassWrapHome`), der sich `compassBefore` mit dem grossen Kompass teilt.
-- **"Auch gut für dich"** — zwei weitere Empfehlungen, sofern vorhanden.
-- Alles wird bei jedem Aufruf über `renderHome()` neu aufgebaut, zeigt also immer den aktuellen Stand.
+- Alles wird bei jedem Aufruf über `renderHome()` neu aufgebaut, zeigt also immer den aktuellen Stand. `heutigeMeditationen()` filtert `loadHistory()` auf den heutigen Kalendertag (`dayStamp()`) und listet jede einzelne gehörte Übung mit `uhrzeitWort()`.
 
 ### 3.2 Kompass ("Wie geht es dir gerade?", `data-step="compass"`)
 

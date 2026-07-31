@@ -312,6 +312,10 @@
   .empty-card{ padding:18px; }
   .empty-card p{ margin:0 0 14px; font-size:.9rem; line-height:1.5; color:var(--ink-soft); }
 
+  /* Kurzer Satz über der Empfehlungskarte auf der Startseite */
+  .focus-kicker{ margin:0 0 9px; font-size:.85rem; color:var(--ink-soft); }
+  .focus-kicker strong{ color:var(--ink); }
+
   /* ---------- Auswahl: Dauer und Anzahl ---------- */
   .pref-block{ margin-top:20px; }
   .pref-block h3{ font-size:.85rem; margin:0 0 9px; font-weight:700; }
@@ -842,6 +846,9 @@
 
     <div class="home-hero-photo"><img src="insel.jpg" alt="Deine Insel"></div>
 
+    <!-- Eine Karte statt zwei getrennter Bereiche: entweder das, was heute
+         schon gehört wurde, oder - noch nichts gehört - die eine
+         Empfehlung mit Startknopf. Kein Zwischentext ohne Handlung. -->
     <div class="section-label first">Dein heutiger Fokus</div>
     <div id="focusSlot"></div>
 
@@ -868,11 +875,6 @@
           <circle cx="200" cy="200" r="10" class="rose-hub-dot"/>
         </svg>
       </div>
-    </div>
-
-    <div id="homeRecWrap" style="display:none;">
-      <div class="section-label">Empfehlung für dich</div>
-      <div id="homeRecList"></div>
     </div>
   </div>
 
@@ -3521,8 +3523,9 @@
   }
 
   // ---- Startseite ----------------------------------------------------
-  // Ein Blick genuegt: Begruessung, was heute schon gehört wurde, der
-  // aktuelle Zustand aus dem Kompass und die Empfehlung für jetzt.
+  // Eine Karte, kein Nebeneinander von Rueckblick und Vorschlag - so wie
+  // bei Calm, Headspace & Co.: entweder "heute schon erledigt" oder "das
+  // empfehlen wir dir jetzt" mit Startknopf, nie beides gleichzeitig.
   function renderHome(){
     var stunde = new Date().getHours();
     document.getElementById("greeting").textContent =
@@ -3531,11 +3534,23 @@
       ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
       : "Nutze den Kompass, um deinen momentanen Zustand anzugeben.";
 
-    // "Dein heutiger Fokus": was heute wirklich gehört wurde.
     var heute = heutigeMeditationen();
+    var liste = empfehlung;
     var focus = document.getElementById("focusSlot");
-    focus.innerHTML = heute.length
-      ? '<div class="card">' + heute.map(function(e){
+    var html;
+
+    if (!liste.length){
+      // Kompass noch nie benutzt: es gibt noch keine Empfehlung und auch
+      // nichts zurueckzublicken - einziger sinnvoller Schritt ist hin.
+      html =
+        '<div class="card empty-card">' +
+          '<p>Finde deine heutige Meditation über den Kompass.</p>' +
+          '<button class="btn-dark" id="focusToCompassBtn">Zum Kompass →</button>' +
+        '</div>';
+    } else if (heute.length){
+      // Heute schon etwas gehört: das zeigen und feiern, statt denselben
+      // Vorschlag noch einmal danebenzustellen.
+      html = '<div class="card">' + heute.map(function(e){
           var dir = dirVonName(e.name);
           return '<div class="hist-row">' +
             '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
@@ -3543,23 +3558,27 @@
             '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + Math.max(1, Math.round(e.seconds / 60)) +
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
           '</div>';
-        }).join("") + '</div>'
-      : '<div class="card"><p class="hist-leer">Heute hast du noch keine Meditation gehört.</p></div>';
+        }).join("") + '</div>' +
+        '<button class="btn-ghost full" id="focusMehrBtn" style="margin-top:9px;">Noch eine Meditation? →</button>';
+    } else {
+      // Kompass gesetzt, heute noch nichts gehört: die eine Empfehlung,
+      // direkt startbar, mit dem Zustand als kurzer Begruendung darueber.
+      var top = liste[0];
+      html =
+        '<p class="focus-kicker">Dein Kompass zeigt: <strong>' + moodWort(compassBefore) +
+          '</strong> – das empfehlen wir dir jetzt.</p>' +
+        '<div class="card">' + medZeile(top) + '</div>' +
+        (liste.length > 1
+          ? '<button class="btn-ghost full" id="focusMehrBtn" style="margin-top:9px;">Weitere Empfehlungen ansehen →</button>'
+          : "");
+    }
 
-    // "Empfehlung für dich": die Empfehlung aus dem Kompass, komplett -
-    // vorher stand der erste Platz oben im Fokus, der ist jetzt frei
-    // für den Rückblick auf den Tag.
-    var liste = empfehlung;
-    var wrap = document.getElementById("homeRecWrap");
-    wrap.style.display = "";
-    document.getElementById("homeRecList").innerHTML = liste.length
-      ? '<div class="card">' + liste.map(function(m){ return medZeile(m); }).join("") + '</div>'
-      : '<div class="card empty-card">' +
-          '<p>Finde deine heutige Meditation über den Kompass.</p>' +
-          '<button class="btn-dark" id="focusToCompassBtn">Zum Kompass →</button>' +
-        '</div>';
+    focus.innerHTML = html;
+
     var toCompassBtn = document.getElementById("focusToCompassBtn");
     if (toCompassBtn) toCompassBtn.addEventListener("click", function(){ goToStep("compass"); });
+    var mehrBtn = document.getElementById("focusMehrBtn");
+    if (mehrBtn) mehrBtn.addEventListener("click", function(){ renderMyMed(); goToStep("meditation"); });
   }
 
   // ---- Fortschritt: drei Zahlen aus dem echten Verlauf ----------------
