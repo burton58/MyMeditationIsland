@@ -63,14 +63,14 @@ Titelseite → Startseite → Kompass → My Meditation → Spieler (Vollbild) �
 Der Insel-Konfigurator (`island`) ist über **Profil → "Meine Insel gestalten"** wieder erreichbar (§4); im Hauptfluss steht er nicht.
 
 ### 3.0 Titelseite (`data-step="splash"`)
-- Vollflächiges Insel-Foto mit dunklem Verlauf, mittig das App-Symbol (`icon-180.png`), Titel "My Meditation Island" und "Dein Ort. Deine Auszeit. Dein inneres Gleichgewicht."
-- Unten die goldene Taste **"Meine Insel betreten"** (→ Startseite), darunter die Einordnung "Geführte Meditationen auf Schweizerdeutsch · 3 bis 30 Minuten" und vier Punkte als Andeutung eines Einstiegs.
+- Vollflächiges Insel-Foto mit dunklem Verlauf, mittig das runde Logo aus der Vorlage (`logo.png`, weisse Strichzeichnung), Titel "My Meditation Island" und "Dein Ort. Deine Auszeit. Dein inneres Gleichgewicht."
+- Unten die goldene Taste **"Meine Insel betreten"** (→ Startseite) und vier Punkte als Andeutung eines Einstiegs.
 - Über **Profil → "Zur Titelseite"** jederzeit wieder erreichbar. Tab-Bar ist hier ausgeblendet.
 
 ### 3.1 Startseite (`data-step="home"`)
 - Seitenkopf mit tageszeitabhängiger Begrüssung (`begruessung()` + Symbol) und rundem Profil-Knopf.
 - Grosses Insel-Foto (randlos, ~38vh) als Stimmungsbild.
-- **"Dein heutiger Fokus"** — eine Karte mit der aktuell besten Empfehlung aus `empfehlungen()` (Name, Dauer, Nutzen, Play-Taste); Antippen startet direkt.
+- **"Dein heutiger Fokus"** — solange der Kompass noch nicht bewegt wurde (`kompassBenutzt === false`), steht hier wie in der Vorlage die leere Karte "Finde deine heutige Meditation über den Kompass." mit der Taste "Zum Kompass →". Danach die aktuell beste Empfehlung aus `empfehlungen()` (Name, Dauer, Nutzen, Play-Taste); Antippen startet direkt.
 - **"Dein Zustand"** — Karte mit dem aktuellen Kompass-Satz (`moodSatz(compassBefore)`), Taste "Zum Kompass →" und einem **kleinen, mitlaufenden Kompass** (`#compassWrapHome`), der sich `compassBefore` mit dem grossen Kompass teilt.
 - **"Auch gut für dich"** — zwei weitere Empfehlungen, sofern vorhanden.
 - Alles wird bei jedem Aufruf über `renderHome()` neu aufgebaut, zeigt also immer den aktuellen Stand.
@@ -79,10 +79,12 @@ Der Insel-Konfigurator (`island`) ist über **Profil → "Meine Insel gestalten"
 
 **Die Bedienung und die ganze Logik dahinter sind unverändert** — neu ist nur der Rahmen aus der Vorlage.
 
-- Beschriftung liegt jetzt **ausserhalb** der Scheibe: 🧠 Denken oben, ❤️ Fühlen unten, Anspannung links und Entspannung rechts senkrecht gesetzt (`.axis-label.side`). Dadurch kann die Scheibe die volle Breite nutzen.
-- Die Scheibe selbst: das echte Kompass-Foto als runde Fläche (`.compass-photo`), darüber ein **Goldring** mit Verlauf, vier Punkte an den Polen und zwölf feine Marken — dieselbe Bildsprache wie in der Vorlage.
-- **Zeiger und Ruhezone unverändert:** ein frei in der Scheibe verschiebbarer Punkt (jetzt golden statt rot, `MAXR = 168`), gestrichelte Ruhezone (r=25) für "ausgeglichen", weisse Nabe. Die beiden Achsen bleiben **unabhängig**: waagrecht Anspannung↔Entspannung (`x`), senkrecht Denken↔Fühlen (`y`), jeweils −1…1, gespeichert in `compassBefore`.
-- **Status (`#compassReadout`, `renderMoodStatus()`)** liegt jetzt in einer weissen Karte: abgestufter Satz mit Emoji ("Du fühlst dich **eher** angespannt", §5) plus zwei schlanke Achsen-Spuren mit goldenem Punkt und der Zeile "Ziehe den goldenen Punkt, um es anzupassen".
+- Beschriftung liegt **ausserhalb** der Scheibe, genau wie in der Vorlage und ohne Symbole: **Gedanken** oben, **Gefühle** unten, **Entspannt** links und **Angespannt** rechts senkrecht gesetzt (`.axis-label.side`). Dadurch kann die Scheibe die volle Breite nutzen.
+- **Achtung, waagrecht gespiegelt:** In der Vorlage steht links "Entspannt" und rechts "Angespannt" — umgekehrt zur internen Rechnung (`x < 0` = Anspannung). Die *Bedeutung* ist deshalb unverändert geblieben, nur die Zeichnung spiegelt: `nadelX(x) = 200 − x · COMPASS_MAXR`, `nadelY(y) = 200 + y · COMPASS_MAXR`. Jede Stelle, die eine Nadel setzt (Ziehen, Abschluss-Kompass, Reise-Spur, kleiner Kompass auf der Startseite), rechnet über diese beiden Funktionen.
+- Die Scheibe selbst: das Zifferblatt-Foto aus der Vorlage (Insel/Bucht mit goldenem Innenring) als runde Fläche (`.compass-photo`, r=150), darüber ein **Goldring** mit Verlauf (r=157, 14 breit), vier Punkte und Pfeile an den Polen und acht feine Marken.
+- **Zeiger unverändert in der Wirkung:** ein frei in der Scheibe verschiebbarer goldener Punkt (`COMPASS_MAXR = 135`, damit er auf dem Zifferblatt bleibt), weisse Nabe mit Kernpunkt. Die beiden Achsen bleiben **unabhängig**: waagrecht Anspannung↔Entspannung (`x`), senkrecht Denken↔Fühlen (`y`), jeweils −1…1, gespeichert in `compassBefore`. Die gestrichelte Ruhezone entfällt — die Nabe des Zifferblatts markiert die Mitte schon selbst.
+- **Status (`#compassReadout`, `renderMoodStatus()`)** in einer weissen Karte, wie in der Vorlage: Symbol des Zustands, darüber "Deine Auswahl", darunter das Wort mit seiner Abstufung (`moodWort()`: "Ausgeglichen" / "Etwas unruhig" / "Sehr angespannt") und ein erklärender Satz (`MOODS[...].next`). Solange der Zeiger genau in der Mitte steht, steht dort die Anleitung "Bewege den Zeiger, um deinen Zustand anzugeben." Die früheren zwei Achsen-Spuren entfallen; dieselbe Information liegt als `aria-label` auf der Karte.
+- **i-Knopf oben rechts** blendet zwei Sätze ein, was oben/unten und links/rechts bedeuten (`#compassInfo`).
 - **Optionen** darunter als Chip-Reihen: "Wie viel Zeit hast du?" (5/10/15/20/30 Min, `#durationOptsV2`) vor "Wie viele Meditationen?" (`Eine`/`Zwei`/`Drei`, `#countOptsV2`) — Werte und Wirkung (`durationV2`, `desiredCountV2`) unverändert.
 - Abschluss der Seite: **"Meditationen empfehlen →"** (`#toMedBtn`) führt nach My Meditation (§3.3).
 

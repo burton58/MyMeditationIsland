@@ -26,6 +26,8 @@ nicht nötig. Das Repo ist öffentlich, Pages ist damit kostenlos.
 | Datei | Beschreibung |
 |---|---|
 | `index.html` | Der komplette aktuelle Prototyp — ein einzelnes, selbstständiges HTML-File (HTML + CSS + Vanilla JS, kein Build-Step). Alle Fotos sind base64-inline eingebettet. |
+| `logo.png` | Rundes Logo (weisse Strichzeichnung) für die Titelseite. |
+| `icon-180.png` | Symbol für "Zum Home-Bildschirm" auf dem iPhone. |
 | `SPEC.md` | App-Spezifikation: Design-System, Flow, Datenmodell, Kernlogik und offene Punkte für die Migration in ein echtes Repo. |
 
 ## Starten
