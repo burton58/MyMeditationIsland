@@ -434,6 +434,12 @@
   .journey-hint{ margin:10px 0 0; }
 
   /* ---------- Abo ---------- */
+  .abo-vorteile{ padding:15px; margin-bottom:14px; }
+  .abo-vorteile p{ margin:0 0 9px; font-size:.85rem; line-height:1.5; color:var(--ink-soft);
+    padding-left:22px; position:relative; }
+  .abo-vorteile p:last-child{ margin-bottom:0; }
+  .abo-vorteile span{ position:absolute; left:0; top:0; color:var(--gold-deep); font-weight:800; }
+  .abo-vorteile strong{ color:var(--ink); }
   .trial-box{ padding:15px; margin-bottom:14px; font-size:.86rem; line-height:1.55;
     background:var(--card); border-radius:16px; box-shadow:0 3px 14px rgba(28,59,51,.07); }
   .plan{
@@ -1028,15 +1034,21 @@
 
     <div class="trial-box" id="trialBox"></div>
 
+    <div class="card abo-vorteile">
+      <p><span>✓</span> <strong>7 Tage gratis testen</strong> – ohne Verpflichtung.</p>
+      <p><span>✓</span> <strong>Neue Meditationen sind immer dabei</strong> – alles, was dazukommt, ist in beiden Abos ohne Aufpreis enthalten.</p>
+      <p><span>✓</span> Die ganze Bibliothek, von drei Minuten bis zur halben Stunde.</p>
+    </div>
+
     <button class="plan best" id="planJahr">
       <span class="plan-badge">Am günstigsten</span>
       <span class="plan-name">Jahr</span>
-      <span class="plan-price">CHF 39</span>
-      <span class="plan-note">Entspricht CHF 3.25 pro Monat – du sparst 19 % gegenüber dem Monatsabo.</span>
+      <span class="plan-price">CHF 25</span>
+      <span class="plan-note">Entspricht rund CHF 2.10 pro Monat – du sparst 31 % gegenüber dem Monatsabo.</span>
     </button>
     <button class="plan" id="planMonat">
       <span class="plan-name">Monat</span>
-      <span class="plan-price">CHF 4</span>
+      <span class="plan-price">CHF 3</span>
       <span class="plan-note">Monatlich kündbar.</span>
     </button>
 
@@ -2873,16 +2885,17 @@
     if (state === "active"){
       icon = "✅";
       title = (abo.plan === "jahr" ? "Jahresabo" : "Monatsabo") + " aktiv";
-      detail = (abo.plan === "jahr" ? "CHF 39 pro Jahr" : "CHF 4 pro Monat") + " · ganze Bibliothek offen";
+      detail = (abo.plan === "jahr" ? "CHF 25 pro Jahr" : "CHF 3 pro Monat") +
+        " · ganze Bibliothek offen · neue Meditationen immer dabei";
     } else if (state === "test"){
       icon = "⏳";
       title = "Test läuft · noch " + tageWort(testTageUebrig());
-      detail = GRATIS_IDS.length + " Meditationen offen · danach Monatsabo CHF 4 oder Jahresabo CHF 39";
+      detail = GRATIS_IDS.length + " Meditationen offen · danach Monatsabo CHF 3 oder Jahresabo CHF 25";
       zeigeCta = true;
     } else {
       icon = "🔒";
       title = "Test beendet";
-      detail = "Mit einem Abo öffnest du die ganze Bibliothek · Monatsabo CHF 4 oder Jahresabo CHF 39";
+      detail = "Mit einem Abo öffnest du die ganze Bibliothek · Monatsabo CHF 3 oder Jahresabo CHF 25";
       zeigeCta = true;
     }
 
@@ -2913,25 +2926,27 @@
     var t = document.getElementById("trialBox");
     if (!ABO_LIVE){
       t.innerHTML = "<strong>Noch nicht live.</strong> Die Bezahlung ist noch nicht angeschlossen – " +
-        "bis dahin ist die ganze Bibliothek frei zugänglich.";
+        "bis dahin ist die ganze Bibliothek frei zugänglich. Geplant sind " + TEST_TAGE +
+        " Tage gratis testen, danach CHF 3 im Monat oder CHF 25 im Jahr.";
       return;
     }
     if (hatAbo()){
-      t.innerHTML = "<strong>Du bist dabei.</strong> Die ganze Bibliothek ist offen. " +
-        "Deine Inselreise läuft weiter.";
+      t.innerHTML = "<strong>Du bist dabei.</strong> Die ganze Bibliothek ist offen, und jede neue " +
+        "Meditation kommt automatisch dazu. Deine Inselreise läuft weiter.";
     } else if (imTest()){
       t.innerHTML = "<strong>Dein Test läuft.</strong> Noch " + tageWort(testTageUebrig()) + " mit " +
-        GRATIS_IDS.length + " Meditationen. Danach brauchst du ein Abo, um weiterzuhören.";
+        GRATIS_IDS.length + " Meditationen. Danach geht es mit einem Abo weiter: CHF 3 im Monat " +
+        "oder CHF 25 im Jahr.";
     } else {
       t.innerHTML = "<strong>Dein Test ist vorbei.</strong> Mit einem Abo öffnest du die ganze " +
-        "Bibliothek – und deine Inselreise läuft weiter.";
+        "Bibliothek – CHF 3 im Monat oder CHF 25 im Jahr, neue Meditationen immer inbegriffen.";
     }
   }
 
   // Es ist bewusst KEINE Bezahlung angeschlossen. Der Knopf erklaert das
   // ehrlich und bietet daneben eine Freischaltung zum Ausprobieren an.
   function planGewaehlt(plan){
-    var preis = plan === "jahr" ? "CHF 39 pro Jahr" : "CHF 4 pro Monat";
+    var preis = plan === "jahr" ? "CHF 25 pro Jahr" : "CHF 3 pro Monat";
     document.getElementById("payNote").innerHTML =
       '<strong>' + preis + ' – noch nicht bezahlbar.</strong><br>' +
       'Für eine echte Zahlung braucht es einen Zahlungsanbieter; das ist noch nicht angeschlossen. ' +
