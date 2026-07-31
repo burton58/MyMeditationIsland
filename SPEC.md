@@ -76,7 +76,9 @@ Die Titelseite ist die Landingpage: Sie hat genau **eine** Aufgabe — den Grati
 
 **Tab-Bar ist auf der Titelseite ausgeblendet.** Sie kostete 74px genau dort, wo das Boot liegt, und eine Coverseite mit sechs Reitern wirkt nicht ruhig. Hinein geht es über die Taste; erreichbar bleibt die Titelseite von überall über das Feld **Insel** und über **Profil → "Zur Titelseite"**.
 
-**Gemessen mit echter Safe-Area (34px Home-Balken)**: Auf 390×844 beginnt die goldene Taste bei 678px, auf 430×932 bei 766px — das **ganze Boot inklusive Ruder** (bis ~675px bzw. ~746px) bleibt frei. Auf sehr kurzen Geräten (375×667) berührt die Taste den unteren Bootsrand; die Person bleibt frei. Tests dafür können die Safe-Area über `:root{--safe-bottom:34px}` nachstellen — ohne das sitzt der Block im Test 34px tiefer als auf dem echten iPhone.
+**Gemessen mit echter Safe-Area (34px Home-Balken).** Das Boot mit Person und Rudern liegt im Foto zwischen **66,5 % und 75,5 % der Bildhöhe** (im Bild selbst nachgemessen, nicht geschätzt). Geprüft auf acht Grössen — iPhone SE, 13 mini, 8 Plus, 11, 14, 15, 15 Pro Max und ein schmales Android: Auf allen endet der Kopftext oberhalb und beginnt der Handlungsblock unterhalb des Bootes. Am knappsten ist es auf dem SE (11px Luft) und dem 8 Plus (14px).
+
+**Wenn hier etwas dazukommt, zuerst nachmessen:** Jede zusätzliche Zeile unten schiebt die goldene Taste nach oben ins Bild. Deshalb sind Probe und Preise in *eine* Zeile zusammengezogen, und deshalb ist die Erklärung oben zweizeilig statt dreizeilig.
 
 ### 3.1 Startseite (`data-step="home"`)
 - Seitenkopf mit tageszeitabhängiger Begrüssung (`begruessung()` + Symbol) und rundem Profil-Knopf.
