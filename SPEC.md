@@ -66,9 +66,9 @@ Der Insel-Konfigurator (`island`) ist über **Profil → "Meine Insel gestalten"
 
 Die Titelseite ist die Landingpage: Sie hat genau **eine** Aufgabe — den Gratis-Test starten. Aufbau in **drei Bändern**, damit das Foto wirkt und der Blick schnell unten ankommt:
 
-1. **Oben (Kopf, ~30 % Höhe):** Logo (52px), Marke in Versalien und gesperrt (`.splash-brand`, klein — der Name ist Absender, nicht Botschaft), Serif-Headline **"Ruhe beginnt hier."** (2.35rem), zwei Zeilen Subheadline **"Geführte Meditationen auf Schweizerdeutsch – für Schlaf, Stress und innere Ruhe."** und drei ruhige Glas-Chips (🇨🇭 Schweizerdeutsch · 🕒 3–30 Min · 😴 Schlaf & Stress) statt Fliesstext.
+1. **Oben (Kopf, ~20–28 % Höhe):** Logo (52px), darunter der Name **"My Meditation Island"** als Serif-Überschrift (2.5rem, auf schmalen Geräten zweizeilig) und zwei Zeilen Subheadline **"Geführte Meditationen auf Schweizerdeutsch – für Schlaf, Stress und innere Ruhe."** Der Name ist bewusst das Grösste: So war es gewünscht, und die Marke soll sich einprägen. Die Chips mit Emoji sind wieder entfallen; die Dauer steht klein unter dem Knopf.
 2. **Mitte (`.splash-frei`, flexibel):** bleibt **leer**. Dort liegen Insel, Boot und die Person darin. Der Verlauf ist deshalb geteilt (dunkel oben 0–34 %, klar in der Mitte, dunkel ab 72 %), statt durchgehend über dem ganzen Bild zu liegen.
-3. **Unten (Handlung):** goldene Taste **"7 Tage gratis starten"** (Nutzen statt Ort — der frühere Text "Meine Insel betreten" beschrieb einen Ort, nicht den Gewinn), darunter die Risiko-Zeile **"Keine Verpflichtung · jederzeit kündbar"** und klein **"Was kostet es danach?"** (→ Abo-Seite).
+3. **Unten (Handlung):** goldene Taste **"7 Tage gratis starten"** (Nutzen statt Ort — der frühere Text "Meine Insel betreten" beschrieb einen Ort, nicht den Gewinn), darunter die kleine Zeile **"3–30 Minuten · keine Verpflichtung · jederzeit kündbar"** (Dauer bewusst hier statt prominent oben) und klein **"Was kostet es danach?"** (→ Abo-Seite).
 
 **Tab-Bar ist auf der Titelseite ausgeblendet.** Sie kostete 74px genau dort, wo das Boot liegt, und eine Coverseite mit sechs Reitern wirkt nicht ruhig. Hinein geht es über die Taste; erreichbar bleibt die Titelseite von überall über das Feld **Insel** und über **Profil → "Zur Titelseite"**.
 

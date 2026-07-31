@@ -91,25 +91,14 @@
 
   .splash-badge{ width:52px; height:52px; margin:0 auto 10px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
   .splash-badge img{ width:100%; height:100%; object-fit:contain; }
-  .splash-brand{
-    margin:0 0 14px; font-size:.66rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
-    opacity:.82; text-shadow:0 2px 10px rgba(0,0,0,.4);
-  }
   .splash h1{
-    font-family:var(--serif); font-size:2.35rem; margin:0 0 12px; line-height:1.12;
+    font-family:var(--serif); font-size:2.5rem; margin:0 0 14px; line-height:1.1;
     text-shadow:0 2px 18px rgba(0,0,0,.45);
   }
   .splash-sub{
     margin:0; font-size:.95rem; line-height:1.55; opacity:.94; text-shadow:0 2px 12px rgba(0,0,0,.45);
   }
 
-  /* Vorteile als kleine, ruhige Chips statt Fliesstext */
-  .splash-chips{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-top:18px; }
-  .splash-chips span{
-    font-size:.7rem; font-weight:600; padding:7px 11px; border-radius:20px; white-space:nowrap;
-    background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.24);
-    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); text-shadow:0 1px 6px rgba(0,0,0,.35);
-  }
   .splash-cta{
     width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08;
     font-weight:700; font-size:1.05rem; padding:18px; border-radius:18px; font-family:inherit;
@@ -129,9 +118,8 @@
   @media (max-height:720px){
     .splash-badge{ width:44px; height:44px; margin-bottom:8px; }
     .splash-brand{ margin-bottom:10px; }
-    .splash h1{ font-size:2rem; margin-bottom:10px; }
+    .splash h1{ font-size:2.15rem; margin-bottom:10px; }
     .splash-sub{ font-size:.88rem; }
-    .splash-chips{ margin-top:14px; }
     .splash-cta{ padding:16px; font-size:1rem; }
   }
 
@@ -707,14 +695,8 @@
              Blick schnell nach unten zum Knopf wandert. -->
         <div class="splash-top">
           <div class="splash-badge"><img src="logo.png" alt="My Meditation Island"></div>
-          <p class="splash-brand">My Meditation Island</p>
-          <h1>Ruhe beginnt hier.</h1>
+          <h1>My Meditation Island</h1>
           <p class="splash-sub">Geführte Meditationen auf Schweizerdeutsch –<br>für Schlaf, Stress und innere Ruhe.</p>
-          <div class="splash-chips">
-            <span>🇨🇭 Schweizerdeutsch</span>
-            <span>🕒 3–30 Min</span>
-            <span>😴 Schlaf &amp; Stress</span>
-          </div>
         </div>
 
         <!-- Die Mitte bleibt bewusst leer: Insel, Boot und die Person darin
@@ -724,7 +706,7 @@
         <!-- Unten: alles zum Handeln, in einer ruhigen Reihenfolge. -->
         <div class="splash-bottom">
           <button class="splash-cta" id="enterAppBtn">7 Tage gratis starten</button>
-          <p class="splash-mikro">Keine Verpflichtung · jederzeit kündbar</p>
+          <p class="splash-mikro">3–30 Minuten · keine Verpflichtung · jederzeit kündbar</p>
           <button class="splash-link" id="splashAboBtn">Was kostet es danach?</button>
         </div>
 
