@@ -740,7 +740,7 @@
         <div class="splash-top">
           <div class="splash-badge"><img src="logo.png" alt="My Meditation Island"></div>
           <h1>My Meditation Island</h1>
-          <p class="splash-sub" id="splashSub">Geführte Meditationen auf Schweizerdeutsch –<br>für Schlaf, Stress und innere Ruhe.</p>
+          <p class="splash-sub" id="splashSub">Geführte Meditationen auf Schweizerdeutsch</p>
           <button class="splash-vertrauen" id="splashUeberBtn">Gesprochen von einer diplomierten Yogalehrerin &amp; Meditationsleiterin ›</button>
         </div>
 
@@ -2130,7 +2130,6 @@
     // genau dort ist sie neu. Danach nie wieder von selbst; ueber das "i"
     // bleibt sie jederzeit erreichbar.
     if (step === "compass") erklaerungBeimErstenMal();
-    if (step === "splash") renderSplashSub();
     document.body.setAttribute("data-step", step);
     var info = STEPS[step] || STEPS.island;
     document.getElementById("stepper").textContent = info.label;
@@ -3562,21 +3561,6 @@
   });
   document.getElementById("ueberCtaBtn").addEventListener("click", function(){ goToStep("home"); });
 
-  // Die zweite Zeile passt sich der Tageszeit an - dieselbe Seite, der
-  // passende Moment.
-  var SUB_TAGESZEIT = [
-    { bis:11, text:"Geführte Meditationen auf Schweizerdeutsch –<br>für einen ruhigen Start in den Tag." },
-    { bis:18, text:"Geführte Meditationen auf Schweizerdeutsch –<br>für Stress, Unruhe und kurze Pausen." },
-    { bis:22, text:"Geführte Meditationen auf Schweizerdeutsch –<br>für einen ruhigen Abend." },
-    { bis:24, text:"Geführte Meditationen auf Schweizerdeutsch –<br>für gute Nacht und tiefen Schlaf." }
-  ];
-  function renderSplashSub(){
-    var h = new Date().getHours(), el = document.getElementById("splashSub");
-    if (!el) return;
-    for (var i = 0; i < SUB_TAGESZEIT.length; i++){
-      if (h < SUB_TAGESZEIT[i].bis){ el.innerHTML = SUB_TAGESZEIT[i].text; return; }
-    }
-  }
   var ERKLAERT_KEY = "myisland.kompass-erklaert.v1";
   function erklaerungBeimErstenMal(){
     var box = document.getElementById("compassInfo");
