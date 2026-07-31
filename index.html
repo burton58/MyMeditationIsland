@@ -83,7 +83,7 @@
   }
   .splash-inner{
     position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center;
-    padding:calc(24px + env(safe-area-inset-top, 0px)) 24px calc(6px + var(--safe-bottom));
+    padding:calc(24px + env(safe-area-inset-top, 0px)) 24px calc(2px + var(--safe-bottom));
     text-align:center; color:#fff;
   }
   .splash-top{ width:100%; max-width:340px; }
@@ -107,8 +107,8 @@
   /* Der Hinweis auf die Ausbildung steht ganz unten und klein - er soll da
      sein, aber nichts überstrahlen. Antippen führt zu "Über mich". */
   .splash-vertrauen{
-    display:block; margin:10px auto 0; max-width:320px; border:none; background:none; cursor:pointer;
-    font-family:inherit; color:#fff; font-size:.68rem; line-height:1.4; opacity:.72;
+    display:block; margin:7px auto 0; max-width:330px; border:none; background:none; cursor:pointer;
+    font-family:inherit; color:#fff; font-size:.66rem; line-height:1.35; opacity:.72;
     font-style:italic; text-shadow:0 2px 10px rgba(0,0,0,.45); padding:2px 4px;
   }
 
@@ -146,12 +146,12 @@
 
   .splash-cta{
     width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08;
-    font-weight:700; font-size:1.05rem; padding:18px; border-radius:18px; font-family:inherit;
-    box-shadow:0 14px 34px rgba(90,66,8,.45);
+    font-weight:700; font-size:1rem; padding:16px; border-radius:17px; font-family:inherit;
+    box-shadow:0 10px 26px rgba(90,66,8,.38);
   }
   .splash-cta:active{ transform:translateY(1px); }
   .splash-mikro{
-    margin:11px 0 0 !important; font-size:.78rem !important; opacity:.9 !important;
+    margin:9px 0 0 !important; font-size:.76rem !important; opacity:.9 !important;
     text-shadow:0 2px 10px rgba(0,0,0,.4);
   }
   .splash-link{
@@ -166,13 +166,13 @@
     .splash h1{ font-size:2.15rem; margin-bottom:10px; }
     .splash-sub{ font-size:.8rem; }
     .splash-sub2{ font-size:.8rem !important; }
-    .splash-cta{ padding:15px; font-size:1rem; }
+    .splash-cta{ padding:14px; font-size:.98rem; }
     .splash-vertrauen{ margin-top:8px; font-size:.66rem; }
     .splash-preisbox{ padding:11px 13px; }
     .splash-preisbox p{ font-size:.76rem !important; }
     .splash-mikro{ margin-top:9px !important; font-size:.72rem !important; }
     .splash-link{ margin-top:2px; font-size:.74rem; padding:4px 8px; }
-    .splash-inner{ padding-bottom:calc(4px + var(--safe-bottom)); }
+    .splash-inner{ padding-bottom:calc(2px + var(--safe-bottom)); }
   }
 
   /* ---------- Gemeinsame Bausteine ---------- */
@@ -772,9 +772,9 @@
 
         <!-- Unten: alles zum Handeln, in einer ruhigen Reihenfolge. -->
         <div class="splash-bottom">
-          <button class="splash-cta" id="enterAppBtn">7 Tage gratis starten</button>
-          <p class="splash-mikro">
-            <button class="splash-probe" id="splashProbeBtn">▶︎ 3 Minuten Probe</button>
+          <button class="splash-cta" id="enterAppBtn">Jetzt starten</button>
+          <p class="splash-mikro">7 Tage gratis ·
+            <button class="splash-probe" id="splashProbeBtn">▶︎ 3 Min Probe</button>
             ·
             <button class="splash-preis" id="splashPreisBtn">Preise <span>⌄</span></button>
           </p>
