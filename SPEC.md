@@ -14,7 +14,7 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 
 - Reines HTML + CSS + Vanilla JS (ein `<script>`-Block, IIFE)
 - Kein Framework, kein Bundler
-- Alle Fotos sind **base64-inline** als JPEG eingebettet (kein separater Asset-Ordner)
+- Das Insel-Foto (`insel.jpg`) und das Logo (`logo.png`) liegen als eigene Dateien neben `index.html`; das Zifferblatt des Kompasses steckt weiterhin base64-inline im CSS. Das Foto war dreimal eingebettet und hat die Datei um über 400 KB aufgebläht — als Datei lädt es einmal und bleibt im Speicher des Geräts.
 - KI-Begleiter ruft `https://api.anthropic.com/v1/messages` direkt per `fetch()` auf (Modell `claude-sonnet-4-6`), mit Fallback-Textbausteinen bei Fehlern/Offline
 - Persistenz: **keine** — der State lebt nur in JS-Variablen im Speicher, kein LocalStorage, kein Backend
 
@@ -63,7 +63,7 @@ Titelseite → Startseite → Kompass → My Meditation → Spieler (Vollbild) �
 Der Insel-Konfigurator (`island`) ist über **Profil → "Meine Insel gestalten"** wieder erreichbar (§4); im Hauptfluss steht er nicht.
 
 ### 3.0 Titelseite (`data-step="splash"`)
-- Vollflächiges Insel-Foto mit dunklem Verlauf, mittig das runde Logo aus der Vorlage (`logo.png`, weisse Strichzeichnung), Titel "My Meditation Island" und "Dein Ort. Deine Auszeit. Dein inneres Gleichgewicht."
+- Vollflächig das Insel-Foto aus der Vorlage (`insel.jpg`, Sonnenuntergang mit Boot) mit dunklem Verlauf, mittig das runde Logo (`logo.png`, weisse Strichzeichnung, 56px), Titel "My Meditation Island" und "Dein Ort. Deine Auszeit. Dein inneres Gleichgewicht." — Abstände und Grössen genau wie in der Vorlage.
 - Unten die goldene Taste **"Meine Insel betreten"** (→ Startseite) und vier Punkte als Andeutung eines Einstiegs.
 - Über **Profil → "Zur Titelseite"** jederzeit wieder erreichbar. Tab-Bar ist hier ausgeblendet.
 
