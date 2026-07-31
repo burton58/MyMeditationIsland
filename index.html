@@ -62,7 +62,8 @@
   body:not(.entered)[data-step="outro"]       .outro-page,
   body:not(.entered)[data-step="profil"]      .profil-page,
   body:not(.entered)[data-step="abo"]         .abo-page,
-  body:not(.entered)[data-step="ueber"]       .ueber-page{ display:block; }
+  body:not(.entered)[data-step="ueber"]       .ueber-page,
+  body:not(.entered)[data-step="konto"]       .konto-page{ display:block; }
   body:not(.entered):not([data-step="island"]) .layout,
   body:not(.entered):not([data-step="island"]) .topbar,
   body:not(.entered):not([data-step="island"]) .stepper{ display:none; }
@@ -85,6 +86,14 @@
     position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center;
     padding:calc(24px + env(safe-area-inset-top, 0px)) 24px calc(2px + var(--safe-bottom));
     text-align:center; color:#fff;
+  }
+  /* "Anmelden" sitzt oben rechts - dort suchen es alle, und unten bleibt
+     der Platz für Bild und Handlung frei. */
+  .splash-anmelden{
+    position:absolute; z-index:5; top:calc(14px + env(safe-area-inset-top, 0px)); right:16px;
+    border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.14); cursor:pointer;
+    font-family:inherit; color:#fff; font-size:.78rem; font-weight:600; padding:7px 14px; border-radius:20px;
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); text-shadow:0 1px 6px rgba(0,0,0,.35);
   }
   .splash-top{ width:100%; max-width:340px; }
   .splash-frei{ flex:1; min-height:12vh; }
@@ -557,6 +566,29 @@
   .journey-lead, .journey-hint{ margin:0 0 10px; font-size:.83rem; line-height:1.55; color:var(--ink-soft); }
   .journey-hint{ margin:10px 0 0; }
 
+  /* ---------- Konto / Anmelden ---------- */
+  .konto-hinweis{ padding:15px; margin-bottom:12px; font-size:.86rem; line-height:1.55; }
+  .konto-form{ padding:18px; position:relative; }
+  .konto-badge{
+    display:inline-block; background:var(--cream-2); color:var(--gold-deep); font-size:.65rem; font-weight:800;
+    padding:4px 9px; border-radius:9px; margin-bottom:14px;
+  }
+  .konto-form label{ display:block; font-size:.78rem; font-weight:600; color:var(--ink-soft); margin-bottom:12px; }
+  .konto-form input{
+    display:block; width:100%; margin-top:5px; padding:12px; border:1px solid var(--line); border-radius:12px;
+    font-family:inherit; font-size:.9rem; background:#fbf9f3; color:var(--ink);
+  }
+  .konto-form input:disabled{ opacity:.7; }
+  .konto-form .btn-dark[disabled], .konto-form .btn-ghost[disabled]{ opacity:.45; cursor:default; box-shadow:none; }
+  .konto-fuss{ margin:14px 0 0; font-size:.79rem; line-height:1.55; color:var(--ink-soft); }
+  .konto-schritte{ padding:6px 16px; }
+  .schritt{ display:flex; gap:12px; padding:13px 0; border-bottom:1px solid var(--line); font-size:.86rem; line-height:1.55; }
+  .schritt:last-child{ border-bottom:none; }
+  .schritt .nr{
+    width:24px; height:24px; border-radius:50%; background:var(--gold-grad); color:#3a2e08; flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700;
+  }
+
   /* ---------- Über mich ---------- */
   .ueber-karte{ padding:20px; text-align:center; }
   /* Das Logo ist eine weisse Strichzeichnung - es braucht einen dunklen
@@ -756,6 +788,8 @@
     <div class="splash">
       <img class="bg" src="insel.jpg" alt="Deine Insel">
       <div class="splash-inner">
+
+        <button class="splash-anmelden" id="splashKontoBtn">Anmelden</button>
 
         <!-- Oben: Marke, Versprechen, Einordnung - kurz gehalten, damit der
              Blick schnell nach unten zum Knopf wandert. -->
@@ -1183,6 +1217,9 @@
       <button class="menu-row" id="profilKiBtn">
         <span class="row-icon">🤖</span><span class="row-text">Dein Begleiter</span><span class="chev">›</span>
       </button>
+      <button class="menu-row" id="profilKontoBtn">
+        <span class="row-icon">🔑</span><span class="row-text">Konto &amp; Anmelden</span><span class="chev">›</span>
+      </button>
       <button class="menu-row" id="profilUeberMichBtn">
         <span class="row-icon">🙋‍♀️</span><span class="row-text">Über mich</span><span class="chev">›</span>
       </button>
@@ -1229,6 +1266,48 @@
     </div>
 
     <div class="btn-row"><button class="btn-dark" id="ueberCtaBtn">7 Tage gratis starten</button></div>
+  </div>
+
+  <!-- ============ KONTO / ANMELDEN ============ -->
+  <div class="page konto-page" id="kontoPage">
+    <div class="page-head">
+      <button class="icon-btn" id="kontoBackBtn" title="Zurück">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="ttl center">
+        <h1>Anmelden</h1>
+        <p>Für dein Abo auf allen Geräten</p>
+      </div>
+      <span class="icon-btn blank"></span>
+    </div>
+
+    <div class="card konto-hinweis" id="kontoStatus"></div>
+
+    <div class="card konto-form">
+      <span class="konto-badge">Noch nicht aktiv</span>
+      <label>E-Mail
+        <input type="email" placeholder="dein.name@beispiel.ch" disabled>
+      </label>
+      <label>Passwort
+        <input type="password" placeholder="••••••••" disabled>
+      </label>
+      <button class="btn-dark full" disabled>Anmelden</button>
+      <button class="btn-ghost full" disabled style="margin-top:9px;">Abo wiederherstellen</button>
+      <p class="konto-fuss">Konto und Bezahlung kommen zusammen. Bis dahin brauchst du dich nirgends anzumelden –
+      alles ist offen, und dein Verlauf liegt auf diesem Gerät.</p>
+    </div>
+
+    <div class="section-label">So wird es laufen</div>
+    <div class="card konto-schritte">
+      <div class="schritt"><span class="nr">1</span><span><strong>Jetzt starten</strong> beginnt deine 7 Tage
+        gratis – ohne Konto, ohne Zahlungsmittel.</span></div>
+      <div class="schritt"><span class="nr">2</span><span>Willst du danach weitermachen, wählst du ein Abo
+        (CHF 3 im Monat oder CHF 25 im Jahr) und legst dabei dein Konto an.</span></div>
+      <div class="schritt"><span class="nr">3</span><span>Mit diesem Konto meldest du dich hier an – auf einem
+        neuen Handy, auf dem iPad, überall.</span></div>
+    </div>
+
+    <div class="btn-row"><button class="btn-dark" id="kontoAboBtn">Preise ansehen</button></div>
   </div>
 
   <!-- ============ ABO ============ -->
@@ -2145,6 +2224,7 @@
   var STEPS = {
     splash:     { label:"", sub:"" },
     ueber:      { label:"", sub:"" },
+    konto:      { label:"", sub:"" },
     home:       { label:"", sub:"" },
     island:     { label:"Insel gestalten · optional",   sub:"Wähle, wie deine Insel aussieht." },
     compass:    { label:"Schritt 1 von 3 · Kompass",    sub:"Stell den Zeiger auf deine Richtung." },
@@ -3572,7 +3652,14 @@
   setupChat("chatBox2", "chatInput2", "chatSend2",
     "Schön, dass du da warst. Wie war es für dich?", false);
 
-  document.getElementById("enterAppBtn").addEventListener("click", function(){ goToStep("home"); });
+  // "Jetzt starten": hier beginnt die Probezeit. Sie wird festgehalten,
+  // damit später sichtbar ist, seit wann sie läuft - gesperrt wird
+  // vorerst nichts (ABO_LIVE = false).
+  document.getElementById("enterAppBtn").addEventListener("click", function(){
+    var a = loadAbo();
+    if (!a.gestartet){ a.gestartet = Date.now(); a.start = a.start || Date.now(); saveAbo(a); }
+    goToStep("home");
+  });
   function preisboxZu(){
     var box = document.getElementById("splashPreisBox");
     box.hidden = true;
@@ -3612,6 +3699,35 @@
     goToStep(ueberZurueck);
   });
   document.getElementById("ueberCtaBtn").addEventListener("click", function(){ goToStep("home"); });
+
+  // ---- Konto / Anmelden (Platzhalter, bis die Bezahlung läuft) --------
+  var kontoZurueck = "splash";
+  function renderKonto(){
+    var el = document.getElementById("kontoStatus");
+    var abo = loadAbo();
+    if (abo.gestartet){
+      var tage = testTageUebrig();
+      el.innerHTML = tage > 0
+        ? "<strong>Deine Probezeit läuft.</strong> Noch " + tageWort(tage) +
+          ". Solange die Bezahlung nicht angeschlossen ist, bleibt danach trotzdem alles offen."
+        : "<strong>Deine sieben Tage sind um.</strong> Es ist nichts gesperrt worden – " +
+          "die Bezahlung ist noch nicht angeschlossen.";
+    } else {
+      el.innerHTML = "<strong>Noch nicht gestartet.</strong> Mit \u201eJetzt starten\u201c auf der Titelseite " +
+        "beginnen deine 7 Tage – ohne Konto und ohne Zahlungsmittel.";
+    }
+  }
+  function zumKonto(woher){
+    kontoZurueck = woher;
+    renderKonto();
+    goToStep("konto");
+  }
+  document.getElementById("splashKontoBtn").addEventListener("click", function(){ zumKonto("splash"); });
+  document.getElementById("profilKontoBtn").addEventListener("click", function(){ zumKonto("profil"); });
+  document.getElementById("kontoBackBtn").addEventListener("click", function(){ goToStep(kontoZurueck); });
+  document.getElementById("kontoAboBtn").addEventListener("click", function(){
+    renderAbo(); goToStep("abo");
+  });
 
   var ERKLAERT_KEY = "myisland.kompass-erklaert.v1";
   function erklaerungBeimErstenMal(){

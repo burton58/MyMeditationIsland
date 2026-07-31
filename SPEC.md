@@ -139,6 +139,19 @@ Aufbau genau wie in der Vorlage (`renderMyMed()`), die Empfehlung selbst sitzt s
 - **"Brauchst du noch etwas?"** — "Noch eine Meditation", "Ein Mudra für mich", "Ein Mantra für mich" (deterministisch aus der Nadel-Position, §5).
 - Begleiter-Chat (zweite Instanz) und "Neu beginnen" / "Fertig →".
 
+### 3.6a Konto / Anmelden (`data-step="konto"`) — Platzhalter
+
+Oben rechts auf der Titelseite sitzt **"Anmelden"** (`.splash-anmelden`, Glas-Pille) — dort suchen es alle, und unten bleibt der Platz fürs Bild frei. Es führt auf die Konto-Seite; auch über **Profil → "Konto & Anmelden"** erreichbar.
+
+Die Seite zeigt drei Dinge:
+1. **Status der Probezeit** (`renderKonto()`): noch nicht gestartet / noch X Tage / vorbei — jeweils mit dem ehrlichen Zusatz, dass nichts gesperrt wird, solange `ABO_LIVE = false`.
+2. **Anmelde-Formular als sichtbarer Platzhalter**: E-Mail, Passwort, "Anmelden" und "Abo wiederherstellen" — alle Felder `disabled`, dazu das Kennzeichen **"Noch nicht aktiv"**. So sieht man, wie es kommen wird, ohne dass etwas ins Leere führt.
+3. **"So wird es laufen"** in drei Schritten: (1) "Jetzt starten" beginnt die 7 Tage ohne Konto und ohne Zahlungsmittel, (2) wer weitermachen will, wählt ein Abo und legt dabei das Konto an, (3) mit diesem Konto meldet man sich auf weiteren Geräten an.
+
+**Warum so:** Genau diesen Ablauf haben Calm, Headspace und Balance — Probezeit ohne Hürde, Konto erst beim Kauf, "Wiederherstellen" für den Gerätewechsel. Ein Konto *vor* dem ersten Erlebnis kostet Interessenten; ein Konto *nie* macht ein Abo unbrauchbar, sobald das Handy wechselt.
+
+**"Jetzt starten"** hält den Beginn der Probezeit in `myisland.abo.v1` fest (`gestartet`), sperrt aber nichts. Sobald die Bezahlung angeschlossen wird, wird aus dem Platzhalter der echte Ablauf: `ABO_LIVE = true`, Formular aktiv, Zahlungsanbieter dahinter.
+
 ### 3.7 Über mich (`data-step="ueber"`)
 
 Eine ruhige Karte mit Logo, Begrüssung und drei kurzen Absätzen: diplomierte Yogalehrerin und Meditationsleiterin, alle Meditationen selbst geschrieben und gesprochen auf Schweizerdeutsch, der Kompass als Herzstück. Am Schluss **"Mehr über meine Arbeit: yogaisland.ch"** — bewusst als Text, **nicht** als Link (so gewünscht). Darunter noch einmal die Taste "7 Tage gratis starten".
@@ -335,7 +348,7 @@ session = { timer, elapsed, total, paused, queue: MeditationObjekt[], index }
 
 ### Steps
 ```
-STEPS = { splash, home, island (über Profil), compass, meditation, meditation2, outro, profil, abo, ueber }
+STEPS = { splash, home, island (über Profil), compass, meditation, meditation2, outro, profil, abo, ueber, konto }
 TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", meditation2:"meditation2", profil:"profil" }
 // "splash"/"outro"/"abo"/"island" haben keinen eigenen Tab
 ```
