@@ -748,6 +748,7 @@
       <p>Oben und unten zeigst du, ob gerade eher dein <strong>Kopf</strong> arbeitet oder dein <strong>Gefühl</strong>.
       Links und rechts, wie <strong>entspannt</strong> oder <strong>angespannt</strong> du dabei bist.</p>
       <p>Der Zeiger darf überall in der Scheibe stehen – auch dazwischen. In der Mitte heisst: ausgeglichen.</p>
+      <button class="btn-ghost" id="compassInfoOk" style="margin-top:4px;">Verstanden</button>
     </div>
 
     <div class="axis-label">Gedanken</div>
@@ -2015,6 +2016,10 @@
     // Die Startseite zeigt immer den aktuellen Stand: Begruessung, Vorschlag
     // fuer heute und den Zustand aus dem Kompass.
     if (step === "home") renderHome();
+    // Beim allerersten Besuch der Kompass-Seite steht die Erklaerung offen -
+    // genau dort ist sie neu. Danach nie wieder von selbst; ueber das "i"
+    // bleibt sie jederzeit erreichbar.
+    if (step === "compass") erklaerungBeimErstenMal();
     document.body.setAttribute("data-step", step);
     var info = STEPS[step] || STEPS.island;
     document.getElementById("stepper").textContent = info.label;
@@ -3427,9 +3432,23 @@
   document.getElementById("splashAboBtn").addEventListener("click", function(){
     renderAbo(); goToStep("abo");
   });
+  var ERKLAERT_KEY = "myisland.kompass-erklaert.v1";
+  function erklaerungBeimErstenMal(){
+    var box = document.getElementById("compassInfo");
+    if (!box) return;
+    var schonGesehen = false;
+    try { schonGesehen = localStorage.getItem(ERKLAERT_KEY) === "1"; } catch (e){}
+    if (schonGesehen) return;
+    box.hidden = false;
+    try { localStorage.setItem(ERKLAERT_KEY, "1"); } catch (e){}
+  }
+
   document.getElementById("compassInfoBtn").addEventListener("click", function(){
     var box = document.getElementById("compassInfo");
     box.hidden = !box.hidden;
+  });
+  document.getElementById("compassInfoOk").addEventListener("click", function(){
+    document.getElementById("compassInfo").hidden = true;
   });
   document.getElementById("homeToCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
   document.getElementById("homeProfilBtn").addEventListener("click", function(){
