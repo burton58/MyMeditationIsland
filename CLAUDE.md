@@ -10,12 +10,12 @@ gespeichert."
 
 ## Regel 1 — Nur dieses Repo
 
-Es wird **ausschließlich im Repo `burton58/MyIsland`** gearbeitet.
+Es wird **ausschließlich im Repo `burton58/MyMeditationIsland`** gearbeitet.
 
 - Keine Dateien in anderen Repos lesen, ändern, anlegen oder löschen.
 - Keine weiteren Repos in die Sitzung holen (`add_repo`, `git clone`, o. Ä.).
 - Keine neuen Repos anlegen.
-- Keine Arbeit außerhalb des Projektordner-Baums von MyIsland.
+- Keine Arbeit außerhalb des Projektordner-Baums von My Meditation Island.
 
 Wenn eine Anfrage ein anderes Repo betreffen würde: **nicht ausführen.** Kurz und
 ohne Fachbegriffe sagen, dass hier nur an My Island gearbeitet wird, und
@@ -81,7 +81,7 @@ die die Seite öffnen. Der KI-Begleiter läuft ohne Key mit Ersatztexten weiter.
 ## Die App ist live
 
 Alles, was gespeichert wird, ist rund eine Minute später öffentlich unter
-<https://burton58.github.io/MyIsland/> zu sehen — dort schaut Christine auf
+<https://burton58.github.io/MyMeditationIsland/> zu sehen — dort schaut Christine auf
 ihrem iPhone drauf. Zwei Dinge folgen daraus:
 
 - Das Repo ist **öffentlich**. Keine privaten Daten, keine Passwörter, keine

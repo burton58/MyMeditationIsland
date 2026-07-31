@@ -4,7 +4,7 @@ Meditations-App rund um eine persönliche "Trauminsel": Man richtet sich über e
 Kompass aus, wählt passende geführte Meditationen aus einer kategorisierten Bibliothek
 und bekommt am Ende einen Rückblick, was sich verändert hat.
 
-**Live:** <https://burton58.github.io/MyIsland/> — wird bei jeder Änderung an
+**Live:** <https://burton58.github.io/MyMeditationIsland/> — wird bei jeder Änderung an
 `main` automatisch neu veröffentlicht.
 
 ## Inhalt dieses Repos
