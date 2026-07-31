@@ -61,7 +61,8 @@
   body:not(.entered)[data-step="meditation2"] .medv2-page,
   body:not(.entered)[data-step="outro"]       .outro-page,
   body:not(.entered)[data-step="profil"]      .profil-page,
-  body:not(.entered)[data-step="abo"]         .abo-page{ display:block; }
+  body:not(.entered)[data-step="abo"]         .abo-page,
+  body:not(.entered)[data-step="ueber"]       .ueber-page{ display:block; }
   body:not(.entered):not([data-step="island"]) .layout,
   body:not(.entered):not([data-step="island"]) .topbar,
   body:not(.entered):not([data-step="island"]) .stepper{ display:none; }
@@ -100,8 +101,9 @@
   }
 
   .splash-vertrauen{
-    margin:14px 0 0 !important; font-size:.76rem !important; opacity:.82 !important;
-    font-style:italic; text-shadow:0 2px 10px rgba(0,0,0,.45);
+    display:block; margin:14px auto 0; max-width:300px; border:none; background:none; cursor:pointer;
+    font-family:inherit; color:#fff; font-size:.76rem; line-height:1.45; opacity:.85;
+    font-style:italic; text-shadow:0 2px 10px rgba(0,0,0,.45); padding:2px 4px;
   }
   .splash-probe{
     width:100%; margin-top:10px; cursor:pointer; font-family:inherit; font-weight:600; font-size:.88rem;
@@ -144,7 +146,7 @@
     .splash h1{ font-size:2.15rem; margin-bottom:10px; }
     .splash-sub{ font-size:.88rem; }
     .splash-cta{ padding:15px; font-size:1rem; }
-    .splash-vertrauen{ margin-top:10px !important; font-size:.72rem !important; }
+    .splash-vertrauen{ margin-top:10px; font-size:.72rem; }
     .splash-probe{ margin-top:8px; padding:11px; font-size:.82rem; }
     .splash-mikro{ margin-top:9px !important; font-size:.72rem !important; }
     .splash-link{ margin-top:2px; font-size:.74rem; padding:4px 8px; }
@@ -533,6 +535,20 @@
   .journey-lead, .journey-hint{ margin:0 0 10px; font-size:.83rem; line-height:1.55; color:var(--ink-soft); }
   .journey-hint{ margin:10px 0 0; }
 
+  /* ---------- Über mich ---------- */
+  .ueber-karte{ padding:20px; text-align:center; }
+  /* Das Logo ist eine weisse Strichzeichnung - es braucht einen dunklen
+     Grund, sonst verschwindet es. */
+  .ueber-bild{
+    width:82px; height:82px; margin:0 auto 14px; border-radius:50%; background:var(--deep);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(20,51,44,.25);
+  }
+  .ueber-bild img{ width:66%; height:66%; object-fit:contain; }
+  .ueber-gruss{ margin:0 0 12px; font-family:var(--serif); font-size:1.15rem; }
+  .ueber-karte p{ margin:0 0 12px; font-size:.9rem; line-height:1.6; color:var(--ink-soft); text-align:left; }
+  .ueber-karte p:last-child{ margin-bottom:0; }
+  .ueber-web{ font-size:.84rem !important; color:var(--gold-deep) !important; text-align:center !important; }
+
   /* ---------- Abo ---------- */
   .abo-vorteile{ padding:15px; margin-bottom:14px; }
   .abo-vorteile p{ margin:0 0 9px; font-size:.85rem; line-height:1.5; color:var(--ink-soft);
@@ -725,7 +741,7 @@
           <div class="splash-badge"><img src="logo.png" alt="My Meditation Island"></div>
           <h1>My Meditation Island</h1>
           <p class="splash-sub" id="splashSub">Geführte Meditationen auf Schweizerdeutsch –<br>für Schlaf, Stress und innere Ruhe.</p>
-          <p class="splash-vertrauen">Von einer Schweizer Meditationslehrerin geschrieben</p>
+          <button class="splash-vertrauen" id="splashUeberBtn">Gesprochen von einer diplomierten Yogalehrerin &amp; Meditationsleiterin ›</button>
         </div>
 
         <!-- Die Mitte bleibt bewusst leer: Insel, Boot und die Person darin
@@ -1133,6 +1149,9 @@
       <button class="menu-row" id="profilKiBtn">
         <span class="row-icon">🤖</span><span class="row-text">Dein Begleiter</span><span class="chev">›</span>
       </button>
+      <button class="menu-row" id="profilUeberMichBtn">
+        <span class="row-icon">🙋‍♀️</span><span class="row-text">Über mich</span><span class="chev">›</span>
+      </button>
       <button class="menu-row" id="profilAboutBtn">
         <span class="row-icon">ℹ️</span><span class="row-text">Über die App</span><span class="chev">›</span>
       </button>
@@ -1149,6 +1168,33 @@
     <p class="muted-note" id="storageNote">Dein Verlauf bleibt nur auf diesem Gerät – kein Konto, kein Server.</p>
 
     <button class="btn-ghost full" id="toSplashBtn" style="margin-top:16px;">🏝️ Zur Titelseite</button>
+  </div>
+
+  <!-- ============ ÜBER MICH ============ -->
+  <div class="page ueber-page" id="ueberPage">
+    <div class="page-head">
+      <button class="icon-btn" id="ueberBackBtn" title="Zurück">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="ttl center">
+        <h1>Über mich</h1>
+        <p>Wer dich hier begleitet</p>
+      </div>
+      <span class="icon-btn blank"></span>
+    </div>
+
+    <div class="card ueber-karte">
+      <div class="ueber-bild"><img src="logo.png" alt=""></div>
+      <p class="ueber-gruss">Schön, dass du da bist.</p>
+      <p>Ich bin <strong>diplomierte Yogalehrerin und Meditationsleiterin</strong>. Die Meditationen
+      auf dieser Insel habe ich alle selbst geschrieben und gesprochen – auf <strong>Schweizerdeutsch</strong>,
+      weil Worte in der eigenen Sprache am tiefsten ankommen.</p>
+      <p>Der Kompass ist dabei mein Herzstück: Statt einer langen Liste fragst du dich zuerst,
+      wie es dir gerade wirklich geht – und bekommst genau das, was dazu passt.</p>
+      <p class="ueber-web">Mehr über meine Arbeit: yogaisland.ch</p>
+    </div>
+
+    <div class="btn-row"><button class="btn-dark" id="ueberCtaBtn">7 Tage gratis starten</button></div>
   </div>
 
   <!-- ============ ABO ============ -->
@@ -2064,6 +2110,7 @@
 
   var STEPS = {
     splash:     { label:"", sub:"" },
+    ueber:      { label:"", sub:"" },
     home:       { label:"", sub:"" },
     island:     { label:"Insel gestalten · optional",   sub:"Wähle, wie deine Insel aussieht." },
     compass:    { label:"Schritt 1 von 3 · Kompass",    sub:"Stell den Zeiger auf deine Richtung." },
@@ -3500,6 +3547,20 @@
   document.getElementById("splashProbeBtn").addEventListener("click", function(){
     starteMeditation("dankblitz");
   });
+
+  // "Über mich": von der Titelseite und aus dem Profil erreichbar; der
+  // Zurück-Pfeil führt dorthin, wo man hergekommen ist.
+  var ueberZurueck = "splash";
+  document.getElementById("splashUeberBtn").addEventListener("click", function(){
+    ueberZurueck = "splash"; goToStep("ueber");
+  });
+  document.getElementById("profilUeberMichBtn").addEventListener("click", function(){
+    ueberZurueck = "profil"; goToStep("ueber");
+  });
+  document.getElementById("ueberBackBtn").addEventListener("click", function(){
+    goToStep(ueberZurueck);
+  });
+  document.getElementById("ueberCtaBtn").addEventListener("click", function(){ goToStep("home"); });
 
   // Die zweite Zeile passt sich der Tageszeit an - dieselbe Seite, der
   // passende Moment.

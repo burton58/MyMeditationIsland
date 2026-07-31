@@ -68,7 +68,7 @@ Die Titelseite ist die Landingpage: Sie hat genau **eine** Aufgabe — den Grati
 
 1. **Oben (Kopf, ~20–28 % Höhe):** Logo (52px), darunter der Name **"My Meditation Island"** als Serif-Überschrift (2.5rem, auf schmalen Geräten zweizeilig) und zwei Zeilen Subheadline **"Geführte Meditationen auf Schweizerdeutsch – für Schlaf, Stress und innere Ruhe."** Der Name ist bewusst das Grösste: So war es gewünscht, und die Marke soll sich einprägen. Die Chips mit Emoji sind wieder entfallen; die Dauer steht klein unter dem Knopf.
 2. **Mitte (`.splash-frei`, flexibel):** bleibt **leer**. Dort liegen Insel, Boot und die Person darin. Der Verlauf ist deshalb geteilt (dunkel oben 0–34 %, klar in der Mitte, dunkel ab 72 %), statt durchgehend über dem ganzen Bild zu liegen.
-2b. **Vertrauen und Tageszeit:** Unter der Subheadline steht klein und kursiv **"Von einer Schweizer Meditationslehrerin geschrieben"** — Herkunft statt Bewertungen, solange es keine Nutzerzahlen gibt. Bewusst *geschrieben*, nicht *gesprochen*: Die Meditationen erscheinen als Text, es gibt noch keine Aufnahmen. Die Subheadline selbst wechselt mit der Uhrzeit (`renderSplashSub()`, `SUB_TAGESZEIT`): ruhiger Start in den Tag · Stress und kurze Pausen · ruhiger Abend · gute Nacht und tiefer Schlaf.
+2b. **Vertrauen und Tageszeit:** Unter der Subheadline steht klein und kursiv **"Gesprochen von einer diplomierten Yogalehrerin & Meditationsleiterin ›"** — Herkunft und Qualifikation statt Bewertungen, solange es keine Nutzerzahlen gibt. Die Zeile ist antippbar und führt zu **§3.7 Über mich**. *Gesprochen* ist bewusst gewählt, obwohl die Aufnahmen noch fehlen: Die Repo-Inhaberin nimmt ihre Meditationen demnächst auf, bezahlen kann bis dahin ohnehin niemand (`ABO_LIVE = false`). **Sobald die Bezahlung scharf geschaltet wird, müssen die Aufnahmen da sein** — sonst verspricht die Seite etwas, das die App nicht hält. Die Subheadline selbst wechselt mit der Uhrzeit (`renderSplashSub()`, `SUB_TAGESZEIT`): ruhiger Start in den Tag · Stress und kurze Pausen · ruhiger Abend · gute Nacht und tiefer Schlaf.
 
 3. **Unten (Handlung):** goldene Taste **"7 Tage gratis starten"** (Nutzen statt Ort — der frühere Text "Meine Insel betreten" beschrieb einen Ort, nicht den Gewinn), darunter die Glas-Taste **"▶︎ 3 Minuten Probe – ohne Anmeldung"** (startet sofort `dankblitz`, 3 Min — erleben statt glauben, das stärkste Mittel ohne Social Proof), die kleine Zeile **"3–30 Minuten · keine Verpflichtung · jederzeit kündbar"** (Dauer bewusst hier statt prominent oben) und **"Danach CHF 3 im Monat oder CHF 25 im Jahr"** (→ Abo-Seite; offener Preis schafft Vertrauen, versteckter zerstört es).
 
@@ -136,6 +136,12 @@ Aufbau genau wie in der Vorlage (`renderMyMed()`), die Empfehlung selbst sitzt s
 - **"Dein Rückblick"** — Vorher/Jetzt in Worten + gemachte Meditationen mit Dauer; darunter ein Satz zur Veränderung (`updateShift()`).
 - **"Brauchst du noch etwas?"** — "Noch eine Meditation", "Ein Mudra für mich", "Ein Mantra für mich" (deterministisch aus der Nadel-Position, §5).
 - Begleiter-Chat (zweite Instanz) und "Neu beginnen" / "Fertig →".
+
+### 3.7 Über mich (`data-step="ueber"`)
+
+Eine ruhige Karte mit Logo, Begrüssung und drei kurzen Absätzen: diplomierte Yogalehrerin und Meditationsleiterin, alle Meditationen selbst geschrieben und gesprochen auf Schweizerdeutsch, der Kompass als Herzstück. Am Schluss **"Mehr über meine Arbeit: yogaisland.ch"** — bewusst als Text, **nicht** als Link (so gewünscht). Darunter noch einmal die Taste "7 Tage gratis starten".
+
+Erreichbar von der Titelseite (Vertrauenszeile) und über **Profil → "Über mich"**; der Zurück-Pfeil führt jeweils dorthin zurück, wo man hergekommen ist (`ueberZurueck`). Ohne Bewertungen ist die Person hinter der App der stärkste Vertrauensbeweis — deshalb sitzt der Einstieg direkt auf der Landingpage.
 
 ### 3.6 Profil (`data-step="profil"`)
 - Seitenkopf "Profil · Dein Bereich", Karte "Dein Inselbewohner".
@@ -327,7 +333,7 @@ session = { timer, elapsed, total, paused, queue: MeditationObjekt[], index }
 
 ### Steps
 ```
-STEPS = { splash, home, island (über Profil), compass, meditation, meditation2, outro, profil, abo }
+STEPS = { splash, home, island (über Profil), compass, meditation, meditation2, outro, profil, abo, ueber }
 TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", meditation2:"meditation2", profil:"profil" }
 // "splash"/"outro"/"abo"/"island" haben keinen eigenen Tab
 ```
