@@ -64,7 +64,7 @@ Der Insel-Konfigurator (`island`) ist über **Profil → "Meine Insel gestalten"
 
 ### 3.0 Titelseite (`data-step="splash"`)
 - Vollflächig das Insel-Foto aus der Vorlage (`insel.jpg`, Sonnenuntergang mit Boot) mit dunklem Verlauf, mittig das runde Logo (`logo.png`, weisse Strichzeichnung, 56px), Titel "My Meditation Island" und "Dein Ort. Deine Auszeit. Dein inneres Gleichgewicht." — Abstände und Grössen genau wie in der Vorlage.
-- Unten **"7 Tage gratis testen"**, die goldene Taste **"Meine Insel betreten"** (→ Startseite) und der Textlink **"Was kostet es?"** (→ Abo-Seite).
+- Unten die goldene Taste **"Meine Insel betreten"** (→ Startseite) und darunter eine ruhige Zeile **"7 Tage gratis testen · Was kostet es?"** (→ Abo-Seite). Der Testhinweis stand vorher gross über der Taste — das versprach etwas beim Eintreten, was dort gar nicht passiert (die App ist ohnehin offen, siehe `ABO_LIVE`). Test und Preis gehören zusammen und beide an die zweite Stelle.
 - Ganz unten klein die Einordnung: **"Geführte Meditationen auf Schweizerdeutsch"** und **"🇨🇭 Von 3 Minuten bis zur halben Stunde"** (`.splash-foot`, .72rem) — sie soll auf der ersten Seite stehen, aber dem Bild nicht die Ruhe nehmen.
 - Die vier Punkte aus der Vorlage sind **entfernt**: Sie versprechen einen mehrseitigen Einstieg zum Wischen, den es nicht gibt. Falls später ein echter Einstieg mit mehreren Seiten dazukommt, gehören sie wieder her.
 - Erreichbar über das erste Feld der Tab-Bar (**Insel**) und weiterhin über **Profil → "Zur Titelseite"**. Die Tab-Bar bleibt sichtbar, der Knopf "Meine Insel betreten" sitzt darüber.
