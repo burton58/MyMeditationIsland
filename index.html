@@ -67,6 +67,14 @@
   body:not(.entered):not([data-step="island"]) .layout,
   body:not(.entered):not([data-step="island"]) .topbar,
   body:not(.entered):not([data-step="island"]) .stepper{ display:none; }
+  /* Startseite als Spalte: das Foto ist der einzige Baustein mit
+     Spielraum und fuellt automatisch, was auf dem jeweiligen Bildschirm
+     uebrig bleibt - so passt alles ohne Scrollen, auf kurzen wie auf
+     langen Bildschirmen, ohne dass unten Leerraum entsteht. */
+  body:not(.entered)[data-step="home"] .home-page{
+    display:flex; flex-direction:column;
+    min-height:calc(100vh - var(--tabbar-h) - var(--safe-bottom));
+  }
   body.entered .page, body.entered .topbar, body.entered .stepper{ display:none; }
   .splash-page{ padding:0; max-width:none; }
 
@@ -186,6 +194,7 @@
 
   /* ---------- Gemeinsame Bausteine ---------- */
   .page-head{ display:flex; align-items:flex-start; gap:10px; margin-bottom:18px; }
+  .home-page .page-head{ margin-bottom:12px; }
   .page-head .ttl{ flex:1; min-width:0; }
   .page-head .ttl.center{ text-align:center; }
   .page-head h1{ font-family:var(--serif); font-size:1.65rem; margin:0 0 3px; }
@@ -200,6 +209,10 @@
 
   .section-label{ font-size:1.18rem; font-weight:700; font-family:var(--serif); margin:24px 0 10px; color:var(--ink); }
   .section-label.first{ margin-top:6px; }
+  /* Auf der Startseite muss alles zusammen ohne Scrollen passen - dort
+     etwas knapper als auf den anderen Seiten, wo mehr Platz da ist. */
+  .home-page .section-label{ margin:11px 0 6px; }
+  .home-page .section-label.first{ margin-top:0; }
 
   .card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(28,59,51,.07); }
 
@@ -220,12 +233,25 @@
 
   .muted-note{ padding:14px 4px 0; font-size:.78rem; color:var(--ink-soft); text-align:center; line-height:1.5; }
 
-  /* ---------- Startseite ---------- */
+  /* ---------- Startseite ----------
+     Alles zusammen soll ohne Scrollen aufs Handy passen. Das Foto ist
+     dafuer der groesste Hebel: es zeigt nicht mehr die Bildmitte, sondern
+     ist auf den Bereich von Insel bis Boot ausgerichtet ("center 63%") -
+     dieselbe Fotoflaeche zeigt dadurch beides, statt oben viel Himmel und
+     unten das Boot abzuschneiden. Nachgemessen: Insel liegt bei ca.
+     40-60%, das Boot bei ca. 65-78% der Bildhoehe. */
   .home-hero-photo{
-    height:38vh; min-height:210px; max-height:360px; overflow:hidden;
-    margin:0 -16px 20px;
+    flex:1 1 0; min-height:152px; max-height:400px; overflow:hidden;
+    margin:0 -16px 14px;
   }
-  .home-hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:center 50%; display:block; }
+  .home-hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:center 63%; display:block; }
+
+  /* Wenn heute schon etwas gehört wurde, ist die Liste im "heutigen
+     Fokus" etwas voller - dort darum knapper als anderswo, damit auch
+     dieser Zustand ohne Scrollen passt. */
+  #focusSlot .hist-row{ padding:8px 12px; }
+  #focusSlot .row-thumb{ width:38px; height:38px; font-size:1.05rem; }
+  #focusMehrBtn{ margin-top:6px; padding:9px 18px; }
 
   .focus-card{ display:flex; align-items:center; gap:13px; padding:13px 14px; width:100%; text-align:left;
     border:none; background:var(--card); font-family:inherit; color:var(--ink); cursor:pointer; }
@@ -242,10 +268,10 @@
     box-shadow:0 4px 12px rgba(120,90,10,.3);
   }
 
-  .state-card{ padding:17px; display:flex; gap:14px; align-items:flex-start; }
+  .state-card{ padding:13px; display:flex; gap:12px; align-items:flex-start; }
   .state-card .body{ flex:1; min-width:0; }
-  .state-card h3{ margin:0 0 5px; font-size:.86rem; font-weight:600; color:var(--ink-soft); }
-  .state-card p{ margin:0 0 13px; font-size:.83rem; line-height:1.5; color:var(--ink-soft); }
+  .state-card h3{ margin:0 0 3px; font-size:.86rem; font-weight:600; color:var(--ink-soft); }
+  .state-card p{ margin:0 0 9px; font-size:.83rem; line-height:1.4; color:var(--ink-soft); }
 
   /* ---------- Kompass ----------
      Die Bedienung ist unverändert: der Punkt lässt sich frei in der Scheibe
@@ -309,8 +335,9 @@
   .compass-info p:last-child{ margin-bottom:0; }
 
   /* Leere Fokus-Karte, solange der Kompass noch nicht benutzt wurde */
-  .empty-card{ padding:18px; }
+  .empty-card{ padding:14px; }
   .empty-card p{ margin:0 0 14px; font-size:.9rem; line-height:1.5; color:var(--ink-soft); }
+  .empty-card p:last-child{ margin-bottom:0; }
 
   /* ---------- Auswahl: Dauer und Anzahl ---------- */
   .pref-block{ margin-top:20px; }
@@ -3555,7 +3582,7 @@
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
           '</div>';
         }).join("") + '</div>' +
-        '<button class="btn-ghost full" id="focusMehrBtn" style="margin-top:9px;">Noch eine Meditation? →</button>';
+        '<button class="btn-ghost full" id="focusMehrBtn">Noch eine Meditation? →</button>';
     } else {
       // Kompass gesetzt, heute noch nichts gehört: die eine Empfehlung,
       // direkt startbar. Der Zustand selbst ("eher unruhig" usw.) steht
@@ -3565,7 +3592,7 @@
       html =
         '<div class="card">' + medZeile(top) + '</div>' +
         (liste.length > 1
-          ? '<button class="btn-ghost full" id="focusMehrBtn" style="margin-top:9px;">Weitere Empfehlungen ansehen →</button>'
+          ? '<button class="btn-ghost full" id="focusMehrBtn">Weitere Empfehlungen ansehen →</button>'
           : "");
     }
 
