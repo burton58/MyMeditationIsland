@@ -68,35 +68,71 @@
   body.entered .page, body.entered .topbar, body.entered .stepper{ display:none; }
   .splash-page{ padding:0; max-width:none; }
 
-  /* ---------- Titelseite ---------- */
+  /* ---------- Titelseite ----------
+     Aufbau in drei Bändern: oben der Kopf, in der Mitte nichts (dort liegen
+     Insel und Boot), unten die Handlung. Der dunkle Verlauf liegt nur oben
+     und unten, damit die Bildmitte klar bleibt. */
   .splash{ position:fixed; inset:0; z-index:40; }
   .splash img.bg{ width:100%; height:100%; object-fit:cover; object-position:center 50%; display:block; }
   .splash::after{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(20,40,32,.34) 0%, rgba(20,40,32,.06) 38%, rgba(20,40,32,.55) 74%, rgba(20,40,32,.88) 100%);
+    background:linear-gradient(180deg,
+      rgba(18,38,31,.58) 0%, rgba(18,38,31,.30) 18%, rgba(18,38,31,0) 34%,
+      rgba(18,38,31,0) 52%, rgba(18,38,31,.42) 72%, rgba(18,38,31,.82) 88%, rgba(18,38,31,.92) 100%);
   }
   .splash-inner{
-    position:absolute; inset:0; z-index:2; display:flex; flex-direction:column;
-    align-items:center; justify-content:flex-start;
-    padding:30px 26px calc(24px + var(--tabbar-h) + var(--safe-bottom)); text-align:center; color:#fff;
+    position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center;
+    padding:calc(24px + env(safe-area-inset-top, 0px)) 24px calc(26px + var(--safe-bottom));
+    text-align:center; color:#fff;
   }
-  .splash-inner > .spacer:first-child{ flex:0 0 3vh; }
-  .splash-badge{ width:56px; height:56px; margin-bottom:14px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
+  .splash-top{ width:100%; max-width:340px; }
+  .splash-frei{ flex:1; min-height:12vh; }
+  .splash-bottom{ width:100%; max-width:360px; }
+
+  .splash-badge{ width:52px; height:52px; margin:0 auto 10px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
   .splash-badge img{ width:100%; height:100%; object-fit:contain; }
-  .splash h1{ font-family:var(--serif); font-size:2.1rem; margin:0 0 10px; line-height:1.15; text-shadow:0 2px 16px rgba(0,0,0,.4); }
-  .splash p{ margin:0; font-size:.95rem; line-height:1.6; opacity:.94; text-shadow:0 2px 12px rgba(0,0,0,.4); }
-  .splash .spacer{ flex:1; }
-  .splash-foot{ margin-top:10px !important; font-size:.72rem !important; opacity:.8 !important; line-height:1.45 !important; }
-  .splash-foot + .splash-foot{ margin-top:3px !important; }
-  .splash-link{
-    margin-top:12px; border:none; background:none; cursor:pointer; font-family:inherit;
-    color:#fff; font-size:.82rem; font-weight:600; opacity:.88; text-decoration:underline;
-    text-underline-offset:4px; padding:6px 10px; text-shadow:0 2px 12px rgba(0,0,0,.45);
+  .splash-brand{
+    margin:0 0 14px; font-size:.66rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+    opacity:.82; text-shadow:0 2px 10px rgba(0,0,0,.4);
+  }
+  .splash h1{
+    font-family:var(--serif); font-size:2.35rem; margin:0 0 12px; line-height:1.12;
+    text-shadow:0 2px 18px rgba(0,0,0,.45);
+  }
+  .splash-sub{
+    margin:0; font-size:.95rem; line-height:1.55; opacity:.94; text-shadow:0 2px 12px rgba(0,0,0,.45);
+  }
+
+  /* Vorteile als kleine, ruhige Chips statt Fliesstext */
+  .splash-chips{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-top:18px; }
+  .splash-chips span{
+    font-size:.7rem; font-weight:600; padding:7px 11px; border-radius:20px; white-space:nowrap;
+    background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.24);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); text-shadow:0 1px 6px rgba(0,0,0,.35);
   }
   .splash-cta{
-    width:100%; max-width:330px; border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08;
-    font-weight:700; font-size:1rem; padding:17px; border-radius:16px; font-family:inherit;
-    box-shadow:0 12px 30px rgba(120,90,10,.4);
+    width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08;
+    font-weight:700; font-size:1.05rem; padding:18px; border-radius:18px; font-family:inherit;
+    box-shadow:0 14px 34px rgba(90,66,8,.45);
+  }
+  .splash-cta:active{ transform:translateY(1px); }
+  .splash-mikro{
+    margin:12px 0 0 !important; font-size:.76rem !important; opacity:.86 !important;
+    text-shadow:0 2px 10px rgba(0,0,0,.4);
+  }
+  .splash-link{
+    margin-top:6px; border:none; background:none; cursor:pointer; font-family:inherit;
+    color:#fff; font-size:.78rem; font-weight:600; opacity:.8; text-decoration:underline;
+    text-underline-offset:4px; padding:6px 10px; text-shadow:0 2px 10px rgba(0,0,0,.45);
+  }
+
+  @media (max-height:720px){
+    .splash-badge{ width:44px; height:44px; margin-bottom:8px; }
+    .splash-brand{ margin-bottom:10px; }
+    .splash h1{ font-size:2rem; margin-bottom:10px; }
+    .splash-sub{ font-size:.88rem; }
+    .splash-chips{ margin-top:14px; }
+    .splash-cta{ padding:16px; font-size:1rem; }
   }
 
   /* ---------- Gemeinsame Bausteine ---------- */
@@ -648,7 +684,7 @@
     display:flex; background:rgba(255,253,247,.97); border-top:1px solid var(--line);
     backdrop-filter:blur(10px); padding-bottom:var(--safe-bottom);
   }
-  body.entered .tabbar{ display:none; }
+  body[data-step="splash"] .tabbar, body.entered .tabbar{ display:none; }
   .tab-item{
     flex:1; border:none; background:none; cursor:pointer; font-family:inherit;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
@@ -666,15 +702,32 @@
     <div class="splash">
       <img class="bg" src="insel.jpg" alt="Deine Insel">
       <div class="splash-inner">
-        <div class="spacer"></div>
-        <div class="splash-badge"><img src="logo.png" alt="My Meditation Island"></div>
-        <h1>My Meditation Island</h1>
-        <p>Dein Ort. Deine Auszeit.<br>Dein inneres Gleichgewicht.</p>
-        <div class="spacer"></div>
-        <button class="splash-cta" id="enterAppBtn">Meine Insel betreten</button>
-        <button class="splash-link" id="splashAboBtn">7 Tage gratis testen · Was kostet es?</button>
-        <p class="splash-foot">Geführte Meditationen auf Schweizerdeutsch</p>
-        <p class="splash-foot">🇨🇭 Von 3 Minuten bis zur halben Stunde</p>
+
+        <!-- Oben: Marke, Versprechen, Einordnung - kurz gehalten, damit der
+             Blick schnell nach unten zum Knopf wandert. -->
+        <div class="splash-top">
+          <div class="splash-badge"><img src="logo.png" alt="My Meditation Island"></div>
+          <p class="splash-brand">My Meditation Island</p>
+          <h1>Ruhe beginnt hier.</h1>
+          <p class="splash-sub">Geführte Meditationen auf Schweizerdeutsch –<br>für Schlaf, Stress und innere Ruhe.</p>
+          <div class="splash-chips">
+            <span>🇨🇭 Schweizerdeutsch</span>
+            <span>🕒 3–30 Min</span>
+            <span>😴 Schlaf &amp; Stress</span>
+          </div>
+        </div>
+
+        <!-- Die Mitte bleibt bewusst leer: Insel, Boot und die Person darin
+             sollen frei sichtbar sein. -->
+        <div class="splash-frei"></div>
+
+        <!-- Unten: alles zum Handeln, in einer ruhigen Reihenfolge. -->
+        <div class="splash-bottom">
+          <button class="splash-cta" id="enterAppBtn">7 Tage gratis starten</button>
+          <p class="splash-mikro">Keine Verpflichtung · jederzeit kündbar</p>
+          <button class="splash-link" id="splashAboBtn">Was kostet es danach?</button>
+        </div>
+
       </div>
     </div>
   </div>

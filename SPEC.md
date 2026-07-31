@@ -63,11 +63,16 @@ Titelseite → Startseite → Kompass → My Meditation → Spieler (Vollbild) �
 Der Insel-Konfigurator (`island`) ist über **Profil → "Meine Insel gestalten"** wieder erreichbar (§4); im Hauptfluss steht er nicht.
 
 ### 3.0 Titelseite (`data-step="splash"`)
-- Vollflächig das Insel-Foto aus der Vorlage (`insel.jpg`, Sonnenuntergang mit Boot) mit dunklem Verlauf, mittig das runde Logo (`logo.png`, weisse Strichzeichnung, 56px), Titel "My Meditation Island" und "Dein Ort. Deine Auszeit. Dein inneres Gleichgewicht." — Abstände und Grössen genau wie in der Vorlage.
-- Unten die goldene Taste **"Meine Insel betreten"** (→ Startseite) und darunter eine ruhige Zeile **"7 Tage gratis testen · Was kostet es?"** (→ Abo-Seite). Der Testhinweis stand vorher gross über der Taste — das versprach etwas beim Eintreten, was dort gar nicht passiert (die App ist ohnehin offen, siehe `ABO_LIVE`). Test und Preis gehören zusammen und beide an die zweite Stelle.
-- Ganz unten klein die Einordnung: **"Geführte Meditationen auf Schweizerdeutsch"** und **"🇨🇭 Von 3 Minuten bis zur halben Stunde"** (`.splash-foot`, .72rem) — sie soll auf der ersten Seite stehen, aber dem Bild nicht die Ruhe nehmen.
-- Die vier Punkte aus der Vorlage sind **entfernt**: Sie versprechen einen mehrseitigen Einstieg zum Wischen, den es nicht gibt. Falls später ein echter Einstieg mit mehreren Seiten dazukommt, gehören sie wieder her.
-- Erreichbar über das erste Feld der Tab-Bar (**Insel**) und weiterhin über **Profil → "Zur Titelseite"**. Die Tab-Bar bleibt sichtbar, der Knopf "Meine Insel betreten" sitzt darüber.
+
+Die Titelseite ist die Landingpage: Sie hat genau **eine** Aufgabe — den Gratis-Test starten. Aufbau in **drei Bändern**, damit das Foto wirkt und der Blick schnell unten ankommt:
+
+1. **Oben (Kopf, ~30 % Höhe):** Logo (52px), Marke in Versalien und gesperrt (`.splash-brand`, klein — der Name ist Absender, nicht Botschaft), Serif-Headline **"Ruhe beginnt hier."** (2.35rem), zwei Zeilen Subheadline **"Geführte Meditationen auf Schweizerdeutsch – für Schlaf, Stress und innere Ruhe."** und drei ruhige Glas-Chips (🇨🇭 Schweizerdeutsch · 🕒 3–30 Min · 😴 Schlaf & Stress) statt Fliesstext.
+2. **Mitte (`.splash-frei`, flexibel):** bleibt **leer**. Dort liegen Insel, Boot und die Person darin. Der Verlauf ist deshalb geteilt (dunkel oben 0–34 %, klar in der Mitte, dunkel ab 72 %), statt durchgehend über dem ganzen Bild zu liegen.
+3. **Unten (Handlung):** goldene Taste **"7 Tage gratis starten"** (Nutzen statt Ort — der frühere Text "Meine Insel betreten" beschrieb einen Ort, nicht den Gewinn), darunter die Risiko-Zeile **"Keine Verpflichtung · jederzeit kündbar"** und klein **"Was kostet es danach?"** (→ Abo-Seite).
+
+**Tab-Bar ist auf der Titelseite ausgeblendet.** Sie kostete 74px genau dort, wo das Boot liegt, und eine Coverseite mit sechs Reitern wirkt nicht ruhig. Hinein geht es über die Taste; erreichbar bleibt die Titelseite von überall über das Feld **Insel** und über **Profil → "Zur Titelseite"**.
+
+**Gemessen** (Person im Boot liegt bei ~69–79 % der Bildhöhe): Auf 375×667, 390×844 und 430×932 liegt kein Element über dem Boot; der freie Mittelteil beträgt 30–46 % der Höhe.
 
 ### 3.1 Startseite (`data-step="home"`)
 - Seitenkopf mit tageszeitabhängiger Begrüssung (`begruessung()` + Symbol) und rundem Profil-Knopf.
