@@ -73,7 +73,7 @@
   .splash img.bg{ width:100%; height:100%; object-fit:cover; object-position:center 50%; display:block; }
   .splash::after{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(20,40,32,.28) 0%, rgba(20,40,32,.04) 40%, rgba(20,40,32,.85) 100%);
+    background:linear-gradient(180deg, rgba(20,40,32,.34) 0%, rgba(20,40,32,.06) 38%, rgba(20,40,32,.55) 74%, rgba(20,40,32,.88) 100%);
   }
   .splash-inner{
     position:absolute; inset:0; z-index:2; display:flex; flex-direction:column;
@@ -86,6 +86,14 @@
   .splash h1{ font-family:var(--serif); font-size:2.1rem; margin:0 0 10px; line-height:1.15; text-shadow:0 2px 16px rgba(0,0,0,.4); }
   .splash p{ margin:0; font-size:.95rem; line-height:1.6; opacity:.94; text-shadow:0 2px 12px rgba(0,0,0,.4); }
   .splash .spacer{ flex:1; }
+  .splash-sub{ margin-top:14px !important; font-size:1rem !important; font-weight:600; }
+  .splash-note{ margin-top:6px !important; font-size:.88rem !important; opacity:.85 !important; }
+  .splash-trial{ margin-bottom:12px !important; font-size:.88rem !important; font-weight:600; opacity:.95 !important; }
+  .splash-link{
+    margin-top:12px; border:none; background:none; cursor:pointer; font-family:inherit;
+    color:#fff; font-size:.88rem; font-weight:600; opacity:.92; text-decoration:underline;
+    text-underline-offset:4px; padding:6px 10px; text-shadow:0 2px 12px rgba(0,0,0,.45);
+  }
   .splash-cta{
     width:100%; max-width:330px; border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08;
     font-weight:700; font-size:1rem; padding:17px; border-radius:16px; font-family:inherit;
@@ -622,8 +630,12 @@
         <div class="splash-badge"><img src="logo.png" alt="My Meditation Island"></div>
         <h1>My Meditation Island</h1>
         <p>Dein Ort. Deine Auszeit.<br>Dein inneres Gleichgewicht.</p>
+        <p class="splash-sub">Geführte Meditationen auf Schweizerdeutsch</p>
+        <p class="splash-note">🇨🇭 Von 3 Minuten bis zur halben Stunde</p>
         <div class="spacer"></div>
+        <p class="splash-trial">7 Tage gratis testen</p>
         <button class="splash-cta" id="enterAppBtn">Meine Insel betreten</button>
+        <button class="splash-link" id="splashAboBtn">Was kostet es?</button>
         <div class="splash-dots"><span class="on"></span><span></span><span></span><span></span></div>
       </div>
     </div>
@@ -3293,6 +3305,9 @@
     "Schön, dass du da warst. Wie war es für dich?", false);
 
   document.getElementById("enterAppBtn").addEventListener("click", function(){ goToStep("home"); });
+  document.getElementById("splashAboBtn").addEventListener("click", function(){
+    renderAbo(); goToStep("abo");
+  });
   document.getElementById("compassInfoBtn").addEventListener("click", function(){
     var box = document.getElementById("compassInfo");
     box.hidden = !box.hidden;
