@@ -312,10 +312,6 @@
   .empty-card{ padding:18px; }
   .empty-card p{ margin:0 0 14px; font-size:.9rem; line-height:1.5; color:var(--ink-soft); }
 
-  /* Kurzer Satz über der Empfehlungskarte auf der Startseite */
-  .focus-kicker{ margin:0 0 9px; font-size:.85rem; color:var(--ink-soft); }
-  .focus-kicker strong{ color:var(--ink); }
-
   /* ---------- Auswahl: Dauer und Anzahl ---------- */
   .pref-block{ margin-top:20px; }
   .pref-block h3{ font-size:.85rem; margin:0 0 9px; font-weight:700; }
@@ -3540,12 +3536,12 @@
     var html;
 
     if (!liste.length){
-      // Kompass noch nie benutzt: es gibt noch keine Empfehlung und auch
-      // nichts zurueckzublicken - einziger sinnvoller Schritt ist hin.
+      // Kompass noch nie benutzt: die Karte "Dein Zustand" hat schon den
+      // Knopf zum Kompass - hier keinen zweiten, gleich lautenden dazu-
+      // stellen, sondern nur ankuendigen, was hier erscheinen wird.
       html =
         '<div class="card empty-card">' +
-          '<p>Finde deine heutige Meditation über den Kompass.</p>' +
-          '<button class="btn-dark" id="focusToCompassBtn">Zum Kompass →</button>' +
+          '<p>Sobald du deinen Kompass gestellt hast, erscheint hier deine Meditation für heute.</p>' +
         '</div>';
     } else if (heute.length){
       // Heute schon etwas gehört: das zeigen und feiern, statt denselben
@@ -3562,11 +3558,11 @@
         '<button class="btn-ghost full" id="focusMehrBtn" style="margin-top:9px;">Noch eine Meditation? →</button>';
     } else {
       // Kompass gesetzt, heute noch nichts gehört: die eine Empfehlung,
-      // direkt startbar, mit dem Zustand als kurzer Begruendung darueber.
+      // direkt startbar. Der Zustand selbst ("eher unruhig" usw.) steht
+      // schon in der Karte "Dein Zustand" darunter - hier nicht noch
+      // einmal denselben Satz wiederholen.
       var top = liste[0];
       html =
-        '<p class="focus-kicker">Dein Kompass zeigt: <strong>' + moodWort(compassBefore) +
-          '</strong> – das empfehlen wir dir jetzt.</p>' +
         '<div class="card">' + medZeile(top) + '</div>' +
         (liste.length > 1
           ? '<button class="btn-ghost full" id="focusMehrBtn" style="margin-top:9px;">Weitere Empfehlungen ansehen →</button>'
@@ -3575,8 +3571,6 @@
 
     focus.innerHTML = html;
 
-    var toCompassBtn = document.getElementById("focusToCompassBtn");
-    if (toCompassBtn) toCompassBtn.addEventListener("click", function(){ goToStep("compass"); });
     var mehrBtn = document.getElementById("focusMehrBtn");
     if (mehrBtn) mehrBtn.addEventListener("click", function(){ renderMyMed(); goToStep("meditation"); });
   }
