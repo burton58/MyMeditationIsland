@@ -99,6 +99,10 @@
   .splash-sub{
     margin:0; font-size:.95rem; line-height:1.55; opacity:.94; text-shadow:0 2px 12px rgba(0,0,0,.45);
   }
+  .splash-sub2{
+    margin:5px 0 0 !important; font-size:.8rem !important; line-height:1.45 !important;
+    opacity:.86 !important; text-shadow:0 2px 12px rgba(0,0,0,.45);
+  }
 
   /* Der Hinweis auf die Ausbildung steht ganz unten und klein - er soll da
      sein, aber nichts überstrahlen. Antippen führt zu "Über mich". */
@@ -161,6 +165,7 @@
     .splash-brand{ margin-bottom:10px; }
     .splash h1{ font-size:2.15rem; margin-bottom:10px; }
     .splash-sub{ font-size:.88rem; }
+    .splash-sub2{ font-size:.75rem !important; }
     .splash-cta{ padding:15px; font-size:1rem; }
     .splash-vertrauen{ margin-top:8px; font-size:.66rem; }
     .splash-preisbox{ padding:11px 13px; }
@@ -758,6 +763,7 @@
           <div class="splash-badge"><img src="logo.png" alt="My Meditation Island"></div>
           <h1>My Meditation Island</h1>
           <p class="splash-sub" id="splashSub">Meditationen auf Schweizerdeutsch</p>
+          <p class="splash-sub2">für mehr Ruhe, besseren Schlaf und innere Balance</p>
         </div>
 
         <!-- Die Mitte bleibt bewusst leer: Insel, Boot und die Person darin
@@ -3567,10 +3573,23 @@
     "Schön, dass du da warst. Wie war es für dich?", false);
 
   document.getElementById("enterAppBtn").addEventListener("click", function(){ goToStep("home"); });
-  document.getElementById("splashPreisBtn").addEventListener("click", function(){
+  function preisboxZu(){
+    var box = document.getElementById("splashPreisBox");
+    box.hidden = true;
+    document.getElementById("splashPreisBtn").classList.remove("auf");
+  }
+  document.getElementById("splashPreisBtn").addEventListener("click", function(e){
+    e.stopPropagation();
     var box = document.getElementById("splashPreisBox");
     box.hidden = !box.hidden;
     this.classList.toggle("auf", !box.hidden);
+  });
+  // Tippt man irgendwo daneben, verschwindet die Karte wieder.
+  document.addEventListener("pointerdown", function(e){
+    var box = document.getElementById("splashPreisBox");
+    if (box.hidden) return;
+    if (e.target.closest("#splashPreisBox") || e.target.closest("#splashPreisBtn")) return;
+    preisboxZu();
   });
   document.getElementById("splashAboBtn").addEventListener("click", function(){
     renderAbo(); goToStep("abo");
