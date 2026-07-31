@@ -3500,9 +3500,29 @@
     input.addEventListener("keydown", function(e){ if (e.key === "Enter") submit(); });
   }
 
+  // Was heute schon gehört wurde - aus dem echten Verlauf, nicht aus der
+  // Empfehlung. "Dein heutiger Fokus" ist damit ein Rückblick auf den
+  // Tag, nicht ein Vorschlag (den gibt's weiter unten bei "Empfehlung
+  // für dich").
+  function heutigeMeditationen(){
+    var heute = dayStamp(Date.now()), liste = [];
+    loadHistory().forEach(function(e){
+      if (dayStamp(e.ts) !== heute) return;
+      (e.meds || []).forEach(function(m){
+        liste.push({ ts:e.ts, name:m.name, seconds:m.seconds, min:m.min });
+      });
+    });
+    return liste;
+  }
+
+  function uhrzeitWort(ts){
+    var d = new Date(ts);
+    return d.getHours() + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes() + " Uhr";
+  }
+
   // ---- Startseite ----------------------------------------------------
-  // Ein Blick genuegt: Begruessung, der Vorschlag fuer heute, der aktuelle
-  // Zustand aus dem Kompass und zwei weitere Uebungen, die dazu passen.
+  // Ein Blick genuegt: Begruessung, was heute schon gehört wurde, der
+  // aktuelle Zustand aus dem Kompass und die Empfehlung für jetzt.
   function renderHome(){
     var stunde = new Date().getHours();
     document.getElementById("greeting").textContent =
@@ -3511,27 +3531,35 @@
       ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
       : "Nutze den Kompass, um deinen momentanen Zustand anzugeben.";
 
-    var liste = empfehlung;
+    // "Dein heutiger Fokus": was heute wirklich gehört wurde.
+    var heute = heutigeMeditationen();
     var focus = document.getElementById("focusSlot");
-    if (!liste.length){
-      // Wie in der Vorlage: erst der Kompass, dann die Empfehlung.
-      focus.innerHTML =
-        '<div class="card empty-card">' +
+    focus.innerHTML = heute.length
+      ? '<div class="card">' + heute.map(function(e){
+          var dir = dirVonName(e.name);
+          return '<div class="hist-row">' +
+            '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
+            '<span class="body"><span class="name">' + e.name + '</span>' +
+            '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + Math.max(1, Math.round(e.seconds / 60)) +
+              ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
+          '</div>';
+        }).join("") + '</div>'
+      : '<div class="card"><p class="hist-leer">Heute hast du noch keine Meditation gehört.</p></div>';
+
+    // "Empfehlung für dich": die Empfehlung aus dem Kompass, komplett -
+    // vorher stand der erste Platz oben im Fokus, der ist jetzt frei
+    // für den Rückblick auf den Tag.
+    var liste = empfehlung;
+    var wrap = document.getElementById("homeRecWrap");
+    wrap.style.display = "";
+    document.getElementById("homeRecList").innerHTML = liste.length
+      ? '<div class="card">' + liste.map(function(m){ return medZeile(m); }).join("") + '</div>'
+      : '<div class="card empty-card">' +
           '<p>Finde deine heutige Meditation über den Kompass.</p>' +
           '<button class="btn-dark" id="focusToCompassBtn">Zum Kompass →</button>' +
         '</div>';
-      document.getElementById("focusToCompassBtn")
-        .addEventListener("click", function(){ goToStep("compass"); });
-    } else {
-      focus.innerHTML = '<div class="card">' + medZeile(liste[0]) + '</div>';
-    }
-
-    var weitere = liste.slice(1);
-    var wrap = document.getElementById("homeRecWrap");
-    wrap.style.display = weitere.length ? "" : "none";
-    document.getElementById("homeRecList").innerHTML = weitere.length
-      ? '<div class="card">' + weitere.map(function(m){ return medZeile(m); }).join("") + '</div>'
-      : "";
+    var toCompassBtn = document.getElementById("focusToCompassBtn");
+    if (toCompassBtn) toCompassBtn.addEventListener("click", function(){ goToStep("compass"); });
   }
 
   // ---- Fortschritt: drei Zahlen aus dem echten Verlauf ----------------
