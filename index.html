@@ -69,7 +69,7 @@
   .splash-page{ padding:0; max-width:none; }
 
   /* ---------- Titelseite ---------- */
-  .splash{ position:fixed; inset:0; z-index:60; }
+  .splash{ position:fixed; inset:0; z-index:40; }
   .splash img.bg{ width:100%; height:100%; object-fit:cover; object-position:center 50%; display:block; }
   .splash::after{
     content:""; position:absolute; inset:0;
@@ -78,7 +78,7 @@
   .splash-inner{
     position:absolute; inset:0; z-index:2; display:flex; flex-direction:column;
     align-items:center; justify-content:flex-start;
-    padding:30px 26px calc(30px + var(--safe-bottom)); text-align:center; color:#fff;
+    padding:30px 26px calc(24px + var(--tabbar-h) + var(--safe-bottom)); text-align:center; color:#fff;
   }
   .splash-inner > .spacer:first-child{ flex:0 0 3vh; }
   .splash-badge{ width:56px; height:56px; margin-bottom:14px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
@@ -600,14 +600,14 @@
     display:flex; background:rgba(255,253,247,.97); border-top:1px solid var(--line);
     backdrop-filter:blur(10px); padding-bottom:var(--safe-bottom);
   }
-  body[data-step="splash"] .tabbar, body.entered .tabbar{ display:none; }
+  body.entered .tabbar{ display:none; }
   .tab-item{
     flex:1; border:none; background:none; cursor:pointer; font-family:inherit;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
     color:#9aaaa2; padding:0 2px;
   }
   .tab-item svg{ width:20px; height:20px; }
-  .tab-item span{ font-size:.56rem; font-weight:600; text-align:center; line-height:1.1; letter-spacing:-.01em; }
+  .tab-item span{ font-size:.58rem; font-weight:600; text-align:center; line-height:1.05; }
   .tab-item.active{ color:var(--gold-deep); }
 </style>
 </head>
@@ -1270,6 +1270,10 @@
 
   <!-- ============ TABBAR ============ -->
   <nav class="tabbar" id="tabbar">
+    <button class="tab-item" data-tab="splash">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.6 1-2.6 2.4-3 4"/><path d="M12 3c1.6 1 2.6 2.4 3 4"/><path d="M12 3c-2.2-.4-4 .5-5.2 2.2"/><path d="M12 3c2.2-.4 4 .5 5.2 2.2"/><path d="M12 7v7"/><path d="M4 20c1.6-3 4.6-4.5 8-4.5S18.4 17 20 20"/></svg>
+      <span>Insel</span>
+    </button>
     <button class="tab-item" data-tab="home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
       <span>Startseite</span>
@@ -1280,11 +1284,11 @@
     </button>
     <button class="tab-item" data-tab="meditation">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5.5" r="2.2"/><path d="M5 21c1.5-4 4-6 7-6s5.5 2 7 6"/><path d="M4 12h16"/></svg>
-      <span>My Meditation</span>
+      <span>Training</span>
     </button>
     <button class="tab-item" data-tab="meditation2">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7v15H4z"/><path d="M13 5h7v15h-7z"/></svg>
-      <span>Meditationsleiter</span>
+      <span>Übungen</span>
     </button>
     <button class="tab-item" data-tab="profil">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
@@ -1941,7 +1945,7 @@
     profil:     { label:"Profil",                      sub:"Deine Inselreise und dein Zugang." },
     abo:        { label:"Zugang",                      sub:"Die ganze Bibliothek freischalten." }
   };
-  var TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", meditation2:"meditation2", profil:"profil" };
+  var TAB_FOR_STEP = { splash:"splash", home:"home", compass:"kompass", meditation:"meditation", meditation2:"meditation2", profil:"profil" };
 
   function goToStep(step){
     // Die Startseite zeigt immer den aktuellen Stand: Begruessung, Vorschlag
@@ -3332,6 +3336,7 @@
   document.querySelectorAll(".tab-item").forEach(function(btn){
     btn.addEventListener("click", function(){
       var tab = btn.getAttribute("data-tab");
+      if (tab === "splash"){ goToStep("splash"); return; }
       if (tab === "home"){ goToStep("home"); return; }
       if (tab === "kompass"){ goToStep("compass"); return; }
       if (tab === "meditation"){ renderMyMed(); goToStep("meditation"); return; }

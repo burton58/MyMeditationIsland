@@ -46,7 +46,7 @@ Seit dem Layout-Umbau folgt die ganze App **einer** Vorlage: warmes Creme als Fl
 - **Karte** (`.card`): weiss, 18px Radius, weicher Schatten — der einzige Container-Typ der App.
 - **Buttons**: `.btn-dark` (Gold-Verlauf, dunkelbrauner Text) für die Hauptaktion, `.btn-ghost` (weiss mit Rand) für alles Sekundäre; `.full` macht beide breit.
 - **Auswahlreihen** (`.seg`): gleich breite Chips nebeneinander, aktiver Chip in Gold — für Zeit und Anzahl auf dem Kompass.
-- **Persistente Tab-Bar** unten (`.tabbar`, 74px, cremeweiss, auf Titelseite und während der Sitzung ausgeblendet): 5 Tabs — **Startseite · Kompass · My Meditation · Meditationsleiter · Profil**. Die Steps dahinter sind unverändert (`home`, `compass`, `meditation`, `meditation2`, `profil`), nur Namen und Symbole folgen der Vorlage.
+- **Persistente Tab-Bar** unten (`.tabbar`, 74px, cremeweiss, nur während der Sitzung ausgeblendet): 6 Tabs — **Insel · Startseite · Kompass · Training · Übungen · Profil** (Steps `splash`, `home`, `compass`, `meditation`, `meditation2`, `profil`). Die Titelseite hat ein eigenes Feld, damit sie jederzeit erreichbar ist; sie liegt deshalb unter der Leiste (`z-index:40`) und ihr Inhalt hält unten Platz für sie frei. Die zwei langen Namen heissen in der Leiste kurz **Training** und **Übungen** — bei sechs Feldern passen "My Meditation" und "Meditationsleiter" nicht mehr nebeneinander; die Seiten selbst behalten ihre Titel aus der Vorlage.
 - **Safe-Area:** `--safe-bottom: env(safe-area-inset-bottom)` wird auf `body`, `.tabbar`, Titelseite und Spieler angerechnet, damit unten nichts hinter dem Home-Indikator verschwindet. Tests können den Wert über `:root{--safe-bottom:34px}` nachstellen.
 
 ---
@@ -65,7 +65,7 @@ Der Insel-Konfigurator (`island`) ist über **Profil → "Meine Insel gestalten"
 ### 3.0 Titelseite (`data-step="splash"`)
 - Vollflächig das Insel-Foto aus der Vorlage (`insel.jpg`, Sonnenuntergang mit Boot) mit dunklem Verlauf, mittig das runde Logo (`logo.png`, weisse Strichzeichnung, 56px), Titel "My Meditation Island" und "Dein Ort. Deine Auszeit. Dein inneres Gleichgewicht." — Abstände und Grössen genau wie in der Vorlage.
 - Unten die goldene Taste **"Meine Insel betreten"** (→ Startseite) und vier Punkte als Andeutung eines Einstiegs.
-- Über **Profil → "Zur Titelseite"** jederzeit wieder erreichbar. Tab-Bar ist hier ausgeblendet.
+- Erreichbar über das erste Feld der Tab-Bar (**Insel**) und weiterhin über **Profil → "Zur Titelseite"**. Die Tab-Bar bleibt sichtbar, der Knopf "Meine Insel betreten" sitzt darüber.
 
 ### 3.1 Startseite (`data-step="home"`)
 - Seitenkopf mit tageszeitabhängiger Begrüssung (`begruessung()` + Symbol) und rundem Profil-Knopf.
