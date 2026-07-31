@@ -23,7 +23,9 @@ git rev-parse --git-dir >/dev/null 2>&1 || exit 0
 
 # --- Regel 1: nur im MyIsland-Repo etwas tun -------------------------------
 origin="$(git remote get-url origin 2>/dev/null || true)"
-if ! printf '%s' "$origin" | grep -qi 'myisland'; then
+# Der Ordner heisst seit der Umbenennung MyMeditationIsland; beide Namen
+# gelten, damit die Prüfung nicht wieder ins Leere läuft.
+if ! printf '%s' "$origin" | grep -qiE 'my(meditation)?island'; then
   melde "Automatisches Speichern übersprungen: Dieser Ordner gehört nicht zum Projekt My Island."
 fi
 

@@ -9,7 +9,7 @@ cd "${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}" 
 git rev-parse --git-dir >/dev/null 2>&1 || exit 0
 
 origin="$(git remote get-url origin 2>/dev/null || true)"
-printf '%s' "$origin" | grep -qi 'myisland' || exit 0
+printf '%s' "$origin" | grep -qiE 'my(meditation)?island' || exit 0
 
 git fetch --quiet origin "$ZIEL_BRANCH" >/dev/null 2>&1 || exit 0
 
