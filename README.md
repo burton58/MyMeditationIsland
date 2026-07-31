@@ -7,6 +7,20 @@ und bekommt am Ende einen Rückblick, was sich verändert hat.
 **Live:** <https://burton58.github.io/MyMeditationIsland/> — wird bei jeder Änderung an
 `main` automatisch neu veröffentlicht.
 
+### Veröffentlichung einschalten (einmalig, nur der Repo-Inhaber)
+
+GitHub Pages ist für dieses Repo noch **nicht** aktiviert. Es lässt sich weder über
+einen Actions-Workflow noch über die API von aussen einschalten (GitHub erlaubt das
+Anlegen einer Pages-Site nur mit Admin-Rechten am Repo). Nötig ist deshalb einmalig:
+
+1. <https://github.com/burton58/MyMeditationIsland/settings/pages> öffnen
+2. Unter **Source**: „Deploy from a branch" wählen
+3. Branch: **main**, Ordner: **/ (root)** — dann **Save**
+
+Nach ein bis zwei Minuten ist die App unter der Adresse oben erreichbar. Danach wird
+jede Speicherung auf `main` automatisch veröffentlicht; weitere Einstellungen sind
+nicht nötig. Das Repo ist öffentlich, Pages ist damit kostenlos.
+
 ## Inhalt dieses Repos
 
 | Datei | Beschreibung |
