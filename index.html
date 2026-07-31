@@ -234,7 +234,57 @@
   }
   .seg .opt.active{ background:var(--gold-grad); color:#3a2e08; border-color:var(--gold); }
 
+  /* Trainingsmodus: zwei Zeilen zum Auswählen, wie in der Vorlage */
+  .radio-row{ display:flex; flex-direction:column; gap:9px; }
+  .radio-opt{
+    display:flex; align-items:center; gap:11px; padding:14px; border:1px solid var(--line); border-radius:14px;
+    background:var(--card); cursor:pointer; font-size:.9rem; user-select:none;
+  }
+  .radio-opt .dot{ width:19px; height:19px; border-radius:50%; border:2px solid #c3d1c9; flex:0 0 auto; position:relative; }
+  .radio-opt.on{ border-color:var(--gold); background:#fdf8ea; }
+  .radio-opt.on .dot{ border-color:var(--gold); }
+  .radio-opt.on .dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--gold-grad); }
+  .radio-opt .rtxt strong{ display:block; font-weight:600; }
+  .radio-opt .rtxt span{ font-size:.77rem; color:var(--ink-soft); }
+
+  /* Empfehlung direkt auf der Kompass-Seite */
+  .rec-result{ margin-top:18px; display:none; }
+  .rec-result.show{ display:block; }
+  .rec-head{ font-size:.72rem; text-transform:uppercase; letter-spacing:.09em; color:var(--gold-deep); font-weight:800; margin-bottom:9px; }
+  .rec-item{ display:flex; align-items:center; gap:13px; padding:13px 14px; border-bottom:1px solid var(--line); width:100%;
+    background:none; border-left:none; border-right:none; border-top:none; font-family:inherit; color:var(--ink); text-align:left; cursor:pointer; }
+  .rec-item:last-of-type{ border-bottom:none; }
+  .rec-item .num{
+    width:22px; height:22px; border-radius:50%; background:var(--gold-grad); color:#3a2e08; font-size:.7rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  .rec-why{ padding:14px; border-top:1px solid var(--line); }
+  .rec-why h4{ margin:0 0 6px; font-size:.82rem; }
+  .rec-why p{ margin:0; font-size:.83rem; line-height:1.55; color:var(--ink-soft); }
+  .rec-actions{ padding:14px; }
+
   /* ---------- My Meditation ---------- */
+  .hero-card{ padding:16px; display:flex; gap:14px; align-items:flex-start; }
+  .hero-card .thumb{
+    width:80px; height:80px; border-radius:15px; flex:0 0 auto; background:var(--cream-2);
+    display:flex; align-items:center; justify-content:center; font-size:1.9rem;
+  }
+  .hero-card .body{ flex:1; min-width:0; }
+  .hero-card h3{ margin:0 0 6px; font-size:1rem; line-height:1.3; }
+  .hero-card p{ margin:0 0 12px; font-size:.81rem; line-height:1.5; color:var(--ink-soft); }
+
+  /* Deine Ziele */
+  .goal{ padding:14px; border-bottom:1px solid var(--line); }
+  .goal:last-child{ border-bottom:none; }
+  .goal-top{ display:flex; align-items:center; gap:11px; margin-bottom:9px; }
+  .goal-ico{ width:34px; height:34px; border-radius:10px; background:var(--cream-2); display:flex; align-items:center;
+    justify-content:center; flex:0 0 auto; font-size:.95rem; }
+  .goal-top .body{ flex:1; min-width:0; }
+  .goal-top .name{ font-weight:600; font-size:.9rem; }
+  .goal-top .sub{ font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
+  .bar{ height:6px; background:var(--cream-2); border-radius:4px; overflow:hidden; }
+  .bar span{ display:block; height:100%; background:var(--gold-grad); border-radius:4px; }
+
   .fd-greeting{ margin:0; font-size:.88rem; color:var(--ink-soft); }
   .fd-badge{
     background:var(--cream-2); color:var(--gold-deep); font-size:.68rem; font-weight:800;
@@ -310,39 +360,27 @@
     display:inline-flex; align-items:center; gap:6px;
   }
   .lib-chip.active{ background:var(--gold-grad); color:#3a2e08; border-color:var(--gold); }
-  .lib-list{ display:flex; flex-direction:column; gap:9px; padding-bottom:70px; }
+  .lib-list{ display:flex; flex-direction:column; gap:9px; }
   .lib-group-title{ font-family:var(--serif); font-weight:700; font-size:1rem; margin:14px 0 2px; }
   .lib-group-title span{ font-family:inherit; font-size:.74rem; font-weight:600; color:var(--ink-soft); }
   .lib-row{
     display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer; font-family:inherit;
-    background:var(--card); border:1px solid transparent; border-radius:16px; padding:12px 13px; color:var(--ink);
+    background:var(--card); border:1px solid transparent; border-radius:16px; padding:11px 13px; color:var(--ink);
     box-shadow:0 3px 14px rgba(28,59,51,.07);
   }
-  .lib-row.active{ border-color:var(--gold); background:#fdf8ea; }
   .lib-row.locked{ opacity:.55; }
-  .lib-check{
-    width:24px; height:24px; border-radius:50%; border:2px solid #ddd0b4; flex:0 0 auto;
-    display:flex; align-items:center; justify-content:center; font-size:.75rem; color:#3a2e08;
-  }
-  .lib-row.active .lib-check{ background:var(--gold-grad); border-color:var(--gold); }
   .lib-row-body{ flex:1; min-width:0; }
   .lib-row-name{ display:block; font-weight:600; font-size:.92rem; }
   .lib-row-desc{ display:block; font-size:.77rem; color:var(--ink-soft); margin-top:2px; }
-  .lib-row-min{ font-weight:700; font-size:1rem; text-align:center; flex:0 0 auto; color:var(--gold-deep); }
-  .lib-row-min small{ display:block; font-size:.6rem; font-weight:600; color:var(--ink-soft); }
   .lib-done{ display:inline-block; margin-left:6px; font-size:.62rem; font-weight:700; color:var(--gold-deep);
     background:var(--cream-2); padding:2px 7px; border-radius:8px; vertical-align:middle; }
   .lib-leer{ font-size:.86rem; color:var(--ink-soft); text-align:center; }
-  .lib-bar{
-    position:fixed; left:0; right:0; bottom:calc(var(--tabbar-h) + var(--safe-bottom)); z-index:40;
-    display:flex; align-items:center; gap:12px; padding:12px 16px calc(12px);
-    background:rgba(255,253,247,.97); border-top:1px solid var(--line); backdrop-filter:blur(10px);
-  }
-  .lib-bar.leer{ display:none; }
-  .lib-bar-text{ flex:1; font-size:.85rem; color:var(--ink-soft); }
-  .lib-bar-btn{
-    border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08; font-family:inherit;
-    font-weight:700; font-size:.9rem; padding:13px 22px; border-radius:13px;
+  .fav-btn{ border:none; background:none; cursor:pointer; font-size:1.05rem; padding:4px; color:#c3cec8; flex:0 0 auto; }
+  .fav-btn.on{ color:var(--gold); }
+  /* Gemeinsames Bild-Feld für Listenzeilen */
+  .row-thumb{
+    width:50px; height:50px; border-radius:13px; flex:0 0 auto; background:var(--cream-2);
+    display:flex; align-items:center; justify-content:center; font-size:1.25rem;
   }
 
   /* ---------- Profil ---------- */
@@ -529,7 +567,9 @@
     padding:calc(64px + env(safe-area-inset-top, 0px)) 20px calc(30px + var(--safe-bottom)); color:#fff;
   }
   body.in-session .session{ display:flex; }
-  .med-name{ font-family:var(--serif); font-size:1.3rem; text-align:center; }
+  .player-pos{ text-align:center; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; opacity:.7; font-weight:700; margin-bottom:10px; }
+  .med-name{ font-family:var(--serif); font-size:1.4rem; text-align:center; }
+  .player-cat{ text-align:center; font-size:.8rem; opacity:.7; margin-top:6px; }
   .guide{
     flex:1; font-size:1.05rem; line-height:1.6; text-align:center; margin:0 auto; max-width:22em;
     display:flex; align-items:center; justify-content:center;
@@ -626,7 +666,7 @@
     </div>
 
     <div id="homeRecWrap" style="display:none;">
-      <div class="section-label">Auch gut für dich</div>
+      <div class="section-label">Empfehlung für dich</div>
       <div id="homeRecList"></div>
     </div>
   </div>
@@ -713,7 +753,7 @@
 
     <div class="compass-prefs">
       <div class="pref-block">
-        <h3>Wie viel Zeit hast du?</h3>
+        <h3>Maximale Meditationsdauer</h3>
         <div class="seg" data-field="durationV2" id="durationOptsV2">
           <div class="opt" data-value="5">5 Min</div>
           <div class="opt" data-value="10">10 Min</div>
@@ -723,16 +763,35 @@
         </div>
       </div>
       <div class="pref-block">
-        <h3>Wie viele Meditationen?</h3>
-        <div class="seg" data-field="countV2" id="countOptsV2">
-          <div class="opt" data-value="1">Eine</div>
-          <div class="opt" data-value="2">Zwei</div>
-          <div class="opt" data-value="3">Drei</div>
+        <h3>Trainingsmodus</h3>
+        <div class="radio-row" id="modeRow">
+          <div class="radio-opt on" data-v="single">
+            <span class="dot"></span>
+            <span class="rtxt"><strong>Einzelmeditation</strong><span>Eine Übung, passend zu deinem Zustand</span></span>
+          </div>
+          <div class="radio-opt" data-v="program">
+            <span class="dot"></span>
+            <span class="rtxt"><strong>Trainingsprogramm</strong><span>Mehrere Meditationen nacheinander</span></span>
+          </div>
         </div>
       </div>
     </div>
 
-    <button class="btn-dark full" id="toMedBtn" style="margin-top:20px;">Meditationen empfehlen →</button>
+    <button class="btn-dark full" id="recommendBtn" style="margin-top:20px;">Meditationen empfehlen →</button>
+
+    <div class="rec-result" id="recResult">
+      <div class="rec-head">Für dich empfohlen</div>
+      <div class="card">
+        <div id="recItems"></div>
+        <div class="rec-why">
+          <h4>Warum diese Empfehlung?</h4>
+          <p id="recWhy"></p>
+        </div>
+        <div class="rec-actions">
+          <button class="btn-dark full" id="startRecBtn">Jetzt starten</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ============ MY MEDITATION ============
@@ -747,11 +806,14 @@
       <span class="fd-badge">🇨🇭 Schweizerdeutsch</span>
     </div>
 
-    <div class="section-label first">Dein Zustand</div>
-    <section class="card fd-state" id="fdState"></section>
-
-    <section class="fd-hero" id="fdHero"></section>
-    <section class="fd-more" id="fdMore"></section>
+    <div class="card hero-card">
+      <div class="thumb">🧘</div>
+      <div class="body">
+        <h3>Dein persönliches Meditationstraining</h3>
+        <p>Aus deinem Zustand im Kompass und deiner Zeit stellen wir dir zusammen, was gerade passt.</p>
+        <button class="btn-dark" id="toTrainingBtn">Zum Training →</button>
+      </div>
+    </div>
 
     <div class="section-label">Dein Fortschritt</div>
     <div class="card stats-row">
@@ -759,6 +821,9 @@
       <div class="stat"><div class="n" id="statCount">0</div><div class="l">Meditationen</div></div>
       <div class="stat"><div class="n" id="statMinutes">0</div><div class="l">Minuten gesamt</div></div>
     </div>
+
+    <div class="section-label">Deine Ziele</div>
+    <div class="card" id="goalList"></div>
 
     <div class="section-label">Deine letzten Meditationen</div>
     <div class="card" id="historyList"></div>
@@ -793,11 +858,6 @@
     <p class="lib-meta" id="libMeta"></p>
     <div class="chips" id="libFilters"></div>
     <div class="lib-list" id="libList"></div>
-
-    <div class="lib-bar leer" id="libBar">
-      <span class="lib-bar-text" id="libBarText"></span>
-      <button class="lib-bar-btn" id="enterBtnV2">Starten →</button>
-    </div>
   </div>
 
   <!-- ============ ABSCHLUSS ============ -->
@@ -927,18 +987,32 @@
 
     <div class="section-label">Einstellungen</div>
     <div class="card list-card">
+      <button class="menu-row" id="profilAboBtn">
+        <span class="row-icon">💳</span><span class="row-text">Abo verwalten</span><span class="chev">›</span>
+      </button>
+      <button class="menu-row" id="profilStatsBtn">
+        <span class="row-icon">📊</span><span class="row-text">Statistiken</span><span class="chev">›</span>
+      </button>
+      <button class="menu-row" id="favMenuRow">
+        <span class="row-icon">⭐</span><span class="row-text">Favoriten</span><span class="chev">›</span>
+      </button>
       <button class="menu-row" id="profilIslandBtn">
         <span class="row-icon">🏝️</span><span class="row-text">Meine Insel gestalten</span><span class="chev">›</span>
       </button>
-      <button class="menu-row" id="profilAboBtn">
-        <span class="row-icon">💳</span><span class="row-text">Abo verwalten</span><span class="chev">›</span>
+      <button class="menu-row" id="profilAboutBtn">
+        <span class="row-icon">ℹ️</span><span class="row-text">Über die App</span><span class="chev">›</span>
       </button>
       <button class="menu-row danger" id="profilResetBtn">
         <span class="row-icon">🗑️</span><span class="row-text">Verlauf löschen</span><span class="chev">›</span>
       </button>
     </div>
 
-    <p class="muted-note">Dein Verlauf bleibt nur auf diesem Gerät – kein Konto, kein Server.</p>
+    <div class="card compass-info" id="aboutBox" hidden style="margin-top:12px;">
+      <p><strong>My Meditation Island</strong> – geführte Meditationen auf Schweizerdeutsch, von drei Minuten bis zur halben Stunde.</p>
+      <p>Der Kompass fragt, wie es dir gerade geht, und stellt daraus zusammen, was passt. Alles läuft direkt auf deinem Gerät.</p>
+    </div>
+
+    <p class="muted-note" id="storageNote">Dein Verlauf bleibt nur auf diesem Gerät – kein Konto, kein Server.</p>
 
     <button class="btn-ghost full" id="toSplashBtn" style="margin-top:16px;">🏝️ Zur Titelseite</button>
   </div>
@@ -1163,7 +1237,9 @@
         <div class="stage-caption" id="stageCaption"></div>
 
         <div class="session" id="sessionPanel">
+          <div class="player-pos" id="sessionPos"></div>
           <div class="med-name" id="sessionName"></div>
+          <div class="player-cat" id="sessionCat"></div>
           <div class="guide" id="sessionGuide"></div>
           <div class="playlist-dots" id="playlistDots"></div>
           <div class="progress"><span id="sessionBar"></span></div>
@@ -1973,32 +2049,27 @@
   // nicht nur eine andere Ueberschrift.
   var empfohlenVomChat = null;   // vom Begleiter vorgeschlagene Uebung
 
-  function empfehlungen(){
+  // Alle freien Uebungen, die beste zuerst: erst die Richtung des Kompasses,
+  // dann was zur gewaehlten Zeit passt, dann die Anspannung (angespannt =
+  // kurz und erdend zuerst, ruhig = tief zuerst).
+  function empfehlungsPool(){
     var dir = dirFromCompass(compassBefore);
-    // Wer angespannt ist, kann schlecht lange stillsitzen - da kommen kurze,
-    // erdende Uebungen zuerst. Wer schon ruhig ist, hat Kapazitaet fuers
-    // Vertiefen und bekommt die laengeren zuerst. Dadurch bekommen auch
-    // Zustaende aus demselben Bereich (z. B. gruebelrisch und gedankenvoll)
-    // unterschiedliche Listen, nicht nur unterschiedliche Ueberschriften.
     var angespannt = compassBefore.x < 0;
-    var pool = MEDITATIONS.filter(function(m){ return m.dir === dir && istFrei(m.id); });
     var rang = { mini:0, mittel:1, tief:2 };
+    var pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
     pool.sort(function(a,b){
-      // Die auf dem Kompass gewaehlte Zeit ist eine bewusste Ansage - was
-      // dazu passt, kommt zuerst. Innerhalb davon entscheidet die Anspannung.
-      // Alles Uebrige danach nach Naehe zur Zeit, damit die Liste nicht
-      // zwischen 30 und 4 Minuten hin und her springt.
+      var ra = a.dir === dir ? 0 : 1, rb = b.dir === dir ? 0 : 1;
+      if (ra !== rb) return ra - rb;
       var da = Math.abs(a.min - durationV2), db = Math.abs(b.min - durationV2);
       var pa = da <= 4 ? 0 : 1, pb = db <= 4 ? 0 : 1;
       if (pa !== pb) return pa - pb;
       if (pa === 0){
-        var ra = rang[a.cat], rb = rang[b.cat];
-        if (ra !== rb) return angespannt ? ra - rb : rb - ra;
+        var ta = rang[a.cat], tb = rang[b.cat];
+        if (ta !== tb) return angespannt ? ta - tb : tb - ta;
       }
       return da - db;
     });
-    // Was der Begleiter vorgeschlagen hat, steht ganz oben - auch wenn es
-    // nicht zur Kompass-Richtung gehoert.
+    // Was der Begleiter vorgeschlagen hat, steht ganz oben.
     if (empfohlenVomChat){
       var extra = MEDITATIONS.filter(function(m){ return m.id === empfohlenVomChat; })[0];
       if (extra){
@@ -2006,7 +2077,94 @@
         pool.unshift(extra);
       }
     }
-    return pool.slice(0, 4);
+    return pool;
+  }
+
+  function empfehlungen(){ return empfehlungsPool().slice(0, 4); }
+
+  // Namen und Symbole der vier Bereiche - aus KATEGORIEN, damit es nur eine
+  // Stelle gibt, an der sie stehen.
+  function katName(dir){
+    var k = KATEGORIEN.filter(function(x){ return x.dir === dir; })[0];
+    return k ? k.name : "";
+  }
+  function katIcon(dir){
+    var k = KATEGORIEN.filter(function(x){ return x.dir === dir; })[0];
+    return k ? k.icon : "🧘";
+  }
+
+  // Die Empfehlung selbst: eine Uebung (Einzelmeditation) oder ein Programm
+  // aus mehreren, das zusammen in die gewaehlte Zeit passt.
+  var empfehlung = [];
+  var empfehlungGrund = "";
+
+  function baueEmpfehlung(){
+    var pool = empfehlungsPool();
+    var picks = [];
+    if (modus === "single"){
+      var passend = pool.filter(function(m){ return m.min <= durationV2; });
+      picks = [ passend[0] || pool[0] ].filter(Boolean);
+    } else {
+      var total = 0, richtungen = [];
+      // Erst je Richtung eine - so wird ein Programm abwechslungsreich.
+      pool.forEach(function(m){
+        if (picks.length >= 4 || richtungen.indexOf(m.dir) !== -1) return;
+        if (total + m.min <= durationV2){ picks.push(m); richtungen.push(m.dir); total += m.min; }
+      });
+      // Dann auffuellen, solange noch Zeit uebrig ist.
+      pool.forEach(function(m){
+        if (picks.length >= 4 || picks.indexOf(m) !== -1) return;
+        if (total + m.min <= durationV2){ picks.push(m); total += m.min; }
+      });
+      if (!picks.length){
+        var kuerzeste = pool.slice().sort(function(a,b){ return a.min - b.min; })[0];
+        if (kuerzeste) picks = [kuerzeste];
+      }
+    }
+
+    var bereiche = [];
+    picks.forEach(function(m){
+      var n = katName(m.dir);
+      if (bereiche.indexOf(n) === -1) bereiche.push(n);
+    });
+    var bereichText = bereiche.length > 1
+      ? bereiche.slice(0, -1).join(", ") + " und " + bereiche[bereiche.length - 1]
+      : bereiche[0];
+
+    empfehlung = picks;
+    empfehlungGrund = "Dein Kompass zeigt: " + moodWort(compassBefore).toLowerCase() + ". " +
+      (picks.length === 1
+        ? "Darum empfehlen wir dir eine Übung aus dem Bereich " + bereichText + ", die zu deinem Zustand passt."
+        : "Darum haben wir dir ein Programm aus " + picks.length + " Meditationen zusammengestellt (" +
+          bereichText + "), das dich Schritt für Schritt begleitet.");
+    return picks;
+  }
+
+  // Eine Zeile in einer Empfehlungs- oder Bibliotheksliste.
+  function medZeile(m, opts){
+    opts = opts || {};
+    return '<div class="' + (opts.cls || "focus-card") + '" data-play="' + m.id + '">' +
+      (opts.num ? '<span class="num">' + opts.num + '</span>' : '') +
+      '<span class="row-thumb">' + katIcon(m.dir) + '</span>' +
+      '<span class="lib-row-body">' +
+        '<span class="lib-row-name">' + m.name + '</span>' +
+        '<span class="lib-row-desc">' + m.min + ' Min · ' + katName(m.dir) + '</span>' +
+      '</span>' +
+      '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
+    '</div>';
+  }
+
+  // Die Empfehlung direkt auf der Kompass-Seite anzeigen.
+  function zeigeEmpfehlung(){
+    var picks = baueEmpfehlung();
+    document.getElementById("recItems").innerHTML = picks.map(function(m, i){
+      return medZeile(m, { cls:"rec-item", num: picks.length > 1 ? (i + 1) : null });
+    }).join("");
+    document.getElementById("recWhy").textContent = empfehlungGrund;
+    var box = document.getElementById("recResult");
+    box.classList.add("show");
+    box.scrollIntoView({ behavior:"smooth", block:"start" });
+    renderHome();
   }
 
   function begruessung(){
@@ -2031,69 +2189,43 @@
     startSession();
   }
 
-  function renderMedList(){
-    var mood = moodOf(compassBefore);
-    var liste = empfehlungen();
+  var ZIELE = [
+    { name:"Mehr innere Ruhe",   ziel:10, dirs:["ost","west"], icon:"🌿" },
+    { name:"Gedanken beruhigen", ziel:10, dirs:["nord"],       icon:"🧠" },
+    { name:"Stress lösen",       ziel:10, dirs:["west"],       icon:"💪" },
+    { name:"Gefühle verstehen",  ziel:10, dirs:["sued"],       icon:"❤️" }
+  ];
 
-    renderStats();
-    renderHistoryList();
+  function dirVonName(name){
+    var m = MEDITATIONS.filter(function(x){ return x.name === name; })[0];
+    return m ? m.dir : null;
+  }
 
+  // Deine Ziele: gezählt wird, was im Verlauf wirklich gelaufen ist.
+  function renderZiele(){
+    var zaehler = {};
+    loadHistory().forEach(function(e){
+      (e.meds || []).forEach(function(m){
+        var d = dirVonName(m.name);
+        if (d) zaehler[d] = (zaehler[d] || 0) + 1;
+      });
+    });
+    document.getElementById("goalList").innerHTML = ZIELE.map(function(z){
+      var erreicht = z.dirs.reduce(function(sum, d){ return sum + (zaehler[d] || 0); }, 0);
+      var pct = Math.min(100, Math.round(erreicht / z.ziel * 100));
+      return '<div class="goal">' +
+        '<div class="goal-top"><div class="goal-ico">' + z.icon + '</div>' +
+          '<div class="body"><div class="name">' + z.name + '</div>' +
+          '<div class="sub">' + erreicht + ' von ' + z.ziel + ' Einheiten</div></div></div>' +
+        '<div class="bar"><span style="width:' + pct + '%"></span></div></div>';
+    }).join("");
+  }
+
+  function renderMyMed(){
     document.getElementById("fdGreeting").textContent = begruessung();
-
-    // 1) Kompass-Auswertung
-    var wort = mood.word.charAt(0).toUpperCase() + mood.word.slice(1);
-    document.getElementById("fdState").innerHTML =
-      '<div class="fd-state-top">' +
-        '<span class="fd-state-emoji">' + mood.emoji + '</span>' +
-        '<span><span class="fd-state-label">Dein Kompass zeigt</span>' +
-        '<div class="fd-state-word">' + wort + '</div></span>' +
-      '</div>' +
-      '<ul>' + mood.bullets.map(function(b){ return '<li>' + b + '</li>'; }).join("") + '</ul>' +
-      '<p class="fd-why">' + mood.next + '</p>';
-
-    // 2) Top-Empfehlung
-    var hero = document.getElementById("fdHero");
-    if (!liste.length){
-      hero.innerHTML = "";
-      document.getElementById("fdMore").innerHTML = "";
-    } else {
-      var top = liste[0];
-      hero.innerHTML =
-        '<div class="fd-section-label"><h3>Unsere Empfehlung für dich</h3>' +
-          '<span class="fd-section-note">für ' + durationV2 + ' Min</span></div>' +
-        '<div class="fd-hero-card">' +
-          '<span class="fd-hero-tag">⭐ Passt zu dir</span>' +
-          '<h4 class="fd-hero-name">' + top.name + '</h4>' +
-          '<div class="fd-hero-meta">' + top.min + ' Minuten</div>' +
-          '<ul class="fd-reasons">' +
-            gruende(top).map(function(g){ return '<li>' + g + '</li>'; }).join("") +
-          '</ul>' +
-          '<button class="fd-hero-btn" data-med="' + top.id + '">Jetzt starten</button>' +
-        '</div>';
-      hero.querySelector(".fd-hero-btn").addEventListener("click", function(){
-        starteMeditation(top.id);
-      });
-
-      // 3) Weitere Empfehlungen
-      var rest = liste.slice(1);
-      var more = document.getElementById("fdMore");
-      more.innerHTML = rest.length
-        ? '<div class="fd-section-label"><h3>Auch gut für dich</h3></div>' +
-          rest.map(function(m){
-            return '<button class="fd-card" data-med="' + m.id + '">' +
-              '<span class="fd-card-body">' +
-                '<span class="fd-card-name">' + m.name + '</span>' +
-                '<span class="fd-card-meta">' + m.min + ' Minuten</span>' +
-                '<span class="fd-card-reason">' + NUTZEN[m.dir] + '</span>' +
-              '</span>' +
-              '<span class="fd-card-play">▶</span>' +
-            '</button>';
-          }).join("")
-        : "";
-      Array.prototype.forEach.call(more.querySelectorAll(".fd-card"), function(btn){
-        btn.addEventListener("click", function(){ starteMeditation(btn.getAttribute("data-med")); });
-      });
-    }
+    renderStats();
+    renderZiele();
+    renderHistoryList();
   }
 
   // Kategorien ganz unten: fuehren in die Bibliothek, direkt in die passende
@@ -2113,37 +2245,27 @@
     });
   }
 
-  // ---- Meditationsauswahl Variante 2: nach Kategorie (Kompass-Richtung)
-  // durchklicken. Anzahl und Zieldauer werden schon auf der Kompass-Seite
-  // gewaehlt (#countOptsV2/#durationOptsV2); autoFillV2() sucht dann je
-  // Slot die Uebung, die der (Dauer / Anzahl)-Zielgroesse am naechsten
-  // kommt - dieselbe Logik wie frueher bei Variante 1. ----
-  var chosenMedIdsV2 = [];
-  var currentCatV2 = null;
-  var durationV2 = 10;
-  var desiredCountV2 = 2;
+  // ---- Bibliothek ("Meditationsleiter") ------------------------------
+  // Aufbau wie in der Vorlage: Filter-Chips oben, darunter je Übung eine
+  // Karte mit Stern und Play. Antippen startet die Übung sofort.
+  var currentCatV2 = null;      // null = alle, "fav" = Favoriten, sonst Richtung
+  var durationV2 = 10;          // maximale Meditationsdauer (Kompass-Seite)
+  var modus = "single";         // "single" = Einzelmeditation, "program" = Programm
 
-  var TIER = [
-    { cat:"mini",   titel:"Kurz",   spanne:"3–6 Min" },
-    { cat:"mittel", titel:"Mittel", spanne:"7–14 Min" },
-    { cat:"tief",   titel:"Tief",   spanne:"15–30 Min" }
-  ];
-
-  function autoFillV2(){
-    var pool = MEDITATIONS.filter(function(m){ return m.dir === currentCatV2 && istFrei(m.id); });
-    var ziel = durationV2 / desiredCountV2;
-    pool.sort(function(a,b){ return Math.abs(a.min - ziel) - Math.abs(b.min - ziel); });
-    var pick = [];
-    for (var i = 0; i < pool.length && pick.length < desiredCountV2; i++){
-      if (totalMinutes(pick.concat(pool[i].id)) <= durationV2 || pick.length === 0){
-        pick.push(pool[i].id);
-      }
-    }
-    chosenMedIdsV2 = pick;
+  // ---- Favoriten: liegen wie der Verlauf nur auf diesem Gerät ----------
+  var FAV_KEY = "myisland.favoriten.v1";
+  var favoriten = (function(){
+    try { var r = localStorage.getItem(FAV_KEY); var a = r ? JSON.parse(r) : []; return a instanceof Array ? a : []; }
+    catch (e){ return []; }
+  })();
+  function istFavorit(id){ return favoriten.indexOf(id) !== -1; }
+  function toggleFavorit(id){
+    var i = favoriten.indexOf(id);
+    if (i === -1) favoriten.push(id); else favoriten.splice(i, 1);
+    try { localStorage.setItem(FAV_KEY, JSON.stringify(favoriten)); } catch (e){}
   }
 
-  // Welche Uebungen schon einmal gelaufen sind - aus dem echten Verlauf,
-  // nicht erfunden. Gibt der Liste Tiefe und macht sie persoenlich.
+  // Welche Uebungen schon einmal gelaufen sind - aus dem echten Verlauf.
   function schonGemacht(){
     var namen = {};
     loadHistory().forEach(function(e){
@@ -2154,7 +2276,7 @@
 
   function renderLibFilters(){
     var host = document.getElementById("libFilters");
-    var chips = [{ dir:null, icon:"", name:"Alle" }].concat(KATEGORIEN);
+    var chips = [{ dir:null, icon:"", name:"Alle" }, { dir:"fav", icon:"⭐", name:"Favoriten" }].concat(KATEGORIEN);
     host.innerHTML = chips.map(function(k){
       var aktiv = (k.dir || null) === currentCatV2;
       return '<button class="lib-chip' + (aktiv ? ' active' : '') + '"' +
@@ -2165,10 +2287,7 @@
     if (aktivChip) aktivChip.scrollIntoView({ block:"nearest", inline:"center", behavior:"smooth" });
     Array.prototype.forEach.call(host.querySelectorAll(".lib-chip"), function(btn){
       btn.addEventListener("click", function(){
-        var dir = btn.getAttribute("data-dir");
-        currentCatV2 = dir || null;
-        chosenMedIdsV2 = [];
-        if (currentCatV2) autoFillV2();   // passend zu Zeit und Anzahl vom Kompass
+        currentCatV2 = btn.getAttribute("data-dir") || null;
         renderMedListV2();
       });
     });
@@ -2176,99 +2295,63 @@
 
   function renderMedListV2(){
     renderLibFilters();
-    var pool = MEDITATIONS.filter(function(m){ return !currentCatV2 || m.dir === currentCatV2; });
     var gemacht = schonGemacht();
+    var pool = MEDITATIONS.filter(function(m){
+      if (currentCatV2 === "fav") return istFavorit(m.id);
+      return !currentCatV2 || m.dir === currentCatV2;
+    });
 
     document.getElementById("libMeta").innerHTML =
       "<strong>" + pool.length + "</strong> geführte Übungen · 3–30 Minuten";
 
     var host = document.getElementById("libList");
-    var html = TIER.map(function(t){
-      var items = pool.filter(function(m){ return m.cat === t.cat; });
-      if (!items.length) return "";
-      return '<div class="lib-group-title">' + t.titel + ' <span>· ' + t.spanne + ' · ' + items.length + '</span></div>' +
-        items.map(function(m){
-          var aktiv = chosenMedIdsV2.indexOf(m.id) !== -1;
-          var frei = istFrei(m.id);
-          return '<button class="lib-row' + (aktiv ? ' active' : '') + (frei ? '' : ' locked') + '" data-med="' + m.id + '">' +
-            '<span class="lib-check">' + (aktiv ? '✓' : '') + '</span>' +
-            '<span class="lib-row-body">' +
-              '<span class="lib-row-name">' + m.name + (frei ? '' : ' 🔒') +
-                (gemacht[m.name] ? '<span class="lib-done">schon gemacht</span>' : '') + '</span>' +
-              '<span class="lib-row-desc">' + m.desc + '</span>' +
-            '</span>' +
-            '<span class="lib-row-min">' + m.min + '<small>Min</small></span>' +
-          '</button>';
-        }).join("");
-    }).join("");
-    host.innerHTML = html || '<p class="lib-leer">Hier ist gerade nichts.</p>';
+    host.innerHTML = pool.length ? pool.map(function(m){
+      var frei = istFrei(m.id), fav = istFavorit(m.id);
+      return '<div class="lib-row' + (frei ? '' : ' locked') + '" data-play="' + m.id + '">' +
+        '<span class="row-thumb">' + katIcon(m.dir) + '</span>' +
+        '<span class="lib-row-body">' +
+          '<span class="lib-row-name">' + m.name + (frei ? '' : ' 🔒') +
+            (gemacht[m.name] ? '<span class="lib-done">schon gemacht</span>' : '') + '</span>' +
+          '<span class="lib-row-desc">' + m.min + ' Min · ' + katName(m.dir) + '</span>' +
+        '</span>' +
+        '<button class="fav-btn' + (fav ? ' on' : '') + '" data-fav="' + m.id + '" title="Als Favorit merken">' +
+          (fav ? '★' : '☆') + '</button>' +
+        '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
+      '</div>';
+    }).join("") : '<p class="lib-leer">Hier ist noch nichts. Tippe bei einer Übung auf den Stern, dann steht sie hier.</p>';
+  }
 
-    Array.prototype.forEach.call(host.querySelectorAll(".lib-row"), function(row){
-      row.addEventListener("click", function(){
-        var id = row.getAttribute("data-med");
-        if (!istFrei(id)){ renderAbo(); goToStep("abo"); return; }
-        var pos = chosenMedIdsV2.indexOf(id);
-        if (pos !== -1){
-          chosenMedIdsV2.splice(pos, 1);
-        } else {
-          chosenMedIdsV2.push(id);
-          if (chosenMedIdsV2.length > desiredCountV2) chosenMedIdsV2.shift();
-        }
-        renderMedListV2();
-      });
-    });
+  // Wird von den Kategorien auf "My Meditation" aufgerufen.
+  function openCatV2(dir){ currentCatV2 = dir; renderMedListV2(); }
+  function closeCatV2(){ currentCatV2 = null; renderMedListV2(); }
 
-    // Auswahl-Leiste: erscheint erst, wenn wirklich etwas gewaehlt ist.
-    var bar = document.getElementById("libBar");
-    var n = chosenMedIdsV2.length;
-    bar.classList.toggle("leer", n === 0);
-    if (n){
-      var mins = totalMinutes(chosenMedIdsV2);
-      document.getElementById("libBarText").innerHTML =
-        "<b>" + n + (n === 1 ? " Übung" : " Übungen") + "</b> · " + mins + " Min";
+  // Ein Tipp auf eine Zeile oder auf Play startet sofort; der Stern merkt vor.
+  document.addEventListener("click", function(e){
+    var favEl = e.target.closest("[data-fav]");
+    if (favEl){
+      e.stopPropagation();
+      toggleFavorit(favEl.getAttribute("data-fav"));
+      renderMedListV2();
+      return;
     }
-  }
-
-  // Wird von den Kategorien auf "Für dich" aufgerufen - setzt hier einfach
-  // den Filter, statt in eine eigene Unterseite zu springen.
-  function openCatV2(dir){
-    currentCatV2 = dir;
-    chosenMedIdsV2 = [];
-    autoFillV2();
-    renderMedListV2();
-  }
-  function closeCatV2(){
-    currentCatV2 = null;
-    chosenMedIdsV2 = [];
-    renderMedListV2();
-  }
+    var playEl = e.target.closest("[data-play]");
+    if (playEl) starteMeditation(playEl.getAttribute("data-play"));
+  });
 
   document.getElementById("durationOptsV2").addEventListener("click", function(e){
     var target = e.target.closest("[data-value]");
     if (!target) return;
     Array.prototype.forEach.call(this.children, function(el){ el.classList.toggle("active", el === target); });
     durationV2 = parseInt(target.getAttribute("data-value"), 10);
-    chosenMedIdsV2 = [];
-    if (currentCatV2) renderMedListV2();
   });
   document.querySelector('#durationOptsV2 [data-value="' + durationV2 + '"]').classList.add("active");
 
-  document.getElementById("countOptsV2").addEventListener("click", function(e){
-    var target = e.target.closest("[data-value]");
-    if (!target) return;
-    Array.prototype.forEach.call(this.children, function(el){ el.classList.toggle("active", el === target); });
-    desiredCountV2 = parseInt(target.getAttribute("data-value"), 10);
-    chosenMedIdsV2 = [];
-    if (currentCatV2) renderMedListV2();
-  });
-  document.querySelector('#countOptsV2 [data-value="' + desiredCountV2 + '"]').classList.add("active");
-
-  document.getElementById("enterBtnV2").addEventListener("click", function(){
-    if (!chosenMedIdsV2.length){ renderAbo(); goToStep("abo"); return; }
-    chosenMedIds = chosenMedIdsV2.slice();
-    document.body.classList.add("entered", "in-session");
-    render({ animateBoatIn: state.arrival === "boat" });
-    startSession();
+  // Trainingsmodus: eine Übung oder mehrere nacheinander.
+  document.getElementById("modeRow").addEventListener("click", function(e){
+    var opt = e.target.closest(".radio-opt");
+    if (!opt) return;
+    Array.prototype.forEach.call(this.children, function(el){ el.classList.toggle("on", el === opt); });
+    modus = opt.getAttribute("data-v");
   });
 
   function selectedMeds(){
@@ -2319,8 +2402,11 @@
     var med = session.queue[session.index];
     session.total = med.min * 60;
     session.elapsed = 0;
-    var pos = session.queue.length > 1 ? (" · Meditation " + (session.index + 1) + " von " + session.queue.length) : "";
-    document.getElementById("sessionName").textContent = med.name + " · " + med.min + " Min" + pos;
+    document.getElementById("sessionPos").textContent = session.queue.length > 1
+      ? ("Meditation " + (session.index + 1) + " von " + session.queue.length)
+      : "Meditation";
+    document.getElementById("sessionName").textContent = med.name;
+    document.getElementById("sessionCat").textContent = med.min + " Min · " + katName(med.dir);
     renderPlaylistDots();
     tickSession();
   }
@@ -2853,7 +2939,7 @@
       '<button class="mini-btn" id="testUnlockBtn" style="margin-top:10px">Zum Ausprobieren freischalten</button>';
     document.getElementById("testUnlockBtn").addEventListener("click", function(){
       var a = loadAbo(); a.plan = plan; a.seit = Date.now(); saveAbo(a);
-      renderAbo(); renderMedList();
+      renderAbo(); renderMyMed();
       document.getElementById("payNote").innerHTML =
         '<strong>Zum Ausprobieren freigeschaltet.</strong><br>Es wurde nichts bezahlt. ' +
         'Im Profil kannst du das wieder zurücksetzen.';
@@ -2967,10 +3053,10 @@
       if (!match) return false;
       // Die Empfehlung als eigene Karte oben einsetzen, statt sie irgendwo
       // in einer Liste anzuhaken - so bleibt der Weg "ein Tipp, ein Start".
+      // Der Vorschlag des Begleiters wird zur Empfehlung und steht danach
+      // auf der Kompass-Seite und auf der Startseite ganz oben.
       empfohlenVomChat = match.id;
-      renderMedList();
-      var el = document.getElementById("fdHero");
-      if (el) el.scrollIntoView({ behavior:"smooth", block:"nearest" });
+      zeigeEmpfehlung();
       return true;
     }
 
@@ -3038,17 +3124,6 @@
   // ---- Startseite ----------------------------------------------------
   // Ein Blick genuegt: Begruessung, der Vorschlag fuer heute, der aktuelle
   // Zustand aus dem Kompass und zwei weitere Uebungen, die dazu passen.
-  function uebungsKarte(m){
-    return '<button class="focus-card" data-med="' + m.id + '">' +
-      '<span class="thumb">🧘</span>' +
-      '<span class="body">' +
-        '<span class="name">' + m.name + '</span>' +
-        '<span class="meta">' + m.min + ' Min · ' + NUTZEN[m.dir] + '</span>' +
-      '</span>' +
-      '<span class="play-btn">▶</span>' +
-    '</button>';
-  }
-
   function renderHome(){
     var stunde = new Date().getHours();
     document.getElementById("greeting").textContent =
@@ -3057,9 +3132,9 @@
       ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
       : "Nutze den Kompass, um deinen momentanen Zustand anzugeben.";
 
-    var liste = kompassBenutzt ? empfehlungen() : [];
+    var liste = empfehlung;
     var focus = document.getElementById("focusSlot");
-    if (!kompassBenutzt){
+    if (!liste.length){
       // Wie in der Vorlage: erst der Kompass, dann die Empfehlung.
       focus.innerHTML =
         '<div class="card empty-card">' +
@@ -3069,23 +3144,15 @@
       document.getElementById("focusToCompassBtn")
         .addEventListener("click", function(){ goToStep("compass"); });
     } else {
-      focus.innerHTML = liste.length
-        ? '<div class="card">' + uebungsKarte(liste[0]) + '</div>'
-        : '<div class="card"><p class="hist-leer">Gerade ist nichts da.</p></div>';
+      focus.innerHTML = '<div class="card">' + medZeile(liste[0]) + '</div>';
     }
 
-    var weitere = liste.slice(1, 3);
+    var weitere = liste.slice(1);
     var wrap = document.getElementById("homeRecWrap");
     wrap.style.display = weitere.length ? "" : "none";
-    document.getElementById("homeRecList").innerHTML = weitere.map(function(m){
-      return '<div class="card" style="margin-bottom:9px;">' + uebungsKarte(m) + '</div>';
-    }).join("");
-
-    Array.prototype.forEach.call(
-      document.querySelectorAll("#focusSlot .focus-card, #homeRecList .focus-card"),
-      function(btn){
-        btn.addEventListener("click", function(){ starteMeditation(btn.getAttribute("data-med")); });
-      });
+    document.getElementById("homeRecList").innerHTML = weitere.length
+      ? '<div class="card">' + weitere.map(function(m){ return medZeile(m); }).join("") + '</div>'
+      : "";
   }
 
   // ---- Fortschritt: drei Zahlen aus dem echten Verlauf ----------------
@@ -3126,21 +3193,37 @@
     });
     host.innerHTML = eintraege.length
       ? eintraege.map(function(e){
+          var dir = dirVonName(e.name);
           return '<div class="hist-row">' +
-            '<span class="thumb">🧘</span>' +
+            '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
             '<span class="body"><span class="name">' + e.name + '</span>' +
-            '<span class="meta">' + datumWort(e.ts) + ' · ' + fmt(e.seconds) + ' von ' + e.min + ' Min</span></span>' +
+            '<span class="meta">' + datumWort(e.ts) + ' · ' + Math.max(1, Math.round(e.seconds / 60)) +
+              ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
           '</div>';
         }).join("")
-      : '<p class="hist-leer">Noch nichts – deine erste Meditation wartet.</p>';
+      : '<p class="hist-leer">Noch keine Meditation abgeschlossen.<br>Deine Sitzungen erscheinen hier automatisch.</p>';
   }
 
   // ---- wiring ----
   document.getElementById("toCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
   document.getElementById("backToIslandBtn").addEventListener("click", function(){ goToStep("home"); });
-  document.getElementById("toMedBtn").addEventListener("click", function(){
-    renderMedList();
-    goToStep("meditation");
+  document.getElementById("recommendBtn").addEventListener("click", zeigeEmpfehlung);
+  document.getElementById("startRecBtn").addEventListener("click", function(){
+    if (!empfehlung.length) return;
+    chosenMedIds = empfehlung.map(function(m){ return m.id; });
+    document.body.classList.add("entered", "in-session");
+    render({ animateBoatIn: state.arrival === "boat" });
+    startSession();
+  });
+  document.getElementById("toTrainingBtn").addEventListener("click", function(){
+    if (empfehlung.length){
+      chosenMedIds = empfehlung.map(function(m){ return m.id; });
+      document.body.classList.add("entered", "in-session");
+      render({ animateBoatIn: state.arrival === "boat" });
+      startSession();
+    } else {
+      goToStep("compass");
+    }
   });
   document.getElementById("backToCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
   document.getElementById("fdAllBtn").addEventListener("click", function(){
@@ -3164,11 +3247,13 @@
   document.getElementById("finishOutroBtn").addEventListener("click", beendeSitzung);
 
   document.getElementById("needMoreMedBtn").addEventListener("click", function(){
+    // Die neue Empfehlung geht vom Stand nach der Meditation aus.
     compassBefore.x = compassAfter.x;
     compassBefore.y = compassAfter.y;
     chosenMedIds = [];
-    renderMedList();
-    goToStep("meditation");
+    empfohlenVomChat = null;
+    goToStep("compass");
+    zeigeEmpfehlung();
   });
 
   initKategorien();
@@ -3199,6 +3284,16 @@
   });
   document.getElementById("toSplashBtn").addEventListener("click", function(){ goToStep("splash"); });
   document.getElementById("profilIslandBtn").addEventListener("click", function(){ goToStep("island"); });
+  document.getElementById("profilStatsBtn").addEventListener("click", function(){
+    renderMyMed(); goToStep("meditation");
+  });
+  document.getElementById("favMenuRow").addEventListener("click", function(){
+    openCatV2("fav"); goToStep("meditation2");
+  });
+  document.getElementById("profilAboutBtn").addEventListener("click", function(){
+    var box = document.getElementById("aboutBox");
+    box.hidden = !box.hidden;
+  });
 
   document.getElementById("needMudraBtn").addEventListener("click", zeigeMudra);
   document.getElementById("needMantraBtn").addEventListener("click", zeigeMantra);
@@ -3224,12 +3319,13 @@
       var tab = btn.getAttribute("data-tab");
       if (tab === "home"){ goToStep("home"); return; }
       if (tab === "kompass"){ goToStep("compass"); return; }
-      if (tab === "meditation"){ renderMedList(); goToStep("meditation"); return; }
+      if (tab === "meditation"){ renderMyMed(); goToStep("meditation"); return; }
       if (tab === "meditation2"){ closeCatV2(); goToStep("meditation2"); return; }
       if (tab === "profil"){ renderProfil(); goToStep("profil"); return; }
     });
   });
 
+  renderMyMed();
   refreshActiveStates();
   render({ animateBoatIn:false });
   goToStep("splash");

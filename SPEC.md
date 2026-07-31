@@ -85,34 +85,33 @@ Der Insel-Konfigurator (`island`) ist über **Profil → "Meine Insel gestalten"
 - **Zeiger unverändert in der Wirkung:** ein frei in der Scheibe verschiebbarer goldener Punkt (`COMPASS_MAXR = 135`, damit er auf dem Zifferblatt bleibt), weisse Nabe mit Kernpunkt. Die beiden Achsen bleiben **unabhängig**: waagrecht Anspannung↔Entspannung (`x`), senkrecht Denken↔Fühlen (`y`), jeweils −1…1, gespeichert in `compassBefore`. Die gestrichelte Ruhezone entfällt — die Nabe des Zifferblatts markiert die Mitte schon selbst.
 - **Status (`#compassReadout`, `renderMoodStatus()`)** in einer weissen Karte, wie in der Vorlage: Symbol des Zustands, darüber "Deine Auswahl", darunter das Wort mit seiner Abstufung (`moodWort()`: "Ausgeglichen" / "Etwas unruhig" / "Sehr angespannt") und ein erklärender Satz (`MOODS[...].next`). Solange der Zeiger genau in der Mitte steht, steht dort die Anleitung "Bewege den Zeiger, um deinen Zustand anzugeben." Die früheren zwei Achsen-Spuren entfallen; dieselbe Information liegt als `aria-label` auf der Karte.
 - **i-Knopf oben rechts** blendet zwei Sätze ein, was oben/unten und links/rechts bedeuten (`#compassInfo`).
-- **Optionen** darunter als Chip-Reihen: "Wie viel Zeit hast du?" (5/10/15/20/30 Min, `#durationOptsV2`) vor "Wie viele Meditationen?" (`Eine`/`Zwei`/`Drei`, `#countOptsV2`) — Werte und Wirkung (`durationV2`, `desiredCountV2`) unverändert.
-- Abschluss der Seite: **"Meditationen empfehlen →"** (`#toMedBtn`) führt nach My Meditation (§3.3).
+- **Optionen** darunter, genau wie in der Vorlage: **"Maximale Meditationsdauer"** (5/10/15/20/30 Min, `#durationOptsV2` → `durationV2`) und **"Trainingsmodus"** als zwei Auswahlzeilen (`#modeRow` → `modus`): *Einzelmeditation* ("Eine Übung, passend zu deinem Zustand") oder *Trainingsprogramm* ("Mehrere Meditationen nacheinander"). Die frühere Anzahl-Auswahl (`Eine/Zwei/Drei`) ist damit ersetzt.
+- **Die Empfehlung erscheint direkt auf dieser Seite** (`#recResult`, wie in der Vorlage): Knopf **"Meditationen empfehlen →"** (`#recommendBtn`) → Überschrift "Für dich empfohlen", eine Zeile je Übung (bei einem Programm nummeriert, mit Bild-Feld, Name, "9 Min · Stress lösen" und Play), darunter **"Warum diese Empfehlung?"** mit einem Satz aus Kompass-Zustand und Bereichen, und **"Jetzt starten"** (`#startRecBtn`) für die ganze Liste. Ein Tipp auf eine einzelne Zeile startet nur diese.
 
 ### 3.3 My Meditation — persönliche Empfehlungen (`data-step="meditation"`)
 
-Inhaltlich der frühere "Für dich"-Screen, im Aufbau der Vorlage folgend. Reihenfolge:
+Aufbau genau wie in der Vorlage (`renderMyMed()`), die Empfehlung selbst sitzt seit dem Umbau auf der Kompass-Seite (§3.2):
 
 1. **Kopf** — "My Meditation", darunter die Begrüssung (`#fdGreeting`) und das Badge "🇨🇭 Schweizerdeutsch".
-2. **"Dein Zustand"** (`#fdState`) — Emoji, "Dein Kompass zeigt", Zustandswort, zwei Beobachtungen aus `MOODS[...].bullets` und die Begründung aus `.next`.
-3. **Top-Empfehlung** (`#fdHero`) — grosse Karte mit "⭐ Passt zu dir", Name, Dauer, zwei Gründen und **"Jetzt starten"**.
-4. **"Auch gut für dich"** (`#fdMore`) — kleinere Karten, Antippen startet sofort.
-5. **"Dein Fortschritt"** — drei Zahlen aus dem echten Verlauf (`renderStats()`): Tage am Stück, Meditationen, Minuten gesamt.
-6. **"Deine letzten Meditationen"** — die fünf jüngsten Einträge aus `loadHistory()` mit "Heute"/"Gestern"/Wochentag (`renderHistoryList()`).
-7. **"Alle Meditationen entdecken"** — die vier Kategorien und "Ganze Bibliothek ansehen →".
-8. **Begleiter-Chat** und "← Zurück zum Kompass".
+2. **Trainings-Karte** — "Dein persönliches Meditationstraining" mit **"Zum Training →"** (`#toTrainingBtn`): startet die aktuelle Empfehlung, oder führt zum Kompass, wenn es noch keine gibt.
+3. **"Dein Fortschritt"** — drei Zahlen aus dem echten Verlauf (`renderStats()`): Tage am Stück, Meditationen, Minuten gesamt.
+4. **"Deine Ziele"** (`renderZiele()`, `#goalList`) — vier Ziele mit Fortschrittsbalken, gezählt aus dem Verlauf über die Kompass-Richtung der jeweiligen Übung: Mehr innere Ruhe (Entspannung + Anspannung), Gedanken beruhigen (Denken), Stress lösen (Anspannung), Gefühle verstehen (Fühlen), je 10 Einheiten.
+5. **"Deine letzten Meditationen"** — die fünf jüngsten Einträge aus `loadHistory()` mit "Heute"/"Gestern"/Wochentag, Dauer und Bereich (`renderHistoryList()`).
+6. **"Alle Meditationen entdecken"** — die vier Kategorien und "Ganze Bibliothek ansehen →".
+7. **Begleiter-Chat** und "← Zurück zum Kompass".
 
-**Empfehlungslogik (`empfehlungen()`) unverändert:** Pool = alle freien Übungen der Kompass-Richtung, sortiert nach (1) Nähe zur gewählten Zeit (±4 Min), (2) Anspannung — angespannt zuerst kurz und erdend, ruhig zuerst tief —, (3) Restnähe zur Zeit. Begründungen weiterhin aus `NUTZEN`/`TIEFE`; der Chat setzt seine Empfehlung über `empfohlenVomChat` nach oben.
+**Empfehlungslogik (`empfehlungsPool()` + `baueEmpfehlung()`):** Der Pool sind alle freien Übungen, sortiert nach (1) Kompass-Richtung zuerst, (2) Nähe zur gewählten Zeit (±4 Min), (3) Anspannung — angespannt zuerst kurz und erdend, ruhig zuerst tief —, (4) Restnähe zur Zeit. Daraus baut `baueEmpfehlung()` je nach Trainingsmodus: **Einzelmeditation** = die erste Übung, die in die maximale Dauer passt; **Trainingsprogramm** = bis zu vier Übungen, erst je Richtung eine (Abwechslung), dann auffüllen, solange die Summe in die maximale Dauer passt. Der Begründungssatz entsteht aus dem Zustandswort und den Bereichen der gewählten Übungen. Der Chat setzt seine Empfehlung über `empfohlenVomChat` an die erste Stelle und zeigt sie sofort an.
 
 ### 3.3a Meditationsleiter — die Bibliothek (`data-step="meditation2"`)
 
 - **Kopf** "Meditationsleiter · Lass dich begleiten", darunter die Bestandszahl ("**40** geführte Übungen · 3–30 Minuten").
-- **Filter-Chips** (`#libFilters`): Alle · 🧠 Gedanken beruhigen · ❤️ Gefühle verstehen · 💪 Stress lösen · 🌿 Entspannen; aktiver Chip in Gold, scrollt sich selbst in den sichtbaren Bereich.
-- **Liste nach Länge gruppiert** (Kurz/Mittel/Tief) als weisse Karten mit Auswahlkreis, Name, Kurzbeschreibung und Dauer rechts. Bereits gemachte Übungen bekommen "schon gemacht" (`schonGemacht()`).
-- **Auswahl-Leiste** (`.lib-bar`) klebt über der Tab-Bar, zeigt "2 Übungen · 8 Min" und die Start-Taste; unsichtbar, solange nichts gewählt ist.
-- **Verhalten unverändert:** Kategorie-Chip füllt passend zu Anzahl und Zieldauer vor (`autoFillV2()`), Mehrfachauswahl bleibt auf `desiredCountV2` begrenzt.
+- **Filter-Chips** (`#libFilters`): Alle · ⭐ Favoriten · 🧠 Gedanken beruhigen · ❤️ Gefühle verstehen · 💪 Stress lösen · 🌿 Entspannen; aktiver Chip in Gold, scrollt sich selbst in den sichtbaren Bereich.
+- **Liste wie in der Vorlage:** je Übung eine weisse Karte mit Bild-Feld (Symbol des Bereichs), Name, "5 Min · Gedanken beruhigen", **Stern** (Favorit) und **Play**. Bereits gemachte Übungen bekommen "schon gemacht" (`schonGemacht()`).
+- **Antippen startet sofort** — die frühere Mehrfachauswahl mit Auswahl-Leiste ist entfallen, mehrere Übungen hintereinander laufen jetzt über den Trainingsmodus (§3.2).
+- **Favoriten** liegen wie der Verlauf nur auf dem Gerät (`localStorage`, Schlüssel `myisland.favoriten.v1`); der Chip ⭐ und die Profil-Zeile "Favoriten" zeigen sie.
 
 ### 3.4 Spieler (Vollbild, `body.entered.in-session`)
-- Vollflächiges Insel-Foto mit dunklem Verlauf darüber, oben links ein rundes **✕**, oben mittig der Name der Übung ("Wurzelchakra – Erdung · 9 Min").
+- Vollflächiges Insel-Foto mit dunklem Verlauf darüber, oben links ein rundes **✕**, oben mittig wie in der Vorlage drei Zeilen: Position ("MEDITATION 1 VON 2"), Name der Übung und "9 Min · Stress lösen".
 - In der Mitte der Anleitungstext, der mit der Zeit durch `steps[]` wandert.
 - Unten: Fortschritts-Punkte der Playlist, Fortschrittsbalken, Zeit und **Pause · Vorspulen · Fertig →**.
 - Playlist spielt die gewählten Übungen automatisch nacheinander ab (unverändert).
@@ -129,7 +128,7 @@ Inhaltlich der frühere "Für dich"-Screen, im Aufbau der Vorlage folgend. Reihe
 ### 3.6 Profil (`data-step="profil"`)
 - Seitenkopf "Profil · Dein Bereich", Karte "Dein Inselbewohner".
 - **Status-Karte** (`renderStatusCard()`) zum Zugang, danach **Insel-Woche** und **Inselreise** aus dem Verlauf (beide blenden sich aus, solange es zu wenig Daten gibt).
-- **Einstellungen** als Liste: "Meine Insel gestalten" (→ §4), "Abo verwalten" (→ Abo-Seite), "Verlauf löschen".
+- **Einstellungen** als Liste, wie in der Vorlage: "Abo verwalten" (→ Abo-Seite), "Statistiken" (→ My Meditation), "Favoriten" (→ Bibliothek, Filter ⭐), "Meine Insel gestalten" (→ §4), "Über die App" (blendet zwei Sätze ein), "Verlauf löschen".
 - Fusszeile: Hinweis, dass alles nur auf dem Gerät liegt, und "🏝️ Zur Titelseite".
 
 ---
