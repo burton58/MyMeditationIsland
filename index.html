@@ -86,9 +86,9 @@
   .splash h1{ font-family:var(--serif); font-size:2.1rem; margin:0 0 10px; line-height:1.15; text-shadow:0 2px 16px rgba(0,0,0,.4); }
   .splash p{ margin:0; font-size:.95rem; line-height:1.6; opacity:.94; text-shadow:0 2px 12px rgba(0,0,0,.4); }
   .splash .spacer{ flex:1; }
-  .splash-sub{ margin-top:14px !important; font-size:1rem !important; font-weight:600; }
-  .splash-note{ margin-top:6px !important; font-size:.88rem !important; opacity:.85 !important; }
   .splash-trial{ margin-bottom:12px !important; font-size:.88rem !important; font-weight:600; opacity:.95 !important; }
+  .splash-foot{ margin-top:10px !important; font-size:.72rem !important; opacity:.8 !important; line-height:1.45 !important; }
+  .splash-foot + .splash-foot{ margin-top:3px !important; }
   .splash-link{
     margin-top:12px; border:none; background:none; cursor:pointer; font-family:inherit;
     color:#fff; font-size:.88rem; font-weight:600; opacity:.92; text-decoration:underline;
@@ -99,9 +99,6 @@
     font-weight:700; font-size:1rem; padding:17px; border-radius:16px; font-family:inherit;
     box-shadow:0 12px 30px rgba(120,90,10,.4);
   }
-  .splash-dots{ display:flex; gap:7px; margin-top:22px; }
-  .splash-dots span{ width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.45); }
-  .splash-dots span.on{ background:#fff; }
 
   /* ---------- Gemeinsame Bausteine ---------- */
   .page-head{ display:flex; align-items:flex-start; gap:10px; margin-bottom:18px; }
@@ -674,13 +671,12 @@
         <div class="splash-badge"><img src="logo.png" alt="My Meditation Island"></div>
         <h1>My Meditation Island</h1>
         <p>Dein Ort. Deine Auszeit.<br>Dein inneres Gleichgewicht.</p>
-        <p class="splash-sub">Geführte Meditationen auf Schweizerdeutsch</p>
-        <p class="splash-note">🇨🇭 Von 3 Minuten bis zur halben Stunde</p>
         <div class="spacer"></div>
         <p class="splash-trial">7 Tage gratis testen</p>
         <button class="splash-cta" id="enterAppBtn">Meine Insel betreten</button>
         <button class="splash-link" id="splashAboBtn">Was kostet es?</button>
-        <div class="splash-dots"><span class="on"></span><span></span><span></span><span></span></div>
+        <p class="splash-foot">Geführte Meditationen auf Schweizerdeutsch</p>
+        <p class="splash-foot">🇨🇭 Von 3 Minuten bis zur halben Stunde</p>
       </div>
     </div>
   </div>
