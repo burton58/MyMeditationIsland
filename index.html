@@ -426,6 +426,50 @@
   .menu-row .row-text{ flex:1; font-size:.9rem; font-weight:500; }
   .menu-row.danger .row-text{ color:#a33b2c; }
 
+  /* Wochenraster, Inselweg und Begleiter-Karte (aus der Skizze) ---------- */
+  .box-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
+  .box-head h4{ margin:0; flex:1; font-family:var(--serif); font-size:1.05rem; }
+  .box-head button{
+    border:none; background:none; cursor:pointer; font-family:inherit; color:var(--gold-deep);
+    font-size:.78rem; font-weight:700; padding:2px 0;
+  }
+  .week-grid{ display:flex; gap:6px; margin-bottom:12px; }
+  .week-cell{ flex:1; text-align:center; }
+  .week-cell .tag{ font-size:.68rem; font-weight:700; color:var(--ink-soft); margin-bottom:5px; }
+  .week-cell .kreis{
+    width:100%; aspect-ratio:1/1; max-width:36px; margin:0 auto; border-radius:50%;
+    border:1.5px solid var(--line); background:#fffdf7; display:flex; align-items:center;
+    justify-content:center; font-size:.85rem; color:transparent;
+  }
+  .week-cell.on .kreis{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
+  .week-cell.heute .kreis{ box-shadow:0 0 0 2px rgba(201,162,39,.35); }
+  .week-goal{ display:flex; justify-content:space-between; font-size:.76rem; color:var(--ink-soft); margin-bottom:6px; }
+
+  .journey-path{ display:flex; align-items:center; justify-content:space-between; position:relative; margin:6px 0 14px; }
+  .journey-path::before{
+    content:""; position:absolute; left:8%; right:8%; top:50%; border-top:2px dashed var(--cream-2);
+  }
+  .journey-stop{
+    position:relative; width:46px; height:46px; border-radius:50%; background:#fffdf7; border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem; opacity:.55;
+  }
+  .journey-stop.erreicht{ opacity:1; border-color:var(--gold); }
+  .journey-stop.jetzt{ opacity:1; border-color:var(--gold); box-shadow:0 4px 14px rgba(120,90,10,.28); transform:scale(1.14); background:#fdf8ea; }
+  .journey-stufe{ display:flex; align-items:baseline; gap:8px; margin-bottom:8px; }
+  .journey-stufe .name{ font-weight:700; font-size:.95rem; flex:1; }
+  .journey-stufe .zahl{ font-size:.76rem; color:var(--ink-soft); }
+
+  .ki-card{
+    background:linear-gradient(140deg,#fdf3d6,#f3ddac); border:1px solid var(--gold-soft);
+    border-radius:18px; padding:16px; margin:16px 0; display:flex; gap:13px; align-items:flex-start;
+  }
+  .ki-card .ki-ico{
+    width:44px; height:44px; border-radius:13px; background:#fffdf7; flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center; font-size:1.35rem;
+  }
+  .ki-card h4{ margin:0 0 4px; font-family:var(--serif); font-size:1.02rem; }
+  .ki-card p{ margin:0 0 12px; font-size:.82rem; line-height:1.5; color:var(--ink-soft); }
+
   /* Wochenansicht und Inselreise ---------------------------------------- */
   .recap{ padding:16px; margin-bottom:12px; }
   .recap h4{ margin:0 0 10px; font-family:var(--serif); font-size:1.05rem; }
@@ -875,6 +919,15 @@
     </div>
     <p class="lib-meta" id="libMeta"></p>
     <div class="chips" id="libFilters"></div>
+    <div class="ki-card">
+      <div class="ki-ico">🤖</div>
+      <div class="body">
+        <h4>Dein Begleiter</h4>
+        <p>Erzähl kurz, wie es dir geht – der Begleiter sucht dir eine passende Meditation heraus.</p>
+        <button class="btn-dark" id="libKiBtn">Empfehlung erhalten →</button>
+      </div>
+    </div>
+
     <div class="lib-list" id="libList"></div>
   </div>
 
@@ -1016,6 +1069,9 @@
       </button>
       <button class="menu-row" id="profilIslandBtn">
         <span class="row-icon">🏝️</span><span class="row-text">Meine Insel gestalten</span><span class="chev">›</span>
+      </button>
+      <button class="menu-row" id="profilKiBtn">
+        <span class="row-icon">🤖</span><span class="row-text">Dein Begleiter</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilAboutBtn">
         <span class="row-icon">ℹ️</span><span class="row-text">Über die App</span><span class="chev">›</span>
@@ -2797,29 +2853,68 @@
   var WEEKDAYS = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
   function dayStamp(ts){ var d = new Date(ts); return d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate(); }
 
+  // Sieben Kreise von Montag bis Sonntag: gefüllt an den Tagen, an denen
+  // wirklich meditiert wurde. Darunter die Serie und ein Balken bis zum
+  // Wochenziel. Die Einzelheiten (vorher/nachher je Tag) stehen hinter
+  // "Details" - so bleibt die Karte ruhig und die Information erhalten.
+  var WOCHE_KURZ = ["M","D","M","D","F","S","S"];   // Montag bis Sonntag
+
   function renderWeek(zielId){
     var box = document.getElementById(zielId || "weekBox");
-    var grenze = Date.now() - 7*24*60*60*1000;
-    var letzte = loadHistory().filter(function(e){ return e.ts >= grenze; });
-    if (!letzte.length){ box.innerHTML = ""; box.style.display = "none"; return; }
+    var list = loadHistory();
+    if (!list.length){ box.innerHTML = ""; box.style.display = "none"; return; }
     box.style.display = "";
 
-    // Pro Tag eine Zeile: erster Stand beim Ankommen, letzter beim Gehen.
-    var tage = [], index = {};
-    letzte.forEach(function(e){
-      var k = dayStamp(e.ts);
-      if (!(k in index)){ index[k] = tage.length; tage.push({ ts:e.ts, before:e.before, after:e.after, n:1 }); }
-      else { var t = tage[index[k]]; t.after = e.after; t.n++; }
-    });
+    // Montag dieser Woche bestimmen
+    var jetzt = new Date();
+    var montag = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate());
+    montag.setDate(montag.getDate() - ((jetzt.getDay() + 6) % 7));
 
-    box.innerHTML = '<h4>Deine Insel-Woche</h4>' + tage.map(function(t){
-      return '<div class="week-row">' +
-        '<span class="week-day">' + WEEKDAYS[new Date(t.ts).getDay()] +
-          (t.n > 1 ? ' \u00b7 ' + t.n + ' Mal' : '') + '</span>' +
-        '<span class="week-line"><span class="lbl">Vorher:</span> ' + moodHtml(t.before) + '</span>' +
-        '<span class="week-line"><span class="lbl">Nachher:</span> ' + moodHtml(t.after) + '</span>' +
+    var tage = [];
+    for (var i = 0; i < 7; i++){
+      var d = new Date(montag.getFullYear(), montag.getMonth(), montag.getDate() + i);
+      var stempel = dayStamp(d.getTime());
+      var eintraege = list.filter(function(e){ return dayStamp(e.ts) === stempel; });
+      tage.push({ datum:d, stempel:stempel, eintraege:eintraege,
+                  heute: stempel === dayStamp(Date.now()) });
+    }
+    var erledigt = tage.filter(function(t){ return t.eintraege.length; }).length;
+
+    var raster = tage.map(function(t, i){
+      return '<div class="week-cell' + (t.eintraege.length ? ' on' : '') + (t.heute ? ' heute' : '') + '">' +
+        '<div class="tag">' + WOCHE_KURZ[i] + '</div>' +
+        '<div class="kreis">✓</div>' +
       '</div>';
     }).join("");
+
+    var details = tage.filter(function(t){ return t.eintraege.length; }).map(function(t){
+      var erste = t.eintraege[0], letzte = t.eintraege[t.eintraege.length - 1];
+      return '<div class="week-row">' +
+        '<span class="week-day">' + WEEKDAYS[t.datum.getDay()] +
+          (t.eintraege.length > 1 ? ' · ' + t.eintraege.length + ' Mal' : '') + '</span>' +
+        '<span class="week-line"><span class="lbl">Vorher:</span> ' + moodHtml(erste.before) + '</span>' +
+        '<span class="week-line"><span class="lbl">Nachher:</span> ' + moodHtml(letzte.after) + '</span>' +
+      '</div>';
+    }).join("");
+
+    box.innerHTML =
+      '<div class="box-head"><h4>Deine Inselwoche</h4>' +
+        (details ? '<button data-auf="wochenDetails">Details</button>' : '') + '</div>' +
+      '<div class="week-grid">' + raster + '</div>' +
+      '<div class="week-goal"><span>' + computeStreak() + (computeStreak() === 1 ? ' Tag' : ' Tage') +
+        ' am Stück</span><span>Ziel: 7 Tage</span></div>' +
+      '<div class="bar"><span style="width:' + Math.round(erledigt / 7 * 100) + '%"></span></div>' +
+      (details ? '<div id="wochenDetails" hidden style="margin-top:12px;">' + details + '</div>' : '');
+  }
+
+  // Wie viele Tage am Stück zuletzt meditiert wurde.
+  function computeStreak(){
+    var tage = {};
+    loadHistory().forEach(function(e){ tage[dayStamp(e.ts)] = true; });
+    var streak = 0, tag = new Date();
+    if (!(dayStamp(tag.getTime()) in tage)) tag.setDate(tag.getDate() - 1);
+    while (dayStamp(tag.getTime()) in tage){ streak++; tag.setDate(tag.getDate() - 1); }
+    return streak;
   }
 
   // ---- Inselreise: kein Punktestand, sondern Muster ----
@@ -2834,49 +2929,77 @@
     return best === null ? null : { wert:best, n:bestN };
   }
 
+  // Die Reise als Weg über die Insel: fünf Stufen, jede mit einem Namen.
+  // Gezählt werden abgeschlossene Meditationen aus dem echten Verlauf -
+  // keine Punkte, die man sonstwo einsammeln könnte.
+  var STUFEN = [
+    { ab:0,  name:"Angekommen",         icon:"⛵" },
+    { ab:5,  name:"Ruhiger Anker",      icon:"⚓" },
+    { ab:15, name:"Achtsame Entdeckerin", icon:"🧭" },
+    { ab:30, name:"Vertraute Insel",    icon:"🌴" },
+    { ab:60, name:"Zuhause auf der Insel", icon:"🏝️" }
+  ];
+
   function renderJourney(zielId){
     var box = document.getElementById(zielId || "journeyBox");
     var list = loadHistory();
-    if (list.length < 2){ box.innerHTML = ""; box.style.display = "none"; return; }
+    if (!list.length){ box.innerHTML = ""; box.style.display = "none"; return; }
     box.style.display = "";
 
-    var tage = Math.max(1, Math.round((list[list.length-1].ts - list[0].ts) / 86400000) + 1);
-    var kopf = '<h4>Deine Inselreise</h4>' +
-      '<p class="journey-lead">Du lernst deine innere Landschaft besser kennen.</p>' +
-      row("Bisher", list.length + " Besuche in " + tage + (tage === 1 ? " Tag" : " Tagen"));
+    var anzahl = 0;
+    list.forEach(function(e){ anzahl += (e.meds || []).length; });
 
-    if (list.length < 5){
-      box.innerHTML = kopf +
-        '<p class="journey-hint">Deine Reise f\u00e4ngt gerade an. Nach ein paar Wochen zeigen sich hier deine Muster \u2013 ' +
-        'was dich am h\u00e4ufigsten herbringt, was dir am meisten hilft und wohin sich deine Stimmung bewegt.</p>';
-      return;
+    var stufe = 0;
+    for (var i = 0; i < STUFEN.length; i++){ if (anzahl >= STUFEN[i].ab) stufe = i; }
+    var naechste = STUFEN[stufe + 1] || null;
+    var von = STUFEN[stufe].ab;
+    var bis = naechste ? naechste.ab : von;
+    var pct = naechste ? Math.round((anzahl - von) / (bis - von) * 100) : 100;
+
+    var weg = STUFEN.map(function(st, i){
+      var cls = i < stufe ? "erreicht" : (i === stufe ? "jetzt" : "");
+      return '<div class="journey-stop ' + cls + '" title="' + st.name + '">' + st.icon + '</div>';
+    }).join("");
+
+    var tage = Math.max(1, Math.round((list[list.length-1].ts - list[0].ts) / 86400000) + 1);
+    var details = '<div class="recap-row"><span class="k">Bisher</span><span class="v">' +
+      list.length + ' Besuche in ' + tage + (tage === 1 ? ' Tag' : ' Tagen') + '</span></div>';
+
+    if (list.length >= 5){
+      var ankunft = haeufigste(list.map(function(e){ return moodOf(e.before).word; }));
+      var alleMeds = [];
+      list.forEach(function(e){ (e.meds || []).forEach(function(m){ alleMeds.push(m.name); }); });
+      var liebling = haeufigste(alleMeds);
+      var zeiten = list.map(function(e){
+        var h = new Date(e.ts).getHours();
+        for (var j = 0; j < TAGESZEIT.length; j++){ if (h < TAGESZEIT[j].bis) return TAGESZEIT[j].wort; }
+        return "abends";
+      });
+      var rhythmus = haeufigste(zeiten);
+      var schnitt = list.reduce(function(sum,e){ return sum + (e.after.x - e.before.x); }, 0) / list.length;
+      var entwicklung = schnitt > 0.12
+        ? "Im Schnitt gehst du entspannter, als du gekommen bist."
+        : (schnitt < -0.12
+          ? "Im Schnitt führt dich das Ankommen eher nach innen als zur Ruhe – auch das ist ein Ergebnis."
+          : "Im Schnitt bleibt dein Zeiger, wo er war. Manchmal ist Ankommen genug.");
+      if (ankunft)  details += zeile("Wie du meistens ankommst", ankunft.wert + " – " + ankunft.n + " von " + list.length + " Mal");
+      if (liebling) details += zeile("Deine liebste Übung", liebling.wert + " (" + liebling.n + "×)");
+      if (rhythmus) details += zeile("Dein Rhythmus", "Du kommst meistens " + rhythmus.wert + " her.");
+      details += zeile("Entwicklung", entwicklung);
+    } else {
+      details += '<p class="journey-hint">Deine Reise fängt gerade an. Nach ein paar Wochen zeigen sich hier deine Muster – ' +
+        'was dich am häufigsten herbringt, was dir am meisten hilft und wohin sich deine Stimmung bewegt.</p>';
     }
 
-    var ankunft = haeufigste(list.map(function(e){ return moodOf(e.before).word; }));
-    var alleMeds = [];
-    list.forEach(function(e){ (e.meds || []).forEach(function(m){ alleMeds.push(m.name); }); });
-    var liebling = haeufigste(alleMeds);
-    var zeiten = list.map(function(e){
-      var h = new Date(e.ts).getHours();
-      for (var i = 0; i < TAGESZEIT.length; i++){ if (h < TAGESZEIT[i].bis) return TAGESZEIT[i].wort; }
-      return "abends";
-    });
-    var rhythmus = haeufigste(zeiten);
-    var schnitt = list.reduce(function(sum,e){ return sum + (e.after.x - e.before.x); }, 0) / list.length;
-    var entwicklung = schnitt > 0.12
-      ? "Im Schnitt gehst du entspannter, als du gekommen bist."
-      : (schnitt < -0.12
-        ? "Im Schnitt f\u00fchrt dich das Ankommen eher nach innen als zur Ruhe \u2013 auch das ist ein Ergebnis."
-        : "Im Schnitt bleibt dein Zeiger, wo er war. Manchmal ist Ankommen genug.");
+    box.innerHTML =
+      '<div class="box-head"><h4>Deine Inselreise</h4><button data-auf="reiseDetails">Details</button></div>' +
+      '<div class="journey-path">' + weg + '</div>' +
+      '<div class="journey-stufe"><span class="name">Stufe ' + (stufe + 1) + ' · ' + STUFEN[stufe].name + '</span>' +
+        '<span class="zahl">' + anzahl + (naechste ? ' / ' + bis : '') + ' Meditationen</span></div>' +
+      '<div class="bar"><span style="width:' + Math.max(4, Math.min(100, pct)) + '%"></span></div>' +
+      '<div id="reiseDetails" hidden style="margin-top:12px;">' + details + '</div>';
 
-    var html = kopf;
-    if (ankunft)  html += row("Wie du meistens ankommst", ankunft.wert + " \u2013 " + ankunft.n + " von " + list.length + " Mal");
-    if (liebling) html += row("Deine liebste \u00dcbung", liebling.wert + " (" + liebling.n + "\u00d7)");
-    if (rhythmus) html += row("Dein Rhythmus", "Du kommst meistens " + rhythmus.wert + " her.");
-    html += row("Entwicklung", entwicklung);
-    box.innerHTML = html;
-
-    function row(k, v){
+    function zeile(k, v){
       return '<div class="recap-row"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>';
     }
   }
@@ -3324,6 +3447,26 @@
   document.getElementById("favMenuRow").addEventListener("click", function(){
     openCatV2("fav"); goToStep("meditation2");
   });
+  // Zum Begleiter: er sitzt unten auf "My Meditation".
+  function zumBegleiter(){
+    renderMyMed();
+    goToStep("meditation");
+    var el = document.getElementById("chatBox");
+    if (el) setTimeout(function(){ el.scrollIntoView({ behavior:"smooth", block:"center" }); }, 60);
+  }
+  document.getElementById("libKiBtn").addEventListener("click", zumBegleiter);
+  document.getElementById("profilKiBtn").addEventListener("click", zumBegleiter);
+
+  // "Details" blendet die ausführlichen Zeilen unter den Karten ein und aus.
+  document.addEventListener("click", function(e){
+    var btn = e.target.closest("[data-auf]");
+    if (!btn) return;
+    var ziel = document.getElementById(btn.getAttribute("data-auf"));
+    if (!ziel) return;
+    ziel.hidden = !ziel.hidden;
+    btn.textContent = ziel.hidden ? "Details" : "Weniger";
+  });
+
   document.getElementById("profilAboutBtn").addEventListener("click", function(){
     var box = document.getElementById("aboutBox");
     box.hidden = !box.hidden;

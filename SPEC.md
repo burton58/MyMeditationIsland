@@ -109,6 +109,7 @@ Aufbau genau wie in der Vorlage (`renderMyMed()`), die Empfehlung selbst sitzt s
 - **Filter-Chips** (`#libFilters`): Alle · ⭐ Favoriten · 🧠 Gedanken beruhigen · ❤️ Gefühle verstehen · 💪 Stress lösen · 🌿 Entspannen; aktiver Chip in Gold, scrollt sich selbst in den sichtbaren Bereich.
 - **Liste wie in der Vorlage:** je Übung eine weisse Karte mit Bild-Feld (Symbol des Bereichs), Name, "5 Min · Gedanken beruhigen", **Stern** (Favorit) und **Play**. Bereits gemachte Übungen bekommen "schon gemacht" (`schonGemacht()`).
 - **Antippen startet sofort** — die frühere Mehrfachauswahl mit Auswahl-Leiste ist entfallen, mehrere Übungen hintereinander laufen jetzt über den Trainingsmodus (§3.2).
+- **Begleiter-Karte** über der Liste (goldene Karte "Dein Begleiter · Empfehlung erhalten →"), führt zum Chat auf My Meditation.
 - **Favoriten** liegen wie der Verlauf nur auf dem Gerät (`localStorage`, Schlüssel `myisland.favoriten.v1`); der Chip ⭐ und die Profil-Zeile "Favoriten" zeigen sie.
 
 ### 3.4 Spieler (Vollbild, `body.entered.in-session`)
@@ -128,8 +129,10 @@ Aufbau genau wie in der Vorlage (`renderMyMed()`), die Empfehlung selbst sitzt s
 
 ### 3.6 Profil (`data-step="profil"`)
 - Seitenkopf "Profil · Dein Bereich", Karte "Dein Inselbewohner".
-- **Status-Karte** (`renderStatusCard()`) zum Zugang, danach **Insel-Woche** und **Inselreise** aus dem Verlauf (beide blenden sich aus, solange es zu wenig Daten gibt).
-- **Einstellungen** als Liste, wie in der Vorlage: "Abo verwalten" (→ Abo-Seite), "Statistiken" (→ My Meditation), "Favoriten" (→ Bibliothek, Filter ⭐), "Meine Insel gestalten" (→ §4), "Über die App" (blendet zwei Sätze ein), "Verlauf löschen".
+- **Status-Karte** (`renderStatusCard()`) zum Zugang, danach zwei Karten aus dem echten Verlauf (blenden sich aus, solange nichts da ist):
+  - **"Deine Inselwoche"** (`renderWeek()`) — sieben Kreise von Montag bis Sonntag, gefüllt an den Tagen mit einer Sitzung, der heutige Tag zusätzlich umrandet. Darunter "X Tage am Stück" (`computeStreak()`), "Ziel: 7 Tage" und ein Balken. Hinter **"Details"** stehen wie früher die Zeilen mit Vorher/Nachher je Tag.
+  - **"Deine Inselreise"** (`renderJourney()`) — ein Weg aus fünf Stationen (Angekommen · Ruhiger Anker · Achtsame Entdeckerin · Vertraute Insel · Zuhause auf der Insel), die aktuelle hervorgehoben, darunter "Stufe 3 · …", der Stand ("18 / 30 Meditationen") und ein Balken. Gezählt werden **abgeschlossene Meditationen aus dem Verlauf** — kein Punktesystem, das sich anders einsammeln liesse. Hinter **"Details"** die bisherigen Muster (wie du meistens ankommst, liebste Übung, Rhythmus, Entwicklung).
+- **Einstellungen** als Liste: "Abo verwalten" (→ Abo-Seite), "Statistiken" (→ My Meditation), "Favoriten" (→ Bibliothek, Filter ⭐), "Meine Insel gestalten" (→ §4), "Dein Begleiter" (→ Chat auf My Meditation), "Über die App" (blendet zwei Sätze ein), "Verlauf löschen".
 - Fusszeile: Hinweis, dass alles nur auf dem Gerät liegt, und "🏝️ Zur Titelseite".
 
 ---
