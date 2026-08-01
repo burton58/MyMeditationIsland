@@ -365,10 +365,10 @@ TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", medita
 ## 6. KI-Begleiter
 
 - Zwei Chat-Instanzen: eine auf der Meditationsauswahl (`allowRecommend = true`), eine im Abschluss (`false`)
-- System-Prompt: warmherziger, kurzer (max. 3 Sätze), unaufdringlicher Begleiter, keine Diagnosen, ermutigt bei ernster Not zu echtem menschlichen Kontakt
+- System-Prompt: warmherziger, kurzer (max. 3 Sätze), unaufdringlicher Begleiter, keine Diagnosen, ermutigt bei ernster Not zu echtem menschlichen Kontakt; kennt neben den Meditationen jetzt auch Mudras/Mantras und wird angewiesen, bei unklarem Anliegen auf den Kompass zu verweisen statt zu raten (für den Fall, dass je ein echter Schlüssel/Proxy angeschlossen wird)
 - Bekommt vollen Kontext mitgeschickt: Kompass vorher/(nachher), aktuelle Auswahl bzw. abgeschlossene Meditationen
 - Kann in der Auswahl-Ansicht per angehängtem `[EMPFEHLUNG: <exakter Name>]`-Tag eine Übung **zur Mehrfachauswahl hinzufügen** (nicht ersetzen)
-- Fallback-Sätze bei API-Fehlern/Offline (kein Absturz, kein sichtbarer Fehler für die Person)
+- **Der echte API-Aufruf hat bewusst keinen Schlüssel** (öffentliches Repo) und schlägt darum in der Praxis immer fehl. Statt dessen antwortet `lokaleAntwort()` im Fehlerfall inhaltlich echt, ganz ohne Netz: sie erkennt per Stichwortliste die Richtung (Gedanken/Gefühle/Anspannung/Entspannung), erkennt explizite Nachfragen nach "Mudra" oder "Mantra" und wählt dafür einen passenden Eintrag aus `MUDRAS`/`MANTRAS`, empfiehlt sonst (wo erlaubt) über dasselbe `[EMPFEHLUNG: ...]`-Tag eine passende Meditation aus `MEDITATIONS`, und verweist bei unklarer Nachricht auf den Kompass. Die frühere generische Fallback-Liste (vier immer gleiche Sätze im Kreis) ist damit ersetzt.
 
 ---
 

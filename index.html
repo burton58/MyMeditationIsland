@@ -3607,13 +3607,80 @@
     }).join("\n");
   }
 
-  var FALLBACKS = [
-    "Danke, dass du das teilst. Nimm dir ruhig einen Moment – du musst hier nichts leisten.",
-    "Das klingt nach einiges. Vielleicht hilft es, einmal langsam auszuatmen, bevor du weitermachst.",
-    "Schön, dass du da bist. Deine Insel wartet, und die Übung läuft in deinem Tempo.",
-    "Was auch gerade da ist, es darf da sein. Magst du mit der empfohlenen Übung starten?"
+  // ---- Begleiter ohne Netz: der echte API-Aufruf oben hat bewusst keinen
+  // Schlüssel (der stünde sonst öffentlich im Repo) und schlägt darum immer
+  // fehl. Damit die Person trotzdem eine echte, passende Antwort bekommt
+  // statt vier immer gleicher Standardsätze, wertet diese Funktion aus, was
+  // geschrieben wurde, und antwortet lokal - mit Mudra, Mantra, einer
+  // passenden Meditation oder einem Verweis auf den Kompass.
+  var RICHTUNGS_WOERTER = {
+    nord: ["kopf","gedanke","gedanken","grübl","grübel","denke","denken","kreis","konzentrat","fokus","klarheit","verwirrt","durcheinander","chaotisch"],
+    sued: ["gefühl","fühl","herz","traurig","emotional","weinen","trauer","verletzt","einsam","liebeskummer"],
+    west: ["stress","gestresst","angespannt","anspannung","druck","hektik","nervös","angst","sorge","überfordert","panik","unruhig"],
+    ost:  ["müde","erschöpft","entspann","ruhe","schlaf","energie","erhol","auszeit","ausgelaugt"]
+  };
+  var INTRO_SAETZE = {
+    nord: "Das klingt nach viel im Kopf gerade.",
+    sued: "Das klingt nach Gefühlen, die gerade Raum brauchen.",
+    west: "Das klingt nach Anspannung, die raus darf.",
+    ost:  "Das klingt nach einem Moment, der Ruhe verdient."
+  };
+  var UNKLAR_SAETZE = [
+    "Das kann ich noch nicht gut einordnen. Nutz doch kurz den Kompass – dort siehst du in ein paar Sekunden, was gerade zu dir passt.",
+    "Magst du mir sagen, ob das eher im Kopf, im Gefühl oder im Körper sitzt? Oder du gehst direkt zum Kompass, der fragt genau das."
   ];
-  var fbIndex = 0;
+
+  function erkenneRichtung(text){
+    var t = text.toLowerCase(), treffer = { nord:0, sued:0, west:0, ost:0 };
+    Object.keys(RICHTUNGS_WOERTER).forEach(function(dir){
+      RICHTUNGS_WOERTER[dir].forEach(function(w){ if (t.indexOf(w) !== -1) treffer[dir]++; });
+    });
+    var best = null, max = 0;
+    Object.keys(treffer).forEach(function(dir){ if (treffer[dir] > max){ max = treffer[dir]; best = dir; } });
+    return best;
+  }
+  // Kein Zufall (der waere bei jeder Nachricht anders), aber auch keine
+  // Konstante (immer dasselbe Mudra) - eine einfache Streuung aus dem
+  // Text selbst sorgt fuer Abwechslung, ohne echten Zufall zu brauchen.
+  function textStreuung(text){
+    var n = 0;
+    for (var i = 0; i < text.length; i++) n += text.charCodeAt(i);
+    return n;
+  }
+  function waehleFuerRichtung(liste, dir, streuung){
+    var pool = liste.filter(function(e){ return e.dir === dir; });
+    if (!pool.length) pool = liste;
+    return pool[streuung % pool.length];
+  }
+  function medFuerRichtung(dir){
+    var pool = MEDITATIONS.filter(function(m){ return m.dir === dir && istFrei(m.id); });
+    return pool[0] || null;
+  }
+
+  function lokaleAntwort(text, allowRecommend){
+    var dir = erkenneRichtung(text);
+    if (!dir) return UNKLAR_SAETZE[textStreuung(text) % UNKLAR_SAETZE.length];
+
+    var intro = INTRO_SAETZE[dir], streuung = textStreuung(text);
+    var willMantra = text.toLowerCase().indexOf("mantra") !== -1;
+    var willMudra = text.toLowerCase().indexOf("mudra") !== -1;
+
+    if (willMantra){
+      var ma = waehleFuerRichtung(MANTRAS, dir, streuung);
+      return intro + " Ein Satz dafür: „" + ma.text + "“ – " + ma.why;
+    }
+    if (willMudra){
+      var mu = waehleFuerRichtung(MUDRAS, dir, streuung);
+      return intro + " Versuch das " + mu.name + ": " + mu.how + " " + mu.why;
+    }
+    if (allowRecommend){
+      var med = medFuerRichtung(dir);
+      if (med) return intro + " Ich hab dir eine Übung herausgesucht, die dazu passt. [EMPFEHLUNG: " + med.name + "]";
+    }
+    var muFallback = waehleFuerRichtung(MUDRAS, dir, streuung);
+    return intro + " Ein kleines Mudra dazu: " + muFallback.name + " – " + muFallback.why +
+      " Frag mich gern auch nach einem Mantra dafür.";
+  }
 
   function setupChat(boxId, inputId, sendId, greeting, allowRecommend){
     var box = document.getElementById(boxId);
@@ -3646,6 +3713,27 @@
       return true;
     }
 
+    // Zeigt die Antwort im Chat an und wertet ein angehaengtes
+    // [EMPFEHLUNG: Name]-Tag aus - gemeinsam genutzt von der echten
+    // Antwort (falls je ein Schluessel angeschlossen wird) und der
+    // lokalen Antwort (die dasselbe Tag-Format benutzt).
+    function zeigeAntwort(typing, rohtext, historyEintrag){
+      var tagMatch = rohtext.match(/\[EMPFEHLUNG:\s*([^\]]+)\]\s*$/);
+      var clean = rohtext.replace(/\[EMPFEHLUNG:\s*[^\]]+\]\s*$/, "").trim();
+      typing.classList.remove("typing");
+      typing.textContent = clean;
+      if (historyEintrag) history.push({ role:"assistant", content:rohtext });
+      if (tagMatch && applyRecommendation(tagMatch[1])){
+        var note = document.createElement("div");
+        note.className = "bubble ai";
+        note.style.opacity = ".75";
+        note.style.fontSize = ".78rem";
+        note.textContent = "→ „" + tagMatch[1].trim() + "“ steht jetzt oben als Empfehlung.";
+        box.appendChild(note);
+        box.scrollTop = box.scrollHeight;
+      }
+    }
+
     function submit(){
       var text = input.value.trim();
       if (!text) return;
@@ -3657,9 +3745,13 @@
 
       var recInstruction = allowRecommend
         ? ("Das sind die verfügbaren Meditationen:\n" + medCatalogueText() +
-           "\nWenn aus dem Gespräch eine davon klar passt, empfiehl genau eine mit Begründung in 1 Satz " +
-           "und häng ganz am Ende exakt so an, mit dem exakten Namen aus der Liste: [EMPFEHLUNG: <Name>]. " +
-           "Wenn nichts klar passt, lass das Tag weg.")
+           "\nDu kennst ausserdem Mudras (Handhaltungen) und Mantras (kurze Sätze) für vier Bereiche: " +
+           "Gedanken beruhigen, Gefühle verstehen, Stress lösen, Entspannen. " +
+           "Wenn jemand konkret nach einem Mudra oder Mantra fragt, schlage eines passend zum Gespräch vor " +
+           "und beschreibe es kurz in eigenen Worten. " +
+           "Wenn aus dem Gespräch stattdessen eine Meditation aus der Liste klar passt, empfiehl genau eine " +
+           "mit Begründung in 1 Satz und häng ganz am Ende exakt so an, mit dem exakten Namen aus der Liste: " +
+           "[EMPFEHLUNG: <Name>]. Wenn nichts klar passt, verweise freundlich auf den Kompass, statt zu raten.")
         : "";
 
       fetch("https://api.anthropic.com/v1/messages", {
@@ -3680,25 +3772,13 @@
       .then(function(data){
         var txt = (data.content || []).map(function(c){ return c.text || ""; }).join("").trim();
         if (!txt) throw new Error("leer");
-        var tagMatch = txt.match(/\[EMPFEHLUNG:\s*([^\]]+)\]\s*$/);
-        var clean = txt.replace(/\[EMPFEHLUNG:\s*[^\]]+\]\s*$/, "").trim();
-        typing.classList.remove("typing");
-        typing.textContent = clean;
-        history.push({ role:"assistant", content:txt });
-        if (tagMatch && applyRecommendation(tagMatch[1])){
-          var note = document.createElement("div");
-          note.className = "bubble ai";
-          note.style.opacity = ".75";
-          note.style.fontSize = ".78rem";
-          note.textContent = "→ „" + tagMatch[1].trim() + "“ steht jetzt oben als Empfehlung.";
-          box.appendChild(note);
-          box.scrollTop = box.scrollHeight;
-        }
+        zeigeAntwort(typing, txt, true);
       })
       .catch(function(){
-        typing.classList.remove("typing");
-        typing.textContent = FALLBACKS[fbIndex % FALLBACKS.length];
-        fbIndex++;
+        // Kein Schluessel angeschlossen (siehe Kommentar oben bei
+        // lokaleAntwort) - hier antwortet die App lokal, aber inhaltlich
+        // genauso konkret: Mudra, Mantra, passende Meditation oder Kompass.
+        zeigeAntwort(typing, lokaleAntwort(text, allowRecommend), false);
         history.pop();
       });
     }
