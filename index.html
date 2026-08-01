@@ -47,6 +47,11 @@
     background-attachment:fixed;
     color:var(--ink);
     min-height:100vh;
+    /* "dvh" rechnet mit der Bildschirmhoehe, die gerade wirklich sichtbar
+       ist - "vh" rechnet auf dem iPhone teils mit der Hoehe bei versteckter
+       Adressleiste, wodurch Inhalte (z. B. das Insel-Foto) auf dem echten
+       Geraet anders abschneiden koennen als in einer Vorschau. */
+    min-height:100dvh;
     padding-bottom:calc(var(--tabbar-h) + var(--safe-bottom));
   }
   body[data-step="splash"]{ padding-bottom:0; background:var(--deep); }
@@ -74,6 +79,7 @@
   body:not(.entered)[data-step="home"] .home-page{
     display:flex; flex-direction:column;
     min-height:calc(100vh - var(--tabbar-h) - var(--safe-bottom));
+    min-height:calc(100dvh - var(--tabbar-h) - var(--safe-bottom));
   }
   body.entered .page, body.entered .topbar, body.entered .stepper{ display:none; }
   .splash-page{ padding:0; max-width:none; }
