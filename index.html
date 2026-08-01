@@ -277,12 +277,14 @@
      Die Bedienung ist unverändert: der Punkt lässt sich frei in der Scheibe
      bewegen, waagrecht Anspannung/Entspannung, senkrecht Denken/Fühlen.
      Neu ist nur der Rahmen: Goldring, Marken und Beschriftung aussen. */
-  .compass-row{ display:flex; align-items:center; gap:8px; margin:2px 0 4px; }
+  .compass-row{ display:flex; align-items:center; justify-content:center; margin:2px 0 4px; }
   .compass-wrap{
-    flex:1; min-width:0; position:relative; aspect-ratio:1/1; touch-action:none; margin:0 auto;
+    width:100%; max-width:360px; position:relative; aspect-ratio:1/1; touch-action:none; margin:0 auto;
     filter:drop-shadow(0 10px 24px rgba(28,59,51,.18));
+    animation:dialSettle .5s cubic-bezier(.22,.61,.36,1) both;
   }
   .compass-wrap svg{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:auto; }
+  @keyframes dialSettle{ from{ opacity:0; transform:scale(.94); } to{ opacity:1; transform:scale(1); } }
   /* Das Foto liegt als eigene Ebene hinter der Zeichnung, damit es nicht in
      jeder Kompass-Zeichnung noch einmal gespeichert werden muss. */
   .compass-photo{
@@ -293,14 +295,12 @@
   /* Auf kurzen Bildschirmen darf die Scheibe nicht die ganze Höhe fressen -
      Zustand und Auswahl sollen ohne weites Scrollen erreichbar bleiben. */
   @media (max-height:760px){
-    .compass-wrap{ max-width:290px; }
+    .compass-wrap{ max-width:318px; }
   }
-  .axis-label{ text-align:center; font-size:1.05rem; font-weight:700; color:var(--ink); margin:8px 0; }
-  .axis-label.side{
-    flex:0 0 auto; font-size:.85rem; line-height:1; letter-spacing:.02em; color:var(--ink);
-    writing-mode:vertical-rl; text-orientation:mixed; white-space:nowrap; padding:0 2px; margin:0;
-  }
-  .axis-label.side:first-child{ transform:rotate(180deg); }
+  /* Die vier Himmelsrichtungen stehen jetzt als kleine, waagrechte
+     Beschriftung direkt im Ziffernblatt (siehe .dial-label im SVG) - kein
+     Kopfneigen mehr noetig, und der Ring darf dafuer die ganze Breite
+     einnehmen statt Platz an seitliche Textspalten abzugeben. */
   .compass-hint{ text-align:center; font-size:.83rem; color:var(--ink-soft); margin:10px 0 0; }
 
   .rose-needle{ stroke:#a8842a; stroke-width:5; }
@@ -311,26 +311,53 @@
   .rose-journey{ stroke:#6b5218; stroke-width:2.5; stroke-dasharray:5 5; opacity:.6; }
   .rose-journey-start{ fill:rgba(255,255,255,.9); stroke:#6b5218; stroke-width:2.5; opacity:.8; }
 
+  /* Beschriftung der vier Himmelsrichtungen direkt im Ziffernblatt: klein,
+     waagrecht lesbar, mit dunklem Schein statt harter Kontur, damit sie auf
+     jedem Ausschnitt des Fotos lesbar bleibt. */
+  .dial-label{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:12px; font-weight:700; letter-spacing:.05em; fill:#fffdf7;
+    paint-order:stroke; stroke:rgba(20,40,34,.55); stroke-width:4px; stroke-linejoin:round;
+    pointer-events:none; text-transform:uppercase;
+  }
+
   /* Kleine Ausgabe des Kompasses in der Zustands-Karte auf der Startseite */
-  .compass-wrap.mini{ width:86px; flex:0 0 86px; filter:none; }
+  .compass-wrap.mini{ width:86px; flex:0 0 86px; filter:none; animation:none; }
   .compass-wrap.mini .rose-needle{ stroke-width:9; }
   /* Der kleine Kompass braucht groessere Punkte, sonst sieht man sie nicht. */
   .compass-wrap.mini .rose-needle-tip{ r:22px; }
 
   /* ---------- Zustands-Anzeige unter dem Kompass ---------- */
-  .readout-card{ padding:16px; display:flex; gap:13px; align-items:flex-start; margin-top:18px; }
+  .readout-card{ padding:16px; display:flex; gap:13px; align-items:flex-start; margin-top:22px; }
   .readout-card .glyph{
-    width:44px; height:44px; border-radius:50%; background:var(--cream-2); flex:0 0 auto;
-    display:flex; align-items:center; justify-content:center; font-size:1.15rem;
+    width:46px; height:46px; border-radius:50%; flex:0 0 auto;
+    background:linear-gradient(155deg, #fffdf7, var(--cream-2));
+    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4), 0 2px 8px rgba(28,59,51,.1);
+    display:flex; align-items:center; justify-content:center; font-size:1.2rem;
   }
-  .readout-card .k{ font-size:.78rem; color:var(--ink-soft); margin-bottom:3px; }
+  .readout-card .k{
+    font-size:.68rem; color:var(--gold-deep); margin-bottom:4px; font-weight:800;
+    text-transform:uppercase; letter-spacing:.08em;
+  }
   .readout-card .body{ flex:1; min-width:0; }
-  .compass-readout .v{ font-weight:700; font-size:1.05rem; margin-bottom:6px; }
-  .compass-readout .why{ font-size:.85rem; line-height:1.5; color:var(--ink-soft); }
+  .compass-readout .v{ font-weight:700; font-size:1.05rem; margin-bottom:6px; transition:opacity .15s ease; }
+  .compass-readout .v.fading{ opacity:0; }
+  .compass-readout .why{ font-size:.85rem; line-height:1.5; color:var(--ink-soft); transition:opacity .15s ease; }
+  .compass-readout .why.fading{ opacity:0; }
   .mood-emoji{ font-size:1.05rem; }
 
-  /* Erklärung hinter dem i-Knopf */
-  .compass-info{ padding:15px; margin-bottom:14px; }
+  /* Kleiner, ganz sachlicher Beleg von Regelmaessigkeit - kein Punktesystem,
+     nur ein Fakt aus dem echten Verlauf, der still wieder verschwindet,
+     wenn es noch keine Kette gibt. */
+  .streak-note{ margin:9px 0 0; font-size:.78rem; color:var(--ink-soft); }
+  .streak-note[hidden]{ display:none; }
+
+  /* Erklärung hinter dem i-Knopf: klappt weich auf statt hart umzuschalten. */
+  .compass-info{
+    max-height:0; overflow:hidden; padding:0 15px; margin-bottom:0; opacity:0; box-shadow:none;
+    transition:max-height .3s cubic-bezier(.22,.61,.36,1), opacity .25s ease, padding .3s ease, margin .3s ease;
+  }
+  .compass-info.open{ max-height:280px; padding:15px; margin-bottom:14px; opacity:1; box-shadow:0 3px 14px rgba(28,59,51,.07); }
   .compass-info p{ margin:0 0 8px; font-size:.85rem; line-height:1.55; color:var(--ink-soft); }
   .compass-info p:last-child{ margin-bottom:0; }
 
@@ -339,33 +366,75 @@
   .empty-card p{ margin:0 0 14px; font-size:.9rem; line-height:1.5; color:var(--ink-soft); }
   .empty-card p:last-child{ margin-bottom:0; }
 
-  /* ---------- Auswahl: Dauer und Anzahl ---------- */
+  /* ---------- Dauer & Trainingsmodus: ruhige Randnotiz statt zweier
+     eigener Formularblöcke - eine Zeile, die bei Bedarf aufklappt. ---------- */
+  .prefs-summary{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;
+    margin-top:22px; padding:13px 16px; border:1px solid var(--line); border-radius:14px;
+    background:var(--card); cursor:pointer; font-family:inherit; font-size:.86rem; font-weight:600;
+    color:var(--ink); text-align:left;
+  }
+  .prefs-summary svg{ width:15px; height:15px; opacity:.5; flex:0 0 auto; }
+  .compass-prefs{
+    max-height:0; overflow:hidden; opacity:0;
+    transition:max-height .32s cubic-bezier(.22,.61,.36,1), opacity .28s ease;
+  }
+  .compass-prefs.open{ max-height:420px; opacity:1; margin-top:14px; }
   .pref-block{ margin-top:20px; }
-  .pref-block h3{ font-size:.85rem; margin:0 0 9px; font-weight:700; }
-  .seg{ display:flex; gap:6px; }
+  .pref-block:first-child{ margin-top:0; }
+  .pref-block h3{
+    font-size:.7rem; margin:0 0 10px; font-weight:800; color:var(--gold-deep);
+    text-transform:uppercase; letter-spacing:.08em;
+  }
+  .seg{ display:flex; gap:6px; position:relative; }
   .seg .opt{
     flex:1; min-width:0; border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit;
     padding:11px 4px; border-radius:12px; font-size:.84rem; font-weight:600; color:var(--ink);
     display:flex; align-items:center; justify-content:center; user-select:none; transition:.15s ease;
+    position:relative; z-index:1;
   }
-  .seg .opt.active{ background:var(--gold-grad); color:#3a2e08; border-color:var(--gold); }
+  .seg .opt.active{ color:var(--ink); font-weight:700; border-color:transparent; }
+  /* Ein einzelner, gleitender Umriss zeigt die Auswahl, statt jede Kachel
+     hart einzufaerben - Gold bleibt damit dem Haupt-Knopf vorbehalten. */
+  .seg-thumb{
+    position:absolute; top:0; bottom:0; left:0; width:calc((100% - 24px)/5); border-radius:12px;
+    background:rgba(201,162,39,.12); border:1.5px solid var(--gold); pointer-events:none; z-index:0;
+    transition:left .22s cubic-bezier(.22,.61,.36,1);
+  }
+  /* "left" statt "transform": Prozentwerte in translateX() beziehen sich
+     auf die eigene Breite des Elements, nicht auf den Container - "left"
+     rechnet dagegen korrekt gegen die Breite von .seg. */
+  .seg:has(.opt:nth-child(2).active) .seg-thumb{ left:calc(1 * (((100% - 24px)/5) + 6px)); }
+  .seg:has(.opt:nth-child(3).active) .seg-thumb{ left:calc(2 * (((100% - 24px)/5) + 6px)); }
+  .seg:has(.opt:nth-child(4).active) .seg-thumb{ left:calc(3 * (((100% - 24px)/5) + 6px)); }
+  .seg:has(.opt:nth-child(5).active) .seg-thumb{ left:calc(4 * (((100% - 24px)/5) + 6px)); }
 
   /* Trainingsmodus: zwei Zeilen zum Auswählen, wie in der Vorlage */
   .radio-row{ display:flex; flex-direction:column; gap:9px; }
   .radio-opt{
     display:flex; align-items:center; gap:11px; padding:14px; border:1px solid var(--line); border-radius:14px;
-    background:var(--card); cursor:pointer; font-size:.9rem; user-select:none;
+    background:var(--card); cursor:pointer; font-size:.9rem; user-select:none; transition:.15s ease;
   }
-  .radio-opt .dot{ width:19px; height:19px; border-radius:50%; border:2px solid #c3d1c9; flex:0 0 auto; position:relative; }
+  .radio-opt .mode-ico{ flex:0 0 auto; width:18px; height:18px; color:var(--ink-soft); opacity:.65; }
+  .radio-opt .mode-ico svg{ width:100%; height:100%; }
+  .radio-opt .dot{ width:19px; height:19px; border-radius:50%; border:2px solid #c3d1c9; flex:0 0 auto; position:relative; transition:.15s ease; }
   .radio-opt.on{ border-color:var(--gold); background:#fdf8ea; }
+  .radio-opt.on .mode-ico{ color:var(--gold-deep); opacity:1; }
   .radio-opt.on .dot{ border-color:var(--gold); }
   .radio-opt.on .dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--gold-grad); }
   .radio-opt .rtxt strong{ display:block; font-weight:600; }
   .radio-opt .rtxt span{ font-size:.77rem; color:var(--ink-soft); }
 
-  /* Empfehlung direkt auf der Kompass-Seite */
-  .rec-result{ margin-top:18px; display:none; }
+  /* Empfehlung direkt auf der Kompass-Seite: blendet weich ein statt hart
+     umzuschalten - die Antwort soll wie eine kurze, ruhige Ueberlegung
+     wirken, nicht wie ein Datenbank-Lookup. */
+  .rec-result{
+    margin-top:32px; display:none; opacity:0; transform:translateY(12px);
+    transition:opacity .4s cubic-bezier(.22,.61,.36,1), transform .4s cubic-bezier(.22,.61,.36,1);
+  }
   .rec-result.show{ display:block; }
+  .rec-result.show.in{ opacity:1; transform:translateY(0); }
+  .rec-result .card{ background:linear-gradient(180deg, #fffdf7, var(--cream-2) 180%); box-shadow:0 14px 34px rgba(28,59,51,.1); }
   .rec-head{ font-size:.72rem; text-transform:uppercase; letter-spacing:.09em; color:var(--gold-deep); font-weight:800; margin-bottom:9px; }
   .rec-item{ display:flex; align-items:center; gap:13px; padding:13px 14px; border-bottom:1px solid var(--line); width:100%;
     background:none; border-left:none; border-right:none; border-top:none; font-family:inherit; color:var(--ink); text-align:left; cursor:pointer; }
@@ -374,10 +443,60 @@
     width:22px; height:22px; border-radius:50%; background:var(--gold-grad); color:#3a2e08; font-size:.7rem; font-weight:700;
     display:flex; align-items:center; justify-content:center; flex:0 0 auto;
   }
-  .rec-why{ padding:14px; border-top:1px solid var(--line); }
+  .rec-result.in .play-btn{ animation:playPop .3s .15s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes playPop{ 0%{ transform:scale(0); } 60%{ transform:scale(1.08); } 100%{ transform:scale(1); } }
+  .rec-why{ padding:14px; margin-top:8px; }
   .rec-why h4{ margin:0 0 6px; font-size:.82rem; }
   .rec-why p{ margin:0; font-size:.83rem; line-height:1.55; color:var(--ink-soft); }
   .rec-actions{ padding:14px; }
+
+  /* ---------- Kompass: Feinschliff ---------- */
+  /* Kopfzeile knapper, damit der Ring mehr Raum bekommt; der Zurueck-Pfeil
+     tritt einen Hauch zurueck, damit "i" als die interessante Option wirkt. */
+  .compass-page .page-head{ margin-bottom:10px; }
+  .compass-page #backToIslandBtn{ opacity:.8; }
+
+  /* Ein extrem sanfter, sehr langsamer Verlauf zwischen den beiden
+     ohnehin schon vorhandenen Cremetoenen - kaum wahrnehmbar als Bewegung,
+     nur als ein Hauch Leben hinter der Nadel. Das Kompass-Foto selbst
+     bleibt davon unberuehrt. */
+  body[data-step="compass"]{ background-size:180% 180%; animation:bgAtmen 24s ease-in-out infinite; }
+  @keyframes bgAtmen{ 0%,100%{ background-position:0% 0%; } 50%{ background-position:100% 60%; } }
+
+  /* Gestaffeltes Eintreten: der Kompass zuerst, dann Zustand, dann die
+     ruhige Randnotiz - das fuehrt den Blick, statt alles auf einmal zu
+     zeigen. */
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+  .compass-page .readout-card{ animation:riseIn .45s .16s cubic-bezier(.22,.61,.36,1) both; }
+  .compass-page .prefs-summary{ animation:riseIn .45s .28s cubic-bezier(.22,.61,.36,1) both; }
+  .compass-page #recommendBtn{ animation:riseIn .45s .38s cubic-bezier(.22,.61,.36,1) both; }
+
+  /* Ein leises Atmen in der Nabe, solange der Zeiger noch nie bewegt wurde -
+     eine stille Einladung zum Anfassen. Hoert auf, sobald einmal gezogen
+     wurde, und bleibt beim kleinen Kompass auf der Startseite ganz aus. */
+  @keyframes hubAtmen{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.16); } }
+  .rose-hub, .rose-hub-dot{ transform-origin:200px 200px; }
+  .compass-wrap:not(.touched):not(.mini) .rose-hub,
+  .compass-wrap:not(.touched):not(.mini) .rose-hub-dot{ animation:hubAtmen 4s ease-in-out infinite; }
+
+  /* Jede Beruehrung bekommt eine kleine Rueckmeldung - einheitlich fuer
+     alle antippbaren Elemente statt nur fuer den Haupt-Knopf. */
+  .icon-btn, .seg .opt, .radio-opt, .rec-item, .prefs-summary, .tab-item, .play-btn, .focus-card{
+    transition:transform .08s ease;
+  }
+  .icon-btn:active, .seg .opt:active, .radio-opt:active, .rec-item:active,
+  .prefs-summary:active, .tab-item:active, .play-btn:active, .focus-card:active{
+    transform:scale(.97);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    body[data-step="compass"]{ animation:none; }
+    .compass-page *, .compass-page *::before, .compass-page *::after,
+    .rose-hub, .rose-hub-dot{
+      animation-duration:.001ms !important; animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+    }
+  }
 
   /* ---------- My Meditation ---------- */
   .hero-card{ padding:16px; display:flex; gap:14px; align-items:flex-start; }
@@ -916,16 +1035,13 @@
       </button>
     </div>
 
-    <div class="card compass-info" id="compassInfo" hidden>
-      <p>Oben und unten zeigst du, ob gerade eher dein <strong>Kopf</strong> arbeitet oder dein <strong>Gefühl</strong>.
-      Links und rechts, wie <strong>entspannt</strong> oder <strong>angespannt</strong> du dabei bist.</p>
-      <p>Der Zeiger darf überall in der Scheibe stehen – auch dazwischen. In der Mitte heisst: ausgeglichen.</p>
+    <div class="card compass-info" id="compassInfo">
+      <p>Oben/unten = <strong>Kopf</strong> oder <strong>Gefühl</strong>. Links/rechts = <strong>entspannt</strong>
+      oder <strong>angespannt</strong>. Der Zeiger darf überall stehen – auch dazwischen.</p>
       <button class="btn-ghost" id="compassInfoOk" style="margin-top:4px;">Verstanden</button>
     </div>
 
-    <div class="axis-label">Gedanken</div>
     <div class="compass-row">
-      <div class="axis-label side">Entspannt</div>
       <div class="compass-wrap" id="compassWrap">
         <div class="compass-photo"></div>
         <svg id="compassSvg" viewBox="0 0 400 400" class="compass-flat">
@@ -937,6 +1053,11 @@
               <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity=".35"/>
             </filter>
           </defs>
+
+          <text class="dial-label" x="200" y="72" text-anchor="middle">Gedanken</text>
+          <text class="dial-label" x="200" y="336" text-anchor="middle">Gefühle</text>
+          <text class="dial-label" x="60" y="205" text-anchor="start">Entspannt</text>
+          <text class="dial-label" x="340" y="205" text-anchor="end">Angespannt</text>
 
           <!-- Marken rund um die Scheibe: die vier Pole, Pfeile und feine Striche -->
           <g fill="#c9a227">
@@ -970,19 +1091,22 @@
           <circle cx="200" cy="200" r="4" class="rose-hub-dot"/>
         </svg>
       </div>
-      <div class="axis-label side">Angespannt</div>
     </div>
-    <div class="axis-label">Gefühle</div>
 
     <div class="card readout-card">
       <div class="glyph" id="stateGlyph">💛</div>
       <div class="body">
-        <div class="k">Deine Auswahl</div>
+        <div class="k">Gerade bei dir</div>
         <div class="compass-readout" id="compassReadout"></div>
       </div>
     </div>
+    <p class="streak-note" id="streakNote" hidden></p>
 
-    <div class="compass-prefs">
+    <button class="prefs-summary" id="prefsSummaryBtn" type="button" aria-expanded="false">
+      <span id="prefsSummaryText">10 Min · Einzelmeditation</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+    </button>
+    <div class="compass-prefs" id="compassPrefs">
       <div class="pref-block">
         <h3>Maximale Meditationsdauer</h3>
         <div class="seg" data-field="durationV2" id="durationOptsV2">
@@ -991,16 +1115,19 @@
           <div class="opt" data-value="15">15 Min</div>
           <div class="opt" data-value="20">20 Min</div>
           <div class="opt" data-value="30">30 Min</div>
+          <div class="seg-thumb"></div>
         </div>
       </div>
       <div class="pref-block">
         <h3>Trainingsmodus</h3>
         <div class="radio-row" id="modeRow">
           <div class="radio-opt on" data-v="single">
+            <span class="mode-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/></svg></span>
             <span class="dot"></span>
             <span class="rtxt"><strong>Einzelmeditation</strong><span>Eine Übung, passend zu deinem Zustand</span></span>
           </div>
           <div class="radio-opt" data-v="program">
+            <span class="mode-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg></span>
             <span class="dot"></span>
             <span class="rtxt"><strong>Trainingsprogramm</strong><span>Mehrere Meditationen nacheinander</span></span>
           </div>
@@ -1008,7 +1135,7 @@
       </div>
     </div>
 
-    <button class="btn-dark full" id="recommendBtn" style="margin-top:20px;">Meditationen empfehlen →</button>
+    <button class="btn-dark full" id="recommendBtn" style="margin-top:16px;">Zeig mir, was jetzt passt →</button>
 
     <div class="rec-result" id="recResult">
       <div class="rec-head">Für dich empfohlen</div>
@@ -1109,9 +1236,7 @@
       </div>
     </div>
 
-    <div class="axis-label">Gedanken</div>
     <div class="compass-row">
-      <div class="axis-label side">Entspannt</div>
       <div class="compass-wrap" id="compassWrap2">
         <div class="compass-photo"></div>
         <svg id="compassSvg2" viewBox="0 0 400 400" class="compass-flat">
@@ -1123,6 +1248,11 @@
               <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity=".35"/>
             </filter>
           </defs>
+
+          <text class="dial-label" x="200" y="72" text-anchor="middle">Gedanken</text>
+          <text class="dial-label" x="200" y="336" text-anchor="middle">Gefühle</text>
+          <text class="dial-label" x="60" y="205" text-anchor="start">Entspannt</text>
+          <text class="dial-label" x="340" y="205" text-anchor="end">Angespannt</text>
 
           <!-- Marken rund um die Scheibe: die vier Pole, Pfeile und feine Striche -->
           <g fill="#c9a227">
@@ -1160,9 +1290,7 @@
           <circle cx="200" cy="200" r="4" class="rose-hub-dot"/>
         </svg>
       </div>
-      <div class="axis-label side">Angespannt</div>
     </div>
-    <div class="axis-label">Gefühle</div>
 
     <div class="card readout-card">
       <div class="glyph" id="stateGlyph2">🌅</div>
@@ -2268,7 +2396,7 @@
     // Beim allerersten Besuch der Kompass-Seite steht die Erklaerung offen -
     // genau dort ist sie neu. Danach nie wieder von selbst; ueber das "i"
     // bleibt sie jederzeit erreichbar.
-    if (step === "compass") erklaerungBeimErstenMal();
+    if (step === "compass"){ erklaerungBeimErstenMal(); renderStreak(); }
     document.body.setAttribute("data-step", step);
     var info = STEPS[step] || STEPS.island;
     document.getElementById("stepper").textContent = info.label;
@@ -2315,6 +2443,9 @@
       target.x = -dx / MAXR; // -1 Anspannung .. 1 Entspannung — independent of y
       target.y =  dy / MAXR; // -1 Denken .. 1 Fühlen — independent of x
       if (target === compassBefore) kompassBenutzt = true;
+      // Die atmende Nabe war nur eine stille Einladung zum Anfassen -
+      // sobald einmal gezogen wurde, hat sie ihren Zweck erfuellt.
+      wrap.classList.add("touched");
       // Andere Kompass-Zeichnungen, die denselben Punkt zeigen (z. B. der
       // Kompass auf der Startseite), sofort mitziehen - auch wenn ihre
       // Seite gerade gar nicht sichtbar ist.
@@ -2497,6 +2628,12 @@
     document.getElementById("recWhy").textContent = empfehlungGrund;
     var box = document.getElementById("recResult");
     box.classList.add("show");
+    // Ein Frame warten, bis display:block wirklich gerendert ist, dann erst
+    // die Karte weich einblenden - so bleibt es ein Uebergang statt eines
+    // harten Umschaltens, auch beim allerersten Mal.
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ box.classList.add("in"); });
+    });
     box.scrollIntoView({ behavior:"smooth", block:"start" });
     renderHome();
   }
@@ -2677,6 +2814,7 @@
     if (!target) return;
     Array.prototype.forEach.call(this.children, function(el){ el.classList.toggle("active", el === target); });
     durationV2 = parseInt(target.getAttribute("data-value"), 10);
+    aktualisierePrefsSummary();
   });
   document.querySelector('#durationOptsV2 [data-value="' + durationV2 + '"]').classList.add("active");
 
@@ -2686,7 +2824,9 @@
     if (!opt) return;
     Array.prototype.forEach.call(this.children, function(el){ el.classList.toggle("on", el === opt); });
     modus = opt.getAttribute("data-v");
+    aktualisierePrefsSummary();
   });
+  aktualisierePrefsSummary();
 
   function selectedMeds(){
     return chosenMedIds.map(function(id){
@@ -3078,6 +3218,17 @@
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
+  // Weicher Wortwechsel statt hartem Sprung: das alte Wort blendet kurz
+  // aus, dann steht das neue da - das Wort soll sich so sanft aendern wie
+  // die Nadel daneben, nicht dagegen abstechen.
+  var REDUCE_MOTION = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  function ueberblenden(el, text){
+    if (el.textContent === text) return;
+    if (REDUCE_MOTION){ el.textContent = text; return; }
+    el.classList.add("fading");
+    setTimeout(function(){ el.textContent = text; el.classList.remove("fading"); }, 150);
+  }
+
   // Anzeige wie in der Vorlage: Wort gross, darunter ein erklärender Satz.
   // Solange der Zeiger genau in der Mitte steht, ist das die Anleitung.
   function renderMoodStatus(el, c){
@@ -3087,10 +3238,10 @@
     }
     var m = moodOf(c), t = el._teile;
     var unberuehrt = (c.x === 0 && c.y === 0);
-    t.wort.textContent = moodWort(c);
-    t.why.textContent = unberuehrt
+    ueberblenden(t.wort, moodWort(c));
+    ueberblenden(t.why, unberuehrt
       ? "Bewege den Zeiger, um deinen Zustand anzugeben."
-      : m.next;
+      : m.next);
     el.setAttribute("aria-label",
       moodWort(c) + ". Position: " + (c.x < 0 ? "Anspannung" : "Entspannung") +
       ", " + (c.y < 0 ? "Denken" : "Fühlen"));
@@ -3102,6 +3253,28 @@
   // ---- Wochenansicht ----
   var WEEKDAYS = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
   function dayStamp(ts){ var d = new Date(ts); return d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate(); }
+
+  // Ganz leiser Beleg von Regelmaessigkeit auf dem Kompass: reiner Fakt aus
+  // dem echten Verlauf, keine Stufen, keine Belohnungs-Mechanik. Zaehlt ab
+  // heute rueckwaerts - war heute noch nichts dabei, beginnt die Kette bei
+  // gestern, damit sie morgens vor der ersten Meditation nicht auf 0 faellt.
+  function aktuelleStreak(){
+    var tage = {};
+    loadHistory().forEach(function(e){ tage[dayStamp(e.ts)] = true; });
+    var TAG_MS = 86400000, jetzt = Date.now();
+    var start = tage[dayStamp(jetzt)] ? 0 : 1;
+    var n = 0;
+    for (var i = start; tage[dayStamp(jetzt - i * TAG_MS)]; i++) n++;
+    return n;
+  }
+  function renderStreak(){
+    var el = document.getElementById("streakNote");
+    if (!el) return;
+    var n = aktuelleStreak();
+    if (n < 2){ el.hidden = true; return; }
+    el.textContent = "Du checkst seit " + n + " Tagen ein.";
+    el.hidden = false;
+  }
 
   // Sieben Kreise von Montag bis Sonntag: gefüllt an den Tagen, an denen
   // wirklich meditiert wurde. Darunter die Serie und ein Balken bis zum
@@ -3804,16 +3977,29 @@
     var schonGesehen = false;
     try { schonGesehen = localStorage.getItem(ERKLAERT_KEY) === "1"; } catch (e){}
     if (schonGesehen) return;
-    box.hidden = false;
+    box.classList.add("open");
     try { localStorage.setItem(ERKLAERT_KEY, "1"); } catch (e){}
   }
 
+  // Klappt weich auf/zu statt hart umzuschalten (siehe .compass-info im CSS).
   document.getElementById("compassInfoBtn").addEventListener("click", function(){
-    var box = document.getElementById("compassInfo");
-    box.hidden = !box.hidden;
+    document.getElementById("compassInfo").classList.toggle("open");
   });
   document.getElementById("compassInfoOk").addEventListener("click", function(){
-    document.getElementById("compassInfo").hidden = true;
+    document.getElementById("compassInfo").classList.remove("open");
+  });
+
+  // Dauer & Trainingsmodus: ruhige Zusammenfassungs-Zeile, die bei Bedarf
+  // aufklappt - Werte und Logik der bestehenden Steuerelemente bleiben
+  // unveraendert, nur die Buehne wird kleiner.
+  function aktualisierePrefsSummary(){
+    var modeName = modus === "program" ? "Trainingsprogramm" : "Einzelmeditation";
+    document.getElementById("prefsSummaryText").textContent = durationV2 + " Min · " + modeName;
+  }
+  document.getElementById("prefsSummaryBtn").addEventListener("click", function(){
+    var panel = document.getElementById("compassPrefs");
+    var open = panel.classList.toggle("open");
+    this.setAttribute("aria-expanded", open ? "true" : "false");
   });
   document.getElementById("homeToCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
   document.getElementById("homeProfilBtn").addEventListener("click", function(){
