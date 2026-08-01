@@ -3665,6 +3665,8 @@
     var willMantra = text.toLowerCase().indexOf("mantra") !== -1;
     var willMudra = text.toLowerCase().indexOf("mudra") !== -1;
 
+    // Wird gezielt nach einem Mudra oder Mantra gefragt, bekommt die Person
+    // genau das - direkte Fragen haben Vorrang vor der Standard-Reihenfolge.
     if (willMantra){
       var ma = waehleFuerRichtung(MANTRAS, dir, streuung);
       return intro + " Ein Satz dafür: „" + ma.text + "“ – " + ma.why;
@@ -3673,9 +3675,25 @@
       var mu = waehleFuerRichtung(MUDRAS, dir, streuung);
       return intro + " Versuch das " + mu.name + ": " + mu.how + " " + mu.why;
     }
+
+    // Standardfall: Prio 1 ist immer eine konkrete Meditation. Mudra und
+    // Mantra kommen nur als kurze, optionale Ergänzung dazu - das Tag muss
+    // dafuer trotzdem ganz am Ende der Antwort stehen bleiben.
     if (allowRecommend){
       var med = medFuerRichtung(dir);
-      if (med) return intro + " Ich hab dir eine Übung herausgesucht, die dazu passt. [EMPFEHLUNG: " + med.name + "]";
+      if (med){
+        var bonusIstMudra = streuung % 2 === 0;
+        var bonus;
+        if (bonusIstMudra){
+          var mub = waehleFuerRichtung(MUDRAS, dir, streuung);
+          bonus = " Magst du zusätzlich noch etwas für die Hände: das " + mub.name + " passt auch dazu.";
+        } else {
+          var mab = waehleFuerRichtung(MANTRAS, dir, streuung);
+          bonus = " Als kleine Ergänzung dazu ein Mantra: „" + mab.text + "“.";
+        }
+        return intro + " Ich hab dir eine Übung herausgesucht, die dazu passt." + bonus +
+          " [EMPFEHLUNG: " + med.name + "]";
+      }
     }
     var muFallback = waehleFuerRichtung(MUDRAS, dir, streuung);
     return intro + " Ein kleines Mudra dazu: " + muFallback.name + " – " + muFallback.why +
@@ -3747,9 +3765,10 @@
         ? ("Das sind die verfügbaren Meditationen:\n" + medCatalogueText() +
            "\nDu kennst ausserdem Mudras (Handhaltungen) und Mantras (kurze Sätze) für vier Bereiche: " +
            "Gedanken beruhigen, Gefühle verstehen, Stress lösen, Entspannen. " +
-           "Wenn jemand konkret nach einem Mudra oder Mantra fragt, schlage eines passend zum Gespräch vor " +
-           "und beschreibe es kurz in eigenen Worten. " +
-           "Wenn aus dem Gespräch stattdessen eine Meditation aus der Liste klar passt, empfiehl genau eine " +
+           "Priorität 1 ist immer eine passende Meditation aus der Liste - empfiehl sie zuerst. " +
+           "Ein Mudra oder Mantra darfst du zusätzlich als kurze, optionale Ergänzung erwähnen, nie als Ersatz " +
+           "für die Meditation - ausser jemand fragt ausdrücklich nur danach. " +
+           "Wenn eine Meditation aus der Liste klar passt, empfiehl genau eine " +
            "mit Begründung in 1 Satz und häng ganz am Ende exakt so an, mit dem exakten Namen aus der Liste: " +
            "[EMPFEHLUNG: <Name>]. Wenn nichts klar passt, verweise freundlich auf den Kompass, statt zu raten.")
         : "";
