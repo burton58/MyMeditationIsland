@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 2. August 2026
+Stand: 2. August 2026 (zuletzt aktualisiert: Kompass-Tastatur, Offline, Bestätigungs-Karte, Konto-Leiste erledigt)
 
 ---
 
@@ -36,15 +36,10 @@ Stand: 2. August 2026
 - [ ] **Passende Hintergrundbilder je Meditationsthema** statt immer der Insel
       (z. B. bei „Fantasiereise: Bergspitze" läuft aktuell trotzdem das
       Insel-Boot-Foto).
-- [ ] **Kompass per Tastatur bedienbar machen**, für Menschen, die nicht
-      wischen können.
 
 ## 3. Kann warten, lohnt sich aber früh
 
 - [ ] Einfache, anonyme Nutzungs-Zahlen einführen.
-- [ ] Eigene Bestätigungs-Karte für „Verlauf löschen" statt des grauen
-      System-Dialogs.
-- [ ] Grundlegende Offline-Fähigkeit, falls die Verbindung mal fehlt.
 
 ---
 
@@ -55,3 +50,12 @@ Stand: 2. August 2026
 - [x] Datenschutzerklärung ergänzt (ehrlich beschrieben: alles bleibt auf dem
       Gerät, kein Server, kein Konto, Hinweis auf den Begleiter-Chat-Versuch
       und auf GitHub Pages als Hosting).
+- [x] **Kompass per Tastatur bedienbar** – Pfeiltasten bewegen den Zeiger,
+      eine Sprachausgabe-Beschreibung aktualisiert sich mit.
+- [x] **Grundlegende Offline-Fähigkeit** – ein Service Worker speichert die
+      App beim ersten Besuch zwischen; getestet, dass sie danach auch ganz
+      ohne Verbindung startet.
+- [x] **Eigene Bestätigungs-Karte für „Verlauf löschen"** statt des grauen
+      System-Dialogs.
+- [x] **Tab-Leiste auf der Konto-Seite ausgeblendet**, solange die App noch
+      nicht betreten wurde (z. B. direkt über „Anmelden" von der Titelseite).

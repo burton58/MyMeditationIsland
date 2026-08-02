@@ -22,6 +22,7 @@
 <meta http-equiv="Expires" content="0">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
 <style>
   /* ==========================================================================
      Gestaltung nach der Vorlage: warmes Creme, Gold als einzige Akzentfarbe,
@@ -316,6 +317,7 @@
     animation:dialSettle .5s cubic-bezier(.22,.61,.36,1) both;
   }
   .compass-wrap svg{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:auto; }
+  .compass-wrap svg:focus-visible{ outline:3px solid var(--gold); outline-offset:4px; border-radius:50%; }
   @keyframes dialSettle{ from{ opacity:0; transform:scale(.94); } to{ opacity:1; transform:scale(1); } }
   /* Das Foto liegt als eigene Ebene hinter der Zeichnung, damit es nicht in
      jeder Kompass-Zeichnung noch einmal gespeichert werden muss. */
@@ -693,6 +695,19 @@
   .menu-row .row-text{ flex:1; font-size:.9rem; font-weight:500; }
   .menu-row.danger .row-text{ color:#a33b2c; }
 
+  /* Eigene Bestaetigungs-Karte statt des grauen System-Dialogs */
+  .confirm-overlay{
+    position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center;
+    padding:24px; background:rgba(20,40,34,.5); backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
+    opacity:0; transition:opacity .18s ease;
+  }
+  .confirm-overlay[hidden]{ display:none; }
+  .confirm-overlay.show{ opacity:1; }
+  .confirm-card{ padding:22px; max-width:340px; width:100%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,.25); }
+  .confirm-card p{ margin:0 0 18px; font-size:.92rem; line-height:1.5; color:var(--ink); }
+  .btn-dark.danger{ background:#a33b2c; color:#fff; box-shadow:0 6px 16px rgba(163,59,44,.3); }
+  @media (prefers-reduced-motion: reduce){ .confirm-overlay{ transition:none; } }
+
   /* Wochenraster, Inselweg und Begleiter-Karte (aus der Skizze) ---------- */
   .box-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
   .box-head h4{ margin:0; flex:1; font-family:var(--serif); font-size:1.05rem; }
@@ -963,6 +978,11 @@
     backdrop-filter:blur(10px); padding-bottom:var(--safe-bottom);
   }
   body[data-step="splash"] .tabbar, body.entered .tabbar{ display:none; }
+  /* Wird die Konto-Seite direkt von der Titelseite aus geoeffnet (ueber
+     "Anmelden"), ohne dass die App schon "betreten" wurde, soll sie sich
+     genauso ruhig anfuehlen wie die Titelseite selbst - keine App-Leiste,
+     die suggeriert, man waere schon drin. */
+  body[data-step="konto"]:not(.betreten) .tabbar{ display:none; }
   .tab-item{
     flex:1; border:none; background:none; cursor:pointer; font-family:inherit;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
@@ -982,7 +1002,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.8";
+    var AKTUELLE_VERSION = "2026-08-02.9";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -993,6 +1013,16 @@
       }
     } catch (e){}
   })();
+  // Registriert den Service Worker, der die App fuers naechste Mal
+  // zwischenspeichert - damit sie auch ohne Verbindung startet (z. B. im
+  // Zug). Er fragt online aber immer zuerst das Netz, bevor er den
+  // Speicher benutzt, damit er nicht selbst zu einer neuen Quelle fuer
+  // veraltete Inhalte wird.
+  if ("serviceWorker" in navigator){
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("sw.js").catch(function(){});
+    });
+  }
 </script>
 
   <!-- ============ TITELSEITE ============ -->
@@ -1465,6 +1495,21 @@
     <p class="muted-note" id="storageNote">Dein Verlauf bleibt nur auf diesem Gerät – kein Konto, kein Server.</p>
 
     <button class="btn-ghost full" id="toSplashBtn" style="margin-top:16px;">🏝️ Zur Titelseite</button>
+  </div>
+
+  <!-- ============ BESTAETIGUNGS-KARTE (statt System-Dialog) ============
+       Bisher hat "Verlauf löschen" den grauen Browser-Dialog benutzt - der
+       einzige Bruch im sonst durchgehend gestalteten Erscheinungsbild.
+       Dieses Overlay ist dafuer allgemein gehalten (Text austauschbar),
+       falls spaeter eine weitere Stelle eine Bestaetigung braucht. -->
+  <div class="confirm-overlay" id="confirmOverlay" hidden>
+    <div class="card confirm-card">
+      <p id="confirmText"></p>
+      <div class="btn-row">
+        <button class="btn-ghost" id="confirmAbbrechenBtn">Abbrechen</button>
+        <button class="btn-dark danger" id="confirmJaBtn">Löschen</button>
+      </div>
+    </div>
   </div>
 
   <!-- ============ ÜBER MICH ============ -->
@@ -2606,7 +2651,13 @@
       update();
       if (onChange) onChange();
     }
-    function update(){ renderMoodStatus(readout, target); }
+    // Beschreibt den Kompass fuer Sprachausgabe/Screenreader jeweils neu -
+    // sowohl nach Ziehen als auch nach Tastatur-Bedienung, weil beide
+    // Wege ueber setFromPoint()/update() laufen.
+    function update(){
+      renderMoodStatus(readout, target);
+      svg.setAttribute("aria-label", "Kompass. Aktueller Zustand: " + moodWort(target) + ". Mit den Pfeiltasten bewegen.");
+    }
 
     // Mikro-Interaktion: beim Anfassen waechst der Punkt sanft und bekommt
     // einen weichen Schein. Bewusst weich und langsam, nichts Hektisches.
@@ -2635,6 +2686,27 @@
     }
     svg.addEventListener("pointerup", up);
     svg.addEventListener("pointercancel", up);
+
+    // Tastatur-Bedienung: der Kompass ist die zentrale Handlung der App,
+    // bisher liess er sich nur mit Finger/Maus ziehen. Mit Fokus auf der
+    // Scheibe bewegen die vier Pfeiltasten den Zeiger in kleinen Schritten -
+    // rechnet ueber dieselbe setFromPoint()-Funktion wie das Ziehen, damit
+    // Rundung, Begrenzung und Spiegelung exakt gleich bleiben.
+    svg.setAttribute("tabindex", "0");
+    svg.setAttribute("role", "group");
+    svg.addEventListener("keydown", function(e){
+      var STEP = 0.08;
+      var nx = target.x, ny = target.y, geaendert = true;
+      if (e.key === "ArrowLeft") nx = Math.max(-1, target.x - STEP);
+      else if (e.key === "ArrowRight") nx = Math.min(1, target.x + STEP);
+      else if (e.key === "ArrowUp") ny = Math.max(-1, target.y - STEP);
+      else if (e.key === "ArrowDown") ny = Math.min(1, target.y + STEP);
+      else geaendert = false;
+      if (!geaendert) return;
+      e.preventDefault();
+      setFromPoint(CENTER - nx * MAXR, CENTER + ny * MAXR);
+    });
+
     update();
   }
 
@@ -4172,6 +4244,10 @@
   document.getElementById("enterAppBtn").addEventListener("click", function(){
     var a = loadAbo();
     if (!a.gestartet){ a.gestartet = Date.now(); a.start = a.start || Date.now(); saveAbo(a); }
+    // Merkt sich, dass die App jetzt wirklich "betreten" wurde - solange das
+    // nicht der Fall ist (z. B. direkt "Anmelden" von der Titelseite aus),
+    // bleibt die Tab-Leiste auf der Konto-Seite versteckt (siehe CSS).
+    document.body.classList.add("betreten");
     goToStep("home");
   });
   function preisboxZu(){
@@ -4345,11 +4421,35 @@
   document.getElementById("planJahr").addEventListener("click", function(){ planGewaehlt("jahr"); });
   document.getElementById("planMonat").addEventListener("click", function(){ planGewaehlt("monat"); });
 
+  // Eigene Bestaetigungs-Karte statt des grauen Browser-Dialogs - allgemein
+  // gehalten, falls spaeter eine weitere Stelle eine braucht.
+  function zeigeBestaetigung(text, wennJa){
+    var overlay = document.getElementById("confirmOverlay");
+    document.getElementById("confirmText").textContent = text;
+    overlay.hidden = false;
+    requestAnimationFrame(function(){ overlay.classList.add("show"); });
+    function schliessen(){
+      overlay.classList.remove("show");
+      setTimeout(function(){ overlay.hidden = true; }, 180);
+      ja.removeEventListener("click", aufJa);
+      nein.removeEventListener("click", schliessen);
+    }
+    function aufJa(){ schliessen(); wennJa(); }
+    var ja = document.getElementById("confirmJaBtn");
+    var nein = document.getElementById("confirmAbbrechenBtn");
+    ja.addEventListener("click", aufJa);
+    nein.addEventListener("click", schliessen);
+  }
+
   document.getElementById("profilResetBtn").addEventListener("click", function(){
-    if (!window.confirm("Deine Insel-Woche und deine Inselreise werden gelöscht. Das lässt sich nicht rückgängig machen.")) return;
-    try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(ABO_KEY); } catch (e){}
-    currentEntryTs = null;
-    renderProfil();
+    zeigeBestaetigung(
+      "Deine Insel-Woche und deine Inselreise werden gelöscht. Das lässt sich nicht rückgängig machen.",
+      function(){
+        try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(ABO_KEY); } catch (e){}
+        currentEntryTs = null;
+        renderProfil();
+      }
+    );
   });
 
   document.querySelectorAll(".tab-item").forEach(function(btn){
