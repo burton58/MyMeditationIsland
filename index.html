@@ -267,8 +267,12 @@
     margin:0 -16px 14px;
     /* Jetzt ein Knopf (fuehrt zur Titelseite) statt eines reinen Bildes -
        alle Button-Grundformatierung wieder auf null, damit es weiter genau
-       wie ein Foto aussieht. */
-    border:none; padding:0; background:none; font:inherit; cursor:pointer; display:block; width:100%;
+       wie ein Foto aussieht. WICHTIG: kein "width:100%" hier - das wuerde
+       die Breite fest auf 100% der Innenbreite der Seite (ohne die
+       negativen Raender mitzuzaehlen) setzen und rechts eine Luecke lassen.
+       Ohne explizite Breite streckt sich der Knopf wie zuvor der <div>
+       automatisch per Flex-Stretch auf die volle, randlose Breite. */
+    border:none; padding:0; background:none; font:inherit; cursor:pointer; display:block;
   }
   .home-hero-photo img{ width:100%; height:100%; object-fit:contain; display:block; pointer-events:none; }
 
@@ -970,7 +974,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.5";
+    var AKTUELLE_VERSION = "2026-08-02.6";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
