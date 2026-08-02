@@ -265,8 +265,12 @@
   .home-hero-photo{
     flex:1 1 0; min-height:152px; max-height:400px; overflow:hidden;
     margin:0 -16px 14px;
+    /* Jetzt ein Knopf (fuehrt zur Titelseite) statt eines reinen Bildes -
+       alle Button-Grundformatierung wieder auf null, damit es weiter genau
+       wie ein Foto aussieht. */
+    border:none; padding:0; background:none; font:inherit; cursor:pointer; display:block; width:100%;
   }
-  .home-hero-photo img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .home-hero-photo img{ width:100%; height:100%; object-fit:contain; display:block; pointer-events:none; }
 
   /* Wenn heute schon etwas gehört wurde, ist die Liste im "heutigen
      Fokus" etwas voller - dort darum knapper als anderswo, damit auch
@@ -510,6 +514,10 @@
   .prefs-summary:active, .tab-item:active, .play-btn:active, .focus-card:active{
     transform:scale(.97);
   }
+  /* Randloses Vollbild-Foto: Skalieren wuerde am Rand die Hintergrundfarbe
+     durchblitzen lassen, darum hier ein sanftes Abdunkeln statt Schrumpfen. */
+  .home-hero-photo{ transition:opacity .08s ease; }
+  .home-hero-photo:active{ opacity:.85; }
 
   @media (prefers-reduced-motion: reduce){
     body[data-step="compass"]{ animation:none; }
@@ -962,7 +970,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.4";
+    var AKTUELLE_VERSION = "2026-08-02.5";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1032,7 +1040,7 @@
       </button>
     </div>
 
-    <div class="home-hero-photo"><img src="insel-start.jpg" alt="Deine Insel"></div>
+    <button class="home-hero-photo" id="homeHeroBtn" title="Zur Titelseite" type="button"><img src="insel-start.jpg" alt="Deine Insel"></button>
 
     <!-- Eine Karte statt zwei getrennter Bereiche: entweder das, was heute
          schon gehört wurde, oder - noch nichts gehört - die eine
@@ -1206,7 +1214,7 @@
     <div class="page-head">
       <div class="ttl">
         <h1>Mein Weg</h1>
-        <p class="fd-greeting" id="fdGreeting">Schön, dass du da bist</p>
+        <p class="fd-greeting" id="fdGreeting">Was du schon geschafft hast</p>
       </div>
       <span class="fd-badge">🇨🇭 Schweizerdeutsch</span>
     </div>
@@ -1257,7 +1265,7 @@
     <div class="page-head">
       <div class="ttl">
         <h1>Meditationen</h1>
-        <p>Lass dich begleiten</p>
+        <p>Alle Übungen zum Stöbern</p>
       </div>
     </div>
     <p class="lib-meta" id="libMeta"></p>
@@ -1514,8 +1522,8 @@
   <div class="page abo-page" id="aboPage">
     <div class="page-head">
       <div class="ttl">
-        <h1>Deine Meditationen</h1>
-        <p>Vom Drei-Minuten-Anker bis zur halben Stunde.</p>
+        <h1>Dein Zugang</h1>
+        <p>7 Tage gratis, danach wie du magst.</p>
       </div>
     </div>
 
@@ -1757,10 +1765,6 @@
 
   <!-- ============ TABBAR ============ -->
   <nav class="tabbar" id="tabbar">
-    <button class="tab-item" data-tab="splash">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.6 1-2.6 2.4-3 4"/><path d="M12 3c1.6 1 2.6 2.4 3 4"/><path d="M12 3c-2.2-.4-4 .5-5.2 2.2"/><path d="M12 3c2.2-.4 4 .5 5.2 2.2"/><path d="M12 7v7"/><path d="M4 20c1.6-3 4.6-4.5 8-4.5S18.4 17 20 20"/></svg>
-      <span>Insel</span>
-    </button>
     <button class="tab-item" data-tab="home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
       <span>Startseite</span>
@@ -2740,7 +2744,9 @@
   }
 
   function renderMyMed(){
-    document.getElementById("fdGreeting").textContent = begruessung();
+    // Untertitel ist bewusst fest ("Was du schon geschafft hast"), nicht
+    // begruessung() - die Startseite begruesst schon zeitabhaengig; diese
+    // Seite hier beschreibt stattdessen, was auf ihr steht (Fortschritt).
     // Der Knopf tut zwei verschiedene Dinge: liegt schon eine Empfehlung
     // vor, startet er sie sofort - sonst fuehrt er zum Kompass. Frueher
     // hiess er in beiden Faellen "Zum Training", was keines von beidem
@@ -4172,6 +4178,10 @@
     this.setAttribute("aria-expanded", open ? "true" : "false");
   });
   document.getElementById("homeToCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
+  // Das Insel-Feld in der Tabbar ist weg (siehe unten); der Weg zur
+  // Titelseite fuehrt jetzt ueber das Foto hier und weiterhin ueber
+  // "Zur Titelseite" ganz unten im Profil.
+  document.getElementById("homeHeroBtn").addEventListener("click", function(){ goToStep("splash"); });
   document.getElementById("homeProfilBtn").addEventListener("click", function(){
     renderProfil(); goToStep("profil");
   });
