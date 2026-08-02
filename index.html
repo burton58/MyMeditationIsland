@@ -607,7 +607,11 @@
   .hist-row .meta{ display:block; font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
   .hist-leer{ padding:18px 14px; font-size:.86rem; color:var(--ink-soft); text-align:center; margin:0; }
 
-  /* ---------- Meditationsleiter (Bibliothek) ---------- */
+  /* ---------- Meditationen (die Bibliothek) ----------
+     Hiess frueher "Meditationsleiter". Umbenannt, weil das Wort einen
+     Menschen bezeichnet (Christine nennt sich selbst so) und darum als
+     Name fuer eine Uebungsliste in die Irre fuehrte. "Meditationsleiterin"
+     bleibt ihr allein - auf der Titelseite und bei "Ueber mich". */
   .lib-meta{ margin:0 0 14px; font-size:.83rem; color:var(--ink-soft); }
   .chips{ display:flex; gap:7px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; scrollbar-width:none; }
   .chips::-webkit-scrollbar{ display:none; }
@@ -958,7 +962,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.3";
+    var AKTUELLE_VERSION = "2026-08-02.4";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1201,7 +1205,7 @@
   <div class="page med-page" id="medPage">
     <div class="page-head">
       <div class="ttl">
-        <h1>My Meditation</h1>
+        <h1>Mein Weg</h1>
         <p class="fd-greeting" id="fdGreeting">Schön, dass du da bist</p>
       </div>
       <span class="fd-badge">🇨🇭 Schweizerdeutsch</span>
@@ -1252,7 +1256,7 @@
   <div class="page medv2-page" id="medV2Page">
     <div class="page-head">
       <div class="ttl">
-        <h1>Meditationsleiter</h1>
+        <h1>Meditationen</h1>
         <p>Lass dich begleiten</p>
       </div>
     </div>
@@ -1767,11 +1771,11 @@
     </button>
     <button class="tab-item" data-tab="meditation">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5.5" r="2.2"/><path d="M5 21c1.5-4 4-6 7-6s5.5 2 7 6"/><path d="M4 12h16"/></svg>
-      <span>Training</span>
+      <span>Mein Weg</span>
     </button>
     <button class="tab-item" data-tab="meditation2">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7v15H4z"/><path d="M13 5h7v15h-7z"/></svg>
-      <span>Übungen</span>
+      <span>Meditationen</span>
     </button>
     <button class="tab-item" data-tab="profil">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
@@ -2737,6 +2741,12 @@
 
   function renderMyMed(){
     document.getElementById("fdGreeting").textContent = begruessung();
+    // Der Knopf tut zwei verschiedene Dinge: liegt schon eine Empfehlung
+    // vor, startet er sie sofort - sonst fuehrt er zum Kompass. Frueher
+    // hiess er in beiden Faellen "Zum Training", was keines von beidem
+    // beschrieb. Jetzt sagt er, was wirklich passiert.
+    document.getElementById("toTrainingBtn").textContent =
+      empfehlung.length ? "Jetzt starten →" : "Zum Kompass →";
     renderStats();
     renderZiele();
     renderHistoryList();
@@ -2759,7 +2769,7 @@
     });
   }
 
-  // ---- Bibliothek ("Meditationsleiter") ------------------------------
+  // ---- Bibliothek (Seite "Meditationen") -----------------------------
   // Aufbau wie in der Vorlage: Filter-Chips oben, darunter je Übung eine
   // Karte mit Stern und Play. Antippen startet die Übung sofort.
   var currentCatV2 = null;      // null = alle, "fav" = Favoriten, sonst Richtung
@@ -2816,7 +2826,7 @@
     });
 
     document.getElementById("libMeta").innerHTML =
-      "<strong>" + pool.length + "</strong> geführte Übungen";
+      "<strong>" + pool.length + "</strong> geführte Meditationen";
 
     var host = document.getElementById("libList");
     host.innerHTML = pool.length ? pool.map(function(m){
