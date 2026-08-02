@@ -146,10 +146,18 @@
     font-style:italic; text-shadow:0 2px 10px rgba(0,0,0,.45); padding:2px 4px;
   }
 
-  /* Preise: ein Wort zum Antippen, die Einzelheiten klappen darüber auf. */
-  .splash-preis{
-    border:none; background:none; cursor:pointer; font-family:inherit; color:#fff; opacity:1;
-    font-size:.76rem; font-weight:700; padding:0 2px; text-decoration:underline; text-underline-offset:3px;
+  /* Preise & Probe: standen bisher als reiner unterstrichener Text da und
+     wurden dadurch leicht als nicht antippbar gelesen. Jetzt als zwei
+     kleine, klar erkennbare Chips - derselbe Glas-Look wie der
+     "Anmelden"-Knopf oben rechts auf dieser Seite, nur kleiner. */
+  .splash-mikro{
+    display:flex; justify-content:center; gap:9px; margin:10px 0 0 !important;
+  }
+  .splash-preis, .splash-probe{
+    border:1px solid rgba(255,255,255,.32); cursor:pointer; font-family:inherit; color:#fff;
+    background:rgba(255,255,255,.14); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    font-size:.76rem; font-weight:700; padding:7px 14px; border-radius:20px;
+    text-shadow:0 1px 6px rgba(0,0,0,.3);
   }
   .splash-preis span{ display:inline-block; transition:transform .25s ease; }
   .splash-preis.auf span{ transform:rotate(180deg); }
@@ -162,10 +170,6 @@
   .splash-preisbox p{ margin:0 0 5px !important; font-size:.8rem !important; line-height:1.45 !important; opacity:.95 !important; }
   .splash-preisbox p:last-of-type{ margin-bottom:0 !important; }
   .splash-preisbox .splash-link{ margin-top:8px; font-size:.76rem; }
-  .splash-probe{
-    border:none; background:none; cursor:pointer; font-family:inherit; color:#fff;
-    font-size:.78rem; font-weight:700; padding:0 2px; text-decoration:underline; text-underline-offset:3px;
-  }
 
   /* Sanftes Einblenden: erst das Bild, dann der Text, zuletzt die Knöpfe.
      Wer im Gerät weniger Bewegung eingestellt hat, sieht alles sofort. */
@@ -1002,7 +1006,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.9";
+    var AKTUELLE_VERSION = "2026-08-02.10";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1049,11 +1053,10 @@
         <!-- Unten: alles zum Handeln, in einer ruhigen Reihenfolge. -->
         <div class="splash-bottom">
           <button class="splash-cta" id="enterAppBtn">7 Tage kostenlos testen</button>
-          <p class="splash-mikro">
+          <div class="splash-mikro">
             <button class="splash-probe" id="splashProbeBtn">▶︎ Kurze Probe</button>
-            ·
             <button class="splash-preis" id="splashPreisBtn">Preise <span>⌄</span></button>
-          </p>
+          </div>
 
           <div class="splash-preisbox" id="splashPreisBox" hidden>
             <p><strong>7 Tage gratis testen</strong> – ohne Verpflichtung.</p>
@@ -1313,7 +1316,7 @@
     <p class="lib-meta" id="libMeta"></p>
     <div class="chips" id="libFilters"></div>
     <div class="ki-card">
-      <div class="ki-ico">🤖</div>
+      <div class="ki-ico">💬</div>
       <div class="body">
         <h4>Dein Begleiter</h4>
         <p>Erzähl kurz, wie es dir geht – der Begleiter sucht dir eine passende Meditation heraus.</p>
@@ -1465,7 +1468,7 @@
         <span class="row-icon">🏝️</span><span class="row-text">Meine Insel gestalten</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilKiBtn">
-        <span class="row-icon">🤖</span><span class="row-text">Dein Begleiter</span><span class="chev">›</span>
+        <span class="row-icon">💬</span><span class="row-text">Dein Begleiter</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilKontoBtn">
         <span class="row-icon">🔑</span><span class="row-text">Konto &amp; Anmelden</span><span class="chev">›</span>
@@ -3309,14 +3312,22 @@
 
   var currentEntryTs = null;
 
+  // Wer aus Versehen sofort "Fertig" tippt, ohne wirklich meditiert zu
+  // haben, soll dafuer keinen Eintrag im Verlauf und keinen Tag in der
+  // Serie bekommen. 20 Sekunden reichen, um ein versehentliches Antippen
+  // von einer echten (auch kurzen) Uebung zu unterscheiden.
+  var MINDESTDAUER_SEK = 20;
+
   function recordSession(){
+    var echteMeds = completedLog.filter(function(l){ return l.seconds >= MINDESTDAUER_SEK; });
+    if (!echteMeds.length){ currentEntryTs = null; return; }
     var list = loadHistory();
     currentEntryTs = Date.now();
     list.push({
       ts: currentEntryTs,
       before: { x:compassBefore.x, y:compassBefore.y },
       after:  { x:compassAfter.x,  y:compassAfter.y  },
-      meds: completedLog.map(function(l){ return { name:l.name, min:l.min, seconds:l.seconds }; })
+      meds: echteMeds.map(function(l){ return { name:l.name, min:l.min, seconds:l.seconds }; })
     });
     saveHistory(list);
   }
@@ -4126,7 +4137,9 @@
     loadHistory().forEach(function(e){
       (e.meds || []).forEach(function(m){
         anzahl++;
-        minuten += Math.round((m.seconds || 0) / 60);
+        // Aufrunden statt runden: eine echte, gezaehlte Meditation soll nie
+        // mit "0 Minuten gesamt" danebenstehen, auch wenn sie kurz war.
+        minuten += Math.ceil((m.seconds || 0) / 60);
       });
       tage[dayStamp(e.ts)] = true;
     });

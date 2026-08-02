@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 2. August 2026 (zuletzt aktualisiert: Kompass-Tastatur, Offline, Bestätigungs-Karte, Konto-Leiste erledigt)
+Stand: 2. August 2026 (zuletzt aktualisiert: Antipp-Knöpfe Titelseite, Mindestdauer, Minuten-Rundung, Begleiter-Symbol erledigt)
 
 ---
 
@@ -35,7 +35,10 @@ Stand: 2. August 2026 (zuletzt aktualisiert: Kompass-Tastatur, Offline, Bestäti
       „Abo wiederherstellen" ist bisher nur eine Attrappe ohne Funktion).
 - [ ] **Passende Hintergrundbilder je Meditationsthema** statt immer der Insel
       (z. B. bei „Fantasiereise: Bergspitze" läuft aktuell trotzdem das
-      Insel-Boot-Foto).
+      Insel-Boot-Foto). Die ChatGPT-Prompts dafür sind bereits fertig.
+- [ ] **Eigene Bild-Symbole statt Emoji bei den vier Meditationskategorien**
+      (aktuell 🌊🍃🌙🔥 o. Ä.) – bewusst zurückgestellt, bis die Bilder
+      dazu existieren; der ChatGPT-Prompt dafür ist bereits fertig.
 
 ## 3. Kann warten, lohnt sich aber früh
 
@@ -59,3 +62,14 @@ Stand: 2. August 2026 (zuletzt aktualisiert: Kompass-Tastatur, Offline, Bestäti
       System-Dialogs.
 - [x] **Tab-Leiste auf der Konto-Seite ausgeblendet**, solange die App noch
       nicht betreten wurde (z. B. direkt über „Anmelden" von der Titelseite).
+- [x] **„Kurze Probe" und „Preise" auf der Titelseite als echte Knöpfe**
+      gestaltet (runde Pillen wie „Anmelden"), statt als reiner Text – man
+      sieht jetzt sofort, dass man draufdrücken kann.
+- [x] **Mindestdauer von 20 Sekunden** eingeführt, bevor eine Sitzung als
+      abgeschlossen gilt und in den Verlauf/die Serie einfliesst – ein
+      versehentliches sofortiges „Fertig" zählt nicht mehr mit.
+- [x] **„Minuten gesamt" rundet jetzt immer aufwärts** – eine echte, kurze
+      Meditation zeigt nie mehr „0 Minuten".
+- [x] **Begleiter-Symbol von 🤖 auf 💬 geändert** (Bibliothek-Karte und
+      Profil-Menü), damit er nicht als „echte KI" missverstanden wird,
+      solange kein Schlüssel angeschlossen ist.
