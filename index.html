@@ -241,18 +241,16 @@
 
   /* ---------- Startseite ----------
      Alles zusammen soll ohne Scrollen aufs Handy passen. Das Foto ist
-     dafuer der groesste Hebel. Neu vermessen: Insel liegt bei ca. 38-62%,
-     das Boot bei ca. 65-80% der Bildhoehe - zusammen mehr Bildhoehe, als
-     auf der kleinsten Kartengroesse (min-height 152px) gleichzeitig Platz
-     hat. Das Boot (die Person, die zur Insel unterwegs ist) ist dabei das
-     wichtigere Motiv, darum ist "center 72%" so gewaehlt, dass das Boot
-     auch im knappsten Fall vollstaendig sichtbar bleibt - im Zweifel
-     fehlen dafuer die obersten Palmenspitzen, nie das Boot selbst. */
+     dafuer der groesste Hebel. Das Hochformat-Foto (720x1027) ist deutlich
+     schmaler als der breite Streifen hoch ist - ein Ausschnitt ("cover")
+     musste darum immer irgendetwas abschneiden (erst die Insel, dann das
+     Boot). Auf Christines Wunsch zeigt "contain" jetzt IMMER das ganze
+     Foto; links/rechts bleibt dafuer ein Rand in der Seiten-Hintergrundfarbe. */
   .home-hero-photo{
     flex:1 1 0; min-height:152px; max-height:400px; overflow:hidden;
     margin:0 -16px 14px;
   }
-  .home-hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:center 72%; display:block; }
+  .home-hero-photo img{ width:100%; height:100%; object-fit:contain; display:block; }
 
   /* Wenn heute schon etwas gehört wurde, ist die Liste im "heutigen
      Fokus" etwas voller - dort darum knapper als anderswo, damit auch
