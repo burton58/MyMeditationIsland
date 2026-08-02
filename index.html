@@ -12,6 +12,14 @@
 <meta name="apple-mobile-web-app-title" content="My Meditation Island">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#fbecd2">
+<!-- Vom Home-Bildschirm geöffnete Seiten merkt sich das iPhone gerne
+     besonders hartnäckig, auch über ein einfaches Schliessen hinaus. Diese
+     drei Zeilen sagen dem Handy ausdrücklich, sich nicht auf eine gemerkte
+     Fassung zu verlassen, sondern jedes Mal nachzusehen, ob es etwas Neues
+     gibt - eine Garantie ist das bei iPhones leider nicht, aber es hilft. -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-180.png">
 <style>
@@ -934,6 +942,26 @@
 </style>
 </head>
 <body data-step="splash">
+<script>
+  // Vor allem vom Home-Bildschirm aus haelt das iPhone eine Seite gerne
+  // hartnaeckig im Speicher fest, auch ueber ein Schliessen hinaus. Diese
+  // Nummer hier bei jeder wichtigen Aenderung von Hand hochzaehlen (Datum
+  // reicht) - stimmt die gemerkte Nummer nicht mehr mit dieser hier
+  // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
+  // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
+  (function(){
+    var AKTUELLE_VERSION = "2026-08-02.1";
+    try {
+      var gemerkt = localStorage.getItem("myisland.version");
+      if (gemerkt !== AKTUELLE_VERSION){
+        localStorage.setItem("myisland.version", AKTUELLE_VERSION);
+        if (gemerkt !== null && location.search.indexOf("frisch=") === -1){
+          location.replace(location.pathname + "?frisch=" + Date.now());
+        }
+      }
+    } catch (e){}
+  })();
+</script>
 
   <!-- ============ TITELSEITE ============ -->
   <div class="page splash-page" id="splashPage">
