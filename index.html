@@ -249,11 +249,19 @@
 
   /* ---------- Startseite ----------
      Alles zusammen soll ohne Scrollen aufs Handy passen. Das Foto ist
-     dafuer der groesste Hebel. Das Hochformat-Foto (720x1027) ist deutlich
-     schmaler als der breite Streifen hoch ist - ein Ausschnitt ("cover")
-     musste darum immer irgendetwas abschneiden (erst die Insel, dann das
-     Boot). Auf Christines Wunsch zeigt "contain" jetzt IMMER das ganze
-     Foto; links/rechts bleibt dafuer ein Rand in der Seiten-Hintergrundfarbe. */
+     dafuer der groesste Hebel.
+
+     Wichtig: Die Startseite benutzt NICHT das hochformatige insel.jpg
+     (720x1027), sondern einen eigens dafuer zugeschnittenen Ausschnitt
+     insel-start.jpg (720x678, fast quadratisch). Grund: das Hochformat war
+     viel schmaler als der Streifen breit ist - jeder Ausschnitt musste
+     darum etwas abschneiden (erst die Insel, dann das Boot), und "contain"
+     liess links/rechts breite Raender stehen. Der neue Zuschnitt enthaelt
+     genau den wichtigen Teil (Himmel bis unter das Boot, Insel und Boot
+     vollstaendig) und hat fast dasselbe Seitenverhaeltnis wie der Streifen
+     auf den meisten iPhones - dadurch ist das Bild vollstaendig zu sehen
+     und fuellt den Platz trotzdem gut aus. insel.jpg bleibt unveraendert
+     fuer Titelseite und Sitzungs-Hintergrund, wo Hochformat richtig ist. */
   .home-hero-photo{
     flex:1 1 0; min-height:152px; max-height:400px; overflow:hidden;
     margin:0 -16px 14px;
@@ -950,7 +958,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.1";
+    var AKTUELLE_VERSION = "2026-08-02.2";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1020,7 +1028,7 @@
       </button>
     </div>
 
-    <div class="home-hero-photo"><img src="insel.jpg" alt="Deine Insel"></div>
+    <div class="home-hero-photo"><img src="insel-start.jpg" alt="Deine Insel"></div>
 
     <!-- Eine Karte statt zwei getrennter Bereiche: entweder das, was heute
          schon gehört wurde, oder - noch nichts gehört - die eine
