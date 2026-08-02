@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 2. August 2026 (zuletzt aktualisiert: Antipp-Knöpfe Titelseite, Mindestdauer, Minuten-Rundung, Begleiter-Symbol erledigt)
+Stand: 2. August 2026 (zuletzt aktualisiert: Begleiter-Beschreibung, Mudra-Zusatzinfos aus deinem Mudra-Guide, SPEC.md-Feinschliff erledigt)
 
 ---
 
@@ -73,3 +73,13 @@ Stand: 2. August 2026 (zuletzt aktualisiert: Antipp-Knöpfe Titelseite, Mindestd
 - [x] **Begleiter-Symbol von 🤖 auf 💬 geändert** (Bibliothek-Karte und
       Profil-Menü), damit er nicht als „echte KI" missverstanden wird,
       solange kein Schlüssel angeschlossen ist.
+- [x] **Begleiter-Texte klarer geschrieben**, statt vage: Er sagt jetzt überall
+      offen, was er kann – eine passende Meditation finden, dazu auf Wunsch
+      ein Mudra oder Mantra vorschlagen. Nirgends mehr das Wort „KI" (ausser
+      in der ehrlichen technischen Erklärung im Datenschutz-Text).
+- [x] **6 Mudras mit Dauer und Chakra aus deinem Mudra-Guide ergänzt**
+      (Gyan, Hakini, Hridaya, Anjali, Apana, Prana) – erscheint automatisch,
+      wenn der Begleiter genau eines davon vorschlägt oder du dir ein Mudra
+      anzeigen lässt. Nichts erfunden: die übrigen Mudras, die nicht in
+      deinem Dokument stehen, zeigen weiterhin nur Anleitung und Wirkung.
+- [x] **SPEC.md-Stelle zum Meditationen-Untertitel nachgezogen** (Feinschliff-Punkt 17).

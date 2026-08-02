@@ -128,11 +128,11 @@ Aufbau genau wie in der Vorlage (`renderMyMed()`), die Empfehlung selbst sitzt s
 
 ### 3.3a Meditationen — die Bibliothek (`data-step="meditation2"`)
 
-- **Kopf** "Meditationen · Lass dich begleiten", darunter die Bestandszahl ("**40** geführte Meditationen"). Hiess früher "Meditationsleiter" (Tab: "Übungen") — siehe Namens-Aufräumung in §2. Die Spanne "3–30 Minuten" stand früher neben der Zahl und ist entfernt — sie verwirrte, weil bei jeder Übung ohnehin ihre eigene Dauer steht.
+- **Kopf** "Meditationen · Alle Übungen zum Stöbern", darunter die Bestandszahl ("**40** geführte Meditationen"). Hiess früher "Meditationsleiter" (Tab: "Übungen") — siehe Namens-Aufräumung in §2; der Untertitel "Lass dich begleiten" wurde beim Audit vom Aug. 2026 durch etwas Konkreteres ersetzt (er beschrieb nicht, was die Seite eigentlich ist: eine Liste zum Stöbern, kein Chat). Die Spanne "3–30 Minuten" stand früher neben der Zahl und ist entfernt — sie verwirrte, weil bei jeder Übung ohnehin ihre eigene Dauer steht.
 - **Filter-Chips** (`#libFilters`): Alle · ⭐ Favoriten · 🧠 Gedanken beruhigen · ❤️ Gefühle verstehen · 💪 Stress lösen · 🌿 Entspannen; aktiver Chip in Gold, scrollt sich selbst in den sichtbaren Bereich.
 - **Liste wie in der Vorlage:** je Übung eine weisse Karte mit Bild-Feld (Symbol des Bereichs), Name, "5 Min · Gedanken beruhigen", **Stern** (Favorit) und **Play**. Bereits gemachte Übungen bekommen "schon gemacht" (`schonGemacht()`).
 - **Antippen startet sofort** — die frühere Mehrfachauswahl mit Auswahl-Leiste ist entfallen, mehrere Übungen hintereinander laufen jetzt über den Trainingsmodus (§3.2).
-- **Begleiter-Karte** über der Liste (goldene Karte "Dein Begleiter · Empfehlung erhalten →"), führt zum Chat auf My Meditation.
+- **Begleiter-Karte** über der Liste (goldene Karte "Dein Begleiter · Empfehlung erhalten →"), führt zum Chat auf "Mein Weg". Der Text darunter beschreibt seit Aug. 2026 explizit, was er kann ("Er findet dir eine passende Meditation und schlägt dir auf Wunsch auch ein Mudra oder Mantra vor.") — bewusst ohne das Wort "KI", damit klar bleibt, dass es sich um einen einfachen, lokal rechnenden Helfer handelt und nicht um einen echten KI-Dienst (§6).
 - **Favoriten** liegen wie der Verlauf nur auf dem Gerät (`localStorage`, Schlüssel `myisland.favoriten.v1`); der Chip ⭐ und die Profil-Zeile "Favoriten" zeigen sie.
 
 ### 3.4 Spieler (Vollbild, `body.entered.in-session`)
@@ -265,7 +265,7 @@ MEDITATIONS[] = {
 
 ### Mudras & Mantras (Abschluss-Seite)
 ```js
-MUDRAS[]  = { dir, name, how, why }   // 20 Eintraege, 5 je Richtung, Erklaerung auf Hochdeutsch
+MUDRAS[]  = { dir, name, how, why, dauer?, chakra? }   // 20 Eintraege, 5 je Richtung, Erklaerung auf Hochdeutsch
 MANTRAS[] = { dir, text, why }        // 20 Eintraege, 5 je Richtung, auf Hochdeutsch
 
 waehlePassend(liste, c)  // filtert auf die zu c passende Richtung, waehlt daraus DETERMINISTISCH
@@ -273,6 +273,7 @@ waehlePassend(liste, c)  // filtert auf die zu c passende Richtung, waehlt darau
                           // dieselbe Nadel-Position liefert also immer dasselbe Ergebnis
 zeigeMudra()/zeigeMantra()  // rendern die Karte in #mudraBox/#mantraBox, Richtung/Position kommt aus compassAfter
 ```
+- **`dauer`/`chakra` (Aug. 2026 ergänzt):** Christine hat einen eigenen Mudra-Guide (Ein-Seiten-PDF mit den 7 wichtigsten Mudras, je mit Chakra, Wirkung und empfohlener Dauer). Die 6 Mudras aus `MUDRAS[]`, die dort namentlich vorkommen (Gyan, Hakini, Hridaya, Anjali, Apana, Prana), haben jetzt `dauer`/`chakra` wörtlich aus diesem Dokument übernommen; `zeigeMudra()` und die direkte "gib mir ein Mudra"-Antwort in `lokaleAntwort()` zeigen die Zeile, wenn sie vorhanden ist. Für die übrigen 14, nur in der App vorhandenen Mudras wurde bewusst nichts erfunden — dort bleiben die Felder leer und die Zeile entfällt einfach.
 
 ## 5a. Themenvielfalt (umgesetzt)
 

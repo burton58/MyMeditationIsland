@@ -850,6 +850,7 @@
   .mudra-card h5, .mantra-card h5{ margin:0 0 6px; font-size:.95rem; font-family:var(--serif); }
   .mudra-card .how{ margin:0 0 6px; font-size:.83rem; line-height:1.55; }
   .mudra-card .why, .mantra-card .why{ margin:0; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
+  .mudra-card .meta{ margin:8px 0 0; font-size:.74rem; font-weight:700; letter-spacing:.02em; color:var(--gold-deep); }
 
   /* ---------- Begleiter ---------- */
   .companion{ padding:16px; margin-top:16px; }
@@ -1006,7 +1007,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.10";
+    var AKTUELLE_VERSION = "2026-08-02.11";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1294,7 +1295,7 @@
 
     <div class="card companion">
       <h4>Dein Begleiter</h4>
-      <p class="intro">Frag mich, was du brauchst – oder erzähl mir kurz, wie es dir geht.</p>
+      <p class="intro">Er hilft dir, eine passende Meditation zu finden, und schlägt dir auf Wunsch auch ein Mudra oder Mantra vor. Erzähl ihm kurz, wie es dir geht.</p>
       <div class="chat" id="chatBox"></div>
       <div class="chat-row">
         <input id="chatInput" type="text" placeholder="Schreib etwas …" autocomplete="off">
@@ -1319,7 +1320,7 @@
       <div class="ki-ico">💬</div>
       <div class="body">
         <h4>Dein Begleiter</h4>
-        <p>Erzähl kurz, wie es dir geht – der Begleiter sucht dir eine passende Meditation heraus.</p>
+        <p>Er findet dir eine passende Meditation und schlägt dir auf Wunsch auch ein Mudra oder Mantra vor. Erzähl ihm kurz, wie es dir geht.</p>
         <button class="btn-dark" id="libKiBtn">Empfehlung erhalten →</button>
       </div>
     </div>
@@ -3215,19 +3216,23 @@
   // Beide Bibliotheken sind bewusst groesser als noetig (nicht nur 1 pro
   // Richtung), damit die 3er-Empfehlung sich von Mal zu Mal unterscheidet
   // statt immer dieselben 3 zu zeigen.
+  // "dauer"/"chakra" stehen nur bei den Mudras, die auch im Mudra-Guide
+  // (Christines Ein-Seiten-PDF) vorkommen - dort woertlich uebernommen.
+  // Fuer die restlichen, nur in der App vorhandenen Mudras wird nichts
+  // erfunden, darum bleiben diese beiden Felder dort einfach leer.
   var MUDRAS = [
-    { dir:"nord", name:"Gyan Mudra", how:"Daumen und Zeigefinger berühren sich sanft, die anderen drei Finger bleiben locker gestreckt. Hände auf die Knie, Handflächen nach oben.", why:"Für einen klaren Kopf, wenn die Gedanken kreisen." },
+    { dir:"nord", name:"Gyan Mudra", how:"Daumen und Zeigefinger berühren sich sanft, die anderen drei Finger bleiben locker gestreckt. Hände auf die Knie, Handflächen nach oben.", why:"Für einen klaren Kopf, wenn die Gedanken kreisen.", dauer:"10–20 Min.", chakra:"Kronenchakra" },
     { dir:"nord", name:"Buddhi Mudra", how:"Daumen und kleiner Finger berühren sich sanft, die restlichen Finger bleiben gestreckt.", why:"Fördert Klarheit und einen offenen Umgang mit den eigenen Gedanken." },
     { dir:"nord", name:"Shuni Mudra", how:"Daumen und Mittelfinger berühren sich, die restlichen Finger bleiben locker gestreckt.", why:"Unterstützt Geduld und Konzentration." },
-    { dir:"nord", name:"Hakini Mudra", how:"Die Fingerspitzen beider Hände berühren sich sanft, die Handflächen zeigen zueinander, ohne sich zu berühren.", why:"Verbindet beide Gehirnhälften und hilft, Gedanken zu sortieren." },
+    { dir:"nord", name:"Hakini Mudra", how:"Die Fingerspitzen beider Hände berühren sich sanft, die Handflächen zeigen zueinander, ohne sich zu berühren.", why:"Verbindet beide Gehirnhälften und hilft, Gedanken zu sortieren.", dauer:"10–15 Min.", chakra:"Drittes Auge" },
     { dir:"nord", name:"Vayu Mudra", how:"Den Zeigefinger an die Daumenwurzel legen, den Daumen leicht darüberlegen.", why:"Beruhigt einen unruhigen, überaktiven Verstand." },
-    { dir:"sued", name:"Hridaya Mudra", how:"Den Zeigefinger an die Daumenwurzel legen, Daumen, Mittel- und Ringfinger zusammenbringen. Beide Hände auf den Schoss.", why:"Öffnet den Herzraum, wenn viel Gefühl da ist." },
+    { dir:"sued", name:"Hridaya Mudra", how:"Den Zeigefinger an die Daumenwurzel legen, Daumen, Mittel- und Ringfinger zusammenbringen. Beide Hände auf den Schoss.", why:"Öffnet den Herzraum, wenn viel Gefühl da ist.", dauer:"10–15 Min.", chakra:"Herzchakra" },
     { dir:"sued", name:"Padma Mudra", how:"Handballen und kleine Finger berühren sich, die restlichen Finger öffnen sich wie eine Blüte.", why:"Steht für Offenheit gegenüber den eigenen Gefühlen." },
-    { dir:"sued", name:"Anjali Mudra", how:"Beide Handflächen vor der Brust zusammenlegen, als würde man Danke sagen.", why:"Für Dankbarkeit und Verbindung zu sich selbst." },
+    { dir:"sued", name:"Anjali Mudra", how:"Beide Handflächen vor der Brust zusammenlegen, als würde man Danke sagen.", why:"Für Dankbarkeit und Verbindung zu sich selbst.", dauer:"1–5 Min.", chakra:"Herzchakra" },
     { dir:"sued", name:"Karana Mudra", how:"Zeige- und kleiner Finger gestreckt, die restlichen Finger halten den Daumen.", why:"Hilft, schwere Gefühle Stück für Stück loszulassen." },
     { dir:"sued", name:"Matangi Mudra", how:"Beide Hände vor dem Bauch falten, die Mittelfinger gestreckt aneinanderlegen, die Daumen kreuzen.", why:"Für inneren Ausgleich bei starken Gefühlen." },
-    { dir:"west", name:"Apana Mudra", how:"Daumen, Mittel- und Ringfinger berühren sich, Zeigefinger und kleiner Finger bleiben gestreckt.", why:"Hilft, Spannung aus dem Körper zu lassen." },
-    { dir:"west", name:"Prana Mudra", how:"Daumen, Ring- und kleiner Finger berühren sich, die restlichen Finger bleiben gestreckt.", why:"Aktiviert neue Energie, wenn alles schwer und angespannt wirkt." },
+    { dir:"west", name:"Apana Mudra", how:"Daumen, Mittel- und Ringfinger berühren sich, Zeigefinger und kleiner Finger bleiben gestreckt.", why:"Hilft, Spannung aus dem Körper zu lassen.", dauer:"10–15 Min.", chakra:"Wurzelchakra" },
+    { dir:"west", name:"Prana Mudra", how:"Daumen, Ring- und kleiner Finger berühren sich, die restlichen Finger bleiben gestreckt.", why:"Aktiviert neue Energie, wenn alles schwer und angespannt wirkt.", dauer:"10–20 Min.", chakra:"Wurzel- & Herzchakra" },
     { dir:"west", name:"Kubera Mudra", how:"Daumen, Zeige- und Mittelfinger an den Spitzen zusammenführen, die restlichen Finger locker einrollen.", why:"Für ein Gefühl von Halt und Sicherheit." },
     { dir:"west", name:"Rudra Mudra", how:"Daumen, Zeige- und Ringfinger berühren sich, die restlichen Finger bleiben gestreckt.", why:"Unterstützt Stabilität, wenn der Körper unruhig ist." },
     { dir:"west", name:"Ksepana Mudra", how:"Beide Zeigefinger aneinanderlegen, die restlichen Finger ineinander verschränken, Daumen zeigen nach unten.", why:"Zum bewussten Loslassen von Druck und Anspannung." },
@@ -3280,6 +3285,7 @@
         '<h5>🤲 ' + m.name + '</h5>' +
         '<p class="how">' + m.how + '</p>' +
         '<p class="why">' + m.why + '</p>' +
+        (m.dauer ? '<p class="meta">' + m.dauer + (m.chakra ? " · " + m.chakra : "") + '</p>' : '') +
       '</div>';
   }
   function zeigeMantra(){
@@ -3905,7 +3911,8 @@
     }
     if (willMudra){
       var mu = waehleFuerRichtung(MUDRAS, dir, streuung);
-      return intro + " Versuch das " + mu.name + ": " + mu.how + " " + mu.why;
+      var muExtra = mu.dauer ? (" Am besten " + mu.dauer + " halten (wirkt auf: " + mu.chakra + ").") : "";
+      return intro + " Versuch das " + mu.name + ": " + mu.how + " " + mu.why + muExtra;
     }
 
     // Erkennbare Richtung: Prio 1 ist eine konkrete Meditation, Mudra und
@@ -4247,7 +4254,7 @@
   });
 
   setupChat("chatBox", "chatInput", "chatSend",
-    "Hi! Ich begleite dich durch die Übung. Erzähl mir kurz, wie es dir gerade geht oder was du brauchst – ich empfehle dir dann etwas Passendes.", true);
+    "Hi! Ich helfe dir, eine passende Meditation zu finden – und kann dir auf Wunsch auch ein Mudra oder Mantra vorschlagen. Erzähl mir kurz, wie es dir gerade geht.", true);
   setupChat("chatBox2", "chatInput2", "chatSend2",
     "Schön, dass du da warst. Wie war es für dich?", false);
 
