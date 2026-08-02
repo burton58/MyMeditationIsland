@@ -76,7 +76,9 @@
   body:not(.entered)[data-step="profil"]      .profil-page,
   body:not(.entered)[data-step="abo"]         .abo-page,
   body:not(.entered)[data-step="ueber"]       .ueber-page,
-  body:not(.entered)[data-step="konto"]       .konto-page{ display:block; }
+  body:not(.entered)[data-step="konto"]       .konto-page,
+  body:not(.entered)[data-step="impressum"]   .impressum-page,
+  body:not(.entered)[data-step="datenschutz"] .datenschutz-page{ display:block; }
   body:not(.entered):not([data-step="island"]) .layout,
   body:not(.entered):not([data-step="island"]) .topbar,
   body:not(.entered):not([data-step="island"]) .stepper{ display:none; }
@@ -786,6 +788,12 @@
   .ueber-karte p{ margin:0 0 12px; font-size:.9rem; line-height:1.6; color:var(--ink-soft); text-align:left; }
   .ueber-karte p:last-child{ margin-bottom:0; }
   .ueber-web{ font-size:.84rem !important; color:var(--gold-deep) !important; text-align:center !important; }
+  .legal-karte{ text-align:left; }
+  .legal-karte h3{ font-size:.78rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--gold-deep); margin:22px 0 8px; }
+  .legal-karte h3:first-child{ margin-top:0; }
+  .legal-karte a{ color:var(--gold-deep); }
+  .legal-links{ text-align:center; margin:14px 0 0; font-size:.78rem; color:var(--ink-soft); }
+  .legal-links button{ border:none; background:none; font:inherit; color:var(--gold-deep); cursor:pointer; padding:0; text-decoration:underline; }
 
   /* ---------- Abo ---------- */
   .abo-vorteile{ padding:15px; margin-bottom:14px; }
@@ -974,7 +982,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.6";
+    var AKTUELLE_VERSION = "2026-08-02.7";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1438,6 +1446,12 @@
       <button class="menu-row" id="profilAboutBtn">
         <span class="row-icon">ℹ️</span><span class="row-text">Über die App</span><span class="chev">›</span>
       </button>
+      <button class="menu-row" id="profilImpressumBtn">
+        <span class="row-icon">📜</span><span class="row-text">Impressum</span><span class="chev">›</span>
+      </button>
+      <button class="menu-row" id="profilDatenschutzBtn">
+        <span class="row-icon">🔒</span><span class="row-text">Datenschutz</span><span class="chev">›</span>
+      </button>
       <button class="menu-row danger" id="profilResetBtn">
         <span class="row-icon">🗑️</span><span class="row-text">Verlauf löschen</span><span class="chev">›</span>
       </button>
@@ -1478,6 +1492,81 @@
     </div>
 
     <div class="btn-row"><button class="btn-dark" id="ueberCtaBtn">7 Tage gratis starten</button></div>
+  </div>
+
+  <!-- ============ IMPRESSUM ============ -->
+  <div class="page impressum-page" id="impressumPage">
+    <div class="page-head">
+      <button class="icon-btn" id="impressumBackBtn" title="Zurück">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="ttl center">
+        <h1>Impressum</h1>
+        <p>Wer diese App betreibt</p>
+      </div>
+      <span class="icon-btn blank"></span>
+    </div>
+
+    <div class="card ueber-karte legal-karte">
+      <h3>Verantwortlich für diese App</h3>
+      <p>Yoga Island<br>8005 Zürich, Schweiz</p>
+      <h3>Kontakt</h3>
+      <p>E-Mail: <a href="mailto:chris@yogaisland.ch">chris@yogaisland.ch</a><br>
+      Mehr über meine Arbeit: yogaisland.ch</p>
+    </div>
+  </div>
+
+  <!-- ============ DATENSCHUTZ ============ -->
+  <div class="page datenschutz-page" id="datenschutzPage">
+    <div class="page-head">
+      <button class="icon-btn" id="datenschutzBackBtn" title="Zurück">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="ttl center">
+        <h1>Datenschutz</h1>
+        <p>Was mit deinen Daten passiert</p>
+      </div>
+      <span class="icon-btn blank"></span>
+    </div>
+
+    <div class="card ueber-karte legal-karte">
+      <p><strong>Kurz gesagt:</strong> Diese App hat keinen eigenen Server und kein Konto. Was du hier einträgst
+      oder tust, bleibt auf deinem eigenen Gerät.</p>
+
+      <h3>Was auf deinem Gerät gespeichert wird</h3>
+      <p>Dein Meditations-Verlauf, deine Favoriten und der Stand deiner Testphase liegen ausschliesslich im lokalen
+      Speicher deines Browsers (<em>localStorage</em>). Diese Daten verlassen dein Gerät nie – es gibt keinen
+      Server, an den sie geschickt werden, und kein Konto, das sie sammelt. Löschst du deine Browserdaten oder
+      wechselst du dein Gerät, sind sie weg; eine Wiederherstellung ist aktuell nicht möglich.</p>
+
+      <h3>Dein Begleiter (Chat)</h3>
+      <p>Der Begleiter-Chat versucht, eine Anfrage an einen KI-Dienst (Anthropic, USA) zu senden. Aktuell ist dafür
+      kein gültiger Zugang hinterlegt; die Anfrage schlägt darum immer fehl, und es kommt keine echte Antwort von
+      dort zurück – stattdessen antwortet die App direkt auf deinem Gerät. Trotzdem baut dein Browser dabei
+      technisch eine Verbindung zu einem Server in den USA auf (u. a. mit deiner IP-Adresse). Wer das nicht möchte,
+      nutzt den Begleiter-Chat einfach nicht – der Rest der App funktioniert unabhängig davon.</p>
+
+      <h3>Hosting</h3>
+      <p>Diese Seite liegt bei GitHub Pages (GitHub Inc., Teil von Microsoft). Wie bei jedem Website-Aufruf
+      verarbeitet der Hosting-Anbieter dabei automatisch technische Zugriffsdaten (z. B. IP-Adresse, Zeitpunkt) –
+      darauf haben wir keinen Einfluss. Details dazu in der Datenschutzerklärung von GitHub.</p>
+
+      <h3>Keine Cookies, kein Tracking</h3>
+      <p>Diese App setzt keine Cookies und keine Analyse- oder Werbe-Tools ein. Es gibt aktuell keine Möglichkeit
+      für uns zu sehen, wie viele Menschen die App nutzen oder wie sie genutzt wird.</p>
+
+      <h3>Bezahlung</h3>
+      <p>Eine echte Bezahlung ist noch nicht angeschlossen. Sobald das der Fall ist, wird diese Erklärung um die
+      Angaben zum Zahlungsanbieter ergänzt.</p>
+
+      <h3>Deine Rechte</h3>
+      <p>Da keine Daten bei uns gespeichert werden, gibt es serverseitig auch nichts, das wir für dich einsehen,
+      ändern oder löschen könnten – das kannst du jederzeit selbst tun, direkt in der App unter
+      <strong>Profil → Verlauf löschen</strong>, oder indem du die Browserdaten deines Geräts löschst.</p>
+
+      <h3>Kontakt</h3>
+      <p>Fragen zum Datenschutz? <a href="mailto:chris@yogaisland.ch">chris@yogaisland.ch</a></p>
+    </div>
   </div>
 
   <!-- ============ KONTO / ANMELDEN ============ -->
@@ -1555,6 +1644,8 @@
       <strong>Hinweis:</strong> Die Bezahlung ist noch nicht angeschlossen. Die Knöpfe zeigen,
       wie es aussehen wird – es wird nichts belastet.
     </div>
+
+    <p class="legal-links"><button id="aboImpressumBtn">Impressum</button> · <button id="aboDatenschutzBtn">Datenschutz</button></p>
 
     <div class="btn-row"><button class="btn-ghost" id="aboBackBtn">Zurück</button></div>
   </div>
@@ -2433,6 +2524,8 @@
     splash:     { label:"", sub:"" },
     ueber:      { label:"", sub:"" },
     konto:      { label:"", sub:"" },
+    impressum:  { label:"", sub:"" },
+    datenschutz:{ label:"", sub:"" },
     home:       { label:"", sub:"" },
     island:     { label:"Insel gestalten · optional",   sub:"Wähle, wie deine Insel aussieht." },
     compass:    { label:"Schritt 1 von 3 · Kompass",    sub:"Stell den Zeiger auf deine Richtung." },
@@ -4120,6 +4213,24 @@
     goToStep(ueberZurueck);
   });
   document.getElementById("ueberCtaBtn").addEventListener("click", function(){ goToStep("home"); });
+
+  // Impressum & Datenschutz: aus Profil und von der Abo-Seite erreichbar;
+  // der Zurück-Pfeil fuehrt dorthin, wo man hergekommen ist (wie bei "Über mich").
+  var legalZurueck = "profil";
+  document.getElementById("profilImpressumBtn").addEventListener("click", function(){
+    legalZurueck = "profil"; goToStep("impressum");
+  });
+  document.getElementById("profilDatenschutzBtn").addEventListener("click", function(){
+    legalZurueck = "profil"; goToStep("datenschutz");
+  });
+  document.getElementById("aboImpressumBtn").addEventListener("click", function(){
+    legalZurueck = "abo"; goToStep("impressum");
+  });
+  document.getElementById("aboDatenschutzBtn").addEventListener("click", function(){
+    legalZurueck = "abo"; goToStep("datenschutz");
+  });
+  document.getElementById("impressumBackBtn").addEventListener("click", function(){ goToStep(legalZurueck); });
+  document.getElementById("datenschutzBackBtn").addEventListener("click", function(){ goToStep(legalZurueck); });
 
   // ---- Konto / Anmelden (Platzhalter, bis die Bezahlung läuft) --------
   var kontoZurueck = "splash";
