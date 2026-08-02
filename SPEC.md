@@ -168,6 +168,14 @@ Eine ruhige Karte mit Logo, Begrüssung und drei kurzen Absätzen: diplomierte Y
 
 Erreichbar von der Titelseite (Vertrauenszeile) und über **Profil → "Über mich"**; der Zurück-Pfeil führt jeweils dorthin zurück, wo man hergekommen ist (`ueberZurueck`). Ohne Bewertungen ist die Person hinter der App der stärkste Vertrauensbeweis — deshalb sitzt der Einstieg direkt auf der Landingpage.
 
+### 3.7a Impressum & Datenschutz (`data-step="impressum"`/`"datenschutz"`) — Aug. 2026 ergänzt
+
+Zwei einfache Text-Seiten, gleicher Aufbau wie "Über mich" (`.legal-karte`, wiederverwendet `.ueber-karte`). Erreichbar über **Profil** (zwei neue Zeilen zwischen "Über die App" und "Verlauf löschen") sowie über zwei kleine Text-Links auf der **Abo-Seite** direkt beim Preis-Hinweis — dort, wo es rechtlich am meisten zählt. Der Zurück-Pfeil führt jeweils dorthin zurück, wo man hergekommen ist (`legalZurueck`, gleiches Prinzip wie `ueberZurueck`).
+
+- **Impressum:** "Yoga Island", 8005 Zürich Schweiz, chris@yogaisland.ch — Angaben stammen von der echten Seite yogaisland.ch (per Screenshot bestätigt, nicht erfunden). **Offen:** kein vollständiger rechtlicher Name einer natürlichen Person und keine Strassenadresse hinterlegt, nur PLZ/Ort — für ein rechtlich robustes Impressum (insbesondere bei deutschen Besucher:innen) wäre das eine sinnvolle Ergänzung, sobald Christine das liefert.
+- **Datenschutz:** ehrlich aus dem tatsächlichen Code abgeleitet, nicht aus einer Vorlage kopiert — insbesondere die Offenlegung, dass der Begleiter-Chat-Versuch technisch eine Verbindung zu Anthropic (USA) aufbaut, auch wenn er mangels Schlüssel immer fehlschlägt (§6), sowie der Hinweis auf GitHub Pages als Hosting-Anbieter.
+- **Wichtig, wiederkehrend zu prüfen:** Beide Texte sind sorgfältig, aber keine Rechtsberatung. Vor dem ersten echten Zahlungsvorgang (`ABO_LIVE = true`) sollte das jemand vom Fach gegenlesen — insbesondere muss die Datenschutzerklärung dann um den tatsächlichen Zahlungsanbieter ergänzt werden.
+
 ### 3.6 Profil (`data-step="profil"`)
 - Seitenkopf "Profil · Dein Bereich", Karte "Dein Inselbewohner".
 - **Status-Karte** (`renderStatusCard()`) zum Zugang, danach zwei Karten aus dem echten Verlauf (blenden sich aus, solange nichts da ist):
