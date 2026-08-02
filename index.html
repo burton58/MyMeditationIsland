@@ -3657,14 +3657,16 @@
 
   function lokaleAntwort(text, allowRecommend){
     var dir = erkenneRichtung(text);
-    if (!dir) return UNKLAR_SAETZE[textStreuung(text) % UNKLAR_SAETZE.length];
-
-    var intro = INTRO_SAETZE[dir], streuung = textStreuung(text);
+    var streuung = textStreuung(text);
+    var intro = dir ? INTRO_SAETZE[dir] : "Gerne.";
     var willMantra = text.toLowerCase().indexOf("mantra") !== -1;
     var willMudra = text.toLowerCase().indexOf("mudra") !== -1;
 
     // Wird gezielt nach einem Mudra oder Mantra gefragt, bekommt die Person
-    // genau das - direkte Fragen haben Vorrang vor der Standard-Reihenfolge.
+    // genau das - direkte Fragen haben immer Vorrang, auch wenn der Text
+    // sonst kein Gefühls-Stichwort enthält (dann ueber alle vier Bereiche
+    // hinweg gewählt statt gezielt auf einen Zustand - waehleFuerRichtung
+    // faengt ein leeres "dir" von selbst ab).
     if (willMantra){
       var ma = waehleFuerRichtung(MANTRAS, dir, streuung);
       return intro + " Ein Satz dafür: „" + ma.text + "“ – " + ma.why;
@@ -3674,10 +3676,10 @@
       return intro + " Versuch das " + mu.name + ": " + mu.how + " " + mu.why;
     }
 
-    // Standardfall: Prio 1 ist immer eine konkrete Meditation. Mudra und
+    // Erkennbare Richtung: Prio 1 ist eine konkrete Meditation, Mudra und
     // Mantra kommen nur als kurze, optionale Ergänzung dazu - das Tag muss
     // dafuer trotzdem ganz am Ende der Antwort stehen bleiben.
-    if (allowRecommend){
+    if (dir && allowRecommend){
       var med = medFuerRichtung(dir);
       if (med){
         var bonusIstMudra = streuung % 2 === 0;
@@ -3693,9 +3695,25 @@
           " [EMPFEHLUNG: " + med.name + "]";
       }
     }
-    var muFallback = waehleFuerRichtung(MUDRAS, dir, streuung);
-    return intro + " Ein kleines Mudra dazu: " + muFallback.name + " – " + muFallback.why +
-      " Frag mich gern auch nach einem Mantra dafür.";
+    if (dir){
+      // Erkennbare Richtung, aber kein Meditations-Kontext hier (Abschluss-
+      // Chat) oder keine passende Übung gefunden - dann ist ein Mudra die
+      // naheliegende zweite Wahl.
+      var muFallback = waehleFuerRichtung(MUDRAS, dir, streuung);
+      return intro + " Ein kleines Mudra dazu: " + muFallback.name + " – " + muFallback.why +
+        " Frag mich gern auch nach einem Mantra dafür.";
+    }
+
+    // Keine Meditation erkennbar, weil der Text keine Richtung verrät: als
+    // zweite Wahl trotzdem ein Mudra oder Mantra anbieten, statt nur auf
+    // den Kompass zu verweisen.
+    var unklar = UNKLAR_SAETZE[streuung % UNKLAR_SAETZE.length];
+    if (streuung % 2 === 0){
+      var muGen = waehleFuerRichtung(MUDRAS, dir, streuung);
+      return unklar + " Bis dahin kannst du zum Beispiel das " + muGen.name + " probieren – " + muGen.why;
+    }
+    var maGen = waehleFuerRichtung(MANTRAS, dir, streuung);
+    return unklar + " Bis dahin passt vielleicht dieses Mantra: „" + maGen.text + "“.";
   }
 
   function setupChat(boxId, inputId, sendId, greeting, allowRecommend){
