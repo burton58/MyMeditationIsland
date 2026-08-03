@@ -648,6 +648,8 @@
   .wert-text{ fill:var(--ink); font-size:9px; font-weight:700; font-family:var(--sans); }
   .balken-feld{ fill:transparent; cursor:pointer; }
   .grafik-auswahl{ margin:8px 0 0; font-size:.76rem; color:var(--ink); min-height:1.2em; }
+  .grafik-zu{ margin-top:14px; }
+  .grafik-hinweis[hidden]{ display:none; }
   .grafik-leer{ margin:0; font-size:.84rem; color:var(--ink-soft); line-height:1.5; }
 
   .stats-row{ display:flex; }
@@ -1108,7 +1110,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.18";
+    var AKTUELLE_VERSION = "2026-08-03.19";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4679,11 +4681,16 @@
         '<p class="grafik-lesart">Wie lange du an einem Tag meditiert hast.</p>' +
         balkenSvg(reihe, "minuten", "Minuten") +
       '</div>' +
-      '<p class="grafik-auswahl" id="grafikAuswahl">Tipp auf einen Tag, um seine Zahlen zu sehen.</p>';
+      '<p class="grafik-auswahl" id="grafikAuswahl">Tipp auf einen Tag, um seine Zahlen zu sehen.</p>' +
+      '<button class="btn-ghost full grafik-zu" id="grafikZuBtn" type="button">Grafik zuklappen</button>';
 
     // Antippen statt Mauszeiger-Hover: auf dem Handy gibt es kein Hover.
     // Ein Tag wird in beiden Diagrammen gleichzeitig hervorgehoben.
-    host.addEventListener("click", function(e){
+    // onclick statt addEventListener: renderFortschrittGrafik() laeuft bei
+    // jedem Aufklappen erneut - mit addEventListener wuerden sich die
+    // Zuhoerer stapeln und ein Balken-Tipp mehrfach feuern.
+    host.onclick = function(e){
+      if (e.target.closest("#grafikZuBtn")){ grafikZuklappen(); return; }
       var ziel = e.target.closest("[data-i]");
       if (!ziel) return;
       var i = parseInt(ziel.getAttribute("data-i"), 10);
@@ -4694,8 +4701,23 @@
       document.getElementById("grafikAuswahl").textContent =
         WEEKDAYS[t.datum.getDay()] + ", " + datumKurz(t.datum) + ": " +
         t.anzahl + (t.anzahl === 1 ? " Meditation" : " Meditationen") + " · " + t.minuten + " Min";
-    });
+    };
   }
+
+  // Auf- und Zuklappen an einer Stelle, damit Zahlenreihe und
+  // Zuklappen-Knopf garantiert dasselbe tun.
+  function grafikOeffnen(auf){
+    document.getElementById("fortschrittGrafik").hidden = !auf;
+    if (auf) renderFortschrittGrafik();
+    // Der Hinweis gilt nur im zugeklappten Zustand. Offen stand dort
+    // "Antippen zum Zuklappen" - direkt ueber der Grafik, was sich las,
+    // als muesse man die Grafik selbst antippen (Christine hat genau das
+    // versucht). Jetzt sagt der Knopf IN der Karte, wie man sie schliesst.
+    var hinweis = document.getElementById("grafikHinweis");
+    hinweis.hidden = auf;
+    hinweis.textContent = "Antippen für deine Entwicklung";
+  }
+  function grafikZuklappen(){ grafikOeffnen(false); }
 
   // ---- Letzte Meditationen: erst drei, auf Wunsch alle ----------------
   var historyAlle = false;
@@ -4728,12 +4750,7 @@
 
   // ---- wiring ----
   document.getElementById("statsRowBtn").addEventListener("click", function(){
-    var box = document.getElementById("fortschrittGrafik");
-    var auf = box.hidden;
-    box.hidden = !auf;
-    if (auf) renderFortschrittGrafik();
-    document.getElementById("grafikHinweis").textContent =
-      auf ? "Antippen zum Zuklappen" : "Antippen für deine Entwicklung";
+    grafikOeffnen(document.getElementById("fortschrittGrafik").hidden);
   });
   document.getElementById("historyMehrBtn").addEventListener("click", function(){
     historyAlle = !historyAlle;

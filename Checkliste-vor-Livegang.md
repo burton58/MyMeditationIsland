@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Suche mit Lupe, Dopplung auf „Mein Weg" entfernt)
+Stand: 3. August 2026 (zuletzt aktualisiert: Grafik lässt sich eindeutig zuklappen)
 
 ---
 
@@ -259,3 +259,7 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Suche mit Lupe, Dopplung auf „Mei
       Reiter „Meditationen" genau dasselbe bietet. „Mein Weg" ist jetzt
       reine Auswertung. Der Bild-Platz fürs Begleiter-Foto ist mit in die
       Bibliothek gewandert, geht also nicht verloren.
+- [x] **Grafik lässt sich jetzt eindeutig zuklappen**: Der Hinweis stand über
+      der Grafik und las sich, als solle man die Grafik antippen – dort
+      passiert aber nichts. Jetzt gibt es unten in der Karte einen klaren
+      Knopf „Grafik zuklappen". Die Zahlenreihe schaltet weiterhin auch um.
