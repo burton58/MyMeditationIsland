@@ -899,8 +899,11 @@
 
   /* ---------- Insel gestalten (bleibt erhalten, neu eingefärbt) ---------- */
   .topbar{ text-align:center; padding:20px 16px 4px; }
-  .topbar h1{ font-family:var(--serif); font-size:1.5rem; margin:0 0 4px; }
-  .topbar .subtitle{ margin:0; color:var(--ink-soft); font-size:.9rem; }
+  /* Gleiche Grösse wie .page-head h1/p auf allen anderen Seiten - vorher
+     war der Insel-Konfigurator (einzige Stelle mit .topbar) die einzige
+     Seite mit einem sichtbar kleineren Titel. */
+  .topbar h1{ font-family:var(--serif); font-size:1.65rem; margin:0 0 3px; }
+  .topbar .subtitle{ margin:0; color:var(--ink-soft); font-size:.88rem; }
   .stepper{ text-align:center; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
     color:var(--gold-deep); margin:0 0 8px; }
   .layout{ display:flex; flex-direction:column; gap:16px; padding:0 16px 40px; max-width:520px; margin:0 auto; }
@@ -1033,7 +1036,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.7";
+    var AKTUELLE_VERSION = "2026-08-03.8";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1321,7 +1324,6 @@
 
     <div class="card companion">
       <h4>Dein Begleiter</h4>
-      <p class="intro">Er hilft dir, eine passende Meditation zu finden, und schlägt dir auf Wunsch auch ein Mudra oder Mantra vor. Erzähl ihm kurz, wie es dir geht.</p>
       <div class="chat" id="chatBox"></div>
       <div class="chat-row">
         <input id="chatInput" type="text" placeholder="Schreib etwas …" autocomplete="off">
@@ -1346,7 +1348,7 @@
       <div class="ki-ico">💬</div>
       <div class="body">
         <h4>Dein Begleiter</h4>
-        <p>Er findet dir eine passende Meditation und schlägt dir auf Wunsch auch ein Mudra oder Mantra vor. Erzähl ihm kurz, wie es dir geht.</p>
+        <p>Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?</p>
         <button class="btn-dark" id="libKiBtn">Empfehlung erhalten →</button>
       </div>
     </div>
@@ -4462,7 +4464,7 @@
   });
 
   setupChat("chatBox", "chatInput", "chatSend",
-    "Hi! Ich helfe dir, eine passende Meditation zu finden – und kann dir auf Wunsch auch ein Mudra oder Mantra vorschlagen. Erzähl mir kurz, wie es dir gerade geht.", true);
+    "Hi! Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?", true);
   setupChat("chatBox2", "chatInput2", "chatSend2",
     "Schön, dass du da warst. Wie war es für dich?", false);
 

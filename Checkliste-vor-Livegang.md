@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons samt Hintergrund-Feld deutlich grösser)
+Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter-Text ohne Dopplung, App-weiter Formatierungs-Check)
 
 ---
 
@@ -33,6 +33,10 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons samt Hintergrund-Fe
 - [ ] **Konto/Cloud-Speicherung einbauen**, damit ein Gerätewechsel niemanden
       seinen bezahlten Zugang kostet (aktuell liegt alles nur auf einem Gerät –
       „Abo wiederherstellen" ist bisher nur eine Attrappe ohne Funktion).
+- [ ] **Eigene Symbole statt Emoji auf der Status-Karte im Profil**
+      (aktuell 🤍 ✅ ⏳ 🔒 für „offen"/„aktiv"/„Testphase"/„gesperrt") –
+      beim App-weiten Formatierungs-Check aufgefallen: das ist die letzte
+      Stelle, die noch Emoji statt eigener Bilder zeigt.
 
 ## 3. Kann warten, lohnt sich aber früh
 
@@ -131,3 +135,18 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons samt Hintergrund-Fe
       Übungsliste von 50 auf 64 Pixel, bei den Kategorie-Karten von 34 auf
       46) – wächst künftig nochmal etwas, wächst das Symbol automatisch
       mit, weil es sich jetzt am Feld orientiert statt an einer festen Zahl.
+- [x] **Begleiter-Text ohne Dopplung**: auf „Mein Weg" stand über der
+      Chat-Box derselbe Satz zweimal fast identisch. Die doppelte Zeile ist
+      weg, und der Begleiter stellt sich jetzt überall gleich vor: „Kann ich
+      dir helfen, die passende Meditation zu finden – und optional dazu ein
+      Mudra oder Mantra?" statt der bisherigen Aufforderung „Erzähl mir, wie
+      es dir geht".
+- [x] **App-weiter Formatierungs-Check**: alle Seiten der Reihe nach mit
+      Screenshots durchgegangen (Schrift, Grösse, Stil, Abstände). Einen
+      echten Treffer gefunden und behoben: die Insel-Gestalten-Seite hatte
+      einen kleineren Titel als der Rest der App – jetzt einheitlich. Die
+      vielen winzigen Schriftgrössen-Unterschiede im Rest des Codes
+      (Bruchteile eines Pixels) sind bewusst unangetastet geblieben – nicht
+      wahrnehmbar, aber ein Risiko für neue Fehler beim Anpassen. Einen
+      echten, noch offenen Stilbruch gibt's noch (siehe Status-Karte oben
+      in Punkt 2).
