@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter-Text ohne Dopplung, App-weiter Formatierungs-Check)
+Stand: 3. August 2026 (zuletzt aktualisiert: Mudra-Anleitung überall im Begleiter, blauer Fokusrahmen beim Kompass entfernt)
 
 ---
 
@@ -150,3 +150,14 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter-Text ohne Dopplung, App-w
       wahrnehmbar, aber ein Risiko für neue Fehler beim Anpassen. Einen
       echten, noch offenen Stilbruch gibt's noch (siehe Status-Karte oben
       in Punkt 2).
+- [x] **Begleiter erklärt Mudras jetzt immer richtig**: bisher stand die
+      Handhaltungs-Anleitung ("Zeigefinger und Daumen berühren sich,
+      Handfläche nach oben" usw.) nur da, wenn man ausdrücklich nach einem
+      Mudra gefragt hat. Schlug der Begleiter eines von sich aus vor (als
+      Zusatz zu einer Meditation, im Abschluss-Gespräch oder bei unklarer
+      Nachricht), stand bisher nur der Name da, ohne zu erklären, wie man
+      es macht – jetzt überall mit Anleitung.
+- [x] **Blauer Rahmen beim Kompass entfernt**: nach dem Bewegen des Zeigers
+      blieb ein blauer System-Rahmen um den Kompass sichtbar (Nebenwirkung
+      der Tastatur-Bedienbarkeit). Ist jetzt weg – nur noch beim Bedienen
+      per Tastatur erscheint der (gewollte) goldene Ring.
