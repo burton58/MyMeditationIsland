@@ -287,7 +287,7 @@
      Fokus" etwas voller - dort darum knapper als anderswo, damit auch
      dieser Zustand ohne Scrollen passt. */
   #focusSlot .hist-row{ padding:8px 12px; }
-  #focusSlot .row-thumb{ width:38px; height:38px; font-size:1.05rem; }
+  #focusSlot .row-thumb{ width:44px; height:44px; font-size:1.05rem; }
   #focusMehrBtn{ margin-top:6px; padding:9px 18px; }
 
   .focus-card{ display:flex; align-items:center; gap:13px; padding:13px 14px; width:100%; text-align:left;
@@ -609,10 +609,10 @@
     font-size:.85rem; font-weight:600; text-align:left;
   }
   .fd-cat-icon{
-    width:34px; height:34px; border-radius:10px; flex:0 0 auto; background:var(--cream-2);
+    width:46px; height:46px; border-radius:13px; flex:0 0 auto; background:var(--cream-2);
     display:flex; align-items:center; justify-content:center;
   }
-  .fd-cat-icon .kat-icon{ width:1.7em; height:1.7em; font-size:1rem; }
+  .fd-cat-icon .kat-icon{ width:76%; height:76%; }
   .kat-icon{ width:1.55em; height:1.55em; object-fit:contain; vertical-align:middle; display:inline-block; }
 
   .stats-row{ display:flex; }
@@ -667,9 +667,10 @@
      Grund - das Icon selbst (gross, .kat-icon) soll die Aufmerksamkeit
      bekommen, nicht ein zusaetzlicher Ring/Verlauf um das Feld herum. */
   .row-thumb{
-    width:50px; height:50px; border-radius:13px; flex:0 0 auto; background:var(--cream-2);
+    width:64px; height:64px; border-radius:16px; flex:0 0 auto; background:var(--cream-2);
     display:flex; align-items:center; justify-content:center; font-size:1.25rem;
   }
+  .row-thumb .kat-icon{ width:76%; height:76%; }
 
   /* ---------- Profil ---------- */
   .profile-card{
@@ -1032,7 +1033,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.6";
+    var AKTUELLE_VERSION = "2026-08-03.7";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

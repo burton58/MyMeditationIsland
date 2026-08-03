@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons deutlich fetter/kräftiger nachgezeichnet)
+Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons samt Hintergrund-Feld deutlich grösser)
 
 ---
 
@@ -126,3 +126,8 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons deutlich fetter/kr�
       dünn/blass, um sie richtig zu erkennen. Die vier Bilder sind jetzt neu
       aufbereitet – Linien künstlich verdickt und auf ein kräftiges,
       einheitliches Gold gesetzt statt der ausgefransten Originalfarben.
+- [x] **Das ganze Icon-Feld grösser**: nicht nur das Symbol, auch der
+      Hintergrund-Kasten drumherum ist jetzt deutlich grösser (in der
+      Übungsliste von 50 auf 64 Pixel, bei den Kategorie-Karten von 34 auf
+      46) – wächst künftig nochmal etwas, wächst das Symbol automatisch
+      mit, weil es sich jetzt am Feld orientiert statt an einer festen Zahl.
