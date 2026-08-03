@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 2. August 2026 (zuletzt aktualisiert: Surya Mudra ergänzt, Mantra-Silben aus deinem Mudra-Guide, Entscheid gegen echten KI-Dienst festgehalten)
+Stand: 3. August 2026 (zuletzt aktualisiert: 7 neue Meditationen ergänzt, u. a. vier weitere Chakren)
 
 ---
 
@@ -89,3 +89,9 @@ Stand: 2. August 2026 (zuletzt aktualisiert: Surya Mudra ergänzt, Mantra-Silben
       Begleiter** – die kostenlose, lokale Logik bleibt dauerhaft so, wie sie
       ist. Ein echter KI-Anschluss würde einen eigenen Server und laufende
       Kosten pro Nachricht brauchen; das ist bewusst nicht geplant.
+- [x] **7 neue Meditationen ergänzt** (jetzt 47 statt 40): Kronenchakra –
+      Körperfreiheit, Halschakra – Widerstände lösen, Solarplexuschakra –
+      Willensstärke, Sakralchakra – Vertrauen, Seelenmeditation, Kiefer
+      entspannen, Reinigende Meditation. Vorher abgeglichen, dass Wurzel-,
+      Herz- und Stirnchakra schon eine eigene Meditation hatten – da wurde
+      nichts doppelt angelegt.

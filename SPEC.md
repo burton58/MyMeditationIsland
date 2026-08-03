@@ -49,7 +49,7 @@ Seit dem Layout-Umbau folgt die ganze App **einer** Vorlage: warmes Creme als Fl
 - **Buttons**: `.btn-dark` (Gold-Verlauf, dunkelbrauner Text) für die Hauptaktion, `.btn-ghost` (weiss mit Rand) für alles Sekundäre; `.full` macht beide breit.
 - **Auswahlreihen** (`.seg`): gleich breite Chips nebeneinander, aktiver Chip in Gold — für Zeit und Anzahl auf dem Kompass.
 - **Persistente Tab-Bar** unten (`.tabbar`, 74px, cremeweiss, nur während der Sitzung ausgeblendet): 5 Tabs — **Startseite · Kompass · Mein Weg · Meditationen · Profil** (Steps `home`, `compass`, `meditation`, `meditation2`, `profil`).
-  - **Namens-Aufräumung (Aug. 2026):** Vorher hiessen Tab und Ziel-Seite jeweils unterschiedlich (Tab "Training" → Seite "My Meditation"; Tab "Übungen" → Seite "Meditationsleiter"). Zwei Namen für denselben Ort machen die App schwer merkbar; **Tab-Beschriftung und Seitentitel sind jetzt identisch**. Ausserdem ist **"Meditationsleiter" als Ortsname verschwunden**: Das Wort bezeichnet einen *Menschen* — Christine nennt sich selbst "Meditationsleiterin" (Titelseite, §3.7) — und stand gleichzeitig über einer Übungsliste. Es bleibt jetzt allein ihrer Berufsbezeichnung vorbehalten. "Übungen" wurde zu **"Meditationen"**, weil genau das drin liegt (40 geführte Meditationen); "Training" zu **"Mein Weg"**, weil die Seite Fortschritt, Ziele und Verlauf zeigt und kein Training ist. Auch die Untertitel wurden dabei nachgezogen, wo sie nicht zur Seite passten: "Meditationen" zeigte "Lass dich begleiten" (das ist die Chat-Karte, nicht die Liste) → **"Alle Übungen zum Stöbern"**; "Mein Weg" nutzte dieselbe zeitabhängige Begrüssung wie die Startseite (`begruessung()`) statt etwas Eigenes zu sagen → fest **"Was du schon geschafft hast"**; die Preis-Seite hiess "Deine Meditationen" — verwechselbar mit der neu benannten Bibliothek — → **"Dein Zugang"** / "7 Tage gratis, danach wie du magst.".
+  - **Namens-Aufräumung (Aug. 2026):** Vorher hiessen Tab und Ziel-Seite jeweils unterschiedlich (Tab "Training" → Seite "My Meditation"; Tab "Übungen" → Seite "Meditationsleiter"). Zwei Namen für denselben Ort machen die App schwer merkbar; **Tab-Beschriftung und Seitentitel sind jetzt identisch**. Ausserdem ist **"Meditationsleiter" als Ortsname verschwunden**: Das Wort bezeichnet einen *Menschen* — Christine nennt sich selbst "Meditationsleiterin" (Titelseite, §3.7) — und stand gleichzeitig über einer Übungsliste. Es bleibt jetzt allein ihrer Berufsbezeichnung vorbehalten. "Übungen" wurde zu **"Meditationen"**, weil genau das drin liegt (47 geführte Meditationen); "Training" zu **"Mein Weg"**, weil die Seite Fortschritt, Ziele und Verlauf zeigt und kein Training ist. Auch die Untertitel wurden dabei nachgezogen, wo sie nicht zur Seite passten: "Meditationen" zeigte "Lass dich begleiten" (das ist die Chat-Karte, nicht die Liste) → **"Alle Übungen zum Stöbern"**; "Mein Weg" nutzte dieselbe zeitabhängige Begrüssung wie die Startseite (`begruessung()`) statt etwas Eigenes zu sagen → fest **"Was du schon geschafft hast"**; die Preis-Seite hiess "Deine Meditationen" — verwechselbar mit der neu benannten Bibliothek — → **"Dein Zugang"** / "7 Tage gratis, danach wie du magst.".
   - **Kein eigenes Tab-Feld mehr für die Titelseite** (vorher "Insel", `data-tab="splash"`): Alles, was dort steht (Preise, Über mich, Konto, Insel gestalten), ist ohnehin über **Profil** erreichbar, ein eigenes Leisten-Feld war doppelt. Der Weg zurück zur Titelseite führt jetzt über zwei Stellen: das **Foto oben auf der Startseite ist antippbar geworden** (`#homeHeroBtn`, führt zu `goToStep("splash")`, dezentes Abdunkeln beim Antippen statt Skalieren, damit am randlosen Foto nichts die Hintergrundfarbe durchblitzen lässt) und der bereits vorhandene Knopf **"🏝️ Zur Titelseite"** ganz unten im Profil (`#toSplashBtn`, unverändert). Damit bleiben fünf statt sechs Felder — jedes davon mit mehr Platz, gemessen weiterhin ohne Überlauf auf iPhone SE/14/15 Pro Max.
 - **Safe-Area:** `--safe-bottom: env(safe-area-inset-bottom)` wird auf `body`, `.tabbar`, Titelseite und Spieler angerechnet, damit unten nichts hinter dem Home-Indikator verschwindet. Tests können den Wert über `:root{--safe-bottom:34px}` nachstellen.
 
@@ -260,7 +260,7 @@ MEDITATIONS[] = {
   name, min (Zahl), desc, steps: [ "...", "...", ... ]  // Anleitungstexte, zeitlich verteilt über die Dauer
 }
 ```
-- **40 handgeschriebene Meditationen insgesamt** (13 mini / 13 mittel / 14 tief) — siehe §5a für die volle Titelliste. Kein Generator mehr: `generateLibrary()`/`THEMES`/`PHRASES` wurden entfernt, jeder Eintrag ist ein einzeln geschriebenes Skript.
+- **47 handgeschriebene Meditationen insgesamt** (14 mini / 17 mittel / 16 tief) — siehe §5a für die volle Titelliste. Kein Generator mehr: `generateLibrary()`/`THEMES`/`PHRASES` wurden entfernt, jeder Eintrag ist ein einzeln geschriebenes Skript.
 - Das Feld `cat` ("mini"/"mittel"/"tief") steuert jetzt die Empfehlungs-Reihenfolge auf "Für dich" (§3.3, kurz-zuerst bei Anspannung) und liefert über `TIEFE[cat]` den zweiten Empfehlungsgrund. Als sichtbare Gliederung wird es nicht mehr benutzt — beide Seiten gruppieren nach Kompass-Richtung bzw. Nutzen-Kategorie.
 
 ### Mudras & Mantras (Abschluss-Seite)
@@ -279,9 +279,11 @@ zeigeMudra()/zeigeMantra()  // rendern die Karte in #mudraBox/#mantraBox, Richtu
 
 **Entscheidung:** Die Insel bleibt das einzige Bild/Branding der App (kein zweites, drittes Landschafts-"Skin"). Die *Meditationen selbst* sind inhaltlich breiter als vorher — nicht mehr nur Strand/Palmen/Wellen, sondern klassische Themen aus Achtsamkeit, Körperarbeit und Alltagsbewältigung. Die vier Kompass-Richtungen (Denken/Fühlen/Anspannung/Entspannung) bleiben als Zuordnungs-Logik bestehen; jedes Thema hat weiterhin eine Richtung zugeordnet, damit die Empfehlungslogik unverändert funktioniert.
 
-**Umgesetzte Titelliste (40 Meditationen, alle handgeschrieben)** — ersetzt die früher automatisch generierten "Insel-<Thema>"-Einträge aus `THEMES[dir]`/`PHRASES[dir]` (dieser Generator inkl. `generateLibrary()` wurde entfernt, `MEDITATIONS[]` enthält jetzt alle 40 Einträge direkt). Jeder Titel ist einer Kategorie, einer festen Dauer und einer Kompass-Richtung zugeordnet, damit sowohl die Richtungs-Empfehlung (Meditation 1) als auch die Dauer-Auffüllung (Meditation 2) über die ganze Liste hinweg genug Auswahl haben — nicht nur ein, zwei Themen decken jede Dauerstufe ab. Titel in *Kursiv* sind die 8 ursprünglichen Flaggschiff-Skripte, die unverändert geblieben sind.
+**Umgesetzte Titelliste (47 Meditationen, alle handgeschrieben)** — ersetzt die früher automatisch generierten "Insel-<Thema>"-Einträge aus `THEMES[dir]`/`PHRASES[dir]` (dieser Generator inkl. `generateLibrary()` wurde entfernt, `MEDITATIONS[]` enthält jetzt alle 47 Einträge direkt). Jeder Titel ist einer Kategorie, einer festen Dauer und einer Kompass-Richtung zugeordnet, damit sowohl die Richtungs-Empfehlung (Meditation 1) als auch die Dauer-Auffüllung (Meditation 2) über die ganze Liste hinweg genug Auswahl haben — nicht nur ein, zwei Themen decken jede Dauerstufe ab. Titel in *Kursiv* sind die 8 ursprünglichen Flaggschiff-Skripte, die unverändert geblieben sind.
 
-**Mini (3–6 Min), 13 Titel:**
+**7 neue Meditationen (Aug. 2026, auf Wunsch von Christine):** vier davon füllen die Chakra-Reihe auf — Wurzel-, Herz- und Stirnchakra hatten schon eine eigene Meditation, **Kronenchakra, Halschakra, Solarplexuschakra und Sakralchakra** vorher nicht (die grosse "Chakren-Reise" streift alle sieben nur kurz). Dazu drei eigenständige, nicht chakra-gebundene Themen: **Seelenmeditation, Kiefer entspannen, Reinigende Meditation**. Vor dem Schreiben abgeglichen, welche Chakren schon eine eigene Meditation hatten, um keine Dopplung zu erzeugen — Christine hat daraufhin bestätigt, dass die bestehenden "Stirnchakra – Klarheit" und "Wurzelchakra – Erdung" ausreichen und keine zweite, überlappende Version dazu nötig ist.
+
+**Mini (3–6 Min), 14 Titel:**
 
 | Titel | Dauer | Richtung | Themenfamilie |
 |---|---|---|---|
@@ -298,8 +300,9 @@ zeigeMudra()/zeigeMantra()  // rendern die Karte in #mudraBox/#mantraBox, Richtu
 | Freundlicher Blick auf mich | 5 | Fühlen | Selbstmitgefühl |
 | Fantasiereise: Ankommen am See | 6 | Fühlen | Fantasiereise |
 | Feierabend-Übergang | 4 | Denken | Alltag |
+| Kiefer entspannen | 4 | Anspannung | Körperarbeit |
 
-**Mittel (7–14 Min), 13 Titel:**
+**Mittel (7–14 Min), 17 Titel:**
 
 | Titel | Dauer | Richtung | Themenfamilie |
 |---|---|---|---|
@@ -316,8 +319,12 @@ zeigeMudra()/zeigeMantra()  // rendern die Karte in #mudraBox/#mantraBox, Richtu
 | Verzeihen – ein erster Schritt | 11 | Fühlen | Verzeihen |
 | Alltag einer berufstätigen Mutter | 13 | Denken | Alltag |
 | Fantasiereise: Waldlichtung | 9 | Entspannung | Fantasiereise |
+| Kronenchakra – Körperfreiheit | 9 | Entspannung | Chakra |
+| Solarplexuschakra – Willensstärke | 7 | Entspannung | Chakra |
+| Sakralchakra – Vertrauen | 8 | Fühlen | Chakra |
+| Reinigende Meditation | 8 | Entspannung | Reinigung/Loslassen |
 
-**Tief (15–30 Min), 14 Titel:**
+**Tief (15–30 Min), 16 Titel:**
 
 | Titel | Dauer | Richtung | Themenfamilie |
 |---|---|---|---|
@@ -335,8 +342,10 @@ zeigeMudra()/zeigeMantra()  // rendern die Karte in #mudraBox/#mantraBox, Richtu
 | Yoga-Nidra-artige Tiefenentspannung | 30 | Entspannung | Tiefenentspannung |
 | Dankbarkeits-Reise (ausführlich) | 15 | Fühlen | Dankbarkeit |
 | Geduld im Umgang mit Kindern (vertieft) | 15 | Anspannung | Alltag/Kinder |
+| Halschakra – Widerstände lösen | 10 | Anspannung | Chakra |
+| Seelenmeditation | 12 | Fühlen | Selbstverbindung |
 
-**Verteilung über die vier Kompass-Richtungen** (Summe über alle 40): Denken 8 · Fühlen 12 · Anspannung 10 · Entspannung 10. Nicht perfekt gleich, aber bewusst nah dran — Fühlen ist am stärksten besetzt, weil sich viele der gewünschten Themen (Herz, Dankbarkeit, Verzeihen, Chakra-Herz, Schwangerschaft) inhaltlich dort einordnen. Falls das zu schief wirkt, liesse sich z. B. "Fantasiereise: Insel" oder "Dankbarkeits-Reise" auf Denken/Entspannung umlegen, ohne die Titel selbst zu ändern.
+**Verteilung über die vier Kompass-Richtungen** (Summe über alle 47): Denken 8 · Fühlen 14 · Anspannung 12 · Entspannung 13. Nicht perfekt gleich, aber bewusst nah dran — Fühlen ist am stärksten besetzt, weil sich viele der gewünschten Themen (Herz, Dankbarkeit, Verzeihen, Chakra-Herz, Schwangerschaft, Seelenmeditation) inhaltlich dort einordnen. Falls das zu schief wirkt, liesse sich z. B. "Fantasiereise: Insel" oder "Dankbarkeits-Reise" auf Denken/Entspannung umlegen, ohne die Titel selbst zu ändern.
 
 **Dauer-Abdeckung je Kategorie:** Mini deckt 3–6 Min in allen vier Stufen mehrfach ab, Mittel deckt 6–13 Min, Tief deckt 10–30 Min inklusive der 30-Min-Stufe. Damit hat die Dauer-Auffüllung in Meditation 2 (§3.3a, `autoFillV2()`) in jeder Kategorie und Richtung genug Auswahl, um nah an die gewünschte Zieldauer zu kommen, statt immer auf denselben ein, zwei Titeln zu landen.
 
@@ -391,7 +400,7 @@ TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", medita
 1. **Architektur**: von "ein HTML-File mit `data-step`" zu echten Routen/Komponenten migrieren.
 2. **Assets**: Fotos aus base64 lösen, als echte Dateien (WebP/AVIF) mit `srcset` einbinden.
 3. **Persistenz**: Verlauf und Abo-Testphase liegen inzwischen in `localStorage` (geräte-gebunden, siehe §5 in `index.html`, Schlüssel `myisland.verlauf.v1`/`myisland.abo.v1`) — kein Server, kein geräteübergreifendes Konto. Bei echtem Verkauf braucht es dafür ein richtiges Konto/Backend (siehe Zahlungsanbieter-Hinweis unten).
-4. **Meditationstexte**: alle 40 Übungen sind inzwischen handgeschrieben (siehe §5a) — keine generierten Platzhaltertexte mehr.
+4. **Meditationstexte**: alle 47 Übungen sind inzwischen handgeschrieben (siehe §5a) — keine generierten Platzhaltertexte mehr.
 5. **"Profil"-Tab**: existiert inzwischen (Status-Karte, Insel-Woche, Inselreise, Verlauf löschen). Der "Schlaf"-Tab wurde entfernt statt als Platzhalter stehen zu lassen.
 6. **Barrierefreiheit**: Kompass jetzt per Pfeiltasten bedienbar (Fokus auf der Scheibe, `tabindex="0"`, `role="group"`), zusätzlich zum bestehenden Pointer-Drag — beide Wege laufen über dieselbe `setFromPoint()`, also identische Rundung/Begrenzung/Spiegelung. `aria-label` beschreibt den aktuellen Zustand in Worten und aktualisiert sich bei jeder Änderung (§3.2). Sichtbarer Fokus-Ring in Gold. Offen bleibt eine vollständige Sprachausgabe-Führung durch die restliche App.
 7. **Mehrsprachigkeit**: Oberfläche Hochdeutsch, Meditationen Schweizerdeutsch, beides hart codiert.
