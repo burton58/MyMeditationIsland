@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: 7 neue Meditationen ergänzt, u. a. vier weitere Chakren)
+Stand: 3. August 2026 (zuletzt aktualisiert: „Deine Ziele" durch selbst gesetztes Wochenziel ersetzt)
 
 ---
 
@@ -95,3 +95,10 @@ Stand: 3. August 2026 (zuletzt aktualisiert: 7 neue Meditationen ergänzt, u. a.
       entspannen, Reinigende Meditation. Vorher abgeglichen, dass Wurzel-,
       Herz- und Stirnchakra schon eine eigene Meditation hatten – da wurde
       nichts doppelt angelegt.
+- [x] **„Deine Ziele" (Mein Weg) durch ein selbst gesetztes Wochenziel
+      ersetzt** – die vier festen Balken mit der erfundenen Zahl 10 sind weg.
+      Stattdessen legst du selbst fest: entweder "X Mal pro Woche" oder
+      "Y Minuten pro Woche", über "Ziel festlegen"/"Ziel anpassen". Zählung
+      startet immer neu ab Montag. Hinweis: "Deine Insel-Woche" im Profil
+      hat weiterhin ihr eigenes, unverändertes Ziel "7 Tage" – falls
+      gewünscht, liesse sich das später auch noch zusammenführen.
