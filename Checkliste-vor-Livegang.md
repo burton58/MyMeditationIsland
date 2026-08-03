@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Startseiten-Foto bleibt gleich gross, Lieblingsmeditationen ergänzt)
+Stand: 3. August 2026 (zuletzt aktualisiert: Fortschritts-Grafik, Verlauf mit Aufklapp-Knopf)
 
 ---
 
@@ -218,3 +218,18 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Startseiten-Foto bleibt gleich gros
       hast – vorher wäre es nur eine Wiederholung der Liste darüber.
       (Nicht zu verwechseln mit den ⭐-Favoriten: die wählst du selbst aus,
       diese Liste ergibt sich von allein aus dem, was wirklich gelaufen ist.)
+- [x] **„Dein Fortschritt" zeigt jetzt den Zeitraum** („seit …", ab dem Tag,
+      an dem du die App das erste Mal geöffnet hast) – vorher stand dort
+      keine Angabe, worauf sich die Zahlen beziehen.
+- [x] **Grafik zur Entwicklung**: ein Tipp auf die Zahlenreihe klappt zwei
+      kleine Diagramme auf – Meditationen pro Tag und Minuten pro Tag,
+      beide mit derselben Zeitachse. Tippst du einen Tag an, wird er in
+      beiden hervorgehoben und die Zahlen dazu stehen darunter.
+      (Anmerkung: Du hattest zwei Achsen in einem Bild gewünscht. Davon
+      habe ich abgesehen – zwei Skalen in einem Diagramm stehen willkürlich
+      zueinander und täuschen leicht einen Zusammenhang vor, den es nicht
+      gibt. Zwei Diagramme untereinander zeigen dasselbe, nur ehrlicher.
+      Wenn du es trotzdem anders möchtest, sag Bescheid.)
+- [x] **„Deine letzten Meditationen" zeigt nur noch drei** – darunter ein
+      Knopf „Alle N anzeigen" bzw. „Weniger anzeigen". Bei drei oder
+      weniger Einträgen erscheint der Knopf gar nicht.

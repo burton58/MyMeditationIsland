@@ -646,7 +646,33 @@
   .fd-cat-icon .kat-icon{ width:76%; height:76%; }
   .kat-icon{ width:1.55em; height:1.55em; object-fit:contain; vertical-align:middle; display:inline-block; }
 
+  .seit-hinweis{ margin:-6px 0 8px; font-size:.76rem; color:var(--ink-soft); }
+  .grafik-hinweis{ margin:7px 0 0; font-size:.74rem; color:var(--gold-deep); text-align:center; }
+
+  /* ---------- Fortschritts-Grafik ----------
+     Bewusst ZWEI schmale Diagramme untereinander statt eines Bildes mit
+     zwei y-Achsen: bei zwei Achsen stehen die Skalen willkuerlich
+     zueinander, dadurch taeuscht das Bild einen Zusammenhang vor, den die
+     Zahlen nicht hergeben. Zwei Diagramme mit derselben Zeitachse zeigen
+     dasselbe, ohne in die Irre zu fuehren. Beide in derselben Farbe, weil
+     es je Diagramm nur eine Reihe gibt - eine zweite Farbe wuerde einen
+     Unterschied behaupten, den es nicht gibt. */
+  .grafik-karte{ padding:16px; margin-top:10px; }
+  .grafik-block + .grafik-block{ margin-top:18px; }
+  .grafik-titel{ margin:0 0 2px; font-size:.82rem; font-weight:700; color:var(--ink); }
+  .grafik-lesart{ margin:0 0 8px; font-size:.72rem; color:var(--ink-soft); }
+  .grafik-karte svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .balken{ fill:var(--gold-deep); }
+  .balken.aktiv{ fill:var(--ink); }
+  .achse{ stroke:var(--line); stroke-width:1; }
+  .achs-text{ fill:var(--ink-soft); font-size:9px; font-family:var(--sans); }
+  .wert-text{ fill:var(--ink); font-size:9px; font-weight:700; font-family:var(--sans); }
+  .balken-feld{ fill:transparent; cursor:pointer; }
+  .grafik-auswahl{ margin:8px 0 0; font-size:.76rem; color:var(--ink); min-height:1.2em; }
+  .grafik-leer{ margin:0; font-size:.84rem; color:var(--ink-soft); line-height:1.5; }
+
   .stats-row{ display:flex; }
+  button.stats-row{ width:100%; border:none; font-family:inherit; color:var(--ink); cursor:pointer; text-align:left; padding:0; }
   .stat{ flex:1; padding:16px 8px; text-align:center; border-right:1px solid var(--line); }
   .stat:last-child{ border-right:none; }
   .stat .n{ font-size:1.35rem; font-weight:700; }
@@ -1080,7 +1106,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.13";
+    var AKTUELLE_VERSION = "2026-08-03.14";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1360,17 +1386,24 @@
     </div>
 
     <div class="section-label">Dein Fortschritt</div>
-    <div class="card stats-row">
+    <p class="seit-hinweis" id="seitHinweis"></p>
+    <!-- Die Zahlenreihe ist selbst der Knopf zur Grafik - so muss daneben
+         kein zweiter Knopf stehen. Der Hinweis darunter sagt, was ein Tipp
+         bewirkt, damit die Antippbarkeit nicht geraten werden muss. -->
+    <button class="card stats-row" id="statsRowBtn" type="button">
       <div class="stat"><div class="n" id="statStreak">0</div><div class="l">Tage am Stück</div></div>
       <div class="stat"><div class="n" id="statCount">0</div><div class="l">Meditationen</div></div>
       <div class="stat"><div class="n" id="statMinutes">0</div><div class="l">Minuten gesamt</div></div>
-    </div>
+    </button>
+    <p class="grafik-hinweis" id="grafikHinweis">Antippen für deine Entwicklung</p>
+    <div class="card grafik-karte" id="fortschrittGrafik" hidden></div>
 
     <div class="section-label">Dein Wochenziel</div>
     <div class="card" id="wochenzielCard"></div>
 
     <div class="section-label">Deine letzten Meditationen</div>
     <div class="card" id="historyList"></div>
+    <button class="btn-ghost full" id="historyMehrBtn" hidden>Alle anzeigen</button>
 
     <section class="fd-explore">
       <div class="section-label">Alle Meditationen entdecken</div>
@@ -3216,8 +3249,12 @@
     document.getElementById("toTrainingBtn").textContent =
       empfehlung.length ? "Jetzt starten →" : "Zum Kompass →";
     renderStats();
+    // "seit ..." macht klar, worauf sich die drei Zahlen beziehen - vorher
+    // stand dort nur "Dein Fortschritt", ohne Zeitraum.
+    document.getElementById("seitHinweis").textContent = "seit " + datumKurz(startDatum()) + " " + startDatum().getFullYear();
     renderWochenzielCard();
     renderHistoryList();
+    if (!document.getElementById("fortschrittGrafik").hidden) renderFortschrittGrafik();
   }
 
   // Kategorien ganz unten: fuehren in die Bibliothek, direkt in die passende
@@ -4519,14 +4556,157 @@
     return WEEKDAYS[new Date(ts).getDay()];
   }
 
-  function renderHistoryList(){
-    var host = document.getElementById("historyList");
-    var eintraege = [];
-    loadHistory().slice().reverse().forEach(function(e){
-      (e.meds || []).slice().reverse().forEach(function(m){
-        if (eintraege.length < 5) eintraege.push({ ts:e.ts, name:m.name, seconds:m.seconds, min:m.min });
+  // ---- Fortschritts-Grafik -------------------------------------------
+  // Zwei getrennte Diagramme (Meditationen/Tag und Minuten/Tag) mit
+  // derselben Zeitachse - NICHT eines mit zwei y-Achsen. Begruendung siehe
+  // Kommentar bei ".grafik-karte" im CSS.
+  var MONATE_KURZ = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+  function datumKurz(d){ return d.getDate() + ". " + MONATE_KURZ[d.getMonth()]; }
+
+  // Startdatum = erster Besuch der App (wird beim allerersten Laden in
+  // myisland.abo.v1 festgehalten). Ehrlicher als "seit der ersten
+  // Meditation", weil auch Tage ohne Meditation zum Weg gehoeren.
+  function startDatum(){
+    var s = loadAbo().start;
+    var erste = loadHistory()[0];
+    if (erste && erste.ts < s) s = erste.ts;   // Verlauf aus einer frueheren Fassung
+    return new Date(new Date(s).getFullYear(), new Date(s).getMonth(), new Date(s).getDate());
+  }
+
+  // Ein Eintrag je Tag von Startdatum bis heute: Anzahl Meditationen und
+  // aufgerundete Minuten (gleiche Rundung wie bei "Minuten gesamt").
+  function tagesreihe(){
+    var start = startDatum(), heute = new Date();
+    heute = new Date(heute.getFullYear(), heute.getMonth(), heute.getDate());
+    var proTag = {};
+    loadHistory().forEach(function(e){
+      var k = dayStamp(e.ts);
+      if (!proTag[k]) proTag[k] = { anzahl:0, minuten:0 };
+      (e.meds || []).forEach(function(m){
+        proTag[k].anzahl++;
+        proTag[k].minuten += Math.ceil((m.seconds || 0) / 60);
       });
     });
+    var reihe = [], d = new Date(start);
+    while (d <= heute && reihe.length < 400){
+      var k = dayStamp(d.getTime()), w = proTag[k] || { anzahl:0, minuten:0 };
+      reihe.push({ datum:new Date(d), anzahl:w.anzahl, minuten:w.minuten });
+      d.setDate(d.getDate() + 1);
+    }
+    return reihe;
+  }
+
+  // Zeichnet ein schmales Saeulendiagramm als SVG. Bewusst ohne Bibliothek:
+  // die App soll eine einzige Datei bleiben und offline laufen.
+  function balkenSvg(reihe, feld, einheit){
+    var B = 320, H = 96, LINKS = 26, RECHTS = 4, OBEN = 10, BASIS = 74;
+    var max = 0;
+    reihe.forEach(function(t){ if (t[feld] > max) max = t[feld]; });
+    if (max <= 0) max = 1;
+    var breite = (B - LINKS - RECHTS) / reihe.length;
+    var balkenB = Math.min(24, Math.max(2, breite - 2));   // 2px Luft zwischen den Saeulen
+    var maxIdx = 0;
+    reihe.forEach(function(t, i){ if (t[feld] > reihe[maxIdx][feld]) maxIdx = i; });
+
+    var teile = [];
+    // Nulllinie und obere Hilfslinie - hauchduenn, damit sie hinter den Daten bleiben
+    teile.push('<line class="achse" x1="' + LINKS + '" y1="' + BASIS + '" x2="' + (B - RECHTS) + '" y2="' + BASIS + '"/>');
+    teile.push('<line class="achse" x1="' + LINKS + '" y1="' + OBEN + '" x2="' + (B - RECHTS) + '" y2="' + OBEN + '"/>');
+    teile.push('<text class="achs-text" x="' + (LINKS - 5) + '" y="' + (BASIS + 3) + '" text-anchor="end">0</text>');
+    teile.push('<text class="achs-text" x="' + (LINKS - 5) + '" y="' + (OBEN + 3) + '" text-anchor="end">' + max + '</text>');
+
+    reihe.forEach(function(t, i){
+      var x = LINKS + i * breite + (breite - balkenB) / 2;
+      var h = t[feld] / max * (BASIS - OBEN);
+      if (t[feld] > 0){
+        // Runde Kappe oben, eckig auf der Nulllinie: ein Pfad statt <rect>,
+        // damit nur die beiden oberen Ecken gerundet sind.
+        var r = Math.min(4, balkenB / 2, h);
+        var y = BASIS - h;
+        teile.push('<path class="balken" d="M' + x + ' ' + BASIS +
+          ' V' + (y + r) + ' Q' + x + ' ' + y + ' ' + (x + r) + ' ' + y +
+          ' H' + (x + balkenB - r) + ' Q' + (x + balkenB) + ' ' + y + ' ' + (x + balkenB) + ' ' + (y + r) +
+          ' V' + BASIS + ' Z" data-i="' + i + '"/>');
+      }
+      // Unsichtbares, breiteres Antippfeld - der Balken selbst ist auf dem
+      // Handy oft nur wenige Pixel breit.
+      teile.push('<rect class="balken-feld" x="' + (LINKS + i * breite) + '" y="' + OBEN +
+        '" width="' + breite + '" height="' + (BASIS - OBEN) + '" data-i="' + i + '"/>');
+    });
+
+    // Nur den hoechsten Wert direkt beschriften - eine Zahl an jeder Saeule
+    // waere unlesbar.
+    if (reihe[maxIdx][feld] > 0){
+      var mx = LINKS + maxIdx * breite + breite / 2;
+      var my = BASIS - reihe[maxIdx][feld] / max * (BASIS - OBEN) - 3;
+      teile.push('<text class="wert-text" x="' + mx + '" y="' + my + '" text-anchor="middle">' +
+        reihe[maxIdx][feld] + '</text>');
+    }
+    // Zeitachse: nur Anfang und Ende beschriften
+    teile.push('<text class="achs-text" x="' + LINKS + '" y="' + (H - 2) + '">' + datumKurz(reihe[0].datum) + '</text>');
+    teile.push('<text class="achs-text" x="' + (B - RECHTS) + '" y="' + (H - 2) + '" text-anchor="end">' +
+      datumKurz(reihe[reihe.length - 1].datum) + '</text>');
+
+    return '<svg viewBox="0 0 ' + B + ' ' + H + '" role="img" aria-label="' +
+      einheit + ' pro Tag, ' + datumKurz(reihe[0].datum) + ' bis ' +
+      datumKurz(reihe[reihe.length - 1].datum) + ', Höchstwert ' + max + '">' +
+      teile.join("") + '</svg>';
+  }
+
+  function renderFortschrittGrafik(){
+    var host = document.getElementById("fortschrittGrafik");
+    if (!host) return;
+    var reihe = tagesreihe();
+    var hatDaten = reihe.some(function(t){ return t.anzahl > 0; });
+    if (reihe.length < 2 || !hatDaten){
+      host.innerHTML = '<p class="grafik-leer">Deine Entwicklung erscheint hier, sobald du an mehr als einem Tag meditiert hast.</p>';
+      return;
+    }
+    host.innerHTML =
+      '<div class="grafik-block">' +
+        '<p class="grafik-titel">Meditationen pro Tag</p>' +
+        '<p class="grafik-lesart">Wie oft du an einem Tag meditiert hast.</p>' +
+        balkenSvg(reihe, "anzahl", "Meditationen") +
+      '</div>' +
+      '<div class="grafik-block">' +
+        '<p class="grafik-titel">Minuten pro Tag</p>' +
+        '<p class="grafik-lesart">Wie lange du an einem Tag meditiert hast.</p>' +
+        balkenSvg(reihe, "minuten", "Minuten") +
+      '</div>' +
+      '<p class="grafik-auswahl" id="grafikAuswahl">Tipp auf einen Tag, um seine Zahlen zu sehen.</p>';
+
+    // Antippen statt Mauszeiger-Hover: auf dem Handy gibt es kein Hover.
+    // Ein Tag wird in beiden Diagrammen gleichzeitig hervorgehoben.
+    host.addEventListener("click", function(e){
+      var ziel = e.target.closest("[data-i]");
+      if (!ziel) return;
+      var i = parseInt(ziel.getAttribute("data-i"), 10);
+      var t = reihe[i];
+      host.querySelectorAll(".balken").forEach(function(b){
+        b.classList.toggle("aktiv", parseInt(b.getAttribute("data-i"), 10) === i);
+      });
+      document.getElementById("grafikAuswahl").textContent =
+        WEEKDAYS[t.datum.getDay()] + ", " + datumKurz(t.datum) + ": " +
+        t.anzahl + (t.anzahl === 1 ? " Meditation" : " Meditationen") + " · " + t.minuten + " Min";
+    });
+  }
+
+  // ---- Letzte Meditationen: erst drei, auf Wunsch alle ----------------
+  var historyAlle = false;
+  function renderHistoryList(){
+    var host = document.getElementById("historyList");
+    var alle = [];
+    loadHistory().slice().reverse().forEach(function(e){
+      (e.meds || []).slice().reverse().forEach(function(m){
+        alle.push({ ts:e.ts, name:m.name, seconds:m.seconds, min:m.min });
+      });
+    });
+    var eintraege = historyAlle ? alle : alle.slice(0, 3);
+    var mehrBtn = document.getElementById("historyMehrBtn");
+    if (mehrBtn){
+      mehrBtn.hidden = alle.length <= 3;
+      mehrBtn.textContent = historyAlle ? "Weniger anzeigen" : ("Alle " + alle.length + " anzeigen");
+    }
     host.innerHTML = eintraege.length
       ? eintraege.map(function(e){
           var dir = dirVonName(e.name);
@@ -4541,6 +4721,19 @@
   }
 
   // ---- wiring ----
+  document.getElementById("statsRowBtn").addEventListener("click", function(){
+    var box = document.getElementById("fortschrittGrafik");
+    var auf = box.hidden;
+    box.hidden = !auf;
+    if (auf) renderFortschrittGrafik();
+    document.getElementById("grafikHinweis").textContent =
+      auf ? "Antippen zum Zuklappen" : "Antippen für deine Entwicklung";
+  });
+  document.getElementById("historyMehrBtn").addEventListener("click", function(){
+    historyAlle = !historyAlle;
+    renderHistoryList();
+  });
+
   document.getElementById("toCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
   document.getElementById("backToIslandBtn").addEventListener("click", function(){ goToStep("home"); });
   document.getElementById("recommendBtn").addEventListener("click", zeigeEmpfehlung);
