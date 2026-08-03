@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Grafik lässt sich eindeutig zuklappen)
+Stand: 3. August 2026 (zuletzt aktualisiert: Profilbild wählbar, Zurück-Knöpfe, Vorschlag direkt im Chat)
 
 ---
 
@@ -41,12 +41,6 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Grafik lässt sich eindeutig zuklap
 - [ ] **Konto/Cloud-Speicherung einbauen**, damit ein Gerätewechsel niemanden
       seinen bezahlten Zugang kostet (aktuell liegt alles nur auf einem Gerät –
       „Abo wiederherstellen" ist bisher nur eine Attrappe ohne Funktion).
-- [ ] **Profilbild auswählbar machen**: eine kleine Auswahl fertiger Bilder
-      zum Antippen, plus die Möglichkeit, ein eigenes Foto hochzuladen.
-      (Hinweis von mir: hochgeladene Fotos blieben – wie alles andere –
-      nur auf dem jeweiligen Gerät, solange es kein Konto gibt. Bilder
-      dafür brauchst du auch noch; sag Bescheid, dann schreibe ich dir
-      einen passenden Prompt.)
 - [ ] **Eigene Symbole statt Emoji auf der Status-Karte im Profil**
       (aktuell 🤍 ✅ ⏳ 🔒 für „offen"/„aktiv"/„Testphase"/„gesperrt") –
       beim App-weiten Formatierungs-Check aufgefallen: das ist die letzte
@@ -263,3 +257,14 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Grafik lässt sich eindeutig zuklap
       der Grafik und las sich, als solle man die Grafik antippen – dort
       passiert aber nichts. Jetzt gibt es unten in der Karte einen klaren
       Knopf „Grafik zuklappen". Die Zahlenreihe schaltet weiterhin auch um.
+- [x] **Profilbild ist jetzt wählbar**: Tipp auf das Bild links oben im
+      Profil (es hat neu einen kleinen Stift). Acht Zeichen zur Auswahl
+      oder ein eigenes Foto vom Handy. Das Foto wird klein gerechnet und
+      bleibt nur auf deinem Gerät.
+- [x] **Zurück-Knopf oben auf allen Unterseiten**: „Dein Zugang" und
+      „Meine Insel gestalten" hatten oben keinen – jetzt schon. Er sitzt
+      links, wie bei den anderen Unterseiten auch.
+- [x] **Vorschlag des Begleiters direkt im Gespräch startbar**: statt
+      „… steht jetzt oben als Empfehlung" (was in der Bibliothek nicht
+      stimmte, da gibt es kein „oben") erscheint die Meditation jetzt als
+      Karte im Chat, mit Abspiel-Knopf.

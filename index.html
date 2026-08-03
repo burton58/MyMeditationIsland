@@ -732,15 +732,42 @@
   /* ---------- Profil ---------- */
   .profile-card{
     display:flex; align-items:center; gap:13px; padding:15px; margin-bottom:12px;
-    width:100%; border:none; cursor:pointer; font-family:inherit; color:var(--ink); text-align:left;
+  }
+  .profile-card-haupt{
+    flex:1; min-width:0; display:flex; align-items:center; gap:10px;
+    border:none; background:none; padding:0; cursor:pointer; font-family:inherit;
+    color:var(--ink); text-align:left;
   }
   .profil-avatar{
     width:46px; height:46px; border-radius:14px; background:var(--cream-2); flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+    border:none; cursor:pointer; font-family:inherit; padding:0; position:relative; overflow:hidden;
+  }
+  .profil-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .profil-avatar img[hidden]{ display:none; }
+  /* Kleiner Stift unten rechts: ohne ihn saehe der Avatar nicht antippbar
+     aus - genau das hatte Christine bemaengelt. */
+  .avatar-stift{
+    position:absolute; right:0; bottom:0; width:17px; height:17px; border-radius:50%;
+    background:var(--gold); color:#3a2e08; font-size:.6rem;
+    display:flex; align-items:center; justify-content:center;
   }
   .profile-card .body{ flex:1; min-width:0; }
-  .profile-card .name{ font-weight:700; font-size:.94rem; }
-  .profile-card .sub{ font-size:.78rem; color:var(--ink-soft); margin-top:2px; }
+  .profile-card .name{ display:block; font-weight:700; font-size:.94rem; }
+  .profile-card .sub{ display:block; font-size:.78rem; color:var(--ink-soft); margin-top:2px; }
+
+  .avatar-karte{ text-align:left; max-width:340px; }
+  .avatar-karte h3{ margin:0 0 12px; font-family:var(--serif); font-size:1.08rem; text-align:center; }
+  .avatar-auswahl{ display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin-bottom:14px; }
+  .avatar-wahl{
+    aspect-ratio:1/1; border-radius:14px; background:var(--cream-2); border:2px solid transparent;
+    cursor:pointer; font-size:1.4rem; display:flex; align-items:center; justify-content:center;
+    font-family:inherit; overflow:hidden;
+  }
+  .avatar-wahl.aktiv{ border-color:var(--gold); }
+  .avatar-wahl img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .avatar-upload{ display:block; text-align:center; cursor:pointer; }
+  .avatar-hinweis{ margin:10px 0 0; font-size:.74rem; color:var(--ink-soft); text-align:center; }
   .chev{ color:#c2b391; font-size:1.1rem; }
 
   .status-card{ display:flex; align-items:flex-start; gap:13px; padding:15px; margin-bottom:12px;
@@ -961,6 +988,10 @@
   .bubble.ai{ background:var(--cream-2); align-self:flex-start; border-bottom-left-radius:5px; }
   .bubble.me{ background:var(--gold-grad); color:#3a2e08; align-self:flex-end; border-bottom-right-radius:5px; }
   .bubble.typing{ opacity:.6; }
+  /* Die vom Begleiter vorgeschlagene Uebung, direkt im Gespraech startbar. */
+  .chat-vorschlag{ align-self:stretch; }
+  .chat-vorschlag .focus-card{ background:var(--card); border:1px solid var(--gold-soft); border-radius:14px; }
+  .chat-vorschlag .row-thumb{ width:44px; height:44px; border-radius:11px; }
   .chat-row{ display:flex; gap:8px; }
   .chat-row input{
     flex:1; min-width:0; border:1px solid var(--line); border-radius:12px; padding:12px;
@@ -972,7 +1003,10 @@
   }
 
   /* ---------- Insel gestalten (bleibt erhalten, neu eingefärbt) ---------- */
-  .topbar{ text-align:center; padding:20px 16px 4px; }
+  .topbar{ text-align:center; padding:20px 16px 4px; position:relative; }
+  /* Die topbar ist zentriert (kein Flex-Kopf wie .page-head), darum sitzt
+     der Zurueck-Knopf hier absolut - sonst wuerde er die Mitte verschieben. */
+  .topbar-zurueck{ position:absolute; left:16px; top:16px; }
   /* Gleiche Grösse wie .page-head h1/p auf allen anderen Seiten - vorher
      war der Insel-Konfigurator (einzige Stelle mit .topbar) die einzige
      Seite mit einem sichtbar kleineren Titel. */
@@ -1110,7 +1144,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.19";
+    var AKTUELLE_VERSION = "2026-08-03.20";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1572,14 +1606,42 @@
       </div>
     </div>
 
-    <button class="card profile-card" id="profilInselbewohnerBtn" type="button">
-      <div class="profil-avatar">🌴</div>
-      <div class="body">
-        <div class="name">Dein Inselbewohner</div>
-        <div class="sub" id="inselbewohnerHinweis">Deine Insel-Woche und Inselreise ansehen</div>
+    <div class="card profile-card" id="profilKarte">
+      <!-- Avatar und Aufklapp-Bereich sind zwei getrennte Knoepfe:
+           verschachtelte <button> sind ungueltiges HTML, und die beiden
+           tun ja auch Verschiedenes (Bild waehlen vs. Auf-/Zuklappen). -->
+      <button class="profil-avatar" id="profilAvatarBtn" type="button" title="Bild ändern">
+        <span id="profilAvatarZeichen">🌴</span>
+        <img id="profilAvatarBild" alt="" hidden>
+        <span class="avatar-stift">✎</span>
+      </button>
+      <button class="profile-card-haupt" id="profilInselbewohnerBtn" type="button">
+        <span class="body">
+          <span class="name">Dein Inselbewohner</span>
+          <span class="sub" id="inselbewohnerHinweis">Deine Insel-Woche und Inselreise ansehen</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+    </div>
+
+    <!-- Auswahl fuers Profilbild: ein paar Zeichen zum Antippen und die
+         Moeglichkeit, ein eigenes Foto zu waehlen. Das Foto bleibt - wie
+         alles andere - nur auf diesem Geraet (als Text im lokalen
+         Speicher), es wird nirgendwohin geschickt. -->
+    <div class="confirm-overlay" id="avatarOverlay" hidden>
+      <div class="card confirm-card avatar-karte">
+        <h3>Dein Bild</h3>
+        <div class="avatar-auswahl" id="avatarAuswahl"></div>
+        <label class="btn-ghost full avatar-upload">
+          Eigenes Foto wählen
+          <input type="file" id="avatarDatei" accept="image/*" hidden>
+        </label>
+        <p class="avatar-hinweis">Dein Foto bleibt nur auf diesem Gerät.</p>
+        <div class="btn-row">
+          <button class="btn-ghost" id="avatarAbbrechenBtn">Schliessen</button>
+        </div>
       </div>
-      <span class="chev">›</span>
-    </button>
+    </div>
 
     <!-- Direkt unter der Inselbewohner-Karte, nicht erst unter der
          Zugangs-Karte: was ein Knopf aufklappt, muss gleich darunter
@@ -1820,10 +1882,14 @@
   <!-- ============ ABO ============ -->
   <div class="page abo-page" id="aboPage">
     <div class="page-head">
-      <div class="ttl">
+      <button class="icon-btn" id="aboBackTopBtn" title="Zurück">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="ttl center">
         <h1>Dein Zugang</h1>
         <p>7 Tage gratis, danach wie du magst.</p>
       </div>
+      <span class="icon-btn blank"></span>
     </div>
 
     <div class="trial-box" id="trialBox"></div>
@@ -1858,6 +1924,9 @@
 
   <!-- ============ INSEL GESTALTEN (über das Profil erreichbar) ============ -->
   <div class="topbar">
+    <button class="icon-btn topbar-zurueck" id="inselBackBtn" title="Zurück">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
     <h1>🏝️ Gestalte deine Inselreise</h1>
     <p class="subtitle" id="subtitle">Wähle, wie deine Insel aussieht – und betritt sie danach.</p>
   </div>
@@ -4329,14 +4398,14 @@
       var match = MEDITATIONS.filter(function(m){
         return m.name.toLowerCase() === name.trim().toLowerCase();
       })[0];
-      if (!match) return false;
+      if (!match) return null;
       // Die Empfehlung als eigene Karte oben einsetzen, statt sie irgendwo
       // in einer Liste anzuhaken - so bleibt der Weg "ein Tipp, ein Start".
       // Der Vorschlag des Begleiters wird zur Empfehlung und steht danach
       // auf der Kompass-Seite und auf der Startseite ganz oben.
       empfohlenVomChat = match.id;
       zeigeEmpfehlung();
-      return true;
+      return match;
     }
 
     // Zeigt die Antwort im Chat an und wertet ein angehaengtes
@@ -4349,13 +4418,17 @@
       typing.classList.remove("typing");
       typing.textContent = clean;
       if (historyEintrag) history.push({ role:"assistant", content:rohtext });
-      if (tagMatch && applyRecommendation(tagMatch[1])){
-        var note = document.createElement("div");
-        note.className = "bubble ai";
-        note.style.opacity = ".75";
-        note.style.fontSize = ".78rem";
-        note.textContent = "→ „" + tagMatch[1].trim() + "“ steht jetzt oben als Empfehlung.";
-        box.appendChild(note);
+      var med = tagMatch ? applyRecommendation(tagMatch[1]) : null;
+      if (med){
+        // Frueher stand hier nur "… steht jetzt oben als Empfehlung." Das
+        // stimmte in der Bibliothek nicht: dort gibt es kein "oben", die
+        // Empfehlung landet auf der Kompass- und der Startseite. Jetzt
+        // steht die Uebung direkt im Chat und laesst sich von dort starten
+        // (data-play wird vom allgemeinen Klick-Zuhoerer aufgegriffen).
+        var karte = document.createElement("div");
+        karte.className = "chat-vorschlag";
+        karte.innerHTML = medZeile(med);
+        box.appendChild(karte);
         box.scrollTop = box.scrollHeight;
       }
     }
@@ -5022,6 +5095,81 @@
     var hinweis = document.getElementById("inselbewohnerHinweis");
     if (hinweis) hinweis.textContent = offen ? "Weniger anzeigen" : "Deine Insel-Woche und Inselreise ansehen";
   }
+  // ---- Profilbild ------------------------------------------------------
+  // Ein paar Zeichen zur Auswahl plus eigenes Foto. Beides liegt nur auf
+  // diesem Geraet (localStorage) - ein hochgeladenes Foto wird als Text
+  // (Data-URL) gespeichert und nirgendwohin geschickt. Bewusst kleine
+  // Vorschau (160px), damit der Speicher nicht volllaeuft.
+  var AVATAR_KEY = "myisland.avatar.v1";
+  var AVATAR_ZEICHEN = ["🌴", "🌺", "🐚", "🌊", "⛵", "🌅", "🕊️", "🪷"];
+
+  function ladeAvatar(){
+    try { return localStorage.getItem(AVATAR_KEY) || "🌴"; } catch (e){ return "🌴"; }
+  }
+  function setzeAvatar(wert){
+    try { localStorage.setItem(AVATAR_KEY, wert); } catch (e){}
+    zeigeAvatar();
+  }
+  function zeigeAvatar(){
+    var wert = ladeAvatar();
+    var zeichen = document.getElementById("profilAvatarZeichen");
+    var bild = document.getElementById("profilAvatarBild");
+    var istFoto = wert.indexOf("data:") === 0;
+    bild.hidden = !istFoto;
+    zeichen.hidden = istFoto;
+    if (istFoto) bild.src = wert; else zeichen.textContent = wert;
+  }
+  function renderAvatarAuswahl(){
+    var aktuell = ladeAvatar();
+    document.getElementById("avatarAuswahl").innerHTML = AVATAR_ZEICHEN.map(function(z){
+      return '<button class="avatar-wahl' + (z === aktuell ? ' aktiv' : '') +
+        '" type="button" data-avatar="' + z + '">' + z + '</button>';
+    }).join("");
+  }
+  document.getElementById("profilAvatarBtn").addEventListener("click", function(){
+    renderAvatarAuswahl();
+    var overlay = document.getElementById("avatarOverlay");
+    overlay.hidden = false;
+    requestAnimationFrame(function(){ overlay.classList.add("show"); });
+  });
+  function avatarSchliessen(){
+    var overlay = document.getElementById("avatarOverlay");
+    overlay.classList.remove("show");
+    setTimeout(function(){ overlay.hidden = true; }, 180);
+  }
+  document.getElementById("avatarAbbrechenBtn").addEventListener("click", avatarSchliessen);
+  document.getElementById("avatarAuswahl").addEventListener("click", function(e){
+    var w = e.target.closest("[data-avatar]");
+    if (!w) return;
+    setzeAvatar(w.getAttribute("data-avatar"));
+    renderAvatarAuswahl();
+  });
+  document.getElementById("avatarDatei").addEventListener("change", function(e){
+    var datei = e.target.files && e.target.files[0];
+    if (!datei) return;
+    var leser = new FileReader();
+    leser.onload = function(){
+      // Auf 160px verkleinern und quadratisch zuschneiden, bevor es
+      // gespeichert wird - ein Handyfoto in Originalgroesse waere fuer
+      // localStorage viel zu gross.
+      var img = new Image();
+      img.onload = function(){
+        var S = 160, c = document.createElement("canvas");
+        c.width = S; c.height = S;
+        var k = Math.min(img.width, img.height);
+        c.getContext("2d").drawImage(img, (img.width - k) / 2, (img.height - k) / 2, k, k, 0, 0, S, S);
+        try { setzeAvatar(c.toDataURL("image/jpeg", 0.82)); }
+        catch (err){ zeigeBestaetigung("Das Bild liess sich nicht speichern. Versuch ein kleineres Foto.", function(){}); }
+        avatarSchliessen();
+      };
+      img.onerror = function(){ avatarSchliessen(); };
+      img.src = leser.result;
+    };
+    leser.readAsDataURL(datei);
+    e.target.value = "";   // damit dasselbe Foto erneut gewaehlt werden kann
+  });
+  zeigeAvatar();
+
   document.getElementById("profilInselbewohnerBtn").addEventListener("click", function(){
     setInselbewohnerOffen(!inselbewohnerOffen);
     if (inselbewohnerOffen){
@@ -5053,7 +5201,17 @@
   document.getElementById("profilAboBtn").addEventListener("click", function(){
     renderAbo(); goToStep("abo");
   });
-  document.getElementById("aboBackBtn").addEventListener("click", function(){
+  // Beide Zurueck-Knoepfe der Abo-Seite (oben im Kopf und unten) tun
+  // dasselbe. Oben, weil Christine ihn dort erwartet hat - wie auf den
+  // anderen Unterseiten des Profils auch.
+  ["aboBackBtn", "aboBackTopBtn"].forEach(function(id){
+    document.getElementById(id).addEventListener("click", function(){
+      renderProfil(); goToStep("profil");
+    });
+  });
+  // "Meine Insel gestalten" hatte bisher gar keinen Zurueck-Weg im Kopf,
+  // nur "Weiter zum Kompass" ganz unten.
+  document.getElementById("inselBackBtn").addEventListener("click", function(){
     renderProfil(); goToStep("profil");
   });
   document.getElementById("planJahr").addEventListener("click", function(){ planGewaehlt("jahr"); });
