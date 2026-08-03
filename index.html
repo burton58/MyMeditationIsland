@@ -1065,7 +1065,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.11";
+    var AKTUELLE_VERSION = "2026-08-03.12";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1477,10 +1477,14 @@
     <div class="card recap" id="recapBox" style="margin-top:16px;"></div>
     <div class="card shift-box" id="shiftBox"></div>
 
+    <!-- "Noch eine Meditation" ist hier bewusst entfallen (Aug. 2026):
+         direkt nach einer Meditation gleich die naechste anzubieten passt
+         nicht zum Ausklang. Wer wirklich weitermachen will, geht ueber
+         "Kompass neu setzen" - dann stimmt auch der Zustand wieder. Mudra
+         und Mantra bleiben, weil sie den Moment abrunden statt zu verlaengern. -->
     <div class="card need-more">
       <h4>Brauchst du noch etwas?</h4>
       <div class="need-more-actions">
-        <button class="mini-btn" id="needMoreMedBtn">🧘 Noch eine Meditation</button>
         <button class="mini-btn" id="needMudraBtn">🤲 Ein Mudra für mich</button>
         <button class="mini-btn" id="needMantraBtn">✨ Ein Mantra für mich</button>
       </div>
@@ -1488,18 +1492,13 @@
       <div id="mantraBox"></div>
     </div>
 
-    <div class="card companion">
-      <h4>Dein Begleiter</h4>
-      <p class="intro">Magst du noch etwas dalassen?</p>
-      <div class="chat" id="chatBox2"></div>
-      <div class="chat-row">
-        <input id="chatInput2" type="text" placeholder="Schreib etwas …" autocomplete="off">
-        <button id="chatSend2">Senden</button>
-      </div>
-    </div>
+    <!-- Die Begleiter-Karte stand hier bis Aug. 2026. Nach einer beendeten
+         Meditation braucht es kein Gespraech mehr - der Abschluss soll ruhig
+         ausklingen. Der Begleiter bleibt auf "Mein Weg" und in der
+         Bibliothek erreichbar. -->
 
     <div class="btn-row">
-      <button class="btn-ghost" id="restartBtn">Neu beginnen</button>
+      <button class="btn-ghost" id="restartBtn">Kompass neu setzen</button>
       <button class="btn-dark" id="finishOutroBtn">Fertig →</button>
     </div>
   </div>
@@ -2771,6 +2770,21 @@
   var COMPASS_MAXR = 135;
   function nadelX(x){ return 200 - x * COMPASS_MAXR; }
   function nadelY(y){ return 200 + y * COMPASS_MAXR; }
+
+  // Zeichnet den Vorher-Zeiger (Kompass-Seite UND kleiner Kompass auf der
+  // Startseite) neu aus compassBefore und frischt den Zustandstext auf.
+  // Noetig, wenn compassBefore von aussen gesetzt wird statt durch Ziehen -
+  // sonst stimmt die Zahl im Hintergrund, aber die Nadel steht noch alt da.
+  function syncVorherNadel(){
+    var mx = nadelX(compassBefore.x), my = nadelY(compassBefore.y);
+    [["needleLine", "needleTip"], ["needleLineHome", "needleTipHome"]].forEach(function(paar){
+      var line = document.getElementById(paar[0]), tip = document.getElementById(paar[1]);
+      if (!line || !tip) return;
+      line.setAttribute("x2", mx); line.setAttribute("y2", my);
+      tip.setAttribute("cx", mx);  tip.setAttribute("cy", my);
+    });
+    renderMoodStatus(document.getElementById("compassReadout"), compassBefore);
+  }
   var kompassBenutzt = false;   // erst danach zeigt die Startseite eine Empfehlung
 
   // ---- reusable compass needle (free position = two truly independent axes) ----
@@ -3693,9 +3707,19 @@
     var combo = MOODS[(c.y < 0 ? "Denken" : "F\u00fchlen") + "_" + (c.x < 0 ? "Anspannung" : "Entspannung")];
     return ay >= ax ? combo.vert : combo.horiz;
   }
+  // Zeigt das Zustandswort MIT seiner Abstufung ("sehr grüblerisch" statt
+  // nur "grüblerisch") - Aug. 2026 auf Christines Wunsch. Wird an allen
+  // Stellen benutzt, wo ein Zustand als Wert in einer Zeile steht: im
+  // Rückblick der Abschluss-Seite und in den Vorher/Nachher-Zeilen der
+  // Insel-Woche im Profil. Damit steht dort dasselbe, was auch die grosse
+  // Anzeige unter dem Kompass sagt (moodWort()), statt einer gröberen
+  // Fassung ohne Abstufung. Kleingeschrieben, weil es hinter dem Emoji
+  // mitten in der Zeile steht und kein Satzanfang ist.
   function moodHtml(c){
     var m = moodOf(c);
-    return '<span class="mood-emoji">' + m.emoji + '</span> ' + m.word;
+    var wort = moodWort(c);
+    if (m !== MOOD_BALANCED) wort = wort.charAt(0).toLowerCase() + wort.slice(1);
+    return '<span class="mood-emoji">' + m.emoji + '</span> ' + wort;
   }
   // Wie weit die Nadel vom Zentrum weg liegt (0 = Mitte, 1 = ganz aussen).
   // Daraus wird die Abstufung des Feedbacks: "etwas" / "eher" / "sehr".
@@ -4499,17 +4523,24 @@
     currentEntryTs = null;
     goToStep("home");
   }
-  document.getElementById("restartBtn").addEventListener("click", beendeSitzung);
   document.getElementById("finishOutroBtn").addEventListener("click", beendeSitzung);
 
-  document.getElementById("needMoreMedBtn").addEventListener("click", function(){
-    // Die neue Empfehlung geht vom Stand nach der Meditation aus.
+  // "Kompass neu setzen" (frueher "Neu beginnen", das nur zur Startseite
+  // ging und damit nicht sagte, was passiert). Der Knopf uebernimmt jetzt
+  // die Aufgabe des entfallenen "Noch eine Meditation": zurueck zum
+  // Kompass, wobei der Ausgangspunkt der Stand NACH der Meditation ist -
+  // wer weitermachen will, gibt seinen jetzigen Zustand neu an, statt vom
+  // alten Vorher-Wert auszugehen.
+  document.getElementById("restartBtn").addEventListener("click", function(){
     compassBefore.x = compassAfter.x;
     compassBefore.y = compassAfter.y;
     chosenMedIds = [];
+    completedLog = [];
+    session.queue = [];
+    currentEntryTs = null;
     empfohlenVomChat = null;
+    syncVorherNadel();   // Nadel und Zustandstext auf den neuen Startwert ziehen
     goToStep("compass");
-    zeigeEmpfehlung();
   });
 
   initKategorien();
@@ -4524,10 +4555,10 @@
     renderRecap();
   });
 
+  // Nur noch ein Chat: der auf "Mein Weg". Der zweite auf der Abschluss-
+  // Seite ist im Aug. 2026 entfallen (siehe Kommentar dort im Markup).
   setupChat("chatBox", "chatInput", "chatSend",
     "Hi! Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?", true);
-  setupChat("chatBox2", "chatInput2", "chatSend2",
-    "Schön, dass du da warst. Wie war es für dich?", false);
 
   // "Jetzt starten": hier beginnt die Probezeit. Sie wird festgehalten,
   // damit später sichtbar ist, seit wann sie läuft - gesperrt wird

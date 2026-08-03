@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: blauer Kompass-Rahmen endgültig weg, Zurück-Knöpfe, Inselbewohner klappt auf/zu)
+Stand: 3. August 2026 (zuletzt aktualisiert: Abschluss-Seite aufgeräumt, Rückblick mit abgestuften Adjektiven)
 
 ---
 
@@ -195,3 +195,16 @@ Stand: 3. August 2026 (zuletzt aktualisiert: blauer Kompass-Rahmen endgültig we
       als Nächstes passiert.
 - [x] **Platz für das Begleiter-Foto eingebaut** – erscheint automatisch,
       sobald du mir das Bild schickst (siehe Punkt 1 oben).
+- [x] **Rückblick zeigt jetzt die Abstufung**: statt nur „geborgen" steht
+      dort „sehr geborgen" – genau das Wort, das auch der Kompass anzeigt.
+      Gilt automatisch auch für die Vorher/Nachher-Zeilen der Insel-Woche
+      im Profil. Gespeichert war das schon vorher (die Zeigerposition wird
+      bei jeder Sitzung mitgeschrieben), es wurde nur gröber angezeigt.
+- [x] **Abschluss-Seite aufgeräumt**: „Noch eine Meditation" ist weg – gleich
+      nach einer Meditation die nächste anzubieten passte nicht zum Ausklang.
+      Mudra und Mantra bleiben. Auch die Begleiter-Karte ist dort weg; nach
+      einer beendeten Meditation braucht es kein Gespräch mehr. Der Begleiter
+      bleibt auf „Mein Weg" und in der Bibliothek.
+- [x] **„Neu beginnen" heisst jetzt „Kompass neu setzen"** und tut auch das:
+      es bringt dich zurück zum Kompass, mit deinem Zustand von jetzt als
+      Ausgangspunkt – nicht mehr einfach zur Startseite.

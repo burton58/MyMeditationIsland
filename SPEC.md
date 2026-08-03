@@ -146,9 +146,10 @@ Aufbau genau wie in der Vorlage (`renderMyMed()`), die Empfehlung selbst sitzt s
 - Seitenkopf "Wie fühlst du dich jetzt?", darunter derselbe Kompass wie in §3.2 (gleiche Optik, gleiche Bedienung) → `compassAfter`.
 - **Deine Reise auf dem Kompass** (`zeichneReise()`): heller Punkt = wo du angekommen bist, gestrichelte Spur bis zur aktuellen Nadel; bei sehr kleinen Wegen (< 0.08) ausgeblendet.
 - Status-Karte "Jetzt" mit demselben abgestuften Satz und den Achsen-Spuren.
-- **"Dein Rückblick"** — Vorher/Jetzt in Worten + gemachte Meditationen mit Dauer; darunter ein Satz zur Veränderung (`updateShift()`).
-- **"Brauchst du noch etwas?"** — "Noch eine Meditation", "Ein Mudra für mich", "Ein Mantra für mich" (deterministisch aus der Nadel-Position, §5).
-- Begleiter-Chat (zweite Instanz) und "Neu beginnen" / "Fertig →".
+- **"Dein Rückblick"** — Vorher/Jetzt in Worten + gemachte Meditationen mit Dauer; darunter ein Satz zur Veränderung (`updateShift()`). **Seit Aug. 2026 mit Abstufung** (Christines Wunsch): dort steht "sehr geborgen" statt nur "geborgen". Umgesetzt in `moodHtml()`, das jetzt `moodWort()` benutzt (dieselbe Quelle wie die grosse Anzeige unter dem Kompass) statt nur `moodOf().word` — dadurch stimmen Rückblick und Kompass-Anzeige wörtlich überein, und die Insel-Woche im Profil (§3.6) zeigt die Abstufung automatisch mit, weil sie dieselbe Funktion nutzt. Die Daten dafür lagen ohnehin schon im Verlauf (`before`/`after` als Koordinaten, §5) — das Wort wird bei jeder Anzeige daraus neu berechnet, es musste nichts zusätzlich gespeichert werden.
+- **"Brauchst du noch etwas?"** — "Ein Mudra für mich", "Ein Mantra für mich" (deterministisch aus der Nadel-Position, §5). **"Noch eine Meditation" ist im Aug. 2026 entfallen** — direkt nach einer Meditation gleich die nächste anzubieten passte nicht zum Ausklang; wer weitermachen will, geht über "Kompass neu setzen", dann stimmt auch der Zustand wieder.
+- **Der Begleiter-Chat auf dieser Seite ist im Aug. 2026 entfallen** (zweite `setupChat()`-Instanz samt `#chatBox2`/`#chatInput2`/`#chatSend2` und dem Kartenmarkup): Nach einer beendeten Meditation braucht es kein Gespräch mehr, der Abschluss soll ruhig ausklingen. Der Begleiter bleibt auf "Mein Weg" und in der Bibliothek erreichbar. `lokaleAntwort()`/`setupChat()` behalten den Parameter `allowRecommend` — er wird jetzt nur noch von der einen verbleibenden Instanz mit `true` benutzt.
+- Unten **"Kompass neu setzen"** (`#restartBtn`, vorher "Neu beginnen" — das ging nur zur Startseite und sagte nicht, was passiert) und **"Fertig →"**. "Kompass neu setzen" übernimmt die Aufgabe des entfallenen "Noch eine Meditation": es setzt `compassBefore` auf den Stand **nach** der Meditation, räumt Sitzung/Empfehlung auf und geht zum Kompass. Wichtig dabei: `syncVorherNadel()` zieht Nadel **und** Zustandstext auf den neuen Wert nach — ohne das stimmte zwar der Wert im Hintergrund, die Nadel stand aber sichtbar noch an der alten Stelle (Fehler beim Umbau gefunden und behoben).
 
 ### 3.6a Konto / Anmelden (`data-step="konto"`) — Platzhalter
 
@@ -394,7 +395,7 @@ TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", medita
 
 ## 6. KI-Begleiter
 
-- Zwei Chat-Instanzen: eine auf der Meditationsauswahl (`allowRecommend = true`), eine im Abschluss (`false`)
+- **Nur noch eine Chat-Instanz** (auf "Mein Weg", `allowRecommend = true`) — die zweite auf der Abschluss-Seite ist im Aug. 2026 entfallen (§3.5)
 - System-Prompt: warmherziger, kurzer (max. 3 Sätze), unaufdringlicher Begleiter, keine Diagnosen, ermutigt bei ernster Not zu echtem menschlichen Kontakt; kennt neben den Meditationen jetzt auch Mudras/Mantras und wird angewiesen, bei unklarem Anliegen auf den Kompass zu verweisen statt zu raten (für den Fall, dass je ein echter Schlüssel/Proxy angeschlossen wird)
 - Bekommt vollen Kontext mitgeschickt: Kompass vorher/(nachher), aktuelle Auswahl bzw. abgeschlossene Meditationen
 - Kann in der Auswahl-Ansicht per angehängtem `[EMPFEHLUNG: <exakter Name>]`-Tag eine Übung **zur Mehrfachauswahl hinzufügen** (nicht ersetzen)
