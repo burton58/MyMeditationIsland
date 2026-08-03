@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter erkennt Tippfehler bei „Mudra"/„Mantra")
+Stand: 3. August 2026 (zuletzt aktualisiert: blauer Kompass-Rahmen endgültig weg, Zurück-Knöpfe, Inselbewohner klappt auf/zu)
 
 ---
 
@@ -23,6 +23,14 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter erkennt Tippfehler bei �
 - [ ] **Entscheiden, ob und wie Nutzung gemessen werden soll** (z. B. wie viele
       die Testphase abschliessen) – das ist auch eine Datenschutz-Frage, nicht
       nur eine technische.
+- [ ] **Foto für den Begleiter aussuchen** (eine meditierende Person). Der
+      Platz dafür ist in der App schon eingebaut – sobald du mir das Bild
+      schickst, erscheint es automatisch. Bis dahin steht dort das
+      Sprechblasen-Zeichen. Passender Prompt für ChatGPT: *Grundstil aus
+      der Bild-Anleitung einfügen, dann:* „Motiv: eine ruhige Person in
+      aufrechter Meditationshaltung, von der Seite oder leicht von hinten,
+      vor weichem goldenem Licht. Kein erkennbares Gesicht. Quadratisch,
+      Person mittig – das Bild wird rund zugeschnitten."
 
 ## 2. Das erledige ich im Code, sobald du mir sagst „jetzt"
 
@@ -33,6 +41,12 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter erkennt Tippfehler bei �
 - [ ] **Konto/Cloud-Speicherung einbauen**, damit ein Gerätewechsel niemanden
       seinen bezahlten Zugang kostet (aktuell liegt alles nur auf einem Gerät –
       „Abo wiederherstellen" ist bisher nur eine Attrappe ohne Funktion).
+- [ ] **Profilbild auswählbar machen**: eine kleine Auswahl fertiger Bilder
+      zum Antippen, plus die Möglichkeit, ein eigenes Foto hochzuladen.
+      (Hinweis von mir: hochgeladene Fotos blieben – wie alles andere –
+      nur auf dem jeweiligen Gerät, solange es kein Konto gibt. Bilder
+      dafür brauchst du auch noch; sag Bescheid, dann schreibe ich dir
+      einen passenden Prompt.)
 - [ ] **Eigene Symbole statt Emoji auf der Status-Karte im Profil**
       (aktuell 🤍 ✅ ⏳ 🔒 für „offen"/„aktiv"/„Testphase"/„gesperrt") –
       beim App-weiten Formatierungs-Check aufgefallen: das ist die letzte
@@ -166,3 +180,18 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter erkennt Tippfehler bei �
       erkannt – der Begleiter hat darum zufällig ein Mantra statt eines
       Mudras vorgeschlagen. Jetzt reicht schon der Wortanfang, auch mit
       kleinem Tippfehler.
+- [x] **Blauer Rahmen beim Kompass endgültig weg**: der erste Versuch hatte
+      nicht gereicht. Grund: Safari zeichnet um die Kompass-Zeichnung selbst
+      einen eigenen Rahmen, den man dort nicht wegbekommt. Jetzt sitzt die
+      Tastatur-Bedienung auf dem Kasten drumherum statt auf der Zeichnung –
+      damit ist der blaue Rahmen weg, und alles andere funktioniert wie zuvor.
+- [x] **„Zurück zum Profil"-Knopf bei Statistiken und Favoriten**: wer über
+      das Profil dorthin geht, kommt jetzt mit einem Knopf oben wieder
+      zurück. Über die Leiste unten aufgerufen erscheint er nicht – dort ist
+      man ja nicht „zu Besuch".
+- [x] **„Dein Inselbewohner" klappt jetzt auf und zu**: Insel-Woche und
+      Inselreise sind normalerweise zugeklappt, ein Tipp zeigt sie, der
+      nächste versteckt sie wieder. Der Text auf der Karte sagt jeweils, was
+      als Nächstes passiert.
+- [x] **Platz für das Begleiter-Foto eingebaut** – erscheint automatisch,
+      sobald du mir das Bild schickst (siehe Punkt 1 oben).

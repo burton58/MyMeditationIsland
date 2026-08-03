@@ -320,12 +320,16 @@
     filter:drop-shadow(0 10px 24px rgba(28,59,51,.18));
     animation:dialSettle .5s cubic-bezier(.22,.61,.36,1) both;
   }
-  /* outline:none auf dem Grundzustand, damit beim Ziehen/Antippen per Maus
-     oder Finger nie der blaue System-Fokusrahmen aufblitzt - der goldene
-     Ring unten bleibt der einzige, bewusst gestaltete Fokus-Hinweis und
-     erscheint nur bei echter Tastatur-Bedienung (:focus-visible). */
-  .compass-wrap svg{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:auto; outline:none; }
-  .compass-wrap svg:focus-visible{ outline:3px solid var(--gold); outline-offset:4px; border-radius:50%; }
+  /* Fokus fuer die Tastatur-Bedienung sitzt bewusst auf dem umgebenden DIV,
+     NICHT auf dem <svg>: Safari (macOS wie iOS) zeichnet um ein fokussiertes
+     SVG einen eigenen blauen Rahmen, den "outline:none" dort nicht
+     zuverlaessig unterdrueckt - genau der blaue Kasten, der beim Ziehen der
+     Nadel erschien. Auf einem gewoehnlichen DIV greift outline:none ueberall.
+     Beide Regeln (:focus und Grundzustand) sind gesetzt, damit auch aeltere
+     Browser ohne :focus-visible nichts Blaues zeigen. */
+  .compass-wrap, .compass-wrap:focus, .compass-wrap svg, .compass-wrap svg:focus{ outline:none; }
+  .compass-wrap:focus-visible{ outline:3px solid var(--gold); outline-offset:4px; border-radius:50%; }
+  .compass-wrap svg{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:auto; }
   @keyframes dialSettle{ from{ opacity:0; transform:scale(.94); } to{ opacity:1; transform:scale(1); } }
   /* Das Foto liegt als eigene Ebene hinter der Zeichnung, damit es nicht in
      jeder Kompass-Zeichnung noch einmal gespeichert werden muss. */
@@ -612,6 +616,14 @@
     border-radius:14px; padding:13px 12px; cursor:pointer; font-family:inherit; color:var(--ink);
     font-size:.85rem; font-weight:600; text-align:left;
   }
+  .profil-zurueck{ display:block; margin-bottom:14px; }
+  .profil-zurueck[hidden]{ display:none; }
+  /* Der Pfeil auf der Inselbewohner-Karte dreht sich nach unten, wenn
+     Insel-Woche und Inselreise aufgeklappt sind - so sieht man am Knopf
+     selbst, ob das naechste Antippen oeffnet oder schliesst. */
+  .profile-card .chev{ transition:transform .22s ease; }
+  .profile-card.auf .chev{ transform:rotate(90deg); }
+
   .fd-cat-icon{
     width:46px; height:46px; border-radius:13px; flex:0 0 auto; background:var(--cream-2);
     display:flex; align-items:center; justify-content:center;
@@ -885,6 +897,19 @@
   /* ---------- Begleiter ---------- */
   .companion{ padding:16px; margin-top:16px; }
   .companion h4{ margin:0 0 4px; font-family:var(--serif); font-size:1.05rem; }
+  .companion-head{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+  .companion-head h4{ margin:0; }
+  .companion-foto{
+    width:48px; height:48px; border-radius:50%; flex:0 0 auto; overflow:hidden; position:relative;
+    background:linear-gradient(155deg, var(--cream), var(--cream-2));
+    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .companion-foto img{ width:100%; height:100%; object-fit:cover; display:block; }
+  /* Das Ersatz-Zeichen liegt hinter dem Foto und wird nur sichtbar, wenn
+     gar kein Bild da ist - so entsteht nie eine leere graue Flaeche. */
+  .companion-foto .ersatz{ position:absolute; font-size:1.35rem; opacity:0; }
+  .companion-foto.kein-bild .ersatz{ opacity:1; }
   .companion .intro{ margin:0 0 12px; font-size:.82rem; line-height:1.5; color:var(--ink-soft); }
   .chat{ max-height:230px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
   .bubble{ padding:10px 13px; border-radius:14px; font-size:.85rem; line-height:1.5; max-width:85%; }
@@ -1040,7 +1065,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.10";
+    var AKTUELLE_VERSION = "2026-08-03.11";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1290,6 +1315,10 @@
        Persönliche Auswertung des Kompasses: Zustand → Begründung →
        Top-Empfehlung → weitere Empfehlungen → Fortschritt → Kategorien. -->
   <div class="page med-page" id="medPage">
+    <!-- Erscheint nur, wenn man ueber Profil -> "Statistiken" hierher kam.
+         Als normaler Reiter (unten in der Leiste) gibt es kein "Zurueck",
+         darum ist der Knopf sonst ausgeblendet. -->
+    <button class="btn-ghost profil-zurueck" id="medZurueckProfilBtn" hidden>← Zurück zum Profil</button>
     <div class="page-head">
       <div class="ttl">
         <h1>Mein Weg</h1>
@@ -1327,7 +1356,17 @@
     </section>
 
     <div class="card companion">
-      <h4>Dein Begleiter</h4>
+      <!-- Das Foto (begleiter.jpg) liefert Christine nach. Bis es da ist,
+           faengt onerror den Fehlschlag ab und zeigt weiter das 💬-Zeichen -
+           sobald die Datei im Ordner liegt, erscheint sie hier von selbst,
+           ohne dass am Code noch etwas geaendert werden muesste. -->
+      <div class="companion-head">
+        <div class="companion-foto">
+          <img src="begleiter.jpg" alt="" onerror="this.parentElement.classList.add('kein-bild'); this.remove();">
+          <span class="ersatz">💬</span>
+        </div>
+        <h4>Dein Begleiter</h4>
+      </div>
       <div class="chat" id="chatBox"></div>
       <div class="chat-row">
         <input id="chatInput" type="text" placeholder="Schreib etwas …" autocomplete="off">
@@ -1340,6 +1379,8 @@
 
   <!-- ============ MEDITATIONSLEITER (Bibliothek) ============ -->
   <div class="page medv2-page" id="medV2Page">
+    <!-- Erscheint nur, wenn man ueber Profil -> "Favoriten" hierher kam. -->
+    <button class="btn-ghost profil-zurueck" id="medV2ZurueckProfilBtn" hidden>← Zurück zum Profil</button>
     <div class="page-head">
       <div class="ttl">
         <h1>Meditationen</h1>
@@ -1476,7 +1517,7 @@
       <div class="profil-avatar">🌴</div>
       <div class="body">
         <div class="name">Dein Inselbewohner</div>
-        <div class="sub">Willkommen auf deiner Insel!</div>
+        <div class="sub" id="inselbewohnerHinweis">Deine Insel-Woche und Inselreise ansehen</div>
       </div>
       <span class="chev">›</span>
     </button>
@@ -2699,6 +2740,12 @@
   var TAB_FOR_STEP = { splash:"splash", home:"home", compass:"kompass", meditation:"meditation", meditation2:"meditation2", profil:"profil" };
 
   function goToStep(step){
+    // Der "Zurueck zum Profil"-Knopf gehoert nur zu genau einem Weg
+    // (Profil -> Statistiken/Favoriten). Darum bei jedem Seitenwechsel
+    // ausblenden; die beiden Profil-Zeilen schalten ihn direkt nach ihrem
+    // goToStep() wieder ein. So kann er auf keinem anderen Weg haengen
+    // bleiben, ohne dass jede einzelne Navigation daran denken muss.
+    setProfilZurueck(false);
     // Die Startseite zeigt immer den aktuellen Stand: Begruessung, Vorschlag
     // fuer heute und den Zustand aus dem Kompass.
     if (step === "home") renderHome();
@@ -2772,7 +2819,7 @@
     // Wege ueber setFromPoint()/update() laufen.
     function update(){
       renderMoodStatus(readout, target);
-      svg.setAttribute("aria-label", "Kompass. Aktueller Zustand: " + moodWort(target) + ". Mit den Pfeiltasten bewegen.");
+      wrap.setAttribute("aria-label", "Kompass. Aktueller Zustand: " + moodWort(target) + ". Mit den Pfeiltasten bewegen.");
     }
 
     // Mikro-Interaktion: beim Anfassen waechst der Punkt sanft und bekommt
@@ -2808,9 +2855,13 @@
     // Scheibe bewegen die vier Pfeiltasten den Zeiger in kleinen Schritten -
     // rechnet ueber dieselbe setFromPoint()-Funktion wie das Ziehen, damit
     // Rundung, Begrenzung und Spiegelung exakt gleich bleiben.
-    svg.setAttribute("tabindex", "0");
-    svg.setAttribute("role", "group");
-    svg.addEventListener("keydown", function(e){
+    // Fokus liegt bewusst auf dem umgebenden DIV statt auf dem <svg> - siehe
+    // die ausfuehrliche Begruendung bei ".compass-wrap" im CSS (Safari malt
+    // um fokussierte SVGs einen eigenen blauen Rahmen, der sich dort nicht
+    // wegstylen laesst).
+    wrap.setAttribute("tabindex", "0");
+    wrap.setAttribute("role", "group");
+    wrap.addEventListener("keydown", function(e){
       var STEP = 0.08;
       var nx = target.x, ny = target.y, geaendert = true;
       if (e.key === "ArrowLeft") nx = Math.max(-1, target.x - STEP);
@@ -3940,6 +3991,10 @@
     renderStatusCard();
     renderWeek("profilWeekBox");
     renderJourney("profilJourneyBox");
+    // renderWeek/renderJourney setzen display selbst wieder auf sichtbar,
+    // sobald Verlauf da ist - darum den Auf/Zu-Zustand danach neu anwenden,
+    // sonst waeren die Karten nach jedem Profil-Aufruf wieder offen.
+    setInselbewohnerOffen(inselbewohnerOffen);
   }
 
   // ---- Abo ----
@@ -4614,19 +4669,59 @@
   });
   document.getElementById("toSplashBtn").addEventListener("click", function(){ goToStep("splash"); });
   document.getElementById("profilIslandBtn").addEventListener("click", function(){ goToStep("island"); });
+  // "Statistiken" und "Favoriten" springen auf einen anderen Reiter. Wer so
+  // dorthin kommt, will danach normalerweise zurueck ins Profil - darum
+  // blendet sich auf der Zielseite ein Zurueck-Knopf ein. Ueber die Leiste
+  // unten aufgerufen bleibt er weg (dort ist der Reiter das Zuhause, kein
+  // Zwischenstopp). setProfilZurueck() schaltet beide Knoepfe gemeinsam.
+  function setProfilZurueck(sichtbar){
+    ["medZurueckProfilBtn", "medV2ZurueckProfilBtn"].forEach(function(id){
+      var b = document.getElementById(id);
+      if (b) b.hidden = !sichtbar;
+    });
+  }
+  ["medZurueckProfilBtn", "medV2ZurueckProfilBtn"].forEach(function(id){
+    document.getElementById(id).addEventListener("click", function(){
+      setProfilZurueck(false);
+      renderProfil();
+      goToStep("profil");
+    });
+  });
   document.getElementById("profilStatsBtn").addEventListener("click", function(){
     renderMyMed(); goToStep("meditation");
+    setProfilZurueck(true);   // nach goToStep, das ihn zuerst ausblendet
   });
   document.getElementById("favMenuRow").addEventListener("click", function(){
     openCatV2("fav"); goToStep("meditation2");
+    setProfilZurueck(true);
   });
-  // "Dein Inselbewohner" fuehrt zu dem, was auf derselben Profil-Seite
-  // gleich darunter steht (Insel-Woche/Inselreise) - vorher tat der Pfeil
-  // hier gar nichts, obwohl er Antippbarkeit versprach.
+  // "Dein Inselbewohner" klappt Insel-Woche und Inselreise auf und wieder zu
+  // (Christines Wunsch): standardmaessig sind beide zu, damit die Profil-Seite
+  // ruhig bleibt; ein Tipp zeigt sie, der naechste versteckt sie wieder. Der
+  // Pfeil dreht sich mit, damit man den Zustand sieht.
+  var inselbewohnerOffen = false;
+  function setInselbewohnerOffen(offen){
+    inselbewohnerOffen = offen;
+    var karte = document.getElementById("profilInselbewohnerBtn");
+    karte.classList.toggle("auf", offen);
+    // Nur zeigen, was auch wirklich Inhalt hat - ohne Verlauf bleiben die
+    // Karten leer und wuerden sonst als weisse Luecken erscheinen.
+    ["profilWeekBox", "profilJourneyBox"].forEach(function(id){
+      var box = document.getElementById(id);
+      if (!box) return;
+      box.style.display = (offen && box.innerHTML.trim()) ? "" : "none";
+    });
+    var hinweis = document.getElementById("inselbewohnerHinweis");
+    if (hinweis) hinweis.textContent = offen ? "Weniger anzeigen" : "Deine Insel-Woche und Inselreise ansehen";
+  }
   document.getElementById("profilInselbewohnerBtn").addEventListener("click", function(){
-    var ziel = document.getElementById("profilJourneyBox");
-    if (!ziel || !ziel.innerHTML.trim()) ziel = document.getElementById("profilWeekBox");
-    if (ziel && ziel.innerHTML.trim()) ziel.scrollIntoView({ behavior:"smooth", block:"start" });
+    setInselbewohnerOffen(!inselbewohnerOffen);
+    if (inselbewohnerOffen){
+      var ziel = document.getElementById("profilWeekBox");
+      if (ziel && ziel.innerHTML.trim()){
+        setTimeout(function(){ ziel.scrollIntoView({ behavior:"smooth", block:"start" }); }, 60);
+      }
+    }
   });
   // Zum Begleiter: er sitzt unten auf "My Meditation". Die eigene Zeile im
   // Profil-Menue ist entfallen (Aug. 2026) - der Begleiter ist ueber die
