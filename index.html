@@ -666,7 +666,10 @@
   }
 
   /* ---------- Profil ---------- */
-  .profile-card{ display:flex; align-items:center; gap:13px; padding:15px; margin-bottom:12px; }
+  .profile-card{
+    display:flex; align-items:center; gap:13px; padding:15px; margin-bottom:12px;
+    width:100%; border:none; cursor:pointer; font-family:inherit; color:var(--ink); text-align:left;
+  }
   .profil-avatar{
     width:46px; height:46px; border-radius:14px; background:var(--cream-2); flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.3rem;
@@ -1019,7 +1022,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.2";
+    var AKTUELLE_VERSION = "2026-08-03.3";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1452,14 +1455,14 @@
       </div>
     </div>
 
-    <div class="card profile-card">
+    <button class="card profile-card" id="profilInselbewohnerBtn" type="button">
       <div class="profil-avatar">🌴</div>
       <div class="body">
         <div class="name">Dein Inselbewohner</div>
         <div class="sub">Willkommen auf deiner Insel!</div>
       </div>
       <span class="chev">›</span>
-    </div>
+    </button>
 
     <div class="status-card" id="statusCard"></div>
 
@@ -1472,16 +1475,13 @@
         <span class="row-icon">💳</span><span class="row-text">Abo verwalten</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilStatsBtn">
-        <span class="row-icon">📊</span><span class="row-text">Statistiken</span><span class="chev">›</span>
+        <span class="row-icon">📊</span><span class="row-text">Statistiken</span>
       </button>
       <button class="menu-row" id="favMenuRow">
-        <span class="row-icon">⭐</span><span class="row-text">Favoriten</span><span class="chev">›</span>
+        <span class="row-icon">⭐</span><span class="row-text">Favoriten</span>
       </button>
       <button class="menu-row" id="profilIslandBtn">
         <span class="row-icon">🏝️</span><span class="row-text">Meine Insel gestalten</span><span class="chev">›</span>
-      </button>
-      <button class="menu-row" id="profilKiBtn">
-        <span class="row-icon">💬</span><span class="row-text">Dein Begleiter</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilKontoBtn">
         <span class="row-icon">🔑</span><span class="row-text">Konto &amp; Anmelden</span><span class="chev">›</span>
@@ -4601,7 +4601,18 @@
   document.getElementById("favMenuRow").addEventListener("click", function(){
     openCatV2("fav"); goToStep("meditation2");
   });
-  // Zum Begleiter: er sitzt unten auf "My Meditation".
+  // "Dein Inselbewohner" fuehrt zu dem, was auf derselben Profil-Seite
+  // gleich darunter steht (Insel-Woche/Inselreise) - vorher tat der Pfeil
+  // hier gar nichts, obwohl er Antippbarkeit versprach.
+  document.getElementById("profilInselbewohnerBtn").addEventListener("click", function(){
+    var ziel = document.getElementById("profilJourneyBox");
+    if (!ziel || !ziel.innerHTML.trim()) ziel = document.getElementById("profilWeekBox");
+    if (ziel && ziel.innerHTML.trim()) ziel.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+  // Zum Begleiter: er sitzt unten auf "My Meditation". Die eigene Zeile im
+  // Profil-Menue ist entfallen (Aug. 2026) - der Begleiter ist ueber die
+  // Bibliothek und "Mein Weg" bereits gut erreichbar, eine dritte Stelle im
+  // Einstellungs-Menue war redundant.
   function zumBegleiter(){
     renderMyMed();
     goToStep("meditation");
@@ -4609,7 +4620,6 @@
     if (el) setTimeout(function(){ el.scrollIntoView({ behavior:"smooth", block:"center" }); }, 60);
   }
   document.getElementById("libKiBtn").addEventListener("click", zumBegleiter);
-  document.getElementById("profilKiBtn").addEventListener("click", zumBegleiter);
 
   // "Details" blendet die ausführlichen Zeilen unter den Karten ein und aus.
   document.addEventListener("click", function(e){

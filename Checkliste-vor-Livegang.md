@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: deine Bilder eingebaut – Hintergründe je Meditationsthema und eigene Kategorie-Symbole)
+Stand: 3. August 2026 (zuletzt aktualisiert: Profil-Seite aufgeräumt – Inselbewohner-Karte, Begleiter-Zeile, Statistiken/Favoriten-Pfeile)
 
 ---
 
@@ -103,3 +103,11 @@ Stand: 3. August 2026 (zuletzt aktualisiert: deine Bilder eingebaut – Hintergr
       Bambus, Blatt) statt Emoji – bei den Filter-Chips, den Kategorie-Karten
       und in jeder Übungszeile. Alle Bilder liegen auch offline bereit
       (Service Worker aktualisiert).
+- [x] **Profil-Seite aufgeräumt** (drei von dir gemeldete Stellen):
+      „Dein Inselbewohner" tut jetzt wirklich etwas, wenn man draufklickt
+      (führt zu Inselreise/-woche gleich darunter) – vorher war der Pfeil
+      dort ein echter, unentdeckter Blindgänger. Die Zeile „Dein Begleiter"
+      ist entfernt (war an zwei anderen Stellen schon gut erreichbar, eine
+      dritte im Menü war zu viel). „Statistiken" und „Favoriten" haben
+      keinen Pfeil „›" mehr, weil sie nur auf einen anderen Reiter springen,
+      statt eine echte Unterseite mit Rückweg zu öffnen.
