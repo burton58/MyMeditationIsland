@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Profil-Seite aufgeräumt – Inselbewohner-Karte, Begleiter-Zeile, Statistiken/Favoriten-Pfeile)
+Stand: 3. August 2026 (zuletzt aktualisiert: Wochenziel-Knopf und neue Kategorie-Icons optisch nachgebessert)
 
 ---
 
@@ -111,3 +111,9 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Profil-Seite aufgeräumt – Inselb
       dritte im Menü war zu viel). „Statistiken" und „Favoriten" haben
       keinen Pfeil „›" mehr, weil sie nur auf einen anderen Reiter springen,
       statt eine echte Unterseite mit Rückweg zu öffnen.
+- [x] **Zwei optische Korrekturen** (von dir gemeldet): Der Knopf „Ziel
+      festlegen" beim Wochenziel sass ohne Rand direkt an der Kartenrundung
+      und wirkte abgeschnitten – jetzt mit richtigem Abstand wie bei den
+      anderen Karten. Die vier neuen Kategorie-Symbole gingen im hellen
+      Hintergrund fast unter – sie haben jetzt denselben goldenen Ring wie
+      die Stimmungs-Anzeige beim Kompass, damit sie mehr hervorstechen.
