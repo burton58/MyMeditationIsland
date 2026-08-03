@@ -265,7 +265,7 @@ MEDITATIONS[] = {
 
 ### Mudras & Mantras (Abschluss-Seite)
 ```js
-MUDRAS[]  = { dir, name, how, why, dauer?, chakra? }   // 20 Eintraege, 5 je Richtung, Erklaerung auf Hochdeutsch
+MUDRAS[]  = { dir, name, how, why, dauer?, chakra?, silbe? }   // 21 Eintraege, Erklaerung auf Hochdeutsch
 MANTRAS[] = { dir, text, why }        // 20 Eintraege, 5 je Richtung, auf Hochdeutsch
 
 waehlePassend(liste, c)  // filtert auf die zu c passende Richtung, waehlt daraus DETERMINISTISCH
@@ -273,7 +273,7 @@ waehlePassend(liste, c)  // filtert auf die zu c passende Richtung, waehlt darau
                           // dieselbe Nadel-Position liefert also immer dasselbe Ergebnis
 zeigeMudra()/zeigeMantra()  // rendern die Karte in #mudraBox/#mantraBox, Richtung/Position kommt aus compassAfter
 ```
-- **`dauer`/`chakra` (Aug. 2026 ergänzt):** Christine hat einen eigenen Mudra-Guide (Ein-Seiten-PDF mit den 7 wichtigsten Mudras, je mit Chakra, Wirkung und empfohlener Dauer). Die 6 Mudras aus `MUDRAS[]`, die dort namentlich vorkommen (Gyan, Hakini, Hridaya, Anjali, Apana, Prana), haben jetzt `dauer`/`chakra` wörtlich aus diesem Dokument übernommen; `zeigeMudra()` und die direkte "gib mir ein Mudra"-Antwort in `lokaleAntwort()` zeigen die Zeile, wenn sie vorhanden ist. Für die übrigen 14, nur in der App vorhandenen Mudras wurde bewusst nichts erfunden — dort bleiben die Felder leer und die Zeile entfällt einfach.
+- **`dauer`/`chakra`/`silbe` (Aug. 2026 ergänzt):** Christine hat einen eigenen Mudra-Guide (mit den 7 wichtigsten Mudras, je mit Chakra, Wirkung, empfohlener Dauer und Mantra-Silbe). Die 7 Mudras aus `MUDRAS[]`, die dort namentlich vorkommen (Gyan, Hakini, Hridaya, Anjali, Apana, Prana, Surya), haben `dauer`/`chakra`/`silbe` wörtlich aus diesem Dokument übernommen; `zeigeMudra()` und die direkte "gib mir ein Mudra"-Antwort in `lokaleAntwort()` zeigen die Zeile, wenn sie vorhanden ist. **Surya Mudra** (dir: "ost", passt zu Müdigkeit/Erschöpfung/Energie-Stichwörtern) gab es vorher nur im Guide, nicht in der App — jetzt als 21. Eintrag ergänzt, `how` dafür ist eine eigene, sachlich korrekte Anleitung (nicht im Guide enthalten, da der dort nur Wirkung/Anwendung/Dauer/Mantra zeigt, keine Handhaltungs-Anleitung). Für die übrigen 14, nur in der App vorhandenen Mudras wurde bewusst nichts erfunden — dort bleiben alle drei Felder leer und die Zeile entfällt einfach.
 
 ## 5a. Themenvielfalt (umgesetzt)
 
@@ -382,6 +382,7 @@ TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", medita
 - Bekommt vollen Kontext mitgeschickt: Kompass vorher/(nachher), aktuelle Auswahl bzw. abgeschlossene Meditationen
 - Kann in der Auswahl-Ansicht per angehängtem `[EMPFEHLUNG: <exakter Name>]`-Tag eine Übung **zur Mehrfachauswahl hinzufügen** (nicht ersetzen)
 - **Der echte API-Aufruf hat bewusst keinen Schlüssel** (öffentliches Repo) und schlägt darum in der Praxis immer fehl. Statt dessen antwortet `lokaleAntwort()` im Fehlerfall inhaltlich echt, ganz ohne Netz: sie erkennt per Stichwortliste die Richtung (Gedanken/Gefühle/Anspannung/Entspannung), erkennt explizite Nachfragen nach "Mudra" oder "Mantra" und wählt dafür einen passenden Eintrag aus `MUDRAS`/`MANTRAS`, empfiehlt sonst (wo erlaubt) über dasselbe `[EMPFEHLUNG: ...]`-Tag eine passende Meditation aus `MEDITATIONS`, und verweist bei unklarer Nachricht auf den Kompass. Die frühere generische Fallback-Liste (vier immer gleiche Sätze im Kreis) ist damit ersetzt.
+- **Bewusste Entscheidung (Aug. 2026):** Christine wurde gefragt, ob sie langfristig einen echten, bezahlten KI-Dienst anschliessen möchte (bräuchte einen eigenen Server für den Schlüssel, laufende Kosten pro Nachricht) oder ob die kostenlose, lokale Logik reicht — Antwort: die lokale Logik reicht. Es ist also **kein** echter API-Anschluss geplant; `lokaleAntwort()` bleibt die dauerhafte Lösung, keine Übergangslösung.
 
 ---
 

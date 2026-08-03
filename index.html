@@ -1007,7 +1007,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-02.11";
+    var AKTUELLE_VERSION = "2026-08-02.12";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3216,26 +3216,28 @@
   // Beide Bibliotheken sind bewusst groesser als noetig (nicht nur 1 pro
   // Richtung), damit die 3er-Empfehlung sich von Mal zu Mal unterscheidet
   // statt immer dieselben 3 zu zeigen.
-  // "dauer"/"chakra" stehen nur bei den Mudras, die auch im Mudra-Guide
-  // (Christines Ein-Seiten-PDF) vorkommen - dort woertlich uebernommen.
-  // Fuer die restlichen, nur in der App vorhandenen Mudras wird nichts
-  // erfunden, darum bleiben diese beiden Felder dort einfach leer.
+  // "dauer"/"chakra"/"silbe" stehen nur bei den Mudras, die auch im
+  // Mudra-Guide (Christines Ein-Seiten-PDF) vorkommen - dort woertlich
+  // uebernommen (inkl. Surya Mudra, die es vorher nur dort, nicht in der
+  // App gab). Fuer die restlichen, nur in der App vorhandenen Mudras wird
+  // nichts erfunden, darum bleiben diese drei Felder dort einfach leer.
   var MUDRAS = [
-    { dir:"nord", name:"Gyan Mudra", how:"Daumen und Zeigefinger berühren sich sanft, die anderen drei Finger bleiben locker gestreckt. Hände auf die Knie, Handflächen nach oben.", why:"Für einen klaren Kopf, wenn die Gedanken kreisen.", dauer:"10–20 Min.", chakra:"Kronenchakra" },
+    { dir:"nord", name:"Gyan Mudra", how:"Daumen und Zeigefinger berühren sich sanft, die anderen drei Finger bleiben locker gestreckt. Hände auf die Knie, Handflächen nach oben.", why:"Für einen klaren Kopf, wenn die Gedanken kreisen.", dauer:"10–20 Min.", chakra:"Kronenchakra", silbe:"OM" },
     { dir:"nord", name:"Buddhi Mudra", how:"Daumen und kleiner Finger berühren sich sanft, die restlichen Finger bleiben gestreckt.", why:"Fördert Klarheit und einen offenen Umgang mit den eigenen Gedanken." },
     { dir:"nord", name:"Shuni Mudra", how:"Daumen und Mittelfinger berühren sich, die restlichen Finger bleiben locker gestreckt.", why:"Unterstützt Geduld und Konzentration." },
-    { dir:"nord", name:"Hakini Mudra", how:"Die Fingerspitzen beider Hände berühren sich sanft, die Handflächen zeigen zueinander, ohne sich zu berühren.", why:"Verbindet beide Gehirnhälften und hilft, Gedanken zu sortieren.", dauer:"10–15 Min.", chakra:"Drittes Auge" },
+    { dir:"nord", name:"Hakini Mudra", how:"Die Fingerspitzen beider Hände berühren sich sanft, die Handflächen zeigen zueinander, ohne sich zu berühren.", why:"Verbindet beide Gehirnhälften und hilft, Gedanken zu sortieren.", dauer:"10–15 Min.", chakra:"Drittes Auge", silbe:"OM" },
     { dir:"nord", name:"Vayu Mudra", how:"Den Zeigefinger an die Daumenwurzel legen, den Daumen leicht darüberlegen.", why:"Beruhigt einen unruhigen, überaktiven Verstand." },
-    { dir:"sued", name:"Hridaya Mudra", how:"Den Zeigefinger an die Daumenwurzel legen, Daumen, Mittel- und Ringfinger zusammenbringen. Beide Hände auf den Schoss.", why:"Öffnet den Herzraum, wenn viel Gefühl da ist.", dauer:"10–15 Min.", chakra:"Herzchakra" },
+    { dir:"sued", name:"Hridaya Mudra", how:"Den Zeigefinger an die Daumenwurzel legen, Daumen, Mittel- und Ringfinger zusammenbringen. Beide Hände auf den Schoss.", why:"Öffnet den Herzraum, wenn viel Gefühl da ist.", dauer:"10–15 Min.", chakra:"Herzchakra", silbe:"YAM" },
     { dir:"sued", name:"Padma Mudra", how:"Handballen und kleine Finger berühren sich, die restlichen Finger öffnen sich wie eine Blüte.", why:"Steht für Offenheit gegenüber den eigenen Gefühlen." },
-    { dir:"sued", name:"Anjali Mudra", how:"Beide Handflächen vor der Brust zusammenlegen, als würde man Danke sagen.", why:"Für Dankbarkeit und Verbindung zu sich selbst.", dauer:"1–5 Min.", chakra:"Herzchakra" },
+    { dir:"sued", name:"Anjali Mudra", how:"Beide Handflächen vor der Brust zusammenlegen, als würde man Danke sagen.", why:"Für Dankbarkeit und Verbindung zu sich selbst.", dauer:"1–5 Min.", chakra:"Herzchakra", silbe:"OM SHANTI" },
     { dir:"sued", name:"Karana Mudra", how:"Zeige- und kleiner Finger gestreckt, die restlichen Finger halten den Daumen.", why:"Hilft, schwere Gefühle Stück für Stück loszulassen." },
     { dir:"sued", name:"Matangi Mudra", how:"Beide Hände vor dem Bauch falten, die Mittelfinger gestreckt aneinanderlegen, die Daumen kreuzen.", why:"Für inneren Ausgleich bei starken Gefühlen." },
-    { dir:"west", name:"Apana Mudra", how:"Daumen, Mittel- und Ringfinger berühren sich, Zeigefinger und kleiner Finger bleiben gestreckt.", why:"Hilft, Spannung aus dem Körper zu lassen.", dauer:"10–15 Min.", chakra:"Wurzelchakra" },
-    { dir:"west", name:"Prana Mudra", how:"Daumen, Ring- und kleiner Finger berühren sich, die restlichen Finger bleiben gestreckt.", why:"Aktiviert neue Energie, wenn alles schwer und angespannt wirkt.", dauer:"10–20 Min.", chakra:"Wurzel- & Herzchakra" },
+    { dir:"west", name:"Apana Mudra", how:"Daumen, Mittel- und Ringfinger berühren sich, Zeigefinger und kleiner Finger bleiben gestreckt.", why:"Hilft, Spannung aus dem Körper zu lassen.", dauer:"10–15 Min.", chakra:"Wurzelchakra", silbe:"LAM" },
+    { dir:"west", name:"Prana Mudra", how:"Daumen, Ring- und kleiner Finger berühren sich, die restlichen Finger bleiben gestreckt.", why:"Aktiviert neue Energie, wenn alles schwer und angespannt wirkt.", dauer:"10–20 Min.", chakra:"Wurzel- & Herzchakra", silbe:"SO HAM" },
     { dir:"west", name:"Kubera Mudra", how:"Daumen, Zeige- und Mittelfinger an den Spitzen zusammenführen, die restlichen Finger locker einrollen.", why:"Für ein Gefühl von Halt und Sicherheit." },
     { dir:"west", name:"Rudra Mudra", how:"Daumen, Zeige- und Ringfinger berühren sich, die restlichen Finger bleiben gestreckt.", why:"Unterstützt Stabilität, wenn der Körper unruhig ist." },
     { dir:"west", name:"Ksepana Mudra", how:"Beide Zeigefinger aneinanderlegen, die restlichen Finger ineinander verschränken, Daumen zeigen nach unten.", why:"Zum bewussten Loslassen von Druck und Anspannung." },
+    { dir:"ost", name:"Surya Mudra", how:"Den Ringfinger einrollen und mit der Spitze des Daumens sanft nach unten drücken, die restlichen drei Finger bleiben gestreckt.", why:"Aktiviert das innere Feuer, wenn Müdigkeit oder Trägheit da sind.", dauer:"5–10 Min.", chakra:"Solarplexuschakra", silbe:"RAM" },
     { dir:"ost", name:"Dhyana Mudra", how:"Beide Hände im Schoss, die rechte auf die linke, die Daumenspitzen berühren sich ganz leicht.", why:"Vertieft eine Ruhe, die schon da ist." },
     { dir:"ost", name:"Chin Mudra", how:"Daumen und Zeigefinger berühren sich, die Handrücken liegen auf den Knien.", why:"Für eine ruhige, nach innen gerichtete Aufmerksamkeit." },
     { dir:"ost", name:"Shankh Mudra", how:"Beide Hände formen zusammen eine Muschel, ein Daumen steht aufrecht und wird von der anderen Hand locker umschlossen.", why:"Unterstützt einen langen, ruhigen Atem." },
@@ -3285,7 +3287,7 @@
         '<h5>🤲 ' + m.name + '</h5>' +
         '<p class="how">' + m.how + '</p>' +
         '<p class="why">' + m.why + '</p>' +
-        (m.dauer ? '<p class="meta">' + m.dauer + (m.chakra ? " · " + m.chakra : "") + '</p>' : '') +
+        (m.dauer ? '<p class="meta">' + m.dauer + (m.chakra ? " · " + m.chakra : "") + (m.silbe ? " · Mantra: " + m.silbe : "") + '</p>' : '') +
       '</div>';
   }
   function zeigeMantra(){
@@ -3911,7 +3913,7 @@
     }
     if (willMudra){
       var mu = waehleFuerRichtung(MUDRAS, dir, streuung);
-      var muExtra = mu.dauer ? (" Am besten " + mu.dauer + " halten (wirkt auf: " + mu.chakra + ").") : "";
+      var muExtra = mu.dauer ? (" Am besten " + mu.dauer + " halten (wirkt auf: " + mu.chakra + "), dazu passt die Mantra-Silbe „" + mu.silbe + "“.") : "";
       return intro + " Versuch das " + mu.name + ": " + mu.how + " " + mu.why + muExtra;
     }
 

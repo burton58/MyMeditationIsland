@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 2. August 2026 (zuletzt aktualisiert: Begleiter-Beschreibung, Mudra-Zusatzinfos aus deinem Mudra-Guide, SPEC.md-Feinschliff erledigt)
+Stand: 2. August 2026 (zuletzt aktualisiert: Surya Mudra ergänzt, Mantra-Silben aus deinem Mudra-Guide, Entscheid gegen echten KI-Dienst festgehalten)
 
 ---
 
@@ -77,9 +77,15 @@ Stand: 2. August 2026 (zuletzt aktualisiert: Begleiter-Beschreibung, Mudra-Zusat
       offen, was er kann – eine passende Meditation finden, dazu auf Wunsch
       ein Mudra oder Mantra vorschlagen. Nirgends mehr das Wort „KI" (ausser
       in der ehrlichen technischen Erklärung im Datenschutz-Text).
-- [x] **6 Mudras mit Dauer und Chakra aus deinem Mudra-Guide ergänzt**
-      (Gyan, Hakini, Hridaya, Anjali, Apana, Prana) – erscheint automatisch,
+- [x] **7 Mudras mit Dauer, Chakra und Mantra-Silbe aus deinem Mudra-Guide ergänzt**
+      (Gyan, Hakini, Hridaya, Anjali, Apana, Prana, Surya) – erscheint automatisch,
       wenn der Begleiter genau eines davon vorschlägt oder du dir ein Mudra
       anzeigen lässt. Nichts erfunden: die übrigen Mudras, die nicht in
       deinem Dokument stehen, zeigen weiterhin nur Anleitung und Wirkung.
+- [x] **Surya Mudra neu im Begleiter** – gab es vorher nur in deinem Guide,
+      jetzt auch in der App (passt zu Müdigkeit/Erschöpfung).
 - [x] **SPEC.md-Stelle zum Meditationen-Untertitel nachgezogen** (Feinschliff-Punkt 17).
+- [x] **Entscheid festgehalten: kein echter, bezahlter KI-Dienst für den
+      Begleiter** – die kostenlose, lokale Logik bleibt dauerhaft so, wie sie
+      ist. Ein echter KI-Anschluss würde einen eigenen Server und laufende
+      Kosten pro Nachricht brauchen; das ist bewusst nicht geplant.
