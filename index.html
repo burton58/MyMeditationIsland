@@ -828,6 +828,13 @@
   }
   .ki-card h4{ margin:0 0 4px; font-family:var(--serif); font-size:1.02rem; }
   .ki-card p{ margin:0 0 12px; font-size:.82rem; line-height:1.5; color:var(--ink-soft); }
+  /* Der Chat sitzt hier auf der goldenen Karte, nicht auf Weiss: die
+     Antwort-Blasen haben sonst genau die Farbe des Kartenhintergrunds
+     (beides --cream-2) und waeren unsichtbar. Darum hier hell auf Gold. */
+  .ki-card .chat{ max-height:200px; margin-bottom:10px; }
+  .ki-card .bubble.ai{ background:#fffdf7; }
+  .ki-card .chat-row input{ border-color:rgba(143,111,34,.35); }
+  .ki-card .body{ min-width:0; }
 
   /* Wochenansicht und Inselreise ---------------------------------------- */
   .recap{ padding:16px; margin-bottom:12px; }
@@ -1096,7 +1103,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.16";
+    var AKTUELLE_VERSION = "2026-08-03.17";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1434,12 +1441,20 @@
     </div>
     <p class="lib-meta" id="libMeta"></p>
     <div class="chips" id="libFilters"></div>
+    <!-- Seit Aug. 2026 ein echter Chat statt eines Knopfes, der auf eine
+         andere Seite sprang: hier steht die Bibliothek, hier ist die Frage
+         "welche passt zu mir?" naheliegend - also wird sie auch hier
+         beantwortet. Zweite Chat-Instanz mit denselben Faehigkeiten wie
+         die auf "Mein Weg" (allowRecommend = true), eigene Element-IDs. -->
     <div class="ki-card">
       <div class="ki-ico">💬</div>
       <div class="body">
         <h4>Dein Begleiter</h4>
-        <p>Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?</p>
-        <button class="btn-dark" id="libKiBtn">Empfehlung erhalten →</button>
+        <div class="chat" id="chatBoxLib"></div>
+        <div class="chat-row">
+          <input id="chatInputLib" type="text" placeholder="Schreib etwas …" autocomplete="off">
+          <button id="chatSendLib">Senden</button>
+        </div>
       </div>
     </div>
 
@@ -4790,10 +4805,14 @@
     renderRecap();
   });
 
-  // Nur noch ein Chat: der auf "Mein Weg". Der zweite auf der Abschluss-
-  // Seite ist im Aug. 2026 entfallen (siehe Kommentar dort im Markup).
-  setupChat("chatBox", "chatInput", "chatSend",
-    "Hi! Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?", true);
+  // Zwei Chats: einer unten auf "Mein Weg", einer in der Bibliothek. Beide
+  // koennen empfehlen (true) - der Vorschlag landet ueber das
+  // [EMPFEHLUNG:]-Tag jeweils oben in "Fuer dich". Der dritte auf der
+  // Abschluss-Seite ist im Aug. 2026 entfallen (Kommentar dort im Markup).
+  var BEGLEITER_GRUSS =
+    "Hi! Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?";
+  setupChat("chatBox", "chatInput", "chatSend", BEGLEITER_GRUSS, true);
+  setupChat("chatBoxLib", "chatInputLib", "chatSendLib", BEGLEITER_GRUSS, true);
 
   // "Jetzt starten": hier beginnt die Probezeit. Sie wird festgehalten,
   // damit später sichtbar ist, seit wann sie läuft - gesperrt wird
@@ -4989,17 +5008,6 @@
       }
     }
   });
-  // Zum Begleiter: er sitzt unten auf "My Meditation". Die eigene Zeile im
-  // Profil-Menue ist entfallen (Aug. 2026) - der Begleiter ist ueber die
-  // Bibliothek und "Mein Weg" bereits gut erreichbar, eine dritte Stelle im
-  // Einstellungs-Menue war redundant.
-  function zumBegleiter(){
-    renderMyMed();
-    goToStep("meditation");
-    var el = document.getElementById("chatBox");
-    if (el) setTimeout(function(){ el.scrollIntoView({ behavior:"smooth", block:"center" }); }, 60);
-  }
-  document.getElementById("libKiBtn").addEventListener("click", zumBegleiter);
 
   // "Details" blendet die ausführlichen Zeilen unter den Karten ein und aus.
   document.addEventListener("click", function(e){

@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Trainings-Karte auf „Mein Weg" entfernt)
+Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter-Chat direkt in der Bibliothek)
 
 ---
 
@@ -246,3 +246,7 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Trainings-Karte auf „Mein Weg" en
       die Knopfbeschriftung wechselte) und nahm den obersten Platz der
       Auswertungsseite ein. Der Kompass ist unten in der Leiste ohnehin
       immer erreichbar. Die Seite beginnt jetzt direkt mit „Dein Fortschritt".
+- [x] **Begleiter-Chat direkt bei den Meditationen**: statt eines Knopfes,
+      der auf „Mein Weg" gesprungen ist, kannst du dort jetzt gleich
+      schreiben – mit Eingabefeld und Sprechblasen wie beim anderen Chat.
+      Beide laufen unabhängig voneinander.
