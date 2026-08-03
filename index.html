@@ -270,7 +270,15 @@
      und fuellt den Platz trotzdem gut aus. insel.jpg bleibt unveraendert
      fuer Titelseite und Sitzungs-Hintergrund, wo Hochformat richtig ist. */
   .home-hero-photo{
-    flex:1 1 0; min-height:152px; max-height:400px; overflow:hidden;
+    /* Frueher "flex:1 1 0" mit min-/max-height: das Foto war damit der
+       Puffer der Seite und wurde zusammengedrueckt, sobald die Liste im
+       heutigen Fokus laenger wurde (bei vielen Meditationen bis auf die
+       152px Mindesthoehe hinunter). Jetzt "flex:0 0 auto" plus das exakte
+       Seitenverhaeltnis der Datei (720x678): das Bild ist damit auf jedem
+       Geraet immer gleich gross, immer vollstaendig zu sehen (contain hat
+       bei genau diesem Verhaeltnis nichts abzuschneiden und keine Raender
+       zu lassen) - und wenn die Liste waechst, waechst einfach die Seite. */
+    flex:0 0 auto; aspect-ratio:720 / 678; overflow:hidden;
     margin:0 -16px 14px;
     /* Jetzt ein Knopf (fuehrt zur Titelseite) statt eines reinen Bildes -
        alle Button-Grundformatierung wieder auf null, damit es weiter genau
@@ -286,6 +294,13 @@
   /* Wenn heute schon etwas gehört wurde, ist die Liste im "heutigen
      Fokus" etwas voller - dort darum knapper als anderswo, damit auch
      dieser Zustand ohne Scrollen passt. */
+  /* Platzziffer 1-3 vor den meistgehoerten Meditationen. */
+  .lieblinge-platz{
+    width:22px; flex:0 0 auto; text-align:center; font-family:var(--serif);
+    font-size:1.05rem; font-weight:700; color:var(--gold-deep);
+  }
+  #lieblingeList .hist-row{ padding:10px 12px; gap:10px; }
+
   #focusSlot .hist-row{ padding:8px 12px; }
   #focusSlot .row-thumb{ width:44px; height:44px; font-size:1.05rem; }
   #focusMehrBtn{ margin-top:6px; padding:9px 18px; }
@@ -1065,7 +1080,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.12";
+    var AKTUELLE_VERSION = "2026-08-03.13";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1151,6 +1166,14 @@
          Empfehlung mit Startknopf. Kein Zwischentext ohne Handlung. -->
     <div class="section-label first">Dein heutiger Fokus</div>
     <div id="focusSlot"></div>
+
+    <!-- Erscheint erst, wenn eine Meditation mindestens zweimal gehoert
+         wurde - vorher waere jede "Rangliste" nur eine Wiederholung des
+         Verlaufs. renderLieblinge() blendet den ganzen Block sonst aus. -->
+    <div id="lieblingeSlot" hidden>
+      <div class="section-label">Deine Lieblingsmeditationen</div>
+      <div class="card" id="lieblingeList"></div>
+    </div>
 
     <div class="section-label">Dein Zustand</div>
     <div class="card state-card">
@@ -4431,6 +4454,39 @@
 
     var mehrBtn = document.getElementById("focusMehrBtn");
     if (mehrBtn) mehrBtn.addEventListener("click", function(){ renderMyMed(); goToStep("meditation"); });
+
+    renderLieblinge();
+  }
+
+  // "Deine Lieblingsmeditationen": die drei meistgehoerten aus dem ganzen
+  // Verlauf, mit Platz 1-3. Bewusst NICHT dasselbe wie die Favoriten mit
+  // Stern (die waehlt man selbst aus, §3.3a) - das hier ergibt sich von
+  // allein daraus, was wirklich gehoert wurde. Erscheint erst, wenn
+  // ueberhaupt etwas mehrfach gehoert wurde, sonst waere es nur eine
+  // zweite Fassung des Verlaufs direkt darueber.
+  function renderLieblinge(){
+    var slot = document.getElementById("lieblingeSlot");
+    if (!slot) return;
+    var zaehler = {};
+    loadHistory().forEach(function(e){
+      (e.meds || []).forEach(function(m){ zaehler[m.name] = (zaehler[m.name] || 0) + 1; });
+    });
+    var top = Object.keys(zaehler)
+      .map(function(name){ return { name:name, anzahl:zaehler[name] }; })
+      .filter(function(e){ return e.anzahl > 1; })
+      .sort(function(a, b){ return b.anzahl - a.anzahl || a.name.localeCompare(b.name); })
+      .slice(0, 3);
+    if (!top.length){ slot.hidden = true; return; }
+    slot.hidden = false;
+    document.getElementById("lieblingeList").innerHTML = top.map(function(e, i){
+      var dir = dirVonName(e.name);
+      return '<div class="hist-row">' +
+        '<span class="lieblinge-platz">' + (i + 1) + '</span>' +
+        '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
+        '<span class="body"><span class="name">' + e.name + '</span>' +
+        '<span class="meta">' + e.anzahl + ' Mal gehört' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
+      '</div>';
+    }).join("");
   }
 
   // ---- Fortschritt: drei Zahlen aus dem echten Verlauf ----------------

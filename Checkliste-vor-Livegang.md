@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Abschluss-Seite aufgeräumt, Rückblick mit abgestuften Adjektiven)
+Stand: 3. August 2026 (zuletzt aktualisiert: Startseiten-Foto bleibt gleich gross, Lieblingsmeditationen ergänzt)
 
 ---
 
@@ -208,3 +208,13 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Abschluss-Seite aufgeräumt, Rückb
 - [x] **„Neu beginnen" heisst jetzt „Kompass neu setzen"** und tut auch das:
       es bringt dich zurück zum Kompass, mit deinem Zustand von jetzt als
       Ausgangspunkt – nicht mehr einfach zur Startseite.
+- [x] **Startseiten-Foto bleibt immer gleich gross**: bisher war das Bild der
+      „Gummi“ der Seite und wurde zusammengedrückt, sobald die Liste
+      länger wurde. Jetzt hat es eine feste Grösse – wächst die Liste,
+      wächst einfach die Seite und man scrollt etwas.
+- [x] **„Deine Lieblingsmeditationen“ auf der Startseite**: zeigt mit Platz
+      1–3, welche Meditationen du am häufigsten gehört hast, samt Anzahl.
+      Erscheint erst, sobald du eine Meditation mindestens zweimal gehört
+      hast – vorher wäre es nur eine Wiederholung der Liste darüber.
+      (Nicht zu verwechseln mit den ⭐-Favoriten: die wählst du selbst aus,
+      diese Liste ergibt sich von allein aus dem, was wirklich gelaufen ist.)
