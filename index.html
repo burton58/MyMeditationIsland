@@ -1040,7 +1040,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.9";
+    var AKTUELLE_VERSION = "2026-08-03.10";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4111,8 +4111,10 @@
     var dir = erkenneRichtung(text);
     var streuung = textStreuung(text);
     var intro = dir ? INTRO_SAETZE[dir] : "Gerne.";
-    var willMantra = text.toLowerCase().indexOf("mantra") !== -1;
-    var willMudra = text.toLowerCase().indexOf("mudra") !== -1;
+    // Nur den Wortstamm pruefen (nicht "mantra"/"mudra" vollstaendig) - so
+    // wird auch ein Tippfehler wie "Mudrs" oder "Mantr" noch erkannt.
+    var willMantra = text.toLowerCase().indexOf("mantr") !== -1;
+    var willMudra = text.toLowerCase().indexOf("mudr") !== -1;
 
     // Wird gezielt nach einem Mudra oder Mantra gefragt, bekommt die Person
     // genau das - direkte Fragen haben immer Vorrang, auch wenn der Text

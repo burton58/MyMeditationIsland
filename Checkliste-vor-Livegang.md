@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Mudra-Anleitung überall im Begleiter, blauer Fokusrahmen beim Kompass entfernt)
+Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter erkennt Tippfehler bei „Mudra"/„Mantra")
 
 ---
 
@@ -161,3 +161,8 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Mudra-Anleitung überall im Begleit
       blieb ein blauer System-Rahmen um den Kompass sichtbar (Nebenwirkung
       der Tastatur-Bedienbarkeit). Ist jetzt weg – nur noch beim Bedienen
       per Tastatur erscheint der (gewollte) goldene Ring.
+- [x] **Begleiter erkennt jetzt auch „Mudra"/„Mantra" mit Tippfehler**: du
+      hattest „Mudrs" geschrieben (ein Buchstabe fehlte), das wurde nicht
+      erkannt – der Begleiter hat darum zufällig ein Mantra statt eines
+      Mudras vorgeschlagen. Jetzt reicht schon der Wortanfang, auch mit
+      kleinem Tippfehler.
