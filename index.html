@@ -609,6 +609,7 @@
     font-size:.85rem; font-weight:600; text-align:left;
   }
   .fd-cat-icon{ font-size:1.1rem; }
+  .kat-icon{ width:1.4em; height:1.4em; object-fit:contain; vertical-align:middle; display:inline-block; }
 
   .stats-row{ display:flex; }
   .stat{ flex:1; padding:16px 8px; text-align:center; border-right:1px solid var(--line); }
@@ -1018,7 +1019,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.1";
+    var AKTUELLE_VERSION = "2026-08-03.2";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2003,7 +2004,7 @@
              "Mängi Wolche sind dunkel. Au die zieled wiiter.",
              "De Himmel bliibt. Rueh di en Moment dine us.",
              "Mach d'Auge uf, wänn du parat bisch."] },
-    { id:"herz", dir:"sued", cat:"mittel", name:"Herzraum", min:7, desc:"Dem, wo du fühlsch, fründlich begägne.",
+    { id:"herz", dir:"sued", cat:"mittel", bg:"bg-herzraum.jpg", name:"Herzraum", min:7, desc:"Dem, wo du fühlsch, fründlich begägne.",
       steps:["Leg e Hand uf d'Bruscht. Gspür d'Wärmi.",
              "Schnuuf i dä Ruum under dinere Hand ine.",
              "Frag di liislig: Was isch grad da?",
@@ -2011,7 +2012,7 @@
              "Schick dir sälber en fründliche Satz. Zum Bispil: Möge ich's liicht ha.",
              "Blib no es paar Schnuuf da.",
              "Nimm d'Hand wäg und chumm zrugg."] },
-    { id:"benennen", dir:"sued", cat:"mittel", name:"Gefühle benennen", min:6, desc:"Ornig is Gfühlschaos bringe.",
+    { id:"benennen", dir:"sued", cat:"mittel", bg:"bg-herzraum.jpg", name:"Gefühle benennen", min:6, desc:"Ornig is Gfühlschaos bringe.",
       steps:["Wird still. Gspür din Körper vo inne.",
              "Wo im Körper gspürsch du grad am meiste?",
              "Gib em Gfühl en Name: Unrueh? Schweri? Sehnsucht? Freud?",
@@ -2061,14 +2062,14 @@
              "Zu de Schultere, zum Nacke, zum Gsicht.",
              "Nüt muesch ändere. Nur wahrnäh, wie's grad isch.",
              "Schnuuf einisch tief und chumm zrugg."] },
-    { id:"erdungsatem", dir:"west", cat:"mini", name:"Erdungsatem", min:4, desc:"En churze Atem, wo di wieder ufe Bode holt.",
+    { id:"erdungsatem", dir:"west", cat:"mini", bg:"bg-waldlichtung.jpg", name:"Erdungsatem", min:4, desc:"En churze Atem, wo di wieder ufe Bode holt.",
       steps:["Stell d'Füess fescht ufe Bode oder spür s'Gwicht vom Körper.",
              "Schnuuf ii und stell dir vor, d'Luft chunnt vo unger.",
              "Schnuuf us und lah s'Gwicht i d'Erde abe sinke.",
              "Widerhol das es paar Mal, immer öppis langsamer.",
              "Spür, wie du fester wirsch, Schritt für Schritt.",
              "Chumm mit offne Auge zrugg."] },
-    { id:"lichtmed_kurz", dir:"ost", cat:"mini", name:"Kurze Lichtmeditation", min:5, desc:"Es warms Liecht i dir aluege loh.",
+    { id:"lichtmed_kurz", dir:"ost", cat:"mini", bg:"bg-lichtraum.jpg", name:"Kurze Lichtmeditation", min:5, desc:"Es warms Liecht i dir aluege loh.",
       steps:["Setz di bequem ane und schliess d'Auge.",
              "Stell dir en warms, sanfts Liecht i dinere Bruscht vor.",
              "Mit jedem Ischnuufe wird's Liecht öppis heller.",
@@ -2108,21 +2109,21 @@
              "Sag dir jetzt genau das sälber – mit dene glichne Wort.",
              "Spür, öb sich öppis weicher aafühlt.",
              "Chumm langsam zrugg."] },
-    { id:"fantasie_see", dir:"sued", cat:"mini", name:"Fantasiereise: Ankommen am See", min:6, desc:"En chliini Reis a en ruhige See.",
+    { id:"fantasie_see", dir:"sued", cat:"mini", bg:"bg-bergsee.jpg", name:"Fantasiereise: Ankommen am See", min:6, desc:"En chliini Reis a en ruhige See.",
       steps:["Schliess d'Auge und schnuuf ruhig.",
              "Stell dir en stille See vor, am früeh Morge.",
              "Gseesch de Nabel uf em Wasser, hörsch fascht nüt.",
              "Du sitzisch am Ufer, d'Füess im chüele Gras.",
              "Loh die Rueh vom See es paar Momänt uf dich wirke.",
              "Chumm langsam vo dert zrugg."] },
-    { id:"feierabend", dir:"nord", cat:"mini", name:"Feierabend-Übergang", min:4, desc:"De Chopf vom Tag löse, bevor de Abig aafoht.",
+    { id:"feierabend", dir:"nord", cat:"mini", bg:"bg-warmeszuhause.jpg", name:"Feierabend-Übergang", min:4, desc:"De Chopf vom Tag löse, bevor de Abig aafoht.",
       steps:["Schnuuf einisch tief us, wie wänn de Tag jetzt fertig wär.",
              "Dänk churz a alles, won hüt no offe isch – und leg's innerlich ab.",
              "Sag dir: Das chunnt morn wieder dra, jetzt nöd.",
              "Schnuuf no drü Mal ruhig ii und us.",
              "Chumm mit em Gfühl zrugg, dass de Tag jetzt fertig isch."] },
 
-    { id:"wurzelchakra", dir:"west", cat:"mittel", name:"Wurzelchakra – Erdung", min:9, desc:"Sich über s'Wurzelchakra erde und stabilisiere.",
+    { id:"wurzelchakra", dir:"west", cat:"mittel", bg:"bg-waldlichtung.jpg", name:"Wurzelchakra – Erdung", min:9, desc:"Sich über s'Wurzelchakra erde und stabilisiere.",
       steps:["Sitz bequem ane, d'Füess oder de Sitzbei spüre.",
              "Stell dir a de Basis vo dinere Wirbelsüül e warms, rots Liecht vor.",
              "Mit jedem Ischnuufe wird das Liecht chli stärcher.",
@@ -2130,7 +2131,7 @@
              "Spür, wie die Wurzle di haltet, egal was grad los isch.",
              "Loh das Gfühl vo Halt no es Momänt da si.",
              "Chumm langsam mit offne Auge zrugg."] },
-    { id:"herzchakra", dir:"sued", cat:"mittel", name:"Herzchakra – Weite", min:11, desc:"Weiti im Herzbereich zuelah.",
+    { id:"herzchakra", dir:"sued", cat:"mittel", bg:"bg-herzraum.jpg", name:"Herzchakra – Weite", min:11, desc:"Weiti im Herzbereich zuelah.",
       steps:["Setz di bequem ane und leg eini Hand uf d'Bruscht.",
              "Stell dir i dere Region es grüens, warms Liecht vor.",
              "Mit jedem Ischnuufe wird's Liecht öppis grösser.",
@@ -2138,7 +2139,7 @@
              "Dänk a öpper, wo du gern hesch – und schick das Liecht dert häre.",
              "Chumm langsam wieder zu dir sälber zrugg.",
              "Nimm d'Hand wäg und schnuuf no es paarmal ruhig."] },
-    { id:"stirnchakra", dir:"nord", cat:"mittel", name:"Stirnchakra – Klarheit", min:9, desc:"De Chopf löse und öppis meh Klarheit finde.",
+    { id:"stirnchakra", dir:"nord", cat:"mittel", bg:"bg-lichtraum.jpg", name:"Stirnchakra – Klarheit", min:9, desc:"De Chopf löse und öppis meh Klarheit finde.",
       steps:["Sitz ufrecht und ruhig ane.",
              "Stell dir zwüsched dine Auebraue en Punkt vor, wie en chline Stern.",
              "Mit jedem Ischnuufe wird dä Punkt öppis heller.",
@@ -2146,7 +2147,7 @@
              "Frag di still: Was isch grad würklich wichtig?",
              "Loh d'Antwort choh, oder au nöd. Bedes isch okay.",
              "Chumm langsam zrugg und mach d'Auge uf."] },
-    { id:"kronenchakra", dir:"ost", cat:"mittel", name:"Kronenchakra – Körperfreiheit", min:9, desc:"Liecht und frei werde, ganz im Hier und Jetzt aacho.",
+    { id:"kronenchakra", dir:"ost", cat:"mittel", bg:"bg-lichtraum.jpg", name:"Kronenchakra – Körperfreiheit", min:9, desc:"Liecht und frei werde, ganz im Hier und Jetzt aacho.",
       steps:["Sitz ufrecht und bequem ane, d'Schultere dörfed locker sii.",
              "Stell dir obe am Chopf es wiisses, glänzigs Liecht vor.",
              "Mit jedem Ischnuufe wird das Liecht öppis heller.",
@@ -2154,7 +2155,7 @@
              "Du muesch grad nüt erreiche, nüt löse. Du bisch eifach da.",
              "Spür, wie dä Körper öppis liechter und freier wird.",
              "Chumm langsam zrugg, ganz im Hier und Jetzt."] },
-    { id:"halschakra", dir:"west", cat:"tief", name:"Halschakra – Widerstände lösen", min:10, desc:"Alte Widerstände Stuck für Stuck loh los.",
+    { id:"halschakra", dir:"west", cat:"tief", bg:"bg-lichtraum.jpg", name:"Halschakra – Widerstände lösen", min:10, desc:"Alte Widerstände Stuck für Stuck loh los.",
       steps:["Sitz bequem ane, d'Wirbelsüül ufrecht, Schultere locker.",
              "Stell dir im Hals es klars, blaus Liecht vor.",
              "Dänk a öppis, wo dich scho lang blockiert oder zrugghebt.",
@@ -2163,7 +2164,7 @@
              "Du muesch nüt alles uf einisch lösen. Stuck für Stuck reicht.",
              "Sag innerlich: Ich derf das loh gah, wenn ich sowiit bi.",
              "Chumm langsam zrugg, mit öppis meh Wiiti im Hals."] },
-    { id:"solarplexus", dir:"ost", cat:"mittel", name:"Solarplexuschakra – Willensstärke", min:7, desc:"Innerlichi Chraft und Wille wieder spüre.",
+    { id:"solarplexus", dir:"ost", cat:"mittel", bg:"bg-bergspitze.jpg", name:"Solarplexuschakra – Willensstärke", min:7, desc:"Innerlichi Chraft und Wille wieder spüre.",
       steps:["Sitz oder stand ufrecht ane.",
              "Stell dir im Mage es warms, gelbs Liecht vor.",
              "Mit jedem Ischnuufe wird das Liecht öppis stärcher.",
@@ -2171,7 +2172,7 @@
              "Loh das Gfühl vo Chraft sich im ganze Buuch usbreite.",
              "Sag innerlich: Ich ha, was ich bruuche.",
              "Nimm die Chraft mit i dä Rest vom Tag."] },
-    { id:"sakralchakra", dir:"sued", cat:"mittel", name:"Sakralchakra – Vertrauen", min:8, desc:"Vertraue i sich sälber und ds Läbe stärke.",
+    { id:"sakralchakra", dir:"sued", cat:"mittel", bg:"bg-bergsee.jpg", name:"Sakralchakra – Vertrauen", min:8, desc:"Vertraue i sich sälber und ds Läbe stärke.",
       steps:["Setz di bequem ane, e Hand darf uf de Unterbuuch lige.",
              "Stell dir dert es warms, oranges Liecht vor.",
              "Mit jedem Ischnuufe wird das Liecht öppis wärmer.",
@@ -2179,7 +2180,7 @@
              "Dänk a e Situation, wo's guet uuscho isch, obwohl's unsicher gsi isch.",
              "Loh das Vertraue sich langsam usbreite.",
              "Chumm langsam zrugg, d'Hand darf no eweng blibe."] },
-    { id:"seele", dir:"sued", cat:"tief", name:"Seelenmeditation", min:12, desc:"Tüüf i sich ine lose, deet wo's still und ächt isch.",
+    { id:"seele", dir:"sued", cat:"tief", bg:"bg-herzraum.jpg", name:"Seelenmeditation", min:12, desc:"Tüüf i sich ine lose, deet wo's still und ächt isch.",
       steps:["Lig oder sitz di so bequem hin, wie's grad passt.",
              "Schnuuf es paarmal tief ii und us, ohni nüt z'erzwinge.",
              "Stell dir vor, du gasch hinter dini Gedanke, hinter dini Rolle.",
@@ -2196,7 +2197,7 @@
              "Schnuuf tief us und lah de ganz Chiefer schwer werde.",
              "Merksch, wie sich au Stirn und Auge chli meh entspanned.",
              "Chumm zrugg, mit emene weiche Gsicht."] },
-    { id:"reinigen", dir:"ost", cat:"mittel", name:"Reinigende Meditation", min:8, desc:"Innerlich reinige, was nüme bruucht wird.",
+    { id:"reinigen", dir:"ost", cat:"mittel", bg:"bg-reinigend.jpg", name:"Reinigende Meditation", min:8, desc:"Innerlich reinige, was nüme bruucht wird.",
       steps:["Sitz oder lig bequem ane und schnuuf ruhig ii und us.",
              "Stell dir vor, wie es klars, liechts Wasser dur di durefliesst.",
              "Bi jedem Ischnuufe: das Wasser chunnt vo obe abe ine.",
@@ -2204,7 +2205,7 @@
              "Es muess nüt benennt werde. Eifach loh fliesse.",
              "Spür, wie de Körper Stuck für Stuck chli klarer und liechter wird.",
              "Chumm langsam zrugg, ganz sufer und ruhig."] },
-    { id:"vertrauenaufbauen", dir:"ost", cat:"mittel", name:"Vertrauen aufbauen", min:11, desc:"Schritt für Schritt meh Vertraue i sich sälber ufbaue.",
+    { id:"vertrauenaufbauen", dir:"ost", cat:"mittel", bg:"bg-bergsee.jpg", name:"Vertrauen aufbauen", min:11, desc:"Schritt für Schritt meh Vertraue i sich sälber ufbaue.",
       steps:["Setz di bequem ane und schnuuf es paarmal tief.",
              "Dänk a e Zit, wo öppis schwierigs guet uusecho isch.",
              "Lueg genau ane, was du dert sälber dezue biitreit hesch.",
@@ -2212,7 +2213,7 @@
              "Dänk jetzt a öppis, won grad ansteht – und leg das Vertraue dezue.",
              "Loh das Gfühl sich im Körper usbreite.",
              "Chumm langsam mit dem Gfühl zrugg."] },
-    { id:"innerestaerke", dir:"west", cat:"mittel", name:"Innere Stärke", min:9, desc:"Sich a die eigeti Chraft erinnere.",
+    { id:"innerestaerke", dir:"west", cat:"mittel", bg:"bg-waldlichtung.jpg", name:"Innere Stärke", min:9, desc:"Sich a die eigeti Chraft erinnere.",
       steps:["Sitz oder stand ufrecht ane.",
              "Dänk a e Zit, wo du öppis Schwers duregstande hesch.",
              "Spür, wo im Körper die Chraft von dozmal no da isch.",
@@ -2228,7 +2229,7 @@
              "Sag innerlich: Ich derf das jetzt abstelle.",
              "Spür, wie sich d'Schultere öppis meh sinke loh.",
              "Chumm langsam zrugg, mit öppis weniger Gwicht."] },
-    { id:"verzeihen_erster", dir:"sued", cat:"mittel", name:"Verzeihen – ein erster Schritt", min:11, desc:"En erste, chline Schritt zum Verzeihe wage.",
+    { id:"verzeihen_erster", dir:"sued", cat:"mittel", bg:"bg-herzraum.jpg", name:"Verzeihen – ein erster Schritt", min:11, desc:"En erste, chline Schritt zum Verzeihe wage.",
       steps:["Setz di ruhig ane und schnuuf paarmal tief.",
              "Dänk a öppis, won dir oder eren andere Person weh ta hät.",
              "Du muesch nüt sofort verzeihe – nur churz higuege.",
@@ -2236,7 +2237,7 @@
              "Sag innerlich, wenn's stimmt: Ich bi bereit, das irgendwenn goh z'lah.",
              "Falls no nüt goht: Au das isch okay. Es isch en erste Schritt.",
              "Chumm langsam zrugg zu dim Atem."] },
-    { id:"alltag_mutter", dir:"nord", cat:"mittel", name:"Alltag einer berufstätigen Mutter", min:13, desc:"Churzi Uszit mitte im volle Tagesablauf.",
+    { id:"alltag_mutter", dir:"nord", cat:"mittel", bg:"bg-warmeszuhause.jpg", name:"Alltag einer berufstätigen Mutter", min:13, desc:"Churzi Uszit mitte im volle Tagesablauf.",
       steps:["Setz di churz ane, au wenn's nur es paar Minute sind.",
              "Schnuuf tief us, wie wänn du grad d'Lischte im Chopf abstelle chönntisch.",
              "Dänk a alles, wo hüt no chunnt – Job, Chind, Huushalt – ohni's jetzt z'löse.",
@@ -2244,7 +2245,7 @@
              "Schnuuf es paarmal ruhig, mit jedem Usschnuuf öppis meh los.",
              "Frag di: Was bruuch ich jetzt grad am meiste – Rueh, Chraft oder Klarheit?",
              "Nimm genau das mit i dä Rest vom Tag."] },
-    { id:"fantasie_wald", dir:"ost", cat:"mittel", name:"Fantasiereise: Waldlichtung", min:9, desc:"En ruhigi Reis uf e sunnigi Waldlichtig.",
+    { id:"fantasie_wald", dir:"ost", cat:"mittel", bg:"bg-waldlichtung.jpg", name:"Fantasiereise: Waldlichtung", min:9, desc:"En ruhigi Reis uf e sunnigi Waldlichtig.",
       steps:["Schliess d'Auge und schnuuf ruhig ii und us.",
              "Stell dir vor, wie du langsam dur en Wald gasch.",
              "S'Liecht fallt weich dur d'Blätter, es riecht nach Erde und Grüen.",
@@ -2264,7 +2265,7 @@
              "Schnuuf no es paar Mal ruhig, mit jedem Usschnuuf öppis meh los.",
              "Spür, wie sich de Körper öppis leichter aafühlt.",
              "Beweg langsam Finger und Zeche und chumm zrugg."] },
-    { id:"chakrenreise", dir:"nord", cat:"tief", name:"Chakren-Reise: alle sieben Zentren", min:27, desc:"Tüüfi Reis dur alli siebe Chakra-Zentren.",
+    { id:"chakrenreise", dir:"nord", cat:"tief", bg:"bg-lichtraum.jpg", name:"Chakren-Reise: alle sieben Zentren", min:27, desc:"Tüüfi Reis dur alli siebe Chakra-Zentren.",
       steps:["Lig di bequem hin und schliess d'Auge.",
              "Wurzelchakra, a de Basis: stell dir es rots Liecht vor, wo di erdet.",
              "Sakralchakra, im Unterbuuch: es orangs Liecht für Läbigkeit.",
@@ -2276,7 +2277,7 @@
              "Loh alli sibe Liechter e Moment glichzitig da si.",
              "Schnuuf paarmal ruhig und lah alles wieder ruhig i sich zämme falle.",
              "Beweg langsam Finger und Zeche, mach d'Auge uf, wenn du parat bisch."] },
-    { id:"lichtmed_ganz", dir:"ost", cat:"tief", name:"Lichtmeditation – Ganzkörper", min:23, desc:"Warms Liecht Stuck für Stuck dur de ganz Körper schicke.",
+    { id:"lichtmed_ganz", dir:"ost", cat:"tief", bg:"bg-lichtraum.jpg", name:"Lichtmeditation – Ganzkörper", min:23, desc:"Warms Liecht Stuck für Stuck dur de ganz Körper schicke.",
       steps:["Lig oder sitz bequem, d'Auge zue.",
              "Stell dir es warms, sanfts Liecht über dim Chopf vor.",
              "Loh's Liecht langsam abe sinke, bis zu de Schultere.",
@@ -2287,7 +2288,7 @@
              "Bliib e Momänt eifach dert, ohni öppis z'mache.",
              "Schnuuf ruhig wiiter, das Liecht bliibt da.",
              "Chumm langsam, mit dem Liecht als Erinnerig, zrugg."] },
-    { id:"tiefes_vertrauen", dir:"ost", cat:"tief", name:"Tiefes Vertrauen", min:19, desc:"En tüüfi Reis, um Vertraue i sich und s'Läbe z'stärche.",
+    { id:"tiefes_vertrauen", dir:"ost", cat:"tief", bg:"bg-bergsee.jpg", name:"Tiefes Vertrauen", min:19, desc:"En tüüfi Reis, um Vertraue i sich und s'Läbe z'stärche.",
       steps:["Setz oder lig di bequem hin und schnuuf ruhig.",
              "Dänk a Situatione i dim Läbe, won sich am Aafang schwer aafühlt händ und trotzdem guet uusecho sind.",
              "Loh die Bilder churz nachenand da si, ohni z'werte.",
@@ -2297,7 +2298,7 @@
              "Schnuuf i das Vertraue ine, wie i öppis, wo di treit.",
              "Bliib e Momänt da, ohni öppis z'erwarte.",
              "Chumm langsam mit dem Gfühl zrugg."] },
-    { id:"staerke_vertiefen", dir:"west", cat:"tief", name:"Innere Stärke vertiefen", min:23, desc:"Tüüfer i die eigeti Chraft inetaucht.",
+    { id:"staerke_vertiefen", dir:"west", cat:"tief", bg:"bg-bergspitze.jpg", name:"Innere Stärke vertiefen", min:23, desc:"Tüüfer i die eigeti Chraft inetaucht.",
       steps:["Lig oder sitz di so ane, wien's am meiste Halt gitt.",
              "Dänk a mehreri Momänt i dim Läbe, wo du Chraft bewiese hesch.",
              "Lueg jede Momänt churz aa, ohni z'bewerte, wie gross er gsi isch.",
@@ -2307,7 +2308,7 @@
              "Dänk a öppis, wo grad viel Chraft bruucht – und leg das Gfühl dezue.",
              "Bliib e Momänt eifach still da.",
              "Chumm langsam, mit dere Chraft im Rugge, zrugg."] },
-    { id:"verzeihen_tief", dir:"sued", cat:"tief", name:"Verzeihen – dir selbst und anderen", min:27, desc:"Tüüfi Reis, für sich sälber und anderi öppis lockerer loh.",
+    { id:"verzeihen_tief", dir:"sued", cat:"tief", bg:"bg-herzraum.jpg", name:"Verzeihen – dir selbst und anderen", min:27, desc:"Tüüfi Reis, für sich sälber und anderi öppis lockerer loh.",
       steps:["Setz oder lig di bequem hin und schnuuf paarmal tief.",
              "Dänk zerscht a öppis, won du dir sälber nöd verzeicht hesch.",
              "Sag innerlich: Ich ha damals mit dem umgange, wo ich chönne ha.",
@@ -2327,7 +2328,7 @@
              "Los churz de Stilli zue, wo zwüsched euch beide isch.",
              "Schnuuf no es paarmal ruhig, ohni öppis erwarte z'müesse.",
              "Nimm d'Händ langsam wäg und chumm zrugg."] },
-    { id:"fantasie_berg", dir:"nord", cat:"tief", name:"Fantasiereise: Bergspitze", min:30, desc:"Tüüfi Reis uf e wiiti, ruhigi Bergspitze.",
+    { id:"fantasie_berg", dir:"nord", cat:"tief", bg:"bg-bergspitze.jpg", name:"Fantasiereise: Bergspitze", min:30, desc:"Tüüfi Reis uf e wiiti, ruhigi Bergspitze.",
       steps:["Lig oder sitz di bequem hin, d'Auge zue.",
              "Stell dir vor, wie du langsam en Bärgpfad ufe gasch.",
              "Jede Schritt macht dä Chopf öppis liechter.",
@@ -2338,7 +2339,7 @@
              "Bliib e Momänt eifach nur da, ohni öppis müesse.",
              "Wenn du parat bisch, gang langsam de Wäg wieder abe.",
              "Chumm mit dere Wiiti im Chopf zrugg."] },
-    { id:"fantasie_winter", dir:"nord", cat:"tief", name:"Fantasiereise: Winterlandschaft", min:19, desc:"Stilli, wiissi Landschaft für en klare Chopf.",
+    { id:"fantasie_winter", dir:"nord", cat:"tief", bg:"bg-winterlandschaft.jpg", name:"Fantasiereise: Winterlandschaft", min:19, desc:"Stilli, wiissi Landschaft für en klare Chopf.",
       steps:["Schliess d'Auge und schnuuf ruhig.",
              "Stell dir e wiiti, verschneiti Landschaft vor, ganz still.",
              "De Schnee dämpft jedes Gruusch. Alles isch ruhig.",
@@ -2356,7 +2357,7 @@
              "Sueche dir en Platz, wo du di gern hinsetze wottisch.",
              "Bliib e Momänt eifach da, ohni öppis müesse.",
              "Wenn du parat bisch, schnuuf tief und chumm zrugg."] },
-    { id:"yoganidra", dir:"ost", cat:"tief", name:"Yoga-Nidra-artige Tiefenentspannung", min:30, desc:"Ganz tüüfi Entspannig, fascht wien en bewusste Schlaf.",
+    { id:"yoganidra", dir:"ost", cat:"tief", bg:"bg-lichtraum.jpg", name:"Yoga-Nidra-artige Tiefenentspannung", min:30, desc:"Ganz tüüfi Entspannig, fascht wien en bewusste Schlaf.",
       steps:["Lig di flach hin, Arm und Bei liicht usenand.",
              "Schliess d'Auge und schnuuf paarmal ganz ruhig.",
              "Wander mit de Ufmerksamkeit langsam dur jede einzelne Körperteil, vo de Zeche bis zum Chopf.",
@@ -2366,7 +2367,7 @@
              "Bliib i dere tüüfe Rueh, so lang wie's guet tuet.",
              "Wenn du parat bisch, beweg zerscht ganz liislig d'Finger und Zeche.",
              "Schnuuf tüüf und chumm langsam zrugg."] },
-    { id:"dankreise", dir:"sued", cat:"tief", name:"Dankbarkeits-Reise (ausführlich)", min:15, desc:"Tüüfer i Dankbarkeit ineloh, Schritt für Schritt.",
+    { id:"dankreise", dir:"sued", cat:"tief", bg:"bg-herzraum.jpg", name:"Dankbarkeits-Reise (ausführlich)", min:15, desc:"Tüüfer i Dankbarkeit ineloh, Schritt für Schritt.",
       steps:["Setz oder lig di bequem ane und schnuuf ruhig.",
              "Dänk a en Mensch, für won du dankbar bisch. Loh das Gfühl da si.",
              "Dänk a en Ort, wo dir guet tuet. Stell dir ne genau vor.",
@@ -2375,7 +2376,7 @@
              "Loh alli die Bilder churz zäme da si.",
              "Spür, was das für en Gfühl im Körper git.",
              "Nimm das Gfühl mit i dä Rest vom Tag."] },
-    { id:"geduld_kinder", dir:"west", cat:"tief", name:"Geduld im Umgang mit Kindern (vertieft)", min:15, desc:"Meh Gduld finde, wenn's mit de Chind aamal schwierig wird.",
+    { id:"geduld_kinder", dir:"west", cat:"tief", bg:"bg-warmeszuhause.jpg", name:"Geduld im Umgang mit Kindern (vertieft)", min:15, desc:"Meh Gduld finde, wenn's mit de Chind aamal schwierig wird.",
       steps:["Setz di churz ane und schnuuf tief us, bevor öppis anders chunnt.",
              "Dänk a e Situation, wo d'Gduld hüt churz gfehlt hät.",
              "Frag di: Was han ich i dem Momänt würklich bruucht?",
@@ -2873,7 +2874,7 @@
   }
   function katIcon(dir){
     var k = KATEGORIEN.filter(function(x){ return x.dir === dir; })[0];
-    return k ? k.icon : "🧘";
+    return k ? '<img class="kat-icon" src="' + k.icon + '" alt="">' : "🧘";
   }
 
   // Die Empfehlung selbst: eine Uebung (Einzelmeditation) oder ein Programm
@@ -3120,7 +3121,7 @@
     var host = document.getElementById("fdCats");
     host.innerHTML = KATEGORIEN.map(function(k){
       return '<button class="fd-cat" data-dir="' + k.dir + '">' +
-        '<span class="fd-cat-icon">' + k.icon + '</span>' +
+        '<span class="fd-cat-icon">' + katIcon(k.dir) + '</span>' +
         '<span class="fd-cat-name">' + k.name + '</span></button>';
     }).join("");
     Array.prototype.forEach.call(host.querySelectorAll(".fd-cat"), function(btn){
@@ -3165,9 +3166,13 @@
     var chips = [{ dir:null, icon:"", name:"Alle" }, { dir:"fav", icon:"⭐", name:"Favoriten" }].concat(KATEGORIEN);
     host.innerHTML = chips.map(function(k){
       var aktiv = (k.dir || null) === currentCatV2;
+      // Die echten Kategorien (nord/sued/west/ost) bekommen das Linien-Icon
+      // als Bild; "Alle" und "Favoriten" sind keine KATEGORIEN-Eintraege
+      // und bleiben Text bzw. das Stern-Emoji.
+      var iconHtml = (k.dir && k.dir !== "fav") ? katIcon(k.dir) : (k.icon ? '<span>' + k.icon + '</span>' : '');
       return '<button class="lib-chip' + (aktiv ? ' active' : '') + '"' +
         (k.dir ? ' data-dir="' + k.dir + '"' : '') + '>' +
-        (k.icon ? '<span>' + k.icon + '</span>' : '') + k.name + '</button>';
+        iconHtml + k.name + '</button>';
     }).join("");
     var aktivChip = host.querySelector(".lib-chip.active");
     if (aktivChip) aktivChip.scrollIntoView({ block:"nearest", inline:"center", behavior:"smooth" });
@@ -3296,6 +3301,10 @@
       : "Meditation";
     document.getElementById("sessionName").textContent = med.name;
     document.getElementById("sessionCat").textContent = med.min + " Min · " + katName(med.dir);
+    // Bildsprache pro Meditation (Aug. 2026): passendes Hintergrundfoto je
+    // Themenfamilie, wenn `med.bg` gesetzt ist - sonst bleibt die Insel
+    // (der Grundton der App) wie bisher der Hintergrund.
+    document.querySelector("#sessionBg img").src = med.bg || "insel.jpg";
     renderPlaylistDots();
     tickSession();
   }
@@ -3596,11 +3605,14 @@
   };
   // Kategorien nach Nutzen benannt statt nach Kompass-Achse - "Gedanken
   // beruhigen" sagt mehr als "Denken".
+  // Icons sind seit Aug. 2026 eigene, ruhige Linienzeichnungen (Christines
+  // Bilder) statt Emoji - Emoji sehen je nach Handy unterschiedlich aus und
+  // wirkten weniger hochwertig. katIcon() unten baut daraus ein <img>.
   var KATEGORIEN = [
-    { dir:"nord", icon:"🧠", name:"Gedanken beruhigen" },
-    { dir:"sued", icon:"❤️", name:"Gefühle verstehen" },
-    { dir:"west", icon:"💪", name:"Stress lösen" },
-    { dir:"ost",  icon:"🌿", name:"Entspannen" }
+    { dir:"nord", icon:"icon-gedanken.png", name:"Gedanken beruhigen" },
+    { dir:"sued", icon:"icon-gefuehle.png", name:"Gefühle verstehen" },
+    { dir:"west", icon:"icon-stress.png", name:"Stress lösen" },
+    { dir:"ost",  icon:"icon-entspannen.png", name:"Entspannen" }
   ];
 
   function moodOf(c){

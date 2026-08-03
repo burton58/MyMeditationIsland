@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: „Deine Ziele" durch selbst gesetztes Wochenziel ersetzt)
+Stand: 3. August 2026 (zuletzt aktualisiert: deine Bilder eingebaut – Hintergründe je Meditationsthema und eigene Kategorie-Symbole)
 
 ---
 
@@ -33,12 +33,6 @@ Stand: 3. August 2026 (zuletzt aktualisiert: „Deine Ziele" durch selbst gesetz
 - [ ] **Konto/Cloud-Speicherung einbauen**, damit ein Gerätewechsel niemanden
       seinen bezahlten Zugang kostet (aktuell liegt alles nur auf einem Gerät –
       „Abo wiederherstellen" ist bisher nur eine Attrappe ohne Funktion).
-- [ ] **Passende Hintergrundbilder je Meditationsthema** statt immer der Insel
-      (z. B. bei „Fantasiereise: Bergspitze" läuft aktuell trotzdem das
-      Insel-Boot-Foto). Die ChatGPT-Prompts dafür sind bereits fertig.
-- [ ] **Eigene Bild-Symbole statt Emoji bei den vier Meditationskategorien**
-      (aktuell 🌊🍃🌙🔥 o. Ä.) – bewusst zurückgestellt, bis die Bilder
-      dazu existieren; der ChatGPT-Prompt dafür ist bereits fertig.
 
 ## 3. Kann warten, lohnt sich aber früh
 
@@ -102,3 +96,10 @@ Stand: 3. August 2026 (zuletzt aktualisiert: „Deine Ziele" durch selbst gesetz
       startet immer neu ab Montag. Hinweis: "Deine Insel-Woche" im Profil
       hat weiterhin ihr eigenes, unverändertes Ziel "7 Tage" – falls
       gewünscht, liesse sich das später auch noch zusammenführen.
+- [x] **Deine Bilder eingebaut**: passende Hintergrundfotos für 30 Meditationen
+      (Wald, Bergspitze, Winterlandschaft, Bergsee, Licht, warmes Zuhause,
+      Herzraum, plus ein Wasser-Bild extra für "Reinigende Meditation") statt
+      überall der Insel; dazu die vier eigenen Kategorie-Symbole (Kopf, Herz,
+      Bambus, Blatt) statt Emoji – bei den Filter-Chips, den Kategorie-Karten
+      und in jeder Übungszeile. Alle Bilder liegen auch offline bereit
+      (Service Worker aktualisiert).

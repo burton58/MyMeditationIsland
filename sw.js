@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v1";
+const CACHE_NAME = "myisland-cache-v2";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -16,7 +16,19 @@ const SHELL_FILES = [
   "./insel.jpg",
   "./insel-start.jpg",
   "./logo.png",
-  "./icon-180.png"
+  "./icon-180.png",
+  "./bg-waldlichtung.jpg",
+  "./bg-bergspitze.jpg",
+  "./bg-winterlandschaft.jpg",
+  "./bg-bergsee.jpg",
+  "./bg-lichtraum.jpg",
+  "./bg-warmeszuhause.jpg",
+  "./bg-herzraum.jpg",
+  "./bg-reinigend.jpg",
+  "./icon-gedanken.png",
+  "./icon-gefuehle.png",
+  "./icon-stress.png",
+  "./icon-entspannen.png"
 ];
 
 self.addEventListener("install", function(event){
