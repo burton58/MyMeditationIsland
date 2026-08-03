@@ -558,15 +558,10 @@
     }
   }
 
-  /* ---------- My Meditation ---------- */
-  .hero-card{ padding:16px; display:flex; gap:14px; align-items:flex-start; }
-  .hero-card .thumb{
-    width:80px; height:80px; border-radius:15px; flex:0 0 auto; background:var(--cream-2);
-    display:flex; align-items:center; justify-content:center; font-size:1.9rem;
-  }
-  .hero-card .body{ flex:1; min-width:0; }
-  .hero-card h3{ margin:0 0 6px; font-size:1rem; line-height:1.3; }
-  .hero-card p{ margin:0 0 12px; font-size:.81rem; line-height:1.5; color:var(--ink-soft); }
+  /* ---------- Mein Weg ----------
+     Die .hero-card-Regeln standen hier bis Aug. 2026 fuer die Karte
+     "Dein persoenliches Meditationstraining" - mit ihr zusammen entfernt,
+     weil sie sonst niemand mehr benutzt. */
 
   /* Deine Ziele */
   .goal{ padding:14px; border-bottom:1px solid var(--line); }
@@ -785,9 +780,9 @@
   }
   .wert-chip.active{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
   .ziel-leer{ margin:0 0 14px; font-size:.85rem; color:var(--ink-soft); line-height:1.5; }
-  /* #wochenzielCard ist nur "card" ohne eigene Innenabstands-Klasse (anders
-     als z.B. .hero-card) - ohne dieses padding sass der volle Knopf ohne
-     Rand direkt an der Kartenrundung an und wirkte "abgeschnitten". */
+  /* #wochenzielCard ist nur "card" ohne eigene Innenabstands-Klasse - ohne
+     dieses padding sass der volle Knopf ohne Rand direkt an der
+     Kartenrundung an und wirkte "abgeschnitten". */
   #wochenzielCard{ padding:16px; }
 
   /* Wochenraster, Inselweg und Begleiter-Karte (aus der Skizze) ---------- */
@@ -1101,7 +1096,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.15";
+    var AKTUELLE_VERSION = "2026-08-03.16";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1371,14 +1366,13 @@
       <span class="fd-badge">🇨🇭 Schweizerdeutsch</span>
     </div>
 
-    <div class="card hero-card">
-      <div class="thumb">🧘</div>
-      <div class="body">
-        <h3>Dein persönliches Meditationstraining</h3>
-        <p>Aus deinem Zustand im Kompass und deiner Zeit stellen wir dir zusammen, was gerade passt.</p>
-        <button class="btn-dark" id="toTrainingBtn">Zum Training →</button>
-      </div>
-    </div>
+    <!-- Hier stand bis Aug. 2026 die Karte "Dein persönliches
+         Meditationstraining". Sie zeigte nichts Eigenes - immer derselbe
+         Erklärtext, nur die Knopfbeschriftung wechselte - und erklärte
+         auf der Auswertungsseite etwas, das auf der Kompass-Seite
+         passiert. Der Kompass ist über die Leiste unten ohnehin immer
+         erreichbar, darum ersatzlos entfernt. -->
+
 
     <div class="section-label">Dein Fortschritt</div>
     <p class="seit-hinweis" id="seitHinweis"></p>
@@ -3240,12 +3234,6 @@
     // Untertitel ist bewusst fest ("Was du schon geschafft hast"), nicht
     // begruessung() - die Startseite begruesst schon zeitabhaengig; diese
     // Seite hier beschreibt stattdessen, was auf ihr steht (Fortschritt).
-    // Der Knopf tut zwei verschiedene Dinge: liegt schon eine Empfehlung
-    // vor, startet er sie sofort - sonst fuehrt er zum Kompass. Frueher
-    // hiess er in beiden Faellen "Zum Training", was keines von beidem
-    // beschrieb. Jetzt sagt er, was wirklich passiert.
-    document.getElementById("toTrainingBtn").textContent =
-      empfehlung.length ? "Jetzt starten →" : "Zum Kompass →";
     renderStats();
     // "seit ..." macht klar, worauf sich die drei Zahlen beziehen - vorher
     // stand dort nur "Dein Fortschritt", ohne Zeitraum.
@@ -4751,16 +4739,6 @@
     document.body.classList.add("entered", "in-session");
     render({ animateBoatIn: state.arrival === "boat" });
     startSession();
-  });
-  document.getElementById("toTrainingBtn").addEventListener("click", function(){
-    if (empfehlung.length){
-      chosenMedIds = empfehlung.map(function(m){ return m.id; });
-      document.body.classList.add("entered", "in-session");
-      render({ animateBoatIn: state.arrival === "boat" });
-      startSession();
-    } else {
-      goToStep("compass");
-    }
   });
   document.getElementById("backToCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
   document.getElementById("fdAllBtn").addEventListener("click", function(){

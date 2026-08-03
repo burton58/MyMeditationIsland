@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Profil-Reihenfolge, Lieblinge ohne Ziffern, Skala auch rechts)
+Stand: 3. August 2026 (zuletzt aktualisiert: Trainings-Karte auf „Mein Weg" entfernt)
 
 ---
 
@@ -241,3 +241,8 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Profil-Reihenfolge, Lieblinge ohne 
       damit man Werte auch rechts ablesen kann. Es ist dieselbe Skala
       gespiegelt – zwei verschiedene Skalen in einem Bild wären wieder
       genau die Falle, die wir vermeiden wollten.
+- [x] **Karte „Dein persönliches Meditationstraining" auf „Mein Weg"
+      entfernt** – sie zeigte nichts Eigenes an (immer derselbe Text, nur
+      die Knopfbeschriftung wechselte) und nahm den obersten Platz der
+      Auswertungsseite ein. Der Kompass ist unten in der Leiste ohnehin
+      immer erreichbar. Die Seite beginnt jetzt direkt mit „Dein Fortschritt".
