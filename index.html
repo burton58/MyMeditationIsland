@@ -609,13 +609,11 @@
     font-size:.85rem; font-weight:600; text-align:left;
   }
   .fd-cat-icon{
-    width:34px; height:34px; border-radius:10px; flex:0 0 auto;
-    background:linear-gradient(155deg, var(--cream), var(--cream-2));
-    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4);
+    width:34px; height:34px; border-radius:10px; flex:0 0 auto; background:var(--cream-2);
     display:flex; align-items:center; justify-content:center;
   }
-  .fd-cat-icon .kat-icon{ width:1.35em; height:1.35em; font-size:1rem; }
-  .kat-icon{ width:1.4em; height:1.4em; object-fit:contain; vertical-align:middle; display:inline-block; }
+  .fd-cat-icon .kat-icon{ width:1.7em; height:1.7em; font-size:1rem; }
+  .kat-icon{ width:1.55em; height:1.55em; object-fit:contain; vertical-align:middle; display:inline-block; }
 
   .stats-row{ display:flex; }
   .stat{ flex:1; padding:16px 8px; text-align:center; border-right:1px solid var(--line); }
@@ -665,14 +663,11 @@
   .lib-leer{ font-size:.86rem; color:var(--ink-soft); text-align:center; }
   .fav-btn{ border:none; background:none; cursor:pointer; font-size:1.05rem; padding:4px; color:#c3cec8; flex:0 0 auto; }
   .fav-btn.on{ color:var(--gold); }
-  /* Gemeinsames Bild-Feld für Listenzeilen. Der Ring (inset box-shadow) ist
-     dieselbe Machart wie beim Zustands-Glyph unter dem Kompass (.glyph) -
-     ohne ihn gingen die duennen goldenen Icon-Linien im Cream-Hintergrund
-     fast unter. */
+  /* Gemeinsames Bild-Feld für Listenzeilen. Nur ein leiser, flacher Ton als
+     Grund - das Icon selbst (gross, .kat-icon) soll die Aufmerksamkeit
+     bekommen, nicht ein zusaetzlicher Ring/Verlauf um das Feld herum. */
   .row-thumb{
-    width:50px; height:50px; border-radius:13px; flex:0 0 auto;
-    background:linear-gradient(155deg, var(--cream), var(--cream-2));
-    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4);
+    width:50px; height:50px; border-radius:13px; flex:0 0 auto; background:var(--cream-2);
     display:flex; align-items:center; justify-content:center; font-size:1.25rem;
   }
 
@@ -1037,7 +1032,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.4";
+    var AKTUELLE_VERSION = "2026-08-03.5";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Wochenziel-Knopf und neue Kategorie-Icons optisch nachgebessert)
+Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons nochmals nachgebessert – Hintergrund schlichter, Icon grösser)
 
 ---
 
@@ -115,5 +115,9 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Wochenziel-Knopf und neue Kategorie
       festlegen" beim Wochenziel sass ohne Rand direkt an der Kartenrundung
       und wirkte abgeschnitten – jetzt mit richtigem Abstand wie bei den
       anderen Karten. Die vier neuen Kategorie-Symbole gingen im hellen
-      Hintergrund fast unter – sie haben jetzt denselben goldenen Ring wie
-      die Stimmungs-Anzeige beim Kompass, damit sie mehr hervorstechen.
+      Hintergrund fast unter.
+- [x] **Kategorie-Symbole nochmals nachgebessert**: der erste Versuch (Ring
+      wie beim Kompass) wirkte selbst zu auffällig – Hintergrund zog mehr
+      Blick auf sich als das Symbol. Jetzt: Hintergrund ganz schlicht/flach,
+      dafür das Symbol selbst deutlich grösser – der Hintergrund bleibt
+      zurückhaltend, das Icon ist das Auffällige.
