@@ -294,11 +294,6 @@
   /* Wenn heute schon etwas gehört wurde, ist die Liste im "heutigen
      Fokus" etwas voller - dort darum knapper als anderswo, damit auch
      dieser Zustand ohne Scrollen passt. */
-  /* Platzziffer 1-3 vor den meistgehoerten Meditationen. */
-  .lieblinge-platz{
-    width:22px; flex:0 0 auto; text-align:center; font-family:var(--serif);
-    font-size:1.05rem; font-weight:700; color:var(--gold-deep);
-  }
   #lieblingeList .hist-row{ padding:10px 12px; gap:10px; }
 
   #focusSlot .hist-row{ padding:8px 12px; }
@@ -1106,7 +1101,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.14";
+    var AKTUELLE_VERSION = "2026-08-03.15";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1577,10 +1572,13 @@
       <span class="chev">›</span>
     </button>
 
-    <div class="status-card" id="statusCard"></div>
-
+    <!-- Direkt unter der Inselbewohner-Karte, nicht erst unter der
+         Zugangs-Karte: was ein Knopf aufklappt, muss gleich darunter
+         erscheinen, sonst sucht man es. -->
     <div class="card recap" id="profilWeekBox"></div>
     <div class="card recap" id="profilJourneyBox"></div>
+
+    <div class="status-card" id="statusCard"></div>
 
     <div class="section-label">Einstellungen</div>
     <div class="card list-card">
@@ -4515,10 +4513,11 @@
       .slice(0, 3);
     if (!top.length){ slot.hidden = true; return; }
     slot.hidden = false;
-    document.getElementById("lieblingeList").innerHTML = top.map(function(e, i){
+    // Ohne Platzziffern: die Reihenfolge sagt den Rang schon, die Ziffer
+    // daneben waere nur eine zweite Fassung derselben Information.
+    document.getElementById("lieblingeList").innerHTML = top.map(function(e){
       var dir = dirVonName(e.name);
       return '<div class="hist-row">' +
-        '<span class="lieblinge-platz">' + (i + 1) + '</span>' +
         '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
         '<span class="body"><span class="name">' + e.name + '</span>' +
         '<span class="meta">' + e.anzahl + ' Mal gehört' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
@@ -4599,7 +4598,13 @@
   // Zeichnet ein schmales Saeulendiagramm als SVG. Bewusst ohne Bibliothek:
   // die App soll eine einzige Datei bleiben und offline laufen.
   function balkenSvg(reihe, feld, einheit){
-    var B = 320, H = 96, LINKS = 26, RECHTS = 4, OBEN = 10, BASIS = 74;
+    // RECHTS ist so breit wie LINKS, weil die Skala seit Aug. 2026 auf
+    // beiden Seiten steht (Christines Wunsch) - so lassen sich Werte auch
+    // am rechten Bildrand ablesen, ohne quer ueber das Diagramm zu
+    // schauen. Es ist dieselbe Skala, keine zweite: bei zwei
+    // verschiedenen Skalen in einem Bild wuerde die Grafik einen
+    // Zusammenhang behaupten, den die Zahlen nicht hergeben.
+    var B = 320, H = 96, LINKS = 26, RECHTS = 26, OBEN = 10, BASIS = 74;
     var max = 0;
     reihe.forEach(function(t){ if (t[feld] > max) max = t[feld]; });
     if (max <= 0) max = 1;
@@ -4614,6 +4619,9 @@
     teile.push('<line class="achse" x1="' + LINKS + '" y1="' + OBEN + '" x2="' + (B - RECHTS) + '" y2="' + OBEN + '"/>');
     teile.push('<text class="achs-text" x="' + (LINKS - 5) + '" y="' + (BASIS + 3) + '" text-anchor="end">0</text>');
     teile.push('<text class="achs-text" x="' + (LINKS - 5) + '" y="' + (OBEN + 3) + '" text-anchor="end">' + max + '</text>');
+    // Dieselben Zahlen noch einmal am rechten Rand
+    teile.push('<text class="achs-text" x="' + (B - RECHTS + 5) + '" y="' + (BASIS + 3) + '">0</text>');
+    teile.push('<text class="achs-text" x="' + (B - RECHTS + 5) + '" y="' + (OBEN + 3) + '">' + max + '</text>');
 
     reihe.forEach(function(t, i){
       var x = LINKS + i * breite + (breite - balkenB) / 2;

@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Fortschritts-Grafik, Verlauf mit Aufklapp-Knopf)
+Stand: 3. August 2026 (zuletzt aktualisiert: Profil-Reihenfolge, Lieblinge ohne Ziffern, Skala auch rechts)
 
 ---
 
@@ -233,3 +233,11 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Fortschritts-Grafik, Verlauf mit Au
 - [x] **„Deine letzten Meditationen" zeigt nur noch drei** – darunter ein
       Knopf „Alle N anzeigen" bzw. „Weniger anzeigen". Bei drei oder
       weniger Einträgen erscheint der Knopf gar nicht.
+- [x] **Insel-Woche und Inselreise erscheinen jetzt direkt unter dem
+      Inselbewohner-Knopf** statt weiter unten hinter der Zugangs-Karte.
+- [x] **Lieblingsmeditationen ohne Nummerierung** – die Reihenfolge sagt
+      den Rang ja schon.
+- [x] **Skala steht jetzt auch am rechten Rand** der beiden Diagramme,
+      damit man Werte auch rechts ablesen kann. Es ist dieselbe Skala
+      gespiegelt – zwei verschiedene Skalen in einem Bild wären wieder
+      genau die Falle, die wir vermeiden wollten.
