@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter-Chat direkt in der Bibliothek)
+Stand: 3. August 2026 (zuletzt aktualisiert: Suche mit Lupe, Dopplung auf „Mein Weg" entfernt)
 
 ---
 
@@ -250,3 +250,12 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Begleiter-Chat direkt in der Biblio
       der auf „Mein Weg" gesprungen ist, kannst du dort jetzt gleich
       schreiben – mit Eingabefeld und Sprechblasen wie beim anderen Chat.
       Beide laufen unabhängig voneinander.
+- [x] **Suche mit Lupe bei den Meditationen**: filtert schon beim Tippen und
+      durchsucht Titel, Beschreibung und Bereich – so findet auch „Stress",
+      „Wald" oder „Chakra" etwas. Die Suche wirkt zusätzlich zum gewählten
+      Chip; ein ✕ setzt sie zurück.
+- [x] **Dopplung auf „Mein Weg" entfernt** (von dir bemerkt): „Alle
+      Meditationen entdecken" und der Begleiter-Chat sind dort weg, weil der
+      Reiter „Meditationen" genau dasselbe bietet. „Mein Weg" ist jetzt
+      reine Auswertung. Der Bild-Platz fürs Begleiter-Foto ist mit in die
+      Bibliothek gewandert, geht also nicht verloren.

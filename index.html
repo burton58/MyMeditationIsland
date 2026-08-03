@@ -615,12 +615,6 @@
     width:34px; height:34px; border-radius:50%; background:var(--gold-grad); color:#3a2e08; flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:.8rem;
   }
-  .fd-cats{ display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:12px; }
-  .fd-cat{
-    display:flex; align-items:center; gap:9px; background:var(--card); border:1px solid var(--line);
-    border-radius:14px; padding:13px 12px; cursor:pointer; font-family:inherit; color:var(--ink);
-    font-size:.85rem; font-weight:600; text-align:left;
-  }
   .profil-zurueck{ display:block; margin-bottom:14px; }
   .profil-zurueck[hidden]{ display:none; }
   /* Der Pfeil auf der Inselbewohner-Karte dreht sich nach unten, wenn
@@ -629,11 +623,6 @@
   .profile-card .chev{ transition:transform .22s ease; }
   .profile-card.auf .chev{ transform:rotate(90deg); }
 
-  .fd-cat-icon{
-    width:46px; height:46px; border-radius:13px; flex:0 0 auto; background:var(--cream-2);
-    display:flex; align-items:center; justify-content:center;
-  }
-  .fd-cat-icon .kat-icon{ width:76%; height:76%; }
   .kat-icon{ width:1.55em; height:1.55em; object-fit:contain; vertical-align:middle; display:inline-block; }
 
   .seit-hinweis{ margin:-6px 0 8px; font-size:.76rem; color:var(--ink-soft); }
@@ -684,6 +673,25 @@
      Menschen bezeichnet (Christine nennt sich selbst so) und darum als
      Name fuer eine Uebungsliste in die Irre fuehrte. "Meditationsleiterin"
      bleibt ihr allein - auf der Titelseite und bei "Ueber mich". */
+  /* Suchfeld mit Lupe. Die Lupe liegt im Feld, nicht daneben - so ist auf
+     einen Blick klar, wozu das Feld da ist, ohne eine Beschriftung. */
+  .such-zeile{ position:relative; display:flex; align-items:center; margin:0 0 12px; }
+  .such-lupe{
+    position:absolute; left:13px; width:17px; height:17px; color:var(--ink-soft);
+    pointer-events:none; opacity:.7;
+  }
+  .such-zeile input{
+    width:100%; border:1px solid var(--line); border-radius:14px; padding:12px 40px;
+    font-family:inherit; font-size:.88rem; background:var(--card); color:var(--ink);
+  }
+  .such-zeile input::-webkit-search-cancel-button{ display:none; }  /* eigener Knopf statt des grauen System-Kreuzes */
+  .such-zeile input:focus{ outline:2px solid var(--gold-soft); outline-offset:1px; border-color:var(--gold-soft); }
+  .such-leeren{
+    position:absolute; right:8px; width:28px; height:28px; border:none; background:none;
+    cursor:pointer; color:var(--ink-soft); font-size:.9rem; border-radius:50%;
+  }
+  .such-leeren[hidden]{ display:none; }
+
   .lib-meta{ margin:0 0 14px; font-size:.83rem; color:var(--ink-soft); }
   .chips{ display:flex; gap:7px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; scrollbar-width:none; }
   .chips::-webkit-scrollbar{ display:none; }
@@ -932,23 +940,20 @@
   .mudra-card .why, .mantra-card .why{ margin:0; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
   .mudra-card .meta{ margin:8px 0 0; font-size:.74rem; font-weight:700; letter-spacing:.02em; color:var(--gold-deep); }
 
-  /* ---------- Begleiter ---------- */
-  .companion{ padding:16px; margin-top:16px; }
-  .companion h4{ margin:0 0 4px; font-family:var(--serif); font-size:1.05rem; }
-  .companion-head{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
-  .companion-head h4{ margin:0; }
+  /* ---------- Begleiter ----------
+     Die .companion-Karte auf "Mein Weg" ist im Aug. 2026 entfallen (sie
+     doppelte die Karte in der Bibliothek). Geblieben ist .companion-foto -
+     der runde Bild-Platz, der jetzt in der .ki-card sitzt. */
   .companion-foto{
-    width:48px; height:48px; border-radius:50%; flex:0 0 auto; overflow:hidden; position:relative;
+    border-radius:50%; overflow:hidden; position:relative;
     background:linear-gradient(155deg, var(--cream), var(--cream-2));
     box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4);
-    display:flex; align-items:center; justify-content:center;
   }
   .companion-foto img{ width:100%; height:100%; object-fit:cover; display:block; }
   /* Das Ersatz-Zeichen liegt hinter dem Foto und wird nur sichtbar, wenn
      gar kein Bild da ist - so entsteht nie eine leere graue Flaeche. */
   .companion-foto .ersatz{ position:absolute; font-size:1.35rem; opacity:0; }
   .companion-foto.kein-bild .ersatz{ opacity:1; }
-  .companion .intro{ margin:0 0 12px; font-size:.82rem; line-height:1.5; color:var(--ink-soft); }
   .chat{ max-height:230px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
   .bubble{ padding:10px 13px; border-radius:14px; font-size:.85rem; line-height:1.5; max-width:85%; }
   .bubble.ai{ background:var(--cream-2); align-self:flex-start; border-bottom-left-radius:5px; }
@@ -1103,7 +1108,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.17";
+    var AKTUELLE_VERSION = "2026-08-03.18";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1401,30 +1406,12 @@
     <div class="card" id="historyList"></div>
     <button class="btn-ghost full" id="historyMehrBtn" hidden>Alle anzeigen</button>
 
-    <section class="fd-explore">
-      <div class="section-label">Alle Meditationen entdecken</div>
-      <div class="fd-cats" id="fdCats"></div>
-      <button class="btn-ghost full" id="fdAllBtn">Ganze Bibliothek ansehen →</button>
-    </section>
-
-    <div class="card companion">
-      <!-- Das Foto (begleiter.jpg) liefert Christine nach. Bis es da ist,
-           faengt onerror den Fehlschlag ab und zeigt weiter das 💬-Zeichen -
-           sobald die Datei im Ordner liegt, erscheint sie hier von selbst,
-           ohne dass am Code noch etwas geaendert werden muesste. -->
-      <div class="companion-head">
-        <div class="companion-foto">
-          <img src="begleiter.jpg" alt="" onerror="this.parentElement.classList.add('kein-bild'); this.remove();">
-          <span class="ersatz">💬</span>
-        </div>
-        <h4>Dein Begleiter</h4>
-      </div>
-      <div class="chat" id="chatBox"></div>
-      <div class="chat-row">
-        <input id="chatInput" type="text" placeholder="Schreib etwas …" autocomplete="off">
-        <button id="chatSend">Senden</button>
-      </div>
-    </div>
+    <!-- Bis Aug. 2026 standen hier "Alle Meditationen entdecken" (die vier
+         Kategorie-Karten und "Ganze Bibliothek ansehen") sowie der
+         Begleiter-Chat. Beides doppelte genau das, was der Reiter
+         "Meditationen" daneben macht - Christine hat es bemerkt. "Mein Weg"
+         ist die Auswertungsseite und bleibt jetzt dabei; Stöbern und
+         Nachfragen passieren in der Bibliothek. -->
 
     <div class="btn-row"><button class="btn-ghost" id="backToCompassBtn">← Zurück zum Kompass</button></div>
   </div>
@@ -1439,6 +1426,11 @@
         <p>Alle Übungen zum Stöbern</p>
       </div>
     </div>
+    <div class="such-zeile">
+      <svg class="such-lupe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="libSuche" type="search" placeholder="Meditation suchen …" autocomplete="off" aria-label="Meditationen durchsuchen">
+      <button class="such-leeren" id="libSucheLeeren" type="button" title="Suche löschen" hidden>✕</button>
+    </div>
     <p class="lib-meta" id="libMeta"></p>
     <div class="chips" id="libFilters"></div>
     <!-- Seit Aug. 2026 ein echter Chat statt eines Knopfes, der auf eine
@@ -1447,7 +1439,13 @@
          beantwortet. Zweite Chat-Instanz mit denselben Faehigkeiten wie
          die auf "Mein Weg" (allowRecommend = true), eigene Element-IDs. -->
     <div class="ki-card">
-      <div class="ki-ico">💬</div>
+      <!-- Das Foto (begleiter.jpg) liefert Christine nach. Bis es da ist,
+           faengt onerror den Fehlschlag ab und zeigt weiter das 💬-Zeichen -
+           sobald die Datei im Ordner liegt, erscheint sie von selbst. -->
+      <div class="ki-ico companion-foto">
+        <img src="begleiter.jpg" alt="" onerror="this.parentElement.classList.add('kein-bild'); this.remove();">
+        <span class="ersatz">💬</span>
+      </div>
       <div class="body">
         <h4>Dein Begleiter</h4>
         <div class="chat" id="chatBoxLib"></div>
@@ -3258,27 +3256,11 @@
     if (!document.getElementById("fortschrittGrafik").hidden) renderFortschrittGrafik();
   }
 
-  // Kategorien ganz unten: fuehren in die Bibliothek, direkt in die passende
-  // Kategorie - so gibt es die Auswahl weiterhin, nur nicht mehr als Erstes.
-  function initKategorien(){
-    var host = document.getElementById("fdCats");
-    host.innerHTML = KATEGORIEN.map(function(k){
-      return '<button class="fd-cat" data-dir="' + k.dir + '">' +
-        '<span class="fd-cat-icon">' + katIcon(k.dir) + '</span>' +
-        '<span class="fd-cat-name">' + k.name + '</span></button>';
-    }).join("");
-    Array.prototype.forEach.call(host.querySelectorAll(".fd-cat"), function(btn){
-      btn.addEventListener("click", function(){
-        goToStep("meditation2");
-        openCatV2(btn.getAttribute("data-dir"));
-      });
-    });
-  }
-
   // ---- Bibliothek (Seite "Meditationen") -----------------------------
   // Aufbau wie in der Vorlage: Filter-Chips oben, darunter je Übung eine
   // Karte mit Stern und Play. Antippen startet die Übung sofort.
   var currentCatV2 = null;      // null = alle, "fav" = Favoriten, sonst Richtung
+  var libSuche = "";            // aktuelles Suchwort in der Bibliothek
   var durationV2 = 10;          // maximale Meditationsdauer (Kompass-Seite)
   var modus = "single";         // "single" = Einzelmeditation, "program" = Programm
 
@@ -3335,8 +3317,19 @@
       return !currentCatV2 || m.dir === currentCatV2;
     });
 
-    document.getElementById("libMeta").innerHTML =
-      "<strong>" + pool.length + "</strong> geführte Meditationen";
+    // Suche wirkt ZUSAETZLICH zum gewaehlten Chip, nicht statt seiner -
+    // gesucht wird in Titel, Kurzbeschreibung und Bereichsname, damit auch
+    // "Stress" oder "Wald" etwas findet und nicht nur der genaue Titel.
+    var suchwort = libSuche.trim().toLowerCase();
+    if (suchwort){
+      pool = pool.filter(function(m){
+        return (m.name + " " + (m.desc || "") + " " + katName(m.dir)).toLowerCase().indexOf(suchwort) !== -1;
+      });
+    }
+
+    document.getElementById("libMeta").innerHTML = suchwort
+      ? ("<strong>" + pool.length + "</strong> " + (pool.length === 1 ? "Treffer" : "Treffer") + " für „" + suchwort + "“")
+      : ("<strong>" + pool.length + "</strong> geführte Meditationen");
 
     var host = document.getElementById("libList");
     host.innerHTML = pool.length ? pool.map(function(m){
@@ -3352,7 +3345,9 @@
           (fav ? '★' : '☆') + '</button>' +
         '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
       '</div>';
-    }).join("") : '<p class="lib-leer">Hier ist noch nichts. Tippe bei einer Übung auf den Stern, dann steht sie hier.</p>';
+    }).join("") : (suchwort
+      ? '<p class="lib-leer">Nichts gefunden zu „' + suchwort + '“. Versuch ein anderes Wort – oder frag oben den Begleiter.</p>'
+      : '<p class="lib-leer">Hier ist noch nichts. Tippe bei einer Übung auf den Stern, dann steht sie hier.</p>');
   }
 
   // Wird von den Kategorien auf "My Meditation" aufgerufen.
@@ -4756,10 +4751,25 @@
     startSession();
   });
   document.getElementById("backToCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
-  document.getElementById("fdAllBtn").addEventListener("click", function(){
-    closeCatV2();
-    goToStep("meditation2");
-  });
+
+  // Suche in der Bibliothek: filtert waehrend des Tippens, ohne dass man
+  // "Suchen" druecken muesste. Der Loeschen-Knopf erscheint nur, wenn
+  // wirklich etwas drinsteht.
+  (function(){
+    var feld = document.getElementById("libSuche");
+    var leeren = document.getElementById("libSucheLeeren");
+    function aktualisiere(){
+      libSuche = feld.value;
+      leeren.hidden = !feld.value;
+      renderMedListV2();
+    }
+    feld.addEventListener("input", aktualisiere);
+    leeren.addEventListener("click", function(){
+      feld.value = "";
+      aktualisiere();
+      feld.focus();
+    });
+  })();
 
   document.getElementById("backBtn").addEventListener("click", function(){
     stopSession();
@@ -4793,7 +4803,6 @@
     goToStep("compass");
   });
 
-  initKategorien();
   renderMedListV2();   // Bibliothek einmal aufbauen, damit sie beim ersten Oeffnen steht
 
   initCompass("compassSvg", "needleLine", "needleTip", "compassReadout", compassBefore, null,
@@ -4805,14 +4814,11 @@
     renderRecap();
   });
 
-  // Zwei Chats: einer unten auf "Mein Weg", einer in der Bibliothek. Beide
-  // koennen empfehlen (true) - der Vorschlag landet ueber das
-  // [EMPFEHLUNG:]-Tag jeweils oben in "Fuer dich". Der dritte auf der
-  // Abschluss-Seite ist im Aug. 2026 entfallen (Kommentar dort im Markup).
-  var BEGLEITER_GRUSS =
-    "Hi! Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?";
-  setupChat("chatBox", "chatInput", "chatSend", BEGLEITER_GRUSS, true);
-  setupChat("chatBoxLib", "chatInputLib", "chatSendLib", BEGLEITER_GRUSS, true);
+  // Ein Chat, und zwar in der Bibliothek - dort, wo die Meditationen
+  // stehen. Die Instanz auf "Mein Weg" ist im Aug. 2026 entfallen (sie
+  // doppelte diese hier), die auf der Abschluss-Seite ebenfalls (§3.5).
+  setupChat("chatBoxLib", "chatInputLib", "chatSendLib",
+    "Hi! Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?", true);
 
   // "Jetzt starten": hier beginnt die Probezeit. Sie wird festgehalten,
   // damit später sichtbar ist, seit wann sie läuft - gesperrt wird
