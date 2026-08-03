@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons nochmals nachgebessert – Hintergrund schlichter, Icon grösser)
+Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons deutlich fetter/kräftiger nachgezeichnet)
 
 ---
 
@@ -121,3 +121,8 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Kategorie-Icons nochmals nachgebess
       Blick auf sich als das Symbol. Jetzt: Hintergrund ganz schlicht/flach,
       dafür das Symbol selbst deutlich grösser – der Hintergrund bleibt
       zurückhaltend, das Icon ist das Auffällige.
+- [x] **Kategorie-Symbole deutlich fetter nachgezeichnet**: die feinen
+      Linien aus dem ChatGPT-Bild waren selbst gross dargestellt noch zu
+      dünn/blass, um sie richtig zu erkennen. Die vier Bilder sind jetzt neu
+      aufbereitet – Linien künstlich verdickt und auf ein kräftiges,
+      einheitliches Gold gesetzt statt der ausgefransten Originalfarben.
