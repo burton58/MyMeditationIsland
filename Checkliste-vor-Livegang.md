@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: nur noch ein Wochenziel, Startseite zeigt heute Gemachtes)
+Stand: 3. August 2026 (zuletzt aktualisiert: Stufen der Inselreise offengelegt)
 
 ---
 
@@ -278,3 +278,8 @@ Stand: 3. August 2026 (zuletzt aktualisiert: nur noch ein Wochenziel, Startseite
       den Kompass an dem Tag nicht (nochmals) gestellt hast. Vorher stand
       dort in dem Fall „Sobald du deinen Kompass gestellt hast …", obwohl
       du schon meditiert hattest.
+- [x] **Stufen der Inselreise sind jetzt nachvollziehbar**: Unter jedem
+      Symbol steht, ab wie vielen Meditationen die Stufe beginnt
+      (ab 0 · 5 · 15 · 30 · 60). Unter „Details" stehen alle fünf Stufen
+      mit Namen und Schwelle ausgeschrieben, die aktuelle mit „du bist
+      hier" markiert. Gezählt werden alle Meditationen seit Beginn.

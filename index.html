@@ -851,6 +851,10 @@
   }
   .journey-stop.erreicht{ opacity:1; border-color:var(--gold); }
   .journey-stop.jetzt{ opacity:1; border-color:var(--gold); box-shadow:0 4px 14px rgba(120,90,10,.28); transform:scale(1.14); background:#fdf8ea; }
+  .journey-halt{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .journey-ab{ font-size:.62rem; font-weight:600; color:var(--ink-soft); opacity:.75; }
+  .journey-ab.jetzt{ color:var(--gold-deep); opacity:1; }
+  .recap-row.jetzt .k, .recap-row.jetzt .v{ color:var(--gold-deep); font-weight:700; }
   .journey-stufe{ display:flex; align-items:baseline; gap:8px; margin-bottom:8px; }
   .journey-stufe .name{ font-weight:700; font-size:.95rem; flex:1; }
   .journey-stufe .zahl{ font-size:.76rem; color:var(--ink-soft); }
@@ -1144,7 +1148,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.21";
+    var AKTUELLE_VERSION = "2026-08-03.22";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4055,14 +4059,29 @@
     var bis = naechste ? naechste.ab : von;
     var pct = naechste ? Math.round((anzahl - von) / (bis - von) * 100) : 100;
 
+    // Unter jeder Station steht, ab wie vielen Meditationen sie beginnt -
+    // vorher stand die Schwelle nur im "title", der auf dem Handy nie
+    // erscheint. So ist von aussen sichtbar, wie der Weg aufgebaut ist,
+    // statt dass die Stufen unerklaert auftauchen (Christines Wunsch).
     var weg = STUFEN.map(function(st, i){
       var cls = i < stufe ? "erreicht" : (i === stufe ? "jetzt" : "");
-      return '<div class="journey-stop ' + cls + '" title="' + st.name + '">' + st.icon + '</div>';
+      return '<div class="journey-halt">' +
+        '<div class="journey-stop ' + cls + '" title="' + st.name + '">' + st.icon + '</div>' +
+        '<div class="journey-ab' + (i === stufe ? ' jetzt' : '') + '">ab ' + st.ab + '</div>' +
+      '</div>';
     }).join("");
 
     var tage = Math.max(1, Math.round((list[list.length-1].ts - list[0].ts) / 86400000) + 1);
     var details = '<div class="recap-row"><span class="k">Bisher</span><span class="v">' +
       list.length + ' Besuche in ' + tage + (tage === 1 ? ' Tag' : ' Tagen') + '</span></div>';
+    // Alle fuenf Stufen mit Namen und Schwelle ausgeschrieben - unter den
+    // Kreisen ist nur Platz fuer die Zahl, die Namen passen dort nicht.
+    details += '<p class="journey-lead" style="margin:12px 0 6px;">So ist der Weg aufgebaut – gezählt werden alle Meditationen seit Beginn:</p>';
+    details += STUFEN.map(function(st, i){
+      return '<div class="recap-row' + (i === stufe ? ' jetzt' : '') + '">' +
+        '<span class="k">' + st.icon + ' ' + st.name + '</span>' +
+        '<span class="v">ab ' + st.ab + (i === stufe ? ' · du bist hier' : '') + '</span></div>';
+    }).join("");
 
     if (list.length >= 5){
       var ankunft = haeufigste(list.map(function(e){ return moodOf(e.before).word; }));
