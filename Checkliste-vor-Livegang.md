@@ -64,6 +64,17 @@ Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entf
       ergänzen.
 - [x] **„Über die App" ist eine echte Seite** – vorher tat der Knopf nach
       aussen nichts (der Text erschien weit unterhalb der Liste).
+- [x] **Zustand nach der Meditation wird festgehalten statt dauernd
+      verstellt** – mit einem Knopf „Ja, so fühle ich mich jetzt".
+      Rückblick und Vergleich erscheinen erst danach.
+- [x] **Der Vergleichssatz spricht in Adjektiven** („vorher sehr
+      angespannt, jetzt eher geborgen") statt in den Kompass-Achsen
+      („von Denken auf Fühlen"), was falsch klang.
+- [x] **Keine behaupteten Zustände mehr** – ohne gesetzten Zeiger gibt es
+      keine Empfehlung mit erfundener Begründung; „meistens" und „liebste
+      Übung" stehen erst da, wenn es wirklich ein Muster gibt.
+- [x] **Lieblingsmeditationen auf der Startseite lassen sich antippen.**
+- [x] **Ältere Meditationen zeigen ein Datum**, nicht nur den Wochentag.
 - [x] **Die gestaltete Insel bleibt erhalten** – vorher war die Auswahl
       (Wetter, Meer, Person, Ankunft) beim nächsten Öffnen wieder
       zurückgesetzt.

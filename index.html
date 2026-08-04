@@ -674,6 +674,10 @@
   .hist-row .body{ flex:1; min-width:0; }
   .hist-row .name{ display:block; font-weight:600; font-size:.9rem; }
   .hist-row .meta{ display:block; font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
+  /* Startbare Zeile: soll sich auch anfassbar anfuehlen, sonst sieht sie
+     aus wie die reinen Verlaufszeilen daneben. */
+  .hist-row.startbar{ cursor:pointer; }
+  .hist-row.startbar:active{ background:var(--cream-2); }
   .hist-leer{ padding:18px 14px; font-size:.86rem; color:var(--ink-soft); text-align:center; margin:0; }
 
   /* ---------- Meditationen (die Bibliothek) ----------
@@ -1181,7 +1185,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.4";
+    var AKTUELLE_VERSION = "2026-08-04.5";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3399,6 +3403,15 @@
     var m = MEDITATIONS.filter(function(x){ return x.name === name; })[0];
     return m ? m.dir : null;
   }
+  // Fuer Listen, die nur den Namen gespeichert haben (Verlauf,
+  // Lieblingsmeditationen): die Uebung dahinter finden, damit sich die
+  // Zeile antippen und starten laesst. Gibt null zurueck, wenn eine
+  // Uebung inzwischen umbenannt oder entfernt wurde - dann bleibt die
+  // Zeile eben eine reine Verlaufszeile, statt ins Leere zu fuehren.
+  function idVonName(name){
+    var m = MEDITATIONS.filter(function(x){ return x.name === name; })[0];
+    return m ? m.id : null;
+  }
 
   // ---- Wochenziel: selbst gewaehlt statt einer fixen, erfundenen Zahl ----
   // Ersetzt die fruehere "Deine Ziele"-Liste (vier Kategorien, alle fest
@@ -4341,9 +4354,20 @@
             ? "Im Schnitt führt dich das Ankommen eher nach innen als zur Ruhe – auch das ist ein Ergebnis."
             : "Im Schnitt bleibt dein Zeiger, wo er war. Manchmal ist Ankommen genug.");
       }
-      if (ankunft)  details += zeile("Wie du meistens ankommst", ankunft.wert + " – " + ankunft.n + " von " + list.length + " Mal");
-      if (liebling) details += zeile("Deine liebste Übung", liebling.wert + " (" + liebling.n + "×)");
-      if (rhythmus) details += zeile("Dein Rhythmus", "Du kommst meistens " + rhythmus.wert + " her.");
+      // "meistens" und "liebste" nur sagen, wenn es auch stimmt.
+      // Vorher stand hier bei fuenf verschiedenen Uebungen "Deine liebste
+      // Übung: Atem-Anker (1×)" - ein Muster behaupten, wo noch keines ist.
+      // Ein Wort gilt erst als Muster, wenn es mindestens zweimal vorkommt;
+      // "meistens" zusaetzlich erst ab der Haelfte aller Male.
+      var meistens = function(t){ return t && t.n >= 2 && t.n * 2 > list.length; };
+      if (meistens(ankunft))
+        details += zeile("Wie du meistens ankommst", ankunft.wert + " – " + ankunft.n + " von " + list.length + " Mal");
+      if (liebling && liebling.n >= 2)
+        details += zeile("Deine liebste Übung", liebling.wert + " (" + liebling.n + "×)");
+      if (meistens(rhythmus))
+        details += zeile("Dein Rhythmus", "Du kommst meistens " + rhythmus.wert + " her.");
+      else if (rhythmus)
+        details += zeile("Dein Rhythmus", "Du kommst zu ganz unterschiedlichen Zeiten – da ist noch kein fester Rhythmus zu sehen.");
       details += zeile("Entwicklung", entwicklung);
     } else {
       details += '<p class="journey-hint">Deine Reise fängt gerade an. Nach ein paar Wochen zeigen sich hier deine Muster – ' +
@@ -4896,12 +4920,16 @@
     slot.hidden = false;
     // Ohne Platzziffern: die Reihenfolge sagt den Rang schon, die Ziffer
     // daneben waere nur eine zweite Fassung derselben Information.
+    // Antippbar: eine Liste der Uebungen, die man am liebsten hoert, und
+    // dann kann man sie von dort nicht starten - genau danach greift man
+    // aber. Der allgemeine Klick-Zuhoerer nimmt data-play auf.
     document.getElementById("lieblingeList").innerHTML = top.map(function(e){
-      var dir = dirVonName(e.name);
-      return '<div class="hist-row">' +
+      var dir = dirVonName(e.name), id = idVonName(e.name);
+      return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
         '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
         '<span class="body"><span class="name">' + e.name + '</span>' +
         '<span class="meta">' + e.anzahl + ' Mal gehört' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
+        (id ? '<button class="play-btn" data-play="' + id + '">▶</button>' : '') +
       '</div>';
     }).join("");
   }
@@ -4918,22 +4946,27 @@
       tage[dayStamp(e.ts)] = true;
     });
     minuten = minutenAus(sekunden);
-    // Tage am Stueck: von heute (oder gestern) rueckwaerts zaehlen, solange
-    // an jedem Tag etwas gelaufen ist.
-    var streak = 0, tag = new Date();
-    if (!(dayStamp(tag.getTime()) in tage)) tag.setDate(tag.getDate() - 1);
-    while (dayStamp(tag.getTime()) in tage){ streak++; tag.setDate(tag.getDate() - 1); }
-    document.getElementById("statStreak").textContent = streak;
+    // Tage am Stueck ueber computeStreak(), nicht nochmals von Hand: die
+    // Zaehlung stand hier frueher ein zweites Mal im Code. Zwei Kopien
+    // derselben Regel gehen irgendwann auseinander, und dann zeigen
+    // "Mein Weg" und das Profil verschiedene Zahlen fuer dasselbe.
+    document.getElementById("statStreak").textContent = computeStreak();
     document.getElementById("statCount").textContent = anzahl;
     document.getElementById("statMinutes").textContent = minuten;
   }
 
+  // Ab einer Woche steht das Datum statt nur des Wochentags. Vorher hiess
+  // eine Meditation von vor drei Wochen schlicht "Dienstag" - nicht von
+  // letztem Dienstag zu unterscheiden. In der vollstaendigen Liste
+  // ("Alle anzeigen") standen dadurch lauter gleich aussehende Zeilen.
   function datumWort(ts){
     var d = dayStamp(ts);
     if (d === dayStamp(Date.now())) return "Heute";
     var gestern = new Date(); gestern.setDate(gestern.getDate() - 1);
     if (d === dayStamp(gestern.getTime())) return "Gestern";
-    return WEEKDAYS[new Date(ts).getDay()];
+    var alter = (Date.now() - ts) / 86400000;
+    if (alter < 7) return WEEKDAYS[new Date(ts).getDay()];
+    return datumKurz(new Date(ts));
   }
 
   // ---- Fortschritts-Grafik -------------------------------------------
