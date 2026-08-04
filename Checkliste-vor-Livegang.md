@@ -64,6 +64,12 @@ Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entf
       ergänzen.
 - [x] **„Über die App" ist eine echte Seite** – vorher tat der Knopf nach
       aussen nichts (der Text erschien weit unterhalb der Liste).
+- [x] **Der Begleiter versteht jetzt Anliegen statt Kompass-Achsen** –
+      „mein Rücken tut weh" führt zu Licht- und Körperentspannung mit
+      passendem Mantra, nicht mehr zu „das kann ich nicht einordnen".
+      16 Themen: Schmerz, Schlaf, Angst, Stress, Wut, Trauer, Grübeln,
+      Selbstwert, Erschöpfung, Loslassen, Unruhe, Entspannen,
+      Dankbarkeit, Vertrauen, Kinder, Schwangerschaft.
 - [x] **Zustand nach der Meditation wird festgehalten statt dauernd
       verstellt** – mit einem Knopf „Ja, so fühle ich mich jetzt".
       Rückblick und Vergleich erscheinen erst danach.

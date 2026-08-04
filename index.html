@@ -1185,7 +1185,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.5";
+    var AKTUELLE_VERSION = "2026-08-04.6";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4585,32 +4585,155 @@
   // statt vier immer gleicher Standardsätze, wertet diese Funktion aus, was
   // geschrieben wurde, und antwortet lokal - mit Mudra, Mantra, einer
   // passenden Meditation oder einem Verweis auf den Kompass.
-  var RICHTUNGS_WOERTER = {
-    nord: ["kopf","gedanke","gedanken","grübl","grübel","denke","denken","kreis","konzentrat","fokus","klarheit","verwirrt","durcheinander","chaotisch"],
-    sued: ["gefühl","fühl","herz","traurig","emotional","weinen","trauer","verletzt","einsam","liebeskummer"],
-    west: ["stress","gestresst","angespannt","anspannung","druck","hektik","nervös","angst","sorge","überfordert","panik","unruhig"],
-    ost:  ["müde","erschöpft","entspann","ruhe","schlaf","energie","erhol","auszeit","ausgelaugt"]
-  };
-  var INTRO_SAETZE = {
-    nord: "Das klingt nach viel im Kopf gerade.",
-    sued: "Das klingt nach Gefühlen, die gerade Raum brauchen.",
-    west: "Das klingt nach Anspannung, die raus darf.",
-    ost:  "Das klingt nach einem Moment, der Ruhe verdient."
-  };
-  var UNKLAR_SAETZE = [
-    "Das kann ich noch nicht gut einordnen. Nutz doch kurz den Kompass – dort siehst du in ein paar Sekunden, was gerade zu dir passt.",
-    "Magst du mir sagen, ob das eher im Kopf, im Gefühl oder im Körper sitzt? Oder du gehst direkt zum Kompass, der fragt genau das."
+  // ---- Anliegen statt Kompass-Achsen (4. Aug. 2026) -------------------
+  // Vorher kannte der Begleiter nur die vier Achsen der Kompass-Scheibe
+  // (Denken/Fühlen/Anspannung/Entspannung) und suchte im Text nach
+  // Stichwoertern dafuer. Wer "mein Rücken tut weh" schrieb, passte in
+  // keine dieser Schubladen - es kam ein "Das kann ich noch nicht gut
+  // einordnen. Nutz doch kurz den Kompass". Christine hat das gemeldet:
+  // Schmerz hat mit "denken oder fühlen" nichts zu tun; was hilft, sind
+  // Licht, Koerperentspannung und annehmende Saetze.
+  //
+  // Darum arbeitet der Begleiter jetzt mit ANLIEGEN. Jedes Anliegen kennt
+  // seine Woerter, einen eigenen Einstiegssatz, konkrete Uebungen aus dem
+  // Katalog (kurz zuerst, damit auch im akuten Moment etwas Machbares
+  // dasteht), ein Mantra und ein Mudra. Nichts davon ist erfunden: die
+  // Uebungen sind ihre eigenen, Mantra und Mudra stehen so in MANTRAS
+  // bzw. MUDRAS.
+  //
+  // Falle beim Ergaenzen: "meds" enthaelt IDs aus MEDITATIONS, "mantra"
+  // muss wortgleich in MANTRAS stehen, "mudra" wortgleich in MUDRAS -
+  // sonst faellt der jeweilige Teil still weg (siehe findeMantra/findeMudra).
+  var ANLIEGEN = [
+    { id:"schmerz",
+      woerter:["schmerz","schmerze","weh tut","tut weh","wehtut","aua","kopfweh","kopfschmerz","migräne","rücken","ruecken","nacken","schulter","verspann","verkrampf","kiefer","zahn","bauchweh","magen","krank","entzünd","ziept","stechen"],
+      intro:"Wenn etwas weh tut, hilft selten Nachdenken – eher Wärme, Lösen und ein freundlicher Umgang mit dem Körper.",
+      meds:["lichtmed_kurz","kiefer","koerper","lichtmed_ganz","yoganidra"],
+      // Feinabstimmung: wer den Kiefer nennt, soll die Kiefer-Übung
+      // bekommen und nicht die allgemeine Lichtmeditation.
+      feiner:[
+        { woerter:["kiefer","zahn","gesicht","zähne","zaehne","knirsch"], med:"kiefer" },
+        { woerter:["nacken","schulter","rücken","ruecken","verspann","verkrampf"], med:"koerper" }
+      ],
+      mantra:"Mit jedem Atemzug etwas leichter.",
+      mudra:"Prana Mudra" },
+
+    { id:"schlaf",
+      woerter:["schlaf","einschlaf","durchschlaf","nachts","nicht schlafen","wach lieg","liege wach","insomn","aufgewacht","zur ruhe komm","abends nicht"],
+      intro:"Zum Einschlafen braucht es kein Bemühen – nur etwas, das langsamer wird als deine Gedanken.",
+      meds:["bodyscan_kurz","koerper","fantasie_winter","yoganidra"],
+      mantra:"Alles darf langsam sein.",
+      mudra:"Shankh Mudra" },
+
+    { id:"angst",
+      woerter:["angst","ängst","aengst","panik","sorge","sorgen","befürcht","unsicher","herzklopfen","herzrasen","beklemm","eng in der brust","zittere"],
+      intro:"Bei Angst hilft zuerst der Boden unter den Füssen – nicht das Erklären.",
+      meds:["erdungsatem","welle","wurzelchakra","vertrauensanker","tiefes_vertrauen"],
+      mantra:"Ich muss nicht alles gleichzeitig schaffen.",
+      mudra:"Kubera Mudra" },
+
+    { id:"stress",
+      woerter:["stress","gestresst","druck","überfordert","ueberfordert","hektik","zu viel","zuviel","termin","keine zeit","arbeit","job","chef","büro","deadline","alles auf einmal","hetze"],
+      intro:"Das klingt nach zu viel auf einmal. Ein kurzer Halt bringt oft mehr als noch ein Zahn zulegen.",
+      meds:["welle","erdungsatem","feierabend","koerper","alltag_mutter","grosses_loslassen"],
+      mantra:"Es ist genug für heute.",
+      mudra:"Ksepana Mudra" },
+
+    { id:"wut",
+      woerter:["wut","wütend","wuetend","ärger","aerger","sauer","genervt","gereizt","aggressiv","ungeduld","platzt mir","auf die palme"],
+      intro:"Ärger sitzt oft zuerst im Kiefer und in den Schultern. Da lässt er sich auch am ehesten wieder lösen.",
+      meds:["kiefer","erdungsatem","geduld_kinder","loslassen_traegt"],
+      mantra:"Ich darf jetzt loslassen.",
+      mudra:"Apana Mudra" },
+
+    { id:"trauer",
+      woerter:["trauer","traurig","weinen","geweint","verlust","gestorben","tod","abschied","vermisse","liebeskummer","einsam","allein","verlassen","gebrochen"],
+      intro:"Was schwer ist, will nicht weggemacht werden – nur begleitet.",
+      meds:["herzberuhigen","herz","benennen","fantasie_insel","herzchakra"],
+      mantra:"Was ich fühle, darf da sein.",
+      mudra:"Hridaya Mudra" },
+
+    { id:"gruebeln",
+      woerter:["gedanke","gedanken","grübl","gruebl","grübel","kreis","denke zu viel","kopfkino","durcheinander","chaos","konzentr","abschalten","komme nicht zur ruhe","nicht aufhören zu denken"],
+      intro:"Kreisende Gedanken lassen sich nicht wegdenken – sie brauchen einen Platz, an dem sie sein dürfen.",
+      meds:["atem","wolken","stirnchakra","feierabend","fantasie_winter"],
+      mantra:"Ich muss nicht jeden Gedanken zu Ende denken.",
+      mudra:"Gyan Mudra" },
+
+    { id:"selbstwert",
+      woerter:["selbstwert","selbstkritik","nicht gut genug","nicht genug","mag mich nicht","hasse mich","zweifel","versag","schäme","schaeme","scham","peinlich","annehmen","akzeptier","selbstzweifel","fehler gemacht","schuldig"],
+      intro:"Sich selbst freundlich zu begegnen ist eine Übung wie jede andere – sie lässt sich lernen.",
+      meds:["freundlicherblick","vertrauensanker","verzeihen_erster","vertrauenaufbauen","tiefes_vertrauen"],
+      mantra:"Ich behandle mich wie einen guten Freund.",
+      mudra:"Anjali Mudra" },
+
+    { id:"erschoepfung",
+      woerter:["erschöpft","erschoepft","ausgelaugt","kraftlos","keine energie","keine kraft","leer","burnout","ausgebrannt","kann nicht mehr","müde","muede","schlapp","antriebslos"],
+      intro:"Wenn nichts mehr geht, braucht es kein Zusammenreissen – sondern etwas, das wieder auffüllt.",
+      meds:["lichtmed_kurz","kraftimpuls","solarplexus","innerestaerke","staerke_vertiefen"],
+      mantra:"Ich bin genau richtig, wie es gerade ist.",
+      mudra:"Surya Mudra" },
+
+    { id:"loslassen",
+      woerter:["loslassen","los lassen","festhalt","vergangenheit","widerstand","verzeih","groll","nachtragend","kann nicht vergessen","hängt mir nach","haengt mir nach","alte geschichte"],
+      intro:"Loslassen heisst nicht vergessen – nur, es nicht mehr die ganze Zeit tragen zu müssen.",
+      meds:["loslassen_traegt","halschakra","verzeihen_erster","grosses_loslassen","verzeihen_tief"],
+      mantra:"Ich darf jetzt loslassen.",
+      mudra:"Karana Mudra" },
+
+    { id:"unruhe",
+      woerter:["unruhig","unruhe","rastlos","zappelig","kribbel","halte es nicht aus","nervös","nervoes","fahrig"],
+      intro:"Unruhe verschwindet nicht auf Kommando – aber sie wird leiser, wenn der Körper Halt bekommt.",
+      meds:["erdungsatem","bodyscan_kurz","wurzelchakra","welle"],
+      mantra:"Mit jedem Atemzug etwas leichter.",
+      mudra:"Rudra Mudra" },
+
+    { id:"entspannen",
+      woerter:["entspann","runterkommen","runter kommen","auszeit","abschalten","ruhe finden","pause","erhol","gönnen","goennen"],
+      intro:"Schön, dass du dir das nimmst.",
+      meds:["stille","fantasie_wald","koerper","lichtmed_ganz","yoganidra"],
+      mantra:"Alles darf langsam sein.",
+      mudra:"Dhyana Mudra" },
+
+    { id:"dankbar",
+      woerter:["dankbar","danke","gut geht","geht es gut","geht mir gut","richtig gut","sehr gut","glücklich","gluecklich","zufrieden","freue","schöner tag","schoener tag","gut drauf","leicht ums herz"],
+      intro:"Das ist ein guter Moment, um das Gute auch festzuhalten.",
+      meds:["dankblitz","dank","dankreise","stille"],
+      mantra:"Ich bin dankbar für diesen Moment.",
+      mudra:"Anjali Mudra" },
+
+    { id:"vertrauen",
+      woerter:["vertrauen","kein vertrauen","zutrauen","mut","traue mich nicht","entscheidung","zukunft","ungewiss"],
+      intro:"Vertrauen wächst in kleinen Schritten, nicht auf einmal.",
+      meds:["vertrauensanker","sakralchakra","vertrauenaufbauen","tiefes_vertrauen"],
+      mantra:"Ich bin mit mir selbst im Reinen.",
+      mudra:"Kubera Mudra" },
+
+    { id:"kinder",
+      woerter:["kind","kinder","sohn","tochter","familie","geduld","mutter","mama","eltern","erziehung"],
+      intro:"Mit Kindern ist der Tag selten planbar – umso mehr zählen die kurzen Momente für dich.",
+      meds:["geduld_kinder","alltag_mutter","welle","kiefer"],
+      mantra:"Ich muss nicht alles gleichzeitig schaffen.",
+      mudra:"Shuni Mudra" },
+
+    { id:"schwanger",
+      woerter:["schwanger","baby","ungeboren","kind erwarte","bauch wächst","geburt"],
+      intro:"Eine besondere Zeit – und eine gute, um die Verbindung bewusst zu spüren.",
+      meds:["schwangerschaft","herzchakra","koerper"],
+      mantra:"Ich bin genau richtig, wie es gerade ist.",
+      mudra:"Hridaya Mudra" }
   ];
 
-  function erkenneRichtung(text){
-    var t = text.toLowerCase(), treffer = { nord:0, sued:0, west:0, ost:0 };
-    Object.keys(RICHTUNGS_WOERTER).forEach(function(dir){
-      RICHTUNGS_WOERTER[dir].forEach(function(w){ if (t.indexOf(w) !== -1) treffer[dir]++; });
-    });
-    var best = null, max = 0;
-    Object.keys(treffer).forEach(function(dir){ if (treffer[dir] > max){ max = treffer[dir]; best = dir; } });
-    return best;
-  }
+  var UNKLAR_SAETZE = [
+    "Erzähl mir kurz, was gerade los ist – schläfst du schlecht, tut etwas weh, ist zu viel los, oder geht dir etwas nach? Dann such ich dir etwas Passendes.",
+    "Magst du mir ein Stichwort geben – zum Beispiel Schmerzen, Schlaf, Stress, Traurigkeit oder einfach Ruhe? Dann weiss ich, wo ich suchen soll."
+  ];
+
+  // Hier stand erkenneRichtung(): die alte Zuordnung auf die vier
+  // Kompass-Achsen. Sie ist am 4. Aug. 2026 durch erkenneAnliegen()
+  // ersetzt worden - die Achsen sind eine Zeichnung auf der Scheibe,
+  // kein Raster, in das sich "mein Rücken tut weh" einordnen liesse.
+
   // Kein Zufall (der waere bei jeder Nachricht anders), aber auch keine
   // Konstante (immer dasselbe Mudra) - eine einfache Streuung aus dem
   // Text selbst sorgt fuer Abwechslung, ohne echten Zufall zu brauchen.
@@ -4624,72 +4747,113 @@
     if (!pool.length) pool = liste;
     return pool[streuung % pool.length];
   }
-  function medFuerRichtung(dir){
-    var pool = MEDITATIONS.filter(function(m){ return m.dir === dir && istFrei(m.id); });
-    return pool[0] || null;
+  // Das am besten passende Anliegen: gezaehlt wird, wie viele Woerter
+  // treffen, laengere Woerter zaehlen mehr (damit "kopfschmerz" das
+  // Anliegen Schmerz gewinnt und nicht "kopf" das Gruebeln).
+  function erkenneAnliegen(text){
+    var t = " " + text.toLowerCase() + " ";
+    var best = null, bestScore = 0;
+    ANLIEGEN.forEach(function(a){
+      var score = 0;
+      a.woerter.forEach(function(w){ if (t.indexOf(w) !== -1) score += w.length; });
+      if (score > bestScore){ bestScore = score; best = a; }
+    });
+    return best;
+  }
+  // Aus der Liste des Anliegens die erste Uebung, die freigeschaltet ist
+  // und heute noch nicht gehoert wurde - sonst die erste freie ueberhaupt.
+  function medFuerAnliegen(a, text){
+    var heute = heutigeMeditationen().map(function(e){ return e.name; });
+    // Feinabstimmung zuerst: nennt der Text etwas Bestimmtes (z. B. den
+    // Kiefer), zaehlt das mehr als die allgemeine Reihenfolge.
+    var reihenfolge = a.meds.slice();
+    if (a.feiner){
+      var t = " " + (text || "").toLowerCase() + " ";
+      // Nur die ERSTE zutreffende Regel zaehlt - sonst ueberschreibt eine
+      // spaetere, allgemeinere die genauere ("Kiefer verspannt" traf
+      // sowohl auf "kiefer" als auch auf "verspann" zu).
+      var passend = a.feiner.filter(function(f){
+        return f.woerter.some(function(w){ return t.indexOf(w) !== -1; });
+      })[0];
+      if (passend){
+        reihenfolge = [passend.med].concat(reihenfolge.filter(function(id){ return id !== passend.med; }));
+      }
+    }
+    var kandidaten = reihenfolge
+      .map(function(id){ return MEDITATIONS.filter(function(m){ return m.id === id; })[0]; })
+      .filter(function(m){ return m && istFrei(m.id); });
+    if (!kandidaten.length) return null;
+    var frisch = kandidaten.filter(function(m){ return heute.indexOf(m.name) === -1; });
+    return (frisch[0] || kandidaten[0]);
+  }
+  // Mantra/Mudra ueber den genauen Text bzw. Namen holen. Findet sich
+  // nichts (z. B. weil ein Eintrag umbenannt wurde), faellt der Teil
+  // still weg, statt eine erfundene Angabe zu zeigen.
+  function findeMantra(a){
+    if (!a || !a.mantra) return null;
+    return MANTRAS.filter(function(m){ return m.text === a.mantra; })[0] || null;
+  }
+  function findeMudra(a){
+    if (!a || !a.mudra) return null;
+    return MUDRAS.filter(function(m){ return m.name === a.mudra; })[0] || null;
+  }
+  function mudraSatz(mu){
+    if (!mu) return "";
+    return mu.name + ": " + mu.how + " " + mu.why +
+      (mu.dauer ? (" Am besten " + mu.dauer + " halten (wirkt auf: " + mu.chakra + "), dazu passt die Mantra-Silbe „" + mu.silbe + "“.") : "");
   }
 
   function lokaleAntwort(text, allowRecommend){
-    var dir = erkenneRichtung(text);
+    var a = erkenneAnliegen(text);
     var streuung = textStreuung(text);
-    var intro = dir ? INTRO_SAETZE[dir] : "Gerne.";
+    var intro = a ? a.intro : "";
     // Nur den Wortstamm pruefen (nicht "mantra"/"mudra" vollstaendig) - so
     // wird auch ein Tippfehler wie "Mudrs" oder "Mantr" noch erkannt.
     var willMantra = text.toLowerCase().indexOf("mantr") !== -1;
     var willMudra = text.toLowerCase().indexOf("mudr") !== -1;
 
-    // Wird gezielt nach einem Mudra oder Mantra gefragt, bekommt die Person
-    // genau das - direkte Fragen haben immer Vorrang, auch wenn der Text
-    // sonst kein Gefühls-Stichwort enthält (dann ueber alle vier Bereiche
-    // hinweg gewählt statt gezielt auf einen Zustand - waehleFuerRichtung
-    // faengt ein leeres "dir" von selbst ab).
+    // Gezielt gefragt heisst gezielt geantwortet - passend zum Anliegen,
+    // wenn eines erkennbar ist, sonst gestreut ueber die ganze Sammlung.
     if (willMantra){
-      var ma = waehleFuerRichtung(MANTRAS, dir, streuung);
-      return intro + " Ein Satz dafür: „" + ma.text + "“ – " + ma.why;
+      var ma = findeMantra(a) || waehleFuerRichtung(MANTRAS, null, streuung);
+      return (intro ? intro + " " : "") + "Ein Satz dafür: „" + ma.text + "“ – " + ma.why;
     }
     if (willMudra){
-      var mu = waehleFuerRichtung(MUDRAS, dir, streuung);
-      var muExtra = mu.dauer ? (" Am besten " + mu.dauer + " halten (wirkt auf: " + mu.chakra + "), dazu passt die Mantra-Silbe „" + mu.silbe + "“.") : "";
-      return intro + " Versuch das " + mu.name + ": " + mu.how + " " + mu.why + muExtra;
+      var mu = findeMudra(a) || waehleFuerRichtung(MUDRAS, null, streuung);
+      return (intro ? intro + " " : "") + "Versuch das " + mudraSatz(mu);
     }
 
-    // Erkennbare Richtung: Prio 1 ist eine konkrete Meditation, Mudra und
-    // Mantra kommen nur als kurze, optionale Ergänzung dazu - das Tag muss
-    // dafuer trotzdem ganz am Ende der Antwort stehen bleiben.
-    if (dir && allowRecommend){
-      var med = medFuerRichtung(dir);
+    if (a){
+      // Priorität 1 ist immer eine konkrete Übung aus ihrem Katalog.
+      // Mantra und Mudra kommen als kurze Ergänzung dazu - abwechselnd,
+      // damit die Antwort nicht jedes Mal gleich lang wird. Das
+      // [EMPFEHLUNG:]-Tag muss ganz am Ende stehen bleiben.
+      var med = allowRecommend ? medFuerAnliegen(a, text) : null;
+      var mantra = findeMantra(a), mudra = findeMudra(a);
       if (med){
-        var bonusIstMudra = streuung % 2 === 0;
-        var bonus;
-        if (bonusIstMudra){
-          var mub = waehleFuerRichtung(MUDRAS, dir, streuung);
-          bonus = " Magst du zusätzlich noch etwas für die Hände: " + mub.name + " – " + mub.how;
-        } else {
-          var mab = waehleFuerRichtung(MANTRAS, dir, streuung);
-          bonus = " Als kleine Ergänzung dazu ein Mantra: „" + mab.text + "“.";
+        var bonus = "";
+        if (streuung % 2 === 0 && mudra){
+          bonus = " Dazu passt das " + mudra.name + ": " + mudra.how;
+        } else if (mantra){
+          bonus = " Als kleine Ergänzung ein Mantra: „" + mantra.text + "“.";
         }
         return intro + " Ich hab dir eine Übung herausgesucht, die dazu passt." + bonus +
           " [EMPFEHLUNG: " + med.name + "]";
       }
-    }
-    if (dir){
-      // Erkennbare Richtung, aber kein Meditations-Kontext hier (Abschluss-
-      // Chat) oder keine passende Übung gefunden - dann ist ein Mudra die
-      // naheliegende zweite Wahl.
-      var muFallback = waehleFuerRichtung(MUDRAS, dir, streuung);
-      return intro + " Ein kleines Mudra dazu: " + muFallback.name + ": " + muFallback.how + " " + muFallback.why +
-        " Frag mich gern auch nach einem Mantra dafür.";
+      // Kein Meditations-Kontext (oder nichts frei): dann wenigstens
+      // Mudra und Mantra - beides zusammen, weil hier die Übung fehlt.
+      var teile = [intro];
+      if (mudra) teile.push("Ein Mudra dafür: " + mudraSatz(mudra));
+      if (mantra) teile.push("Und ein Satz dazu: „" + mantra.text + "“.");
+      return teile.join(" ");
     }
 
-    // Keine Meditation erkennbar, weil der Text keine Richtung verrät: als
-    // zweite Wahl trotzdem ein Mudra oder Mantra anbieten, statt nur auf
-    // den Kompass zu verweisen.
+    // Nichts erkannt: nachfragen, statt zu raten - und zwar in normaler
+    // Sprache. Der frühere Satz fragte, ob es "eher im Kopf, im Gefühl
+    // oder im Körper" sitze; das sind die Achsen der Kompass-Scheibe,
+    // keine Frage, die jemand so beantwortet.
     var unklar = UNKLAR_SAETZE[streuung % UNKLAR_SAETZE.length];
-    if (streuung % 2 === 0){
-      var muGen = waehleFuerRichtung(MUDRAS, dir, streuung);
-      return unklar + " Bis dahin kannst du zum Beispiel das " + muGen.name + " probieren: " + muGen.how + " " + muGen.why;
-    }
-    var maGen = waehleFuerRichtung(MANTRAS, dir, streuung);
+    var maGen = waehleFuerRichtung(MANTRAS, null, streuung);
     return unklar + " Bis dahin passt vielleicht dieses Mantra: „" + maGen.text + "“.";
   }
 
@@ -4760,8 +4924,12 @@
 
       var recInstruction = allowRecommend
         ? ("Das sind die verfügbaren Meditationen:\n" + medCatalogueText() +
-           "\nDu kennst ausserdem Mudras (Handhaltungen) und Mantras (kurze Sätze) für vier Bereiche: " +
-           "Gedanken beruhigen, Gefühle verstehen, Stress lösen, Entspannen. " +
+           "\nDu kennst ausserdem Mudras (Handhaltungen) und Mantras (kurze Sätze). " +
+           "WICHTIG: Ordne ein Anliegen niemals in die Kompass-Achsen ein und benutze die Wörter " +
+           "'Denken', 'Fühlen', 'Anspannung', 'Entspannung' nicht als Zustandsbeschreibung - das sind nur " +
+           "Beschriftungen auf der Kompass-Scheibe. Antworte auf das, was wirklich geschrieben wurde. " +
+           "Körperliche Beschwerden (Schmerzen, Verspannung, Kiefer, Rücken, Schlaflosigkeit) sind kein " +
+           "Denk- oder Gefühlsthema: dafür passen Licht-, Körperentspannungs- und annehmende Meditationen. " +
            "Priorität 1 ist immer eine passende Meditation aus der Liste - empfiehl sie zuerst. " +
            "Ein Mudra oder Mantra darfst du zusätzlich als kurze, optionale Ergänzung erwähnen, nie als Ersatz " +
            "für die Meditation - ausser jemand fragt ausdrücklich nur danach. " +
