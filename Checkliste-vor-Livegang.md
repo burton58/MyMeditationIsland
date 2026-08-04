@@ -41,10 +41,11 @@ Stand: 4. August 2026 (zuletzt aktualisiert: Inselreise zählt Tage statt Medita
 - [ ] **Konto/Cloud-Speicherung einbauen**, damit ein Gerätewechsel niemanden
       seinen bezahlten Zugang kostet (aktuell liegt alles nur auf einem Gerät –
       „Abo wiederherstellen" ist bisher nur eine Attrappe ohne Funktion).
-- [ ] **Eigene Symbole statt Emoji auf der Status-Karte im Profil**
-      (aktuell 🤍 ✅ ⏳ 🔒 für „offen"/„aktiv"/„Testphase"/„gesperrt") –
-      beim App-weiten Formatierungs-Check aufgefallen: das ist die letzte
-      Stelle, die noch Emoji statt eigener Bilder zeigt.
+- [ ] **Eigene Symbole statt Emoji.** Die App benutzt aktuell 43
+      verschiedene Emoji – die sehen auf jedem Handy anders aus. In
+      `Icon-Prompts.md` stehen alle aufgelistet und dazu fertige
+      Prompts für ChatGPT, nach Wichtigkeit geordnet. Am meisten
+      lohnen sich die neun Zustände neben dem Kompass.
 
 ## 3. Kann warten, lohnt sich aber früh
 

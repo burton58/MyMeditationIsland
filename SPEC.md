@@ -41,6 +41,8 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 | 4. Aug. 2026 | Bei **Schmerz** gilt ihr fester Weg: Licht in den Körper → wahrnehmen → loslassen → beim Herzen ankommen; **Grün ist die Farbe der Heilung**. | §6b |
 | 4. Aug. 2026 | Vielschichtige Themen bieten **mehrere Wege** an statt einer Empfehlung — zuerst ankommen, dann die weiteren Übungen je nach Beschwerde. | §6b |
 | 4. Aug. 2026 | **Die Inselreise zählt Tage, nicht Meditationen** ("so wie Calm"). | §3.6a |
+| 4. Aug. 2026 | **Reihenfolge der Tab-Leiste:** erst die beiden Reiter zum Tun (Kompass, Meditationen), dann die beiden zum Nachschauen (Mein Weg, Profil). Vorher trennte "Mein Weg" die beiden Wege zur Übungsauswahl. | §2 |
+| 4. Aug. 2026 | **Alle 43 Emoji sollen durch eigene Symbole ersetzt werden.** Prompts dafür in `Icon-Prompts.md`, nach Sichtbarkeit geordnet. | `Icon-Prompts.md` |
 
 ### Funde aus Tests (behoben, nicht zurückdrehen)
 
@@ -89,6 +91,9 @@ Seit dem Layout-Umbau folgt die ganze App **einer** Vorlage: warmes Creme als Fl
 ### Typografie
 - Fließtext: System-Sans (`-apple-system, Segoe UI, Roboto, …`)
 - Überschriften/Logo: `--serif` = Georgia / Iowan Old Style / Palatino / serif-Fallback
+
+**Tab-Leiste (Reihenfolge seit 4. Aug. 2026, Christines Vorschlag):**
+`Startseite · Kompass · Meditationen | Mein Weg · Profil` — erst die beiden Reiter zum **Tun**, dann die beiden zum **Nachschauen**. Vorher stand "Mein Weg" zwischen Kompass und Meditationen und trennte damit die zwei Wege, eine Übung zu wählen (sich fragen lassen oder selber stöbern), voneinander. Nur die Reihenfolge im Markup wurde getauscht; `TAB_FOR_STEP` und alle Zuhörer arbeiten über `data-tab` und sind davon unberührt.
 
 ### Wiederkehrende Muster
 - **Seitenkopf** (`.page-head`): links Titel (Serif) + eine erklärende Zeile, rechts optional ein rundes Symbol (`.icon-btn`). Auf dem Kompass steht der Titel mittig, links daneben der Zurück-Pfeil.

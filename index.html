@@ -1189,7 +1189,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.11";
+    var AKTUELLE_VERSION = "2026-08-04.12";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2271,7 +2271,14 @@
 
   </div>
 
-  <!-- ============ TABBAR ============ -->
+  <!-- ============ TABBAR ============
+       Reihenfolge (4. Aug. 2026, Christines Vorschlag): erst die beiden
+       Reiter zum TUN, dann die beiden zum NACHSCHAUEN.
+         Startseite · Kompass · Meditationen | Mein Weg · Profil
+       Vorher stand "Mein Weg" zwischen Kompass und Meditationen und
+       trennte damit die zwei Wege, eine Uebung zu waehlen (fragen lassen
+       oder selber stoebern), voneinander. Jetzt stehen sie nebeneinander,
+       und Rueckblick plus Einstellungen bilden das Paar rechts. -->
   <nav class="tabbar" id="tabbar">
     <button class="tab-item" data-tab="home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
@@ -2281,13 +2288,13 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>
       <span>Kompass</span>
     </button>
-    <button class="tab-item" data-tab="meditation">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5.5" r="2.2"/><path d="M5 21c1.5-4 4-6 7-6s5.5 2 7 6"/><path d="M4 12h16"/></svg>
-      <span>Mein Weg</span>
-    </button>
     <button class="tab-item" data-tab="meditation2">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7v15H4z"/><path d="M13 5h7v15h-7z"/></svg>
       <span>Meditationen</span>
+    </button>
+    <button class="tab-item" data-tab="meditation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5.5" r="2.2"/><path d="M5 21c1.5-4 4-6 7-6s5.5 2 7 6"/><path d="M4 12h16"/></svg>
+      <span>Mein Weg</span>
     </button>
     <button class="tab-item" data-tab="profil">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
