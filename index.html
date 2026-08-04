@@ -1148,7 +1148,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.22";
+    var AKTUELLE_VERSION = "2026-08-03.23";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4580,8 +4580,12 @@
             '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + Math.max(1, Math.round(e.seconds / 60)) +
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
           '</div>';
-        }).join("") + '</div>' +
-        '<button class="btn-ghost full" id="focusMehrBtn">Noch eine Meditation? →</button>';
+        }).join("") + '</div>';
+        // Hier stand "Noch eine Meditation? →". Der Knopf fuehrte auf
+        // "Mein Weg" - dort gibt es seit dem Aufraeumen (Aug. 2026) gar
+        // keine Meditationsliste mehr, er lief also ins Leere. Ausgewaehlt
+        // wird ueber den Kompass oder den Reiter "Meditationen", beide
+        // stehen unten in der Leiste. Christine hat es bemerkt.
     } else if (!liste.length){
       // Heute noch nichts gehört und auch keine Empfehlung: die Karte
       // "Dein Zustand" hat schon den Knopf zum Kompass - hier keinen
@@ -4606,8 +4610,14 @@
 
     focus.innerHTML = html;
 
+    // Die weiteren Empfehlungen stehen auf der Kompass-Seite (#recResult),
+    // nicht auf "Mein Weg" - der Knopf zeigte bis Aug. 2026 auf dieselbe
+    // leere Seite wie der geloeschte "Noch eine Meditation?"-Knopf.
     var mehrBtn = document.getElementById("focusMehrBtn");
-    if (mehrBtn) mehrBtn.addEventListener("click", function(){ renderMyMed(); goToStep("meditation"); });
+    if (mehrBtn) mehrBtn.addEventListener("click", function(){
+      goToStep("compass");
+      zeigeEmpfehlung();
+    });
 
     renderLieblinge();
   }

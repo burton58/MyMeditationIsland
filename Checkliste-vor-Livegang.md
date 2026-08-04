@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Stufen der Inselreise offengelegt)
+Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entfernt)
 
 ---
 
@@ -283,3 +283,9 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Stufen der Inselreise offengelegt)
       (ab 0 · 5 · 15 · 30 · 60). Unter „Details" stehen alle fünf Stufen
       mit Namen und Schwelle ausgeschrieben, die aktuelle mit „du bist
       hier" markiert. Gezählt werden alle Meditationen seit Beginn.
+- [x] **„Noch eine Meditation?" auf der Startseite entfernt** (von dir
+      bemerkt): Der Knopf führte auf „Mein Weg" – dort gibt es seit dem
+      Aufräumen gar keine Meditationsliste mehr, er lief also ins Leere.
+      Ausgewählt wird über den Kompass oder den Reiter „Meditationen".
+      Derselbe Fehler steckte in „Weitere Empfehlungen ansehen" – dieser
+      Knopf führt jetzt zum Kompass, wo die Empfehlungen wirklich stehen.
