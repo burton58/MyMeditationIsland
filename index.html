@@ -975,6 +975,23 @@
 
   /* ---------- Abschluss ---------- */
   .shift-box{ padding:15px; font-size:.88rem; line-height:1.55; margin-top:10px; }
+  /* Zustand festhalten: der Knopf steht direkt unter dem Kompass, der
+     Hinweis darunter erklaert in einem Satz, was zu tun ist. Nach dem
+     Bestaetigen verschwindet beides und der Rueckblick nimmt seinen Platz. */
+  .outro-bestaetigen{ margin-top:16px; }
+  .outro-hinweis{ margin:9px 2px 0; font-size:.78rem; line-height:1.5; color:var(--ink-soft); text-align:center; }
+  .outro-aendern{ margin-top:2px; font-size:.8rem; }
+  /* Festgehaltener Kompass: die Nadel reagiert nicht mehr, das soll man
+     auch sehen - der Punkt verliert seinen Greif-Zeiger und die Scheibe
+     wirkt einen Hauch ruhiger. */
+  /* Kurzes Winken, wenn jemand eine Empfehlung will, ohne den Zeiger
+     gesetzt zu haben - zeigt hin, statt nur einen Satz zu schreiben. */
+  .rec-fehlt{ margin:10px 2px 0; font-size:.82rem; line-height:1.5; color:var(--gold-deep); text-align:center; }
+  @keyframes winken{ 0%,100%{ transform:none; } 25%{ transform:rotate(-2.5deg); } 75%{ transform:rotate(2.5deg); } }
+  .compass-wrap.winkt{ animation:winken .5s ease-in-out 2; }
+  @media (prefers-reduced-motion: reduce){ .compass-wrap.winkt{ animation:none; } }
+  .compass-wrap.gesperrt svg{ cursor:default; }
+  .compass-wrap.gesperrt .rose-needle-tip{ cursor:default !important; }
   .need-more{ padding:15px; margin-top:12px; }
   .need-more h4{ margin:0 0 10px; font-size:.85rem; }
   .need-more-actions{ display:flex; gap:8px; flex-wrap:wrap; }
@@ -1164,7 +1181,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.3";
+    var AKTUELLE_VERSION = "2026-08-04.4";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1402,6 +1419,11 @@
     </div>
 
     <button class="btn-dark full" id="recommendBtn" style="margin-top:16px;">Zeig mir, was jetzt passt →</button>
+    <!-- Erscheint nur, wenn jemand den Knopf drueckt, ohne den Zeiger
+         gesetzt zu haben. Vorher kam auch dann eine Empfehlung, begruendet
+         mit "Dein Kompass zeigt: ausgeglichen" - ein Zustand, den niemand
+         angegeben hatte. -->
+    <p class="rec-fehlt" id="recFehlt" hidden>Setz zuerst den Zeiger oben – dann sage ich dir, was gerade passt.</p>
 
     <div class="rec-result" id="recResult">
       <div class="rec-head">Für dich empfohlen</div>
@@ -1520,7 +1542,10 @@
     <div class="page-head">
       <div class="ttl">
         <h1>Wie fühlst du dich jetzt?</h1>
-        <p>Stell den Zeiger noch einmal ein.</p>
+        <!-- Untertitel wechselt mit dem Zustand der Seite: solange der
+             Zeiger offen ist, ist er die Anleitung; danach waere
+             "Stell den Zeiger noch einmal ein" schlicht falsch. -->
+        <p id="outroSub">Stell den Zeiger noch einmal ein.</p>
       </div>
     </div>
 
@@ -1588,8 +1613,19 @@
       </div>
     </div>
 
-    <div class="card recap" id="recapBox" style="margin-top:16px;"></div>
-    <div class="card shift-box" id="shiftBox"></div>
+    <!-- Zustand EINMAL setzen, dann festhalten (Aug. 2026, Christines
+         Wunsch): "sonst ändert man ihn die ganze Zeit". Vor dem Bestätigen
+         gibt es keinen Rückblick - er wäre ja noch gar nicht gemeint.
+         Danach steht die Nadel fest; "Nochmals ändern" öffnet sie wieder,
+         falls jemand danebengegriffen hat. -->
+    <div class="outro-bestaetigen" id="outroBestaetigenBox">
+      <button class="btn-dark full" id="outroBestaetigenBtn">Ja, so fühle ich mich jetzt</button>
+      <p class="outro-hinweis">Zieh den Zeiger dorthin, wo du gerade stehst – und halte ihn dann fest.</p>
+    </div>
+
+    <div class="card recap" id="recapBox" style="margin-top:16px;" hidden></div>
+    <div class="card shift-box" id="shiftBox" hidden></div>
+    <button class="btn-ghost full outro-aendern" id="outroAendernBtn" hidden>Zustand nochmals ändern</button>
 
     <!-- "Noch eine Meditation" ist hier bewusst entfallen (Aug. 2026):
          direkt nach einer Meditation gleich die naechste anzubieten passt
@@ -3057,6 +3093,10 @@
     var readout = document.getElementById(readoutId);
     var CENTER = 200, MAXR = COMPASS_MAXR;
     var dragging = false;
+    // Gesperrt = die Nadel steht fest. Gebraucht auf der Abschluss-Seite:
+    // dort soll der Zustand EINMAL gesetzt und dann festgehalten werden,
+    // statt sich bei jeder Beruehrung weiter zu veraendern (Christine).
+    var gesperrt = false;
 
     function toLocal(evt){
       var rect = svg.getBoundingClientRect();
@@ -3109,6 +3149,7 @@
     }
 
     svg.addEventListener("pointerdown", function(e){
+      if (gesperrt) return;
       dragging = true; svg.setPointerCapture(e.pointerId);
       anfassen(true);
       // Kurzes haptisches Signal, wo das Geraet es unterstuetzt.
@@ -3138,6 +3179,7 @@
     wrap.setAttribute("tabindex", "0");
     wrap.setAttribute("role", "group");
     wrap.addEventListener("keydown", function(e){
+      if (gesperrt) return;
       var STEP = 0.08;
       var nx = target.x, ny = target.y, geaendert = true;
       if (e.key === "ArrowLeft") nx = Math.max(-1, target.x - STEP);
@@ -3151,6 +3193,20 @@
     });
 
     update();
+    // Kleine Fernbedienung fuer den Aufrufer: sperren/entsperren und neu
+    // zeichnen, ohne dass er die Interna kennen muss.
+    return {
+      sperren: function(an){
+        gesperrt = !!an;
+        wrap.classList.toggle("gesperrt", gesperrt);
+        tip.style.cursor = gesperrt ? "default" : "grab";
+        wrap.setAttribute("tabindex", gesperrt ? "-1" : "0");
+      },
+      neuZeichnen: function(){
+        setFromPoint(CENTER - target.x * MAXR, CENTER + target.y * MAXR);
+      },
+      auffrischen: update
+    };
   }
 
   function compassText(c){
@@ -3283,7 +3339,23 @@
   }
 
   // Die Empfehlung direkt auf der Kompass-Seite anzeigen.
+  // Ohne gesetzten Zeiger gibt es NICHTS zu empfehlen: die Begruendung
+  // haette sonst "Dein Kompass zeigt: ausgeglichen" behauptet, obwohl das
+  // nur der Ruhewert der Nadel in der Mitte ist und niemand das gesagt hat.
   function zeigeEmpfehlung(){
+    var fehlt = document.getElementById("recFehlt");
+    if (!kompassBenutzt && !empfohlenVomChat){
+      if (fehlt) fehlt.hidden = false;
+      var wrap = document.querySelector(".compass-page .compass-wrap");
+      if (wrap){
+        wrap.classList.remove("winkt");
+        void wrap.offsetWidth;          // Animation neu starten, auch beim zweiten Tipp
+        wrap.classList.add("winkt");
+        wrap.scrollIntoView({ behavior:"smooth", block:"center" });
+      }
+      return;
+    }
+    if (fehlt) fehlt.hidden = true;
     var picks = baueEmpfehlung();
     document.getElementById("recItems").innerHTML = picks.map(function(m, i){
       return medZeile(m, { cls:"rec-item", num: picks.length > 1 ? (i + 1) : null });
@@ -3709,7 +3781,7 @@
     zeichneReise();
     renderMoodStatus(document.getElementById("compassReadout2"), compassAfter);
     recordSession();
-    renderRecap();
+    setOutroBestaetigt(false);   // jede Sitzung beginnt wieder offen
     goToStep("outro");
   });
 
@@ -3871,23 +3943,36 @@
     list.push({
       ts: currentEntryTs,
       before: { x:compassBefore.x, y:compassBefore.y },
-      after:  { x:compassAfter.x,  y:compassAfter.y  },
+      // Platzhalter, damit alte Auswertungen nie auf undefined stossen.
+      // "bestaetigt" sagt, ob dieser Wert wirklich von der Person kommt:
+      // solange auf der Abschluss-Seite nicht bestaetigt wurde, ist es nur
+      // die Ausgangslage. Ohne dieses Merkmal wuerde jede nicht
+      // bestaetigte Sitzung stillschweigend als "nichts hat sich
+      // veraendert" in die Statistik einfliessen - eine Aussage, die
+      // niemand getroffen hat.
+      after:  { x:compassBefore.x, y:compassBefore.y },
+      bestaetigt: false,
       meds: echteMeds.map(function(l){ return { name:l.name, min:l.min, seconds:l.seconds }; })
     });
     saveHistory(list);
   }
-  // Der Zeiger auf der Abschluss-Seite laesst sich nachtraeglich verschieben.
+  // Wird erst beim Bestaetigen auf der Abschluss-Seite aufgerufen, nicht
+  // mehr bei jedem Ziehen an der Nadel.
   function updateCurrentEntry(){
     if (currentEntryTs === null) return;
     var list = loadHistory();
     for (var i = list.length - 1; i >= 0; i--){
       if (list[i].ts === currentEntryTs){
         list[i].after = { x:compassAfter.x, y:compassAfter.y };
+        list[i].bestaetigt = true;
         saveHistory(list);
         return;
       }
     }
   }
+  // Eintraege aus der Zeit vor dem Bestaetigen-Knopf haben kein Merkmal -
+  // die zaehlen als bestaetigt, dort wurde der Wert ja beim Ziehen gesetzt.
+  function istBestaetigt(e){ return e.bestaetigt !== false; }
 
   // ---- Stimmung als Bild und Wort ----
   // "next": kurzer Satz, was diese \u00DCbungen f\u00fcr GENAU dieses Wort bewirken -
@@ -4035,16 +4120,26 @@
     }
     var m = moodOf(c), t = el._teile;
     var unberuehrt = (c.x === 0 && c.y === 0);
+    // Auf der Abschluss-Seite darf hier NICHT "Diese Übungen helfen dir
+    // zu ..." stehen (m.next). Das ist der Begruendungssatz der
+    // Kompass-Seite - er zeigt nach vorn, auf Uebungen, die noch kommen.
+    // Nach der Meditation ist genau das falsch: die Uebung ist vorbei.
+    // Christine hat den Widerspruch im Bildschirmfoto gefunden ("sehr
+    // aufgewühlt" und darunter "Diese Übungen helfen dir zu ...").
+    // Dort stehen deshalb die zwei Beobachtungen zum Zustand selbst.
+    var abschluss = (el.id === "compassReadout2");
     ueberblenden(t.wort, moodWort(c));
     ueberblenden(t.why, unberuehrt
       ? "Bewege den Zeiger, um deinen Zustand anzugeben."
-      : m.next);
+      : (abschluss ? m.bullets.join(" · ") : m.next));
     el.setAttribute("aria-label",
       moodWort(c) + ". Position: " + (c.x < 0 ? "Anspannung" : "Entspannung") +
       ", " + (c.y < 0 ? "Denken" : "Fühlen"));
-    // Das Symbol neben der Karte zeigt denselben Zustand.
-    var glyph = document.getElementById(el.id === "compassReadout2" ? "stateGlyph2" : "stateGlyph");
-    if (glyph && el.id === "compassReadout") glyph.textContent = unberuehrt ? "💛" : m.emoji;
+    // Das Symbol neben der Karte zeigt denselben Zustand - auf BEIDEN
+    // Seiten. Auf der Abschluss-Seite blieb es bisher fest auf 🌅 stehen,
+    // waehrend die Zeile daneben laengst etwas anderes sagte.
+    var glyph = document.getElementById(abschluss ? "stateGlyph2" : "stateGlyph");
+    if (glyph) glyph.textContent = unberuehrt ? "💛" : m.emoji;
   }
 
   // ---- Wochenansicht ----
@@ -4111,7 +4206,10 @@
         '<span class="week-day">' + WEEKDAYS[t.datum.getDay()] +
           (t.eintraege.length > 1 ? ' · ' + t.eintraege.length + ' Mal' : '') + '</span>' +
         '<span class="week-line"><span class="lbl">Vorher:</span> ' + moodHtml(erste.before) + '</span>' +
-        '<span class="week-line"><span class="lbl">Nachher:</span> ' + moodHtml(letzte.after) + '</span>' +
+          // Nur zeigen, was die Person auch wirklich angegeben hat - sonst
+        // stuende hier ihr Ausgangszustand als vermeintliches Ergebnis.
+        '<span class="week-line"><span class="lbl">Nachher:</span> ' +
+          (istBestaetigt(letzte) ? moodHtml(letzte.after) : '<span class="week-offen">nicht angegeben</span>') + '</span>' +
       '</div>';
     }).join("");
 
@@ -4227,12 +4325,22 @@
         return "abends";
       });
       var rhythmus = haeufigste(zeiten);
-      var schnitt = list.reduce(function(sum,e){ return sum + (e.after.x - e.before.x); }, 0) / list.length;
-      var entwicklung = schnitt > 0.12
-        ? "Im Schnitt gehst du entspannter, als du gekommen bist."
-        : (schnitt < -0.12
-          ? "Im Schnitt führt dich das Ankommen eher nach innen als zur Ruhe – auch das ist ein Ergebnis."
-          : "Im Schnitt bleibt dein Zeiger, wo er war. Manchmal ist Ankommen genug.");
+      // Nur Sitzungen, bei denen der Zustand danach wirklich bestaetigt
+      // wurde. Wer die Abschluss-Seite einfach weggetippt hat, hat keine
+      // "keine Veraenderung" gemeldet - er hat gar nichts gemeldet, und
+      // das darf den Schnitt nicht Richtung Null ziehen.
+      var mitAngabe = list.filter(istBestaetigt);
+      var entwicklung;
+      if (mitAngabe.length < 3){
+        entwicklung = "Sag nach der Meditation, wie du dich fühlst – dann steht hier, wie sich dein Zustand über die Zeit verändert.";
+      } else {
+        var schnitt = mitAngabe.reduce(function(sum,e){ return sum + (e.after.x - e.before.x); }, 0) / mitAngabe.length;
+        entwicklung = schnitt > 0.12
+          ? "Im Schnitt gehst du entspannter, als du gekommen bist."
+          : (schnitt < -0.12
+            ? "Im Schnitt führt dich das Ankommen eher nach innen als zur Ruhe – auch das ist ein Ergebnis."
+            : "Im Schnitt bleibt dein Zeiger, wo er war. Manchmal ist Ankommen genug.");
+      }
       if (ankunft)  details += zeile("Wie du meistens ankommst", ankunft.wert + " – " + ankunft.n + " von " + list.length + " Mal");
       if (liebling) details += zeile("Deine liebste Übung", liebling.wert + " (" + liebling.n + "×)");
       if (rhythmus) details += zeile("Dein Rhythmus", "Du kommst meistens " + rhythmus.wert + " her.");
@@ -4363,7 +4471,6 @@
 
   // ---- recap ----
   function renderRecap(){
-    var dirB = dirFromCompass(compassBefore), dirA = dirFromCompass(compassAfter);
     var medSummary = completedLog.length
       ? completedLog.map(function(l){ return l.name + " (" + fmt(l.seconds) + ")"; }).join(", ")
       : "–";
@@ -4399,21 +4506,33 @@
     linie.style.display = zeigen ? "" : "none";
   }
 
+  // Der Vergleichssatz spricht in DENSELBEN Adjektiven wie der Rueckblick
+  // darueber - nicht in den Achsen-Polen des Kompasses.
+  //
+  // Vorher stand hier "Am Anfang zeigte dein Kompass auf Denken, jetzt auf
+  // Fühlen." Das hat Christine zu Recht als falsch gemeldet: es liest sich,
+  // als sei das Fühlen (oder das Denken) nun weg - dabei sind das nur die
+  // beiden Achsen der Scheibe, keine Zustaende. Gemeint ist immer die
+  // Veraenderung im Befinden: vorher eher gedankenvoll, jetzt sehr
+  // aufgewuehlt. Genau das steht jetzt da, mit denselben Woertern wie in
+  // der Zeile "Vorher"/"Jetzt" direkt darueber.
   function updateShift(){
-    var dB = dirFromCompass(compassBefore), dA = dirFromCompass(compassAfter);
-    var dx = compassAfter.x - compassBefore.x;
+    var vor   = moodWort(compassBefore).toLowerCase();
+    var jetzt = moodWort(compassAfter).toLowerCase();
+    var dx = compassAfter.x - compassBefore.x;   // + = Richtung Entspannung
     var moved = Math.abs(dx) + Math.abs(compassAfter.y - compassBefore.y);
+    var richtung = dx > 0.15
+      ? " Es ist entspannter geworden."
+      : (dx < -0.15
+        ? " Die Anspannung ist eher gestiegen – vielleicht ist gerade etwas aufgetaucht, das Aufmerksamkeit braucht. Das darf sein."
+        : " Etwas hat sich bewegt.");
     var text;
     if (moved < 0.12){
-      text = "Dein Zeiger steht fast wie am Anfang – bei " + DIRS[dB].label + ". Auch das ist ein Ergebnis: Manchmal ist Ankommen genug, ohne dass sich etwas verschiebt.";
-    } else if (dB !== dA){
-      text = "Am Anfang zeigte dein Kompass auf <strong>" + DIRS[dB].label + "</strong>, jetzt auf <strong>" + DIRS[dA].label + "</strong>. Etwas hat sich bewegt.";
-    } else if (dx > 0.15){
-      text = "Dein Zeiger ist Richtung Entspannung gewandert – innerhalb von " + DIRS[dB].label + " ist es ruhiger geworden.";
-    } else if (dx < -0.15){
-      text = "Dein Zeiger ist Richtung Anspannung gewandert. Das darf sein – vielleicht ist gerade etwas aufgetaucht, das Aufmerksamkeit braucht.";
+      text = "Du fühlst dich fast wie vorher: <strong>" + vor + "</strong>. Auch das ist ein Ergebnis – manchmal ist Ankommen genug.";
+    } else if (vor === jetzt){
+      text = "Das Wort ist dasselbe geblieben: <strong>" + jetzt + "</strong>." + richtung;
     } else {
-      text = "Dein Zeiger hat sich leicht verschoben, bleibt aber in Richtung " + DIRS[dB].label + ".";
+      text = "Vorher <strong>" + vor + "</strong>, jetzt <strong>" + jetzt + "</strong>." + richtung;
     }
     document.getElementById("shiftBox").innerHTML = text;
   }
@@ -5064,6 +5183,34 @@
   }
   document.getElementById("finishOutroBtn").addEventListener("click", beendeSitzung);
 
+  // ---- Abschluss-Seite: Zustand einmal setzen, dann festhalten ---------
+  // Christines Wunsch: "nur ein Knopf, der sagt: ja, das ist mein Zustand -
+  // sonst ändert man ihn die ganze Zeit". Vor dem Bestaetigen laesst sich
+  // die Nadel frei ziehen, es wird aber nichts ausgewertet und nichts
+  // gespeichert. Nach dem Bestaetigen steht sie fest, der Rueckblick
+  // erscheint, und der Wert geht einmal in den Verlauf.
+  var outroKompass = null;   // wird unten von initCompass() gefuellt
+  function setOutroBestaetigt(ja){
+    document.getElementById("outroBestaetigenBox").hidden = ja;
+    document.getElementById("recapBox").hidden = !ja;
+    document.getElementById("shiftBox").hidden = !ja;
+    document.getElementById("outroAendernBtn").hidden = !ja;
+    document.getElementById("outroSub").textContent = ja
+      ? "Festgehalten – das ist dein Zustand nach der Meditation."
+      : "Stell den Zeiger noch einmal ein.";
+    if (outroKompass) outroKompass.sperren(ja);
+    if (ja) renderRecap();
+  }
+  document.getElementById("outroBestaetigenBtn").addEventListener("click", function(){
+    setOutroBestaetigt(true);
+  });
+  // Notausgang: wer danebengegriffen hat, kommt wieder heran. Der Verlauf
+  // wird beim naechsten Bestaetigen einfach ueberschrieben (derselbe
+  // Eintrag ueber currentEntryTs), es entsteht kein zweiter.
+  document.getElementById("outroAendernBtn").addEventListener("click", function(){
+    setOutroBestaetigt(false);
+  });
+
   // "Kompass neu setzen" (frueher "Neu beginnen", das nur zur Startseite
   // ging und damit nicht sagte, was passiert). Der Knopf uebernimmt jetzt
   // die Aufgabe des entfallenen "Noch eine Meditation": zurueck zum
@@ -5088,9 +5235,11 @@
     [{ line: document.getElementById("needleLineHome"), tip: document.getElementById("needleTipHome") }]);
   initCompass("compassSvgHome", "needleLineHome", "needleTipHome", "compassReadout", compassBefore, null,
     [{ line: document.getElementById("needleLine"), tip: document.getElementById("needleTip") }]);
-  initCompass("compassSvg2", "needleLine2", "needleTip2", "compassReadout2", compassAfter, function(){
+  // Der Abschluss-Kompass zeichnet beim Ziehen nur die Spur mit. Rueckblick
+  // und Vergleichssatz entstehen erst beim Bestaetigen - vorher waeren sie
+  // eine Aussage ueber einen Zustand, den noch niemand bestaetigt hat.
+  outroKompass = initCompass("compassSvg2", "needleLine2", "needleTip2", "compassReadout2", compassAfter, function(){
     zeichneReise();
-    renderRecap();
   });
 
   // Ein Chat, und zwar in der Bibliothek - dort, wo die Meditationen
