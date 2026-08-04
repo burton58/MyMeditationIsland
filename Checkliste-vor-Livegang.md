@@ -64,6 +64,11 @@ Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entf
       ergänzen.
 - [x] **„Über die App" ist eine echte Seite** – vorher tat der Knopf nach
       aussen nichts (der Text erschien weit unterhalb der Liste).
+- [x] **Die gestaltete Insel bleibt erhalten** – vorher war die Auswahl
+      (Wetter, Meer, Person, Ankunft) beim nächsten Öffnen wieder
+      zurückgesetzt.
+- [x] **Erreichtes Wochenziel meldet sich** – vorher passierte beim
+      Erreichen gar nichts.
 - [x] **„yogaisland.ch" ist jetzt anklickbar** (bei „Über mich" und im
       Impressum) – vorher sah es aus wie ein Link, war aber nur Text.
 - [x] Impressum ergänzt (Yoga Island – Christine Maranta Gutmann, Heinrichstrasse 241,

@@ -1164,7 +1164,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.2";
+    var AKTUELLE_VERSION = "2026-08-04.3";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2260,6 +2260,29 @@
     gender: "female", skin: "#f0b98c", hair: "#2b1a12", outfit: "#ff6f59", arrival: "boat"
   };
 
+  // Die gestaltete Insel wurde bis Aug. 2026 NIRGENDS gespeichert: wer sich
+  // eine Person mit passender Haut-, Haar- und Kleiderfarbe zusammenstellte
+  // und die App danach schloss, fand beim naechsten Oeffnen wieder die
+  // Voreinstellung vor. Eine ganze Seite, deren Ergebnis verschwindet - der
+  // groesste stille Blindgang der App. Jetzt liegt die Auswahl wie alles
+  // andere im Geraetespeicher.
+  var INSEL_KEY = "myisland.insel.v1";
+  function ladeInsel(){
+    try {
+      var roh = JSON.parse(localStorage.getItem(INSEL_KEY) || "null");
+      if (!roh) return;
+      // Nur bekannte Felder uebernehmen - ein alter oder beschaedigter
+      // Eintrag darf keine fremden Schluessel in den Zustand schmuggeln.
+      Object.keys(state).forEach(function(f){
+        if (typeof roh[f] === "string") state[f] = roh[f];
+      });
+    } catch (e){}
+  }
+  function speichereInsel(){
+    try { localStorage.setItem(INSEL_KEY, JSON.stringify(state)); } catch (e){}
+  }
+  ladeInsel();
+
   var scaleMap = { small: 1.14, medium: 1.5, large: 1.95 };
   var palmMap  = { few: 2, medium: 5, many: 9 };
   var labels = {
@@ -2943,6 +2966,7 @@
       if (!target) return;
       state[field] = target.getAttribute("data-value");
       setActive(field, state[field]);
+      speichereInsel();          // sofort, nicht erst beim Verlassen der Seite
       render({ animateBoatIn:false });
     });
   });
