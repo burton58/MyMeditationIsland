@@ -1186,7 +1186,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.8";
+    var AKTUELLE_VERSION = "2026-08-04.9";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4655,32 +4655,79 @@
   //    Selbstwert verloren; weiss nicht, wohin man sich entwickeln will.
   //  - Stirn: wirre Gedanken, kann nicht projektionsfrei wahrnehmen.
   //  - Krone: das Licht fehlt, die obere Verbindung fehlt.
-  // Das HALSCHAKRA hat sie nicht genannt. Der Text hier stammt darum aus
-  // dem Untertitel ihrer eigenen Uebung ("Widerstaende loesen") - bitte
-  // gegenlesen und bei Bedarf ersetzen, erfunden werden soll hier nichts.
+  //  - Hals (4. Aug. 2026 nachgetragen): Loslassen, auch koerperlich (sie
+  //    nennt Verstopfung); nicht reden wollen; alles im Atemapparat;
+  //    Krankheiten, die man festhaelt.
+  // Sie hat am selben Tag ausserdem gesagt, dass Rueckenprobleme und die
+  // Wirbelsaeule zum SOLARPLEXUS gehoeren, Verdauung sonst zum SAKRAL-
+  // oder Solarplexuschakra, und dass bei Schmerz der Weg ueber das HERZ
+  // fuehrt (siehe SCHMERZ_WEG unten).
+  // OFFEN: Vergangenheit/Zukunft/nicht im Koerper hat sie einmal dem
+  // Wurzelchakra und einmal dem Halschakra zugeordnet. Hier steht weiter
+  // das Wurzelchakra (ihre erste, ausdrueckliche Aussage) - bitte sagen,
+  // was gilt, statt dass eine der beiden Aussagen still verschwindet.
   var CHAKREN = {
     wurzel:      { name:"Wurzelchakra",       warum:"es holt dich zurück ins Hier und Jetzt und gibt dir wieder Boden unter den Füssen", med:"wurzelchakra" },
     sakral:      { name:"Sakralchakra",       warum:"es steht für Lebensfluss, Freude und Vertrauen", med:"sakralchakra" },
     solarplexus: { name:"Solarplexuschakra",  warum:"es stärkt deinen Willen und holt dich aus dem Gefühl, ausgeliefert zu sein", med:"solarplexus" },
     herz:        { name:"Herzchakra",         warum:"es stellt die Verbindung zu dir selbst und zu deinem eigenen Gefühl wieder her", med:"herzchakra" },
-    hals:        { name:"Halschakra",         warum:"es hilft, alte Widerstände Stück für Stück loszulassen", med:"halschakra" },
+    // Halschakra am 4. Aug. 2026 von Christine selbst beschrieben (vorher
+    // stand hier nur der Untertitel ihrer Uebung): Loslassen - auch
+    // koerperlich bei Verstopfung -, nicht reden wollen, alles im
+    // Atemapparat, und Krankheiten, die man festhaelt.
+    hals:        { name:"Halschakra",         warum:"es geht ums Loslassen – auch da, wo der Körper festhält, und da, wo etwas nicht ausgesprochen wird", med:"halschakra" },
     stirn:       { name:"Stirnchakra",        warum:"es klärt wirre Gedanken und hilft, wieder ohne Projektion wahrzunehmen", med:"stirnchakra" },
     krone:       { name:"Kronenchakra",       warum:"es öffnet die Verbindung nach oben, wenn das Licht fehlt", med:"kronenchakra" }
   };
 
   var ANLIEGEN = [
-    { id:"schmerz",
-      woerter:["schmerz","schmerze","weh tut","tut weh","wehtut","aua","kopfweh","kopfschmerz","migräne","migraene","rücken","ruecken","nacken","schulter","verspann","verkrampf","kiefer","zahn","bauchweh","magen","ziept","stechen","brennt","drückt"],
+    // Bei Schmerz beschreibt Christine einen festen Weg (4. Aug. 2026):
+    // zuerst Licht in den Körper bringen, dann den Schmerz wahrnehmen und
+    // mit ihm im Reinen sein, dann loslassen - und so beim Herzen
+    // ankommen. Grün ist die Farbe der Heilung: grünes Licht dorthin
+    // schicken, wo es weh tut. Darum steht bei Schmerz das Herzchakra und
+    // zusätzlich dieser Hinweis.
+    { id:"schmerz", chakra:"herz",
+      woerter:["schmerz","schmerze","weh tut","tut weh","wehtut","aua","kopfweh","kopfschmerz","migräne","migraene","rücken","ruecken","wirbelsäule","wirbelsaeule","bandscheibe","nacken","schulter","verspann","verkrampf","kiefer","zahn","bauchweh","magen","ziept","stechen","brennt","drückt"],
       intro:"Wenn etwas weh tut, hilft selten Nachdenken – eher Wärme, Lösen und ein freundlicher Umgang mit dem Körper.",
+      hinweis:"Der Weg dabei: zuerst Licht in den Körper bringen, den Schmerz wahrnehmen, statt ihn wegzudrücken – und ihn dann Stück für Stück loslassen. Schick dabei grünes Licht dorthin, wo es weh tut; Grün ist die Farbe der Heilung.",
       meds:["lichtmed_kurz","kiefer","koerper","lichtmed_ganz","yoganidra"],
       // Feinabstimmung: wer den Kiefer nennt, soll die Kiefer-Übung
-      // bekommen und nicht die allgemeine Lichtmeditation.
+      // bekommen und nicht die allgemeine Lichtmeditation. Rücken und
+      // Wirbelsäule gehören laut Christine zum Solarplexus, Verstopfung
+      // zum Hals-, sonstige Verdauung zum Sakralchakra.
       feiner:[
+        { woerter:["verstopf","verstopft","stuhlgang","darm blockiert"], med:"halschakra", chakra:"hals" },
+        { woerter:["verdauung","bauchweh","magen","darm","blähung","blaehung","völlegefühl","voellegefuehl"], med:"sakralchakra", chakra:"sakral" },
+        { woerter:["rücken","ruecken","wirbelsäule","wirbelsaeule","bandscheibe","kreuz","ischias"], med:"koerper", chakra:"solarplexus" },
         { woerter:["kiefer","zahn","gesicht","zähne","zaehne","knirsch"], med:"kiefer" },
-        { woerter:["nacken","schulter","rücken","ruecken","verspann","verkrampf"], med:"koerper" }
+        { woerter:["nacken","schulter","verspann","verkrampf"], med:"koerper" }
       ],
       mantra:"Mit jedem Atemzug etwas leichter.",
       mudra:"Prana Mudra" },
+
+    // Alles im Atemapparat und alles, was nicht ausgesprochen wird -
+    // laut Christine das Halschakra.
+    { id:"hals_atem", chakra:"hals",
+      woerter:["hals","kehle","stimme","heiser","husten","atemnot","kurzatmig","kloss im hals","kloß im hals","nicht reden","nichts sagen","kann es nicht aussprechen","verschluckt","asthma","bronchien","lunge","erkältet","erkaeltet","schlucken"],
+      // Kein eigener "hinweis": der Chakra-Satz sagt hier bereits dasselbe
+      // ("es geht ums Loslassen …"), es stünde sonst zweimal da.
+      intro:"Was nicht ausgesprochen wird, setzt sich oft im Hals und im Atem fest.",
+      meds:["halschakra","erdungsatem","welle","koerper","loslassen_traegt"],
+      mantra:"Ich darf jetzt loslassen.",
+      mudra:"Ksepana Mudra" },
+
+    // Verdauung als eigenes Anliegen, damit auch ohne das Wort "Schmerz"
+    // das richtige Chakra kommt.
+    { id:"verdauung", chakra:"sakral",
+      woerter:["verdauung","verstopf","verstopft","stuhlgang","blähung","blaehung","völlegefühl","voellegefuehl","darm","reizdarm","magenprobleme","übelkeit","uebelkeit"],
+      intro:"Die Verdauung hängt eng damit zusammen, was innerlich fliessen darf und was festgehalten wird.",
+      meds:["sakralchakra","koerper","bodyscan_kurz","solarplexus"],
+      feiner:[
+        { woerter:["verstopf","verstopft","stuhlgang"], med:"halschakra", chakra:"hals" }
+      ],
+      mantra:"Ich darf jetzt loslassen.",
+      mudra:"Apana Mudra" },
 
     { id:"schlaf", chakra:"wurzel",
       woerter:["schlaf","einschlaf","durchschlaf","nachts","nicht schlafen","wach lieg","liege wach","insomn","aufgewacht","zur ruhe komm","abends nicht"],
@@ -4794,7 +4841,10 @@
     // Situation, nicht im Koerper sein, fehlende Verbindung zu sich,
     // Opferrolle, fehlende Freude, Entscheidungen, fehlender Sinn.
 
-    { id:"krankheit", chakra:"wurzel",
+    // Laut Christine gehoeren "Krankheiten, die man zurueckbehalten
+    // moechte" zum Halschakra - dem Thema Loslassen. Stand vorher beim
+    // Wurzelchakra (meine Annahme, mangels Angabe).
+    { id:"krankheit", chakra:"hals",
       woerter:["krank","krankheit","diagnose","erkrankt","behandlung","therapie","spital","krankenhaus","operation","chemo","fieber","erkältet","erkaeltet","genesung","heilung","beschwerden"],
       intro:"Krank sein zehrt – und braucht vor allem Freundlichkeit dir selbst gegenüber, nicht noch mehr Anstrengung.",
       meds:["lichtmed_kurz","bodyscan_kurz","lichtmed_ganz","yoganidra","koerper"],
@@ -4924,22 +4974,25 @@
   }
   // Aus der Liste des Anliegens die erste Uebung, die freigeschaltet ist
   // und heute noch nicht gehoert wurde - sonst die erste freie ueberhaupt.
+  // Welche Feinabstimmung greift? Eine Stelle fuer beides - Uebung UND
+  // Chakra -, damit die Antwort nicht die Rueckenuebung nennt und dazu
+  // das falsche Chakra. Nur die ERSTE zutreffende Regel zaehlt, sonst
+  // ueberschreibt eine spaetere, allgemeinere die genauere ("Kiefer
+  // verspannt" traf sowohl auf "kiefer" als auch auf "verspann" zu).
+  function feineRegel(a, text){
+    if (!a || !a.feiner) return null;
+    var t = " " + (text || "").toLowerCase() + " ";
+    return a.feiner.filter(function(f){
+      return f.woerter.some(function(w){ return t.indexOf(w) !== -1; });
+    })[0] || null;
+  }
+
   function medFuerAnliegen(a, text){
     var heute = heutigeMeditationen().map(function(e){ return e.name; });
-    // Feinabstimmung zuerst: nennt der Text etwas Bestimmtes (z. B. den
-    // Kiefer), zaehlt das mehr als die allgemeine Reihenfolge.
     var reihenfolge = a.meds.slice();
-    if (a.feiner){
-      var t = " " + (text || "").toLowerCase() + " ";
-      // Nur die ERSTE zutreffende Regel zaehlt - sonst ueberschreibt eine
-      // spaetere, allgemeinere die genauere ("Kiefer verspannt" traf
-      // sowohl auf "kiefer" als auch auf "verspann" zu).
-      var passend = a.feiner.filter(function(f){
-        return f.woerter.some(function(w){ return t.indexOf(w) !== -1; });
-      })[0];
-      if (passend){
-        reihenfolge = [passend.med].concat(reihenfolge.filter(function(id){ return id !== passend.med; }));
-      }
+    var passend = feineRegel(a, text);
+    if (passend && passend.med){
+      reihenfolge = [passend.med].concat(reihenfolge.filter(function(id){ return id !== passend.med; }));
     }
     var kandidaten = reihenfolge
       .map(function(id){ return MEDITATIONS.filter(function(m){ return m.id === id; })[0]; })
@@ -4968,11 +5021,26 @@
   // ist - Christines eigene Zuordnung (siehe CHAKREN). Nennt zusaetzlich
   // die passende Chakra-Uebung, wenn sie nicht ohnehin schon empfohlen
   // wurde: sonst stuende zweimal dasselbe da.
-  function chakraSatz(a, schonEmpfohlen){
-    var c = a && a.chakra ? CHAKREN[a.chakra] : null;
+  // Fachlicher Zusatz, den Christine zu einzelnen Anliegen mitgegeben hat -
+  // etwa der Weg bei Schmerz (Licht hinein, wahrnehmen, loslassen, beim
+  // Herzen ankommen; grünes Licht als Farbe der Heilung).
+  function hinweisSatz(a){ return (a && a.hinweis) ? (" " + a.hinweis) : ""; }
+
+  function chakraSatz(a, schonEmpfohlen, text){
+    // Eine Feinabstimmung darf das Chakra des Anliegens ueberschreiben:
+    // Schmerz fuehrt sonst zum Herzchakra, bei Ruecken und Wirbelsaeule
+    // ist es laut Christine aber der Solarplexus, bei Verstopfung der
+    // Hals und bei sonstiger Verdauung das Sakralchakra.
+    var regel = feineRegel(a, text);
+    var key = (regel && regel.chakra) ? regel.chakra : (a && a.chakra);
+    var c = key ? CHAKREN[key] : null;
     if (!c) return "";
     var uebung = MEDITATIONS.filter(function(m){ return m.id === c.med; })[0];
-    var zusatz = (uebung && istFrei(c.med) && uebung.name !== schonEmpfohlen)
+    // Wenn das Anliegen einen eigenen fachlichen Hinweis mitbringt (z. B.
+    // der Schmerz-Weg), entfaellt der Verweis auf die Chakra-Uebung: sonst
+    // wird die Antwort zu einer Wand aus fuenf Saetzen, und der Hinweis
+    // ist das Wertvollere von beiden.
+    var zusatz = (uebung && istFrei(c.med) && uebung.name !== schonEmpfohlen && !(a && a.hinweis))
       ? (" Wenn du direkt daran arbeiten magst: „" + uebung.name + "“.")
       : "";
     return " Energetisch geht es dabei ums " + c.name + " – " + c.warum + "." + zusatz;
@@ -5029,12 +5097,12 @@
           bonus = " Als kleine Ergänzung ein Mantra: „" + mantra.text + "“.";
         }
         return intro + " Ich hab dir eine Übung herausgesucht, die dazu passt." +
-          chakraSatz(a, med.name) + bonus +
+          chakraSatz(a, med.name, text) + hinweisSatz(a) + bonus +
           " [EMPFEHLUNG: " + med.name + "]";
       }
       // Kein Meditations-Kontext (oder nichts frei): dann wenigstens
       // Chakra, Mudra und Mantra - hier fehlt ja die Übung.
-      var teile = [intro + chakraSatz(a, null)];
+      var teile = [intro + chakraSatz(a, null, text) + hinweisSatz(a)];
       if (mudra) teile.push("Ein Mudra dafür: " + mudraSatz(mudra));
       if (mantra) teile.push("Und ein Satz dazu: „" + mantra.text + "“.");
       return teile.join(" ");

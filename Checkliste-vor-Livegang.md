@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entfernt)
+Stand: 4. August 2026 (zuletzt aktualisiert: Chakren-Zuordnung für Schmerz, Krankheit, Hals und Verdauung)
 
 ---
 
@@ -23,14 +23,12 @@ Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entf
 - [ ] **Entscheiden, ob und wie Nutzung gemessen werden soll** (z. B. wie viele
       die Testphase abschliessen) – das ist auch eine Datenschutz-Frage, nicht
       nur eine technische.
-- [ ] **Halschakra-Beschreibung bestätigen.** Bei deiner Chakren-Aufzählung
-      hast du das Halschakra nicht genannt. Ich habe dort den Untertitel
-      deiner eigenen Übung genommen („alte Widerstände Stück für Stück
-      loslassen") – bitte kurz durchlesen und sagen, ob das so stimmt.
-- [ ] **Chakra für Schmerzen und Krankheit festlegen.** In deiner
-      Aufzählung kam beides nicht vor. Bei Schmerzen sagt der Begleiter
-      darum gar kein Chakra, bei Krankheit habe ich das Wurzelchakra
-      genommen (Erdung, Körper). Sag mir, was richtig ist.
+- [ ] **Eine Zuordnung ist noch doppelt.** „Zu fest in der Vergangenheit",
+      „zu fest in der Zukunft" und „nicht richtig im Körper" hast du
+      einmal dem Wurzelchakra und einmal dem Halschakra zugeordnet.
+      Aktuell steht dort das Wurzelchakra (deine erste Aussage). Sag mir,
+      was gilt – ich wollte keine deiner beiden Aussagen einfach
+      verschwinden lassen.
 - [ ] **Foto für den Begleiter aussuchen** (eine meditierende Person). Der
       Platz dafür ist in der App schon eingebaut – sobald du mir das Bild
       schickst, erscheint es automatisch. Bis dahin steht dort das
@@ -79,12 +77,16 @@ Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entf
       mehrmals meditierst (höchstens drei Zeilen plus Zusammenfassung).
 - [x] **Die Grafik hält ein ganzes Jahr aus** – ab zehn Wochen zeigt sie
       Wochen statt Tage, vorher wurde sie zu einem braunen Block.
+- [x] **Chakren für Schmerz, Krankheit, Hals und Verdauung eingebaut** –
+      nach deinen Angaben: Schmerz führt übers Herz (Licht hinein,
+      wahrnehmen, loslassen, grünes Licht als Heilfarbe), Rücken und
+      Wirbelsäule über den Solarplexus, Verstopfung und alles im
+      Atemapparat über den Hals, sonstige Verdauung übers Sakralchakra.
 - [x] **Der Begleiter versteht jetzt Anliegen statt Kompass-Achsen** –
       „mein Rücken tut weh" führt zu Licht- und Körperentspannung mit
       passendem Mantra, nicht mehr zu „das kann ich nicht einordnen".
-      16 Themen: Schmerz, Schlaf, Angst, Stress, Wut, Trauer, Grübeln,
-      Selbstwert, Erschöpfung, Loslassen, Unruhe, Entspannen,
-      Dankbarkeit, Vertrauen, Kinder, Schwangerschaft.
+      31 Themen – von Schmerz, Schlaf und Angst über Trauer, Wut und
+      Selbstwert bis zu Verdauung, Hals/Atem, Opferrolle und Sinn.
 - [x] **Zustand nach der Meditation wird festgehalten statt dauernd
       verstellt** – mit einem Knopf „Ja, so fühle ich mich jetzt".
       Rückblick und Vergleich erscheinen erst danach.
