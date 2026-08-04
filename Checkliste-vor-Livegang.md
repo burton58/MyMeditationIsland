@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 4. August 2026 (zuletzt aktualisiert: Inselreise zählt Tage statt Meditationen)
+Stand: 4. August 2026 (zuletzt aktualisiert: „Profil" aufgeteilt in „Mein Weg" und „Einstellungen")
 
 ---
 
@@ -55,6 +55,22 @@ Stand: 4. August 2026 (zuletzt aktualisiert: Inselreise zählt Tage statt Medita
 
 ## Schon erledigt
 
+- [x] **„Profil" aufgeteilt in „Mein Weg" (persönlich) und „Einstellungen"
+      (Verwaltung, hinter einem Zahnrad).** Deine Beobachtung: Profil war
+      „ein Gemisch aus wenig Persönlichem und viel Administrativem" – Foto
+      und Fortschritt neben neun Zeilen Abo/Konto/Impressum/Datenschutz.
+      Recherche bei Calm, Headspace, Insight Timer, Duolingo und Strava:
+      überall eine einzige Seite über sich selbst, alles Verwaltende
+      hinter einem Zahnrad, kein eigener Reiter dafür. Jetzt genauso: dein
+      Foto, dein Fortschritt und deine Favoriten stehen auf „Mein Weg";
+      Abo, Konto, Insel gestalten, Über mich, Impressum, Datenschutz und
+      Verlauf löschen liegen unter dem Zahnrad auf „Mein Weg" in den
+      „Einstellungen". Die Leiste unten hat jetzt vier statt fünf Felder.
+      Als Nebeneffekt behoben: die Insel-Woche zeigte deine Serie und dein
+      Wochenziel ein zweites Mal – stand das noch auf einer eigenen
+      Profil-Seite, fiel das kaum auf; jetzt, direkt untereinander auf
+      derselben Seite, war es unübersehbar. Zeigt jetzt nur noch das
+      Wochen-Raster.
 - [x] **Minuten zählen nur noch die wirklich gehörte Zeit** – vorher wurde
       jede einzelne Meditation auf volle Minuten aufgerundet, wodurch neun
       Sitzungen zu je gut vier Minuten als 45 statt 37 Minuten erschienen.

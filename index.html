@@ -74,7 +74,7 @@
   body:not(.entered)[data-step="meditation"]  .med-page,
   body:not(.entered)[data-step="meditation2"] .medv2-page,
   body:not(.entered)[data-step="outro"]       .outro-page,
-  body:not(.entered)[data-step="profil"]      .profil-page,
+  body:not(.entered)[data-step="einstellungen"] .einstellungen-page,
   body:not(.entered)[data-step="abo"]         .abo-page,
   body:not(.entered)[data-step="ueber"]       .ueber-page,
   body:not(.entered)[data-step="konto"]       .konto-page,
@@ -621,8 +621,6 @@
     width:34px; height:34px; border-radius:50%; background:var(--gold-grad); color:#3a2e08; flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:.8rem;
   }
-  .profil-zurueck{ display:block; margin-bottom:14px; }
-  .profil-zurueck[hidden]{ display:none; }
   /* Der Pfeil auf der Inselbewohner-Karte dreht sich nach unten, wenn
      Insel-Woche und Inselreise aufgeklappt sind - so sieht man am Knopf
      selbst, ob das naechste Antippen oeffnet oder schliesst. */
@@ -850,7 +848,6 @@
   }
   .week-cell.on .kreis{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
   .week-cell.heute .kreis{ box-shadow:0 0 0 2px rgba(201,162,39,.35); }
-  .week-goal{ display:flex; justify-content:space-between; font-size:.76rem; color:var(--ink-soft); margin-bottom:6px; }
 
   .journey-path{ display:flex; align-items:center; justify-content:space-between; position:relative; margin:6px 0 14px; }
   .journey-path::before{
@@ -1189,7 +1186,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.12";
+    var AKTUELLE_VERSION = "2026-08-04.13";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1263,7 +1260,7 @@
         <h1 id="greeting">Guten Morgen ☀️</h1>
         <p>Deine Insel wartet auf dich.</p>
       </div>
-      <button class="icon-btn" id="homeProfilBtn" title="Profil">
+      <button class="icon-btn" id="homeProfilBtn" title="Mein Weg">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
       </button>
     </div>
@@ -1452,25 +1449,71 @@
        Persönliche Auswertung des Kompasses: Zustand → Begründung →
        Top-Empfehlung → weitere Empfehlungen → Fortschritt → Kategorien. -->
   <div class="page med-page" id="medPage">
-    <!-- Erscheint nur, wenn man ueber Profil -> "Statistiken" hierher kam.
-         Als normaler Reiter (unten in der Leiste) gibt es kein "Zurueck",
-         darum ist der Knopf sonst ausgeblendet. -->
-    <button class="btn-ghost profil-zurueck" id="medZurueckProfilBtn" hidden>← Zurück zum Profil</button>
+    <!-- ============ MEIN WEG ============
+         4. Aug. 2026, Christines Entscheid: "Mein Weg" ist jetzt die eine
+         Seite ueber dich - mit Foto, Fortschritt UND Favoriten. Vorher
+         war das Persoenliche auf zwei Seiten verteilt (hier die Zahlen,
+         im Profil das Foto), waehrend "Profil" gleichzeitig neun Zeilen
+         Verwaltung (Abo, Konto, Impressum, Datenschutz ...) trug - ein
+         Gemisch aus wenig Persoenlichem und viel Administrativem. Genau
+         das haben Calm, Headspace & Co. nicht: dort gibt es eine einzige
+         Seite ueber einen selbst, und alles Verwaltende sitzt hinter
+         einem Zahnrad. Das Zahnrad hier fuehrt zu "Einstellungen"
+         (vorher: die Profil-Seite, siehe dort). -->
     <div class="page-head">
       <div class="ttl">
         <h1>Mein Weg</h1>
         <p class="fd-greeting" id="fdGreeting">Was du schon geschafft hast</p>
       </div>
       <span class="fd-badge">🇨🇭 Schweizerdeutsch</span>
+      <button class="icon-btn" id="meinWegEinstellungenBtn" title="Einstellungen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
     </div>
 
-    <!-- Hier stand bis Aug. 2026 die Karte "Dein persönliches
-         Meditationstraining". Sie zeigte nichts Eigenes - immer derselbe
-         Erklärtext, nur die Knopfbeschriftung wechselte - und erklärte
-         auf der Auswertungsseite etwas, das auf der Kompass-Seite
-         passiert. Der Kompass ist über die Leiste unten ohnehin immer
-         erreichbar, darum ersatzlos entfernt. -->
+    <!-- Vom Profil hierher (4. Aug. 2026): Avatar + Inselbewohner-Karte,
+         direkt gefolgt von Insel-Woche/-Reise, die sie aufklappt - was ein
+         Knopf aufklappt, muss gleich darunter erscheinen, sonst sucht man
+         es (Christines fruehere Vorgabe, hier unveraendert weitergefuehrt). -->
+    <div class="card profile-card" id="profilKarte">
+      <!-- Avatar und Aufklapp-Bereich sind zwei getrennte Knoepfe:
+           verschachtelte <button> sind ungueltiges HTML, und die beiden
+           tun ja auch Verschiedenes (Bild waehlen vs. Auf-/Zuklappen). -->
+      <button class="profil-avatar" id="profilAvatarBtn" type="button" title="Bild ändern">
+        <span id="profilAvatarZeichen">🌴</span>
+        <img id="profilAvatarBild" alt="" hidden>
+        <span class="avatar-stift">✎</span>
+      </button>
+      <button class="profile-card-haupt" id="profilInselbewohnerBtn" type="button">
+        <span class="body">
+          <span class="name">Dein Inselbewohner</span>
+          <span class="sub" id="inselbewohnerHinweis">Deine Insel-Woche und Inselreise ansehen</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+    </div>
 
+    <!-- Auswahl fuers Profilbild: ein paar Zeichen zum Antippen und die
+         Moeglichkeit, ein eigenes Foto zu waehlen. Das Foto bleibt - wie
+         alles andere - nur auf diesem Geraet (als Text im lokalen
+         Speicher), es wird nirgendwohin geschickt. -->
+    <div class="confirm-overlay" id="avatarOverlay" hidden>
+      <div class="card confirm-card avatar-karte">
+        <h3>Dein Bild</h3>
+        <div class="avatar-auswahl" id="avatarAuswahl"></div>
+        <label class="btn-ghost full avatar-upload">
+          Eigenes Foto wählen
+          <input type="file" id="avatarDatei" accept="image/*" hidden>
+        </label>
+        <p class="avatar-hinweis">Dein Foto bleibt nur auf diesem Gerät.</p>
+        <div class="btn-row">
+          <button class="btn-ghost" id="avatarAbbrechenBtn">Schliessen</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card recap" id="profilWeekBox"></div>
+    <div class="card recap" id="profilJourneyBox"></div>
 
     <div class="section-label">Dein Fortschritt</div>
     <p class="seit-hinweis" id="seitHinweis"></p>
@@ -1488,6 +1531,13 @@
     <div class="section-label">Dein Wochenziel</div>
     <div class="card" id="wochenzielCard"></div>
 
+    <!-- Vom Profil hierher (4. Aug. 2026): vorher eine Menüzeile, die auf
+         die Bibliothek sprang - jetzt die Übungen direkt hier, startbar
+         und mit Stern zum Abwählen. Gleiche Zeilenart wie in der
+         Bibliothek (.lib-row), damit sich nichts unterschiedlich anfühlt. -->
+    <div class="section-label">Deine Favoriten</div>
+    <div class="card list-card" id="favoritenListe"></div>
+
     <div class="section-label">Deine letzten Meditationen</div>
     <div class="card" id="historyList"></div>
     <button class="btn-ghost full" id="historyMehrBtn" hidden>Alle anzeigen</button>
@@ -1504,8 +1554,9 @@
 
   <!-- ============ MEDITATIONSLEITER (Bibliothek) ============ -->
   <div class="page medv2-page" id="medV2Page">
-    <!-- Erscheint nur, wenn man ueber Profil -> "Favoriten" hierher kam. -->
-    <button class="btn-ghost profil-zurueck" id="medV2ZurueckProfilBtn" hidden>← Zurück zum Profil</button>
+    <!-- Der Zurueck-Knopf zum Profil ist entfallen (4. Aug. 2026): er
+         gehoerte zur Menüzeile "Favoriten", die jetzt direkt auf "Mein
+         Weg" steht (siehe dort) und nicht mehr hierher springt. -->
     <div class="page-head">
       <div class="ttl">
         <h1>Meditationen</h1>
@@ -1661,74 +1712,33 @@
     </div>
   </div>
 
-  <!-- ============ PROFIL ============ -->
-  <div class="page profil-page" id="profilPage">
+  <!-- ============ EINSTELLUNGEN (vorher "Profil") ============
+       4. Aug. 2026, Christines Entscheid: alles Persoenliche (Foto,
+       Fortschritt, Favoriten) ist nach "Mein Weg" gezogen (siehe dort).
+       Was hier bleibt, ist rein administrativ - Zugang, Konto, rechtliche
+       Angaben. Erreichbar nur ueber das Zahnrad auf "Mein Weg", kein
+       eigener Reiter mehr: kein grosser Anbieter in dem Bereich (Calm,
+       Headspace, Insight Timer, Duolingo, Strava) hat einen eigenen Reiter
+       nur fuer Einstellungen - das waere, als haette ein Buch ein eigenes
+       Kapitel fuer das Impressum. Darum jetzt eine echte Unterseite mit
+       Zurueck-Pfeil, wie Impressum/Datenschutz/Über die App auch. -->
+  <div class="page einstellungen-page" id="einstellungenPage">
     <div class="page-head">
-      <div class="ttl">
-        <h1>Profil</h1>
-        <p>Dein Bereich</p>
-      </div>
-    </div>
-
-    <div class="card profile-card" id="profilKarte">
-      <!-- Avatar und Aufklapp-Bereich sind zwei getrennte Knoepfe:
-           verschachtelte <button> sind ungueltiges HTML, und die beiden
-           tun ja auch Verschiedenes (Bild waehlen vs. Auf-/Zuklappen). -->
-      <button class="profil-avatar" id="profilAvatarBtn" type="button" title="Bild ändern">
-        <span id="profilAvatarZeichen">🌴</span>
-        <img id="profilAvatarBild" alt="" hidden>
-        <span class="avatar-stift">✎</span>
+      <button class="icon-btn" id="einstellungenBackBtn" title="Zurück">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <button class="profile-card-haupt" id="profilInselbewohnerBtn" type="button">
-        <span class="body">
-          <span class="name">Dein Inselbewohner</span>
-          <span class="sub" id="inselbewohnerHinweis">Deine Insel-Woche und Inselreise ansehen</span>
-        </span>
-        <span class="chev">›</span>
-      </button>
-    </div>
-
-    <!-- Auswahl fuers Profilbild: ein paar Zeichen zum Antippen und die
-         Moeglichkeit, ein eigenes Foto zu waehlen. Das Foto bleibt - wie
-         alles andere - nur auf diesem Geraet (als Text im lokalen
-         Speicher), es wird nirgendwohin geschickt. -->
-    <div class="confirm-overlay" id="avatarOverlay" hidden>
-      <div class="card confirm-card avatar-karte">
-        <h3>Dein Bild</h3>
-        <div class="avatar-auswahl" id="avatarAuswahl"></div>
-        <label class="btn-ghost full avatar-upload">
-          Eigenes Foto wählen
-          <input type="file" id="avatarDatei" accept="image/*" hidden>
-        </label>
-        <p class="avatar-hinweis">Dein Foto bleibt nur auf diesem Gerät.</p>
-        <div class="btn-row">
-          <button class="btn-ghost" id="avatarAbbrechenBtn">Schliessen</button>
-        </div>
+      <div class="ttl center">
+        <h1>Einstellungen</h1>
+        <p>Zugang, Konto und rechtliche Angaben</p>
       </div>
+      <span class="icon-btn blank"></span>
     </div>
-
-    <!-- Direkt unter der Inselbewohner-Karte, nicht erst unter der
-         Zugangs-Karte: was ein Knopf aufklappt, muss gleich darunter
-         erscheinen, sonst sucht man es. -->
-    <div class="card recap" id="profilWeekBox"></div>
-    <div class="card recap" id="profilJourneyBox"></div>
 
     <div class="status-card" id="statusCard"></div>
 
-    <div class="section-label">Einstellungen</div>
     <div class="card list-card">
       <button class="menu-row" id="profilAboBtn">
         <span class="row-icon">💳</span><span class="row-text">Abo verwalten</span><span class="chev">›</span>
-      </button>
-      <!-- Hier stand bis Aug. 2026 eine Zeile "Statistiken". Sie sprang auf
-           den Reiter "Mein Weg" - also auf genau dieselbe Seite, die die
-           Leiste unten sowieso zeigt, ohne irgendetwas zu ergaenzen. Zwei
-           Wege zum selben Inhalt lassen einen suchen, wo kein Unterschied
-           ist; darum ist sie weg. "Favoriten" bleibt, weil die Zeile den
-           Stern-Filter mitbringt und damit etwas kann, was der Reiter
-           allein nicht tut. -->
-      <button class="menu-row" id="favMenuRow">
-        <span class="row-icon">⭐</span><span class="row-text">Favoriten</span>
       </button>
       <button class="menu-row" id="profilIslandBtn">
         <span class="row-icon">🏝️</span><span class="row-text">Meine Insel gestalten</span><span class="chev">›</span>
@@ -1896,7 +1906,7 @@
       <h3>Deine Rechte</h3>
       <p>Da keine Daten bei uns gespeichert werden, gibt es serverseitig auch nichts, das wir für dich einsehen,
       ändern oder löschen könnten – das kannst du jederzeit selbst tun, direkt in der App unter
-      <strong>Profil → Verlauf löschen</strong>, oder indem du die Browserdaten deines Geräts löschst.</p>
+      <strong>Einstellungen → Verlauf löschen</strong>, oder indem du die Browserdaten deines Geräts löschst.</p>
 
       <h3>Kontakt</h3>
       <p>Fragen zum Datenschutz? <a href="mailto:chris@yogaisland.ch">chris@yogaisland.ch</a></p>
@@ -2060,7 +2070,7 @@
     <div class="btn-row"><button class="btn-ghost" id="aboBackBtn">Zurück</button></div>
   </div>
 
-  <!-- ============ INSEL GESTALTEN (über das Profil erreichbar) ============ -->
+  <!-- ============ INSEL GESTALTEN (über die Einstellungen erreichbar) ============ -->
   <div class="topbar">
     <button class="icon-btn topbar-zurueck" id="inselBackBtn" title="Zurück">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -2272,13 +2282,15 @@
   </div>
 
   <!-- ============ TABBAR ============
-       Reihenfolge (4. Aug. 2026, Christines Vorschlag): erst die beiden
-       Reiter zum TUN, dann die beiden zum NACHSCHAUEN.
-         Startseite · Kompass · Meditationen | Mein Weg · Profil
-       Vorher stand "Mein Weg" zwischen Kompass und Meditationen und
-       trennte damit die zwei Wege, eine Uebung zu waehlen (fragen lassen
-       oder selber stoebern), voneinander. Jetzt stehen sie nebeneinander,
-       und Rueckblick plus Einstellungen bilden das Paar rechts. -->
+       4. Aug. 2026, Christines Entscheid: "Profil" ist als Reiter entfallen.
+       Es war ein Gemisch aus wenig Persoenlichem (Foto, Fortschritt) und
+       viel Administrativem (Abo, Konto, Impressum, Datenschutz) - kein
+       grosser Anbieter in dem Bereich hat einen eigenen Reiter fuer
+       Einstellungen. Das Persoenliche ist jetzt Teil von "Mein Weg", das
+       Administrative liegt hinter dem Zahnrad dort (§3.6/§3.6b in
+       SPEC.md). Damit vier statt fuenf Reiter, erst die beiden zum TUN,
+       dann die beiden zum NACHSCHAUEN: Startseite · Kompass ·
+       Meditationen | Mein Weg. -->
   <nav class="tabbar" id="tabbar">
     <button class="tab-item" data-tab="home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
@@ -2295,10 +2307,6 @@
     <button class="tab-item" data-tab="meditation">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5.5" r="2.2"/><path d="M5 21c1.5-4 4-6 7-6s5.5 2 7 6"/><path d="M4 12h16"/></svg>
       <span>Mein Weg</span>
-    </button>
-    <button class="tab-item" data-tab="profil">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-      <span>Profil</span>
     </button>
   </nav>
 
@@ -3035,18 +3043,17 @@
     meditation: { label:"Schritt 2 von 3 · Für dich", sub:"Deine persönlichen Empfehlungen." },
     meditation2:{ label:"Alle Meditationen",            sub:"Die ganze Bibliothek zum Stöbern." },
     outro:      { label:"Schritt 3 von 3 · Abschluss",  sub:"Schau, was sich verändert hat." },
-    profil:     { label:"Profil",                      sub:"Deine Inselreise und dein Zugang." },
+    // "profil" ist als eigener Schritt entfallen (4. Aug. 2026) - das war
+    // sowohl Reiter als auch Seite. Das Persoenliche ist jetzt Teil von
+    // "meditation" (Mein Weg), das Administrative liegt in "einstellungen"
+    // (kein Reiter, nur ueber das Zahnrad erreichbar - wie ueber/konto/
+    // impressum/datenschutz/appinfo auch).
+    einstellungen:{ label:"", sub:"" },
     abo:        { label:"Zugang",                      sub:"Die ganze Bibliothek freischalten." }
   };
-  var TAB_FOR_STEP = { splash:"splash", home:"home", compass:"kompass", meditation:"meditation", meditation2:"meditation2", profil:"profil" };
+  var TAB_FOR_STEP = { splash:"splash", home:"home", compass:"kompass", meditation:"meditation", meditation2:"meditation2" };
 
   function goToStep(step){
-    // Der "Zurueck zum Profil"-Knopf gehoert nur zu genau einem Weg
-    // (Profil -> Statistiken/Favoriten). Darum bei jedem Seitenwechsel
-    // ausblenden; die beiden Profil-Zeilen schalten ihn direkt nach ihrem
-    // goToStep() wieder ein. So kann er auf keinem anderen Weg haengen
-    // bleiben, ohne dass jede einzelne Navigation daran denken muss.
-    setProfilZurueck(false);
     // Die Startseite zeigt immer den aktuellen Stand: Begruessung, Vorschlag
     // fuer heute und den Zustand aus dem Kompass.
     if (step === "home") renderHome();
@@ -3454,7 +3461,7 @@
   // auch nichts weiter auslöste). Hier legt die Person selbst fest, ob sie
   // eine Anzahl Meditationen oder eine Anzahl Minuten pro Woche schaffen
   // moechte; gezaehlt wird ab Montag dieser Woche, ganz wie bei der
-  // Inselwoche im Profil (montagDieserWoche() ist dieselbe Grenze).
+  // Inselwoche auf Mein Weg (montagDieserWoche() ist dieselbe Grenze).
   var WOCHENZIEL_KEY = "myisland.wochenziel.v1";
   var WERT_OPTIONEN = { anzahl:[1,2,3,4,5,6,7], minuten:[30,60,90,120,150,180,210] };
 
@@ -3570,6 +3577,10 @@
     renderWochenzielCard();
   });
 
+  // "Mein Weg" ist seit 4. Aug. 2026 die eine Seite ueber dich - Foto,
+  // Insel-Woche/-Reise und Favoriten sind vom frueheren Profil hierher
+  // gezogen (siehe Kommentar bei #medPage). renderMyMed() rendert darum
+  // jetzt beides: Fortschritt UND die persoenlichen Karten.
   function renderMyMed(){
     // Untertitel ist bewusst fest ("Was du schon geschafft hast"), nicht
     // begruessung() - die Startseite begruesst schon zeitabhaengig; diese
@@ -3579,12 +3590,19 @@
     // stand dort nur "Dein Fortschritt", ohne Zeitraum.
     document.getElementById("seitHinweis").textContent = "seit " + datumKurz(startDatum()) + " " + startDatum().getFullYear();
     renderWochenzielCard();
+    renderFavoritenSektion();
     renderHistoryList();
     var grafikOffen = !document.getElementById("fortschrittGrafik").hidden;
     if (grafikOffen) renderFortschrittGrafik();
     // Hinweis mitziehen: nach der ersten Meditation an einem zweiten Tag
     // gibt es plötzlich etwas zu sehen, dann soll die Einladung erscheinen.
     document.getElementById("grafikHinweis").hidden = grafikOffen || !grafikHatDaten();
+    renderWeek("profilWeekBox");
+    renderJourney("profilJourneyBox");
+    // renderWeek/renderJourney setzen display selbst wieder auf sichtbar,
+    // sobald Verlauf da ist - darum den Auf/Zu-Zustand danach neu anwenden,
+    // sonst waeren die Karten nach jedem Aufruf wieder offen.
+    setInselbewohnerOffen(inselbewohnerOffen);
   }
 
   // ---- Bibliothek (Seite "Meditationen") -----------------------------
@@ -3606,6 +3624,35 @@
     var i = favoriten.indexOf(id);
     if (i === -1) favoriten.push(id); else favoriten.splice(i, 1);
     try { localStorage.setItem(FAV_KEY, JSON.stringify(favoriten)); } catch (e){}
+  }
+
+  // "Deine Favoriten" auf Mein Weg (4. Aug. 2026, vom Profil hierher
+  // gezogen): vorher nur eine Menüzeile, die auf die Bibliothek sprang -
+  // jetzt die vollstaendige Liste direkt hier, startbar und mit Stern zum
+  // Abwaehlen. Dieselbe Zeilenart wie in der Bibliothek (.lib-row), damit
+  // sich nichts unterschiedlich anfuehlt.
+  function renderFavoritenSektion(){
+    var host = document.getElementById("favoritenListe");
+    if (!host) return;
+    var gemacht = schonGemacht();
+    var liste = MEDITATIONS.filter(function(m){ return istFavorit(m.id); });
+    if (!liste.length){
+      host.innerHTML = '<p class="lib-leer">Markiere eine Übung mit dem Stern, dann steht sie hier.</p>';
+      return;
+    }
+    host.innerHTML = liste.map(function(m){
+      var frei = istFrei(m.id);
+      return '<div class="lib-row' + (frei ? '' : ' locked') + '" data-play="' + m.id + '">' +
+        '<span class="row-thumb">' + katIcon(m.dir) + '</span>' +
+        '<span class="lib-row-body">' +
+          '<span class="lib-row-name">' + m.name + (frei ? '' : ' 🔒') +
+            (gemacht[m.name] ? '<span class="lib-done">schon gemacht</span>' : '') + '</span>' +
+          '<span class="lib-row-desc">' + m.min + ' Min · ' + katName(m.dir) + '</span>' +
+        '</span>' +
+        '<button class="fav-btn on" data-fav="' + m.id + '" title="Nicht mehr merken">★</button>' +
+        '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
+      '</div>';
+    }).join("");
   }
 
   // Welche Uebungen schon einmal gelaufen sind - aus dem echten Verlauf.
@@ -3692,6 +3739,7 @@
       e.stopPropagation();
       toggleFavorit(favEl.getAttribute("data-fav"));
       renderMedListV2();
+      renderFavoritenSektion();   // haelt "Mein Weg" mit der Bibliothek synchron
       return;
     }
     var playEl = e.target.closest("[data-play]");
@@ -4111,7 +4159,7 @@
   // nur "grüblerisch") - Aug. 2026 auf Christines Wunsch. Wird an allen
   // Stellen benutzt, wo ein Zustand als Wert in einer Zeile steht: im
   // Rückblick der Abschluss-Seite und in den Vorher/Nachher-Zeilen der
-  // Insel-Woche im Profil. Damit steht dort dasselbe, was auch die grosse
+  // Insel-Woche auf Mein Weg. Damit steht dort dasselbe, was auch die grosse
   // Anzeige unter dem Kompass sagt (moodWort()), statt einer gröberen
   // Fassung ohne Abstufung. Kleingeschrieben, weil es hinter dem Emoji
   // mitten in der Zeile steht und kein Satzanfang ist.
@@ -4272,32 +4320,21 @@
       '</div>';
     }).join("");
 
+    // Bis 4. Aug. 2026 stand hier zusaetzlich eine "zielZeile()" mit der
+    // Serie ("X Tage am Stück") und dem Wochenziel-Bruch - dieselben zwei
+    // Zahlen wie in "Dein Fortschritt" und "Dein Wochenziel" direkt
+    // darunter. Solange Insel-Woche auf einer eigenen Seite (Profil) und
+    // Fortschritt auf einer anderen (Mein Weg) standen, fiel das kaum auf;
+    // jetzt sitzen alle drei Karten auf derselben Seite direkt
+    // untereinander, und dieselben zwei Zahlen drei Mal zu lesen ist keine
+    // Bestaetigung, sondern nur Rauschen. Die Insel-Woche zeigt daher nur
+    // noch das, was sie einzigartig kann: das Muster der Woche als Raster
+    // und - aufgeklappt - die Vorher/Nachher-Werte je Tag.
     box.innerHTML =
       '<div class="box-head"><h4>Deine Inselwoche</h4>' +
         (details ? '<button data-auf="wochenDetails">Details</button>' : '') + '</div>' +
       '<div class="week-grid">' + raster + '</div>' +
-      zielZeile() +
       (details ? '<div id="wochenDetails" hidden style="margin-top:12px;">' + details + '</div>' : '');
-
-    // Es gibt nur EIN Ziel, und zwar das selbst gesetzte Wochenziel von
-    // "Mein Weg" (Aug. 2026, Christines Entscheid). Vorher stand hier ein
-    // zweites, fest einprogrammiertes "Ziel: 7 Tage" daneben - zwei Ziele
-    // nebeneinander, von denen eines niemandem gehoerte. Ohne gesetztes
-    // Ziel bleiben Zielzeile und Balken weg; dann steht nur die Serie da.
-    function zielZeile(){
-      var serie = computeStreak();
-      var serieText = serie + (serie === 1 ? ' Tag' : ' Tage') + ' am Stück';
-      var ziel = loadWochenziel();
-      if (!ziel) return '<div class="week-goal"><span>' + serieText + '</span></div>';
-      var f = wochenFortschritt();
-      var erreicht = ziel.typ === "minuten" ? f.minuten : f.anzahl;
-      var einheit = ziel.typ === "minuten" ? "Minuten" : (ziel.wert === 1 ? "Meditation" : "Meditationen");
-      var pct = Math.min(100, Math.round(erreicht / ziel.wert * 100));
-      var geschafft = erreicht >= ziel.wert;   // gleiche Regel wie auf "Mein Weg"
-      return '<div class="week-goal"><span>' + serieText + '</span>' +
-        '<span>' + (geschafft ? '🌴 ' : '') + erreicht + ' / ' + ziel.wert + ' ' + einheit + '</span></div>' +
-        '<div class="bar' + (geschafft ? ' voll' : '') + '"><span style="width:' + pct + '%"></span></div>';
-    }
   }
 
   // Wie viele Tage am Stück zuletzt meditiert wurde.
@@ -4470,7 +4507,7 @@
     }
   }
 
-  // ---- Profil ----
+  // ---- Zugangs-Status (Einstellungen) ----
   function renderStatusCard(){
     var el = document.getElementById("statusCard");
     if (!ABO_LIVE){
@@ -4520,14 +4557,10 @@
     }
   }
 
-  function renderProfil(){
+  // Einstellungen: nur noch die Zugangs-Karte ist hier dynamisch, der Rest
+  // der Seite ist feste Menü-Liste (siehe Kommentar bei #profilPage).
+  function renderEinstellungen(){
     renderStatusCard();
-    renderWeek("profilWeekBox");
-    renderJourney("profilJourneyBox");
-    // renderWeek/renderJourney setzen display selbst wieder auf sichtbar,
-    // sobald Verlauf da ist - darum den Auf/Zu-Zustand danach neu anwenden,
-    // sonst waeren die Karten nach jedem Profil-Aufruf wieder offen.
-    setInselbewohnerOffen(inselbewohnerOffen);
   }
 
   // ---- Abo ----
@@ -4566,7 +4599,7 @@
       renderAbo(); renderMyMed();
       document.getElementById("payNote").innerHTML =
         '<strong>Zum Ausprobieren freigeschaltet.</strong><br>Es wurde nichts bezahlt. ' +
-        'Im Profil kannst du das wieder zurücksetzen.';
+        'In den Einstellungen kannst du das wieder zurücksetzen.';
     });
   }
 
@@ -5484,8 +5517,8 @@
     minuten = minutenAus(sekunden);
     // Tage am Stueck ueber computeStreak(), nicht nochmals von Hand: die
     // Zaehlung stand hier frueher ein zweites Mal im Code. Zwei Kopien
-    // derselben Regel gehen irgendwann auseinander, und dann zeigen
-    // "Mein Weg" und das Profil verschiedene Zahlen fuer dasselbe.
+    // derselben Regel gehen irgendwann auseinander, und dann zeigen zwei
+    // Stellen auf derselben Seite verschiedene Zahlen fuer dasselbe.
     document.getElementById("statStreak").textContent = computeStreak();
     document.getElementById("statCount").textContent = anzahl;
     document.getElementById("statMinutes").textContent = minuten;
@@ -5910,28 +5943,29 @@
     starteMeditation("dankblitz");
   });
 
-  // "Über mich": von der Titelseite und aus dem Profil erreichbar; der
-  // Zurück-Pfeil führt dorthin, wo man hergekommen ist.
+  // "Über mich": von der Titelseite und aus den Einstellungen erreichbar;
+  // der Zurück-Pfeil führt dorthin, wo man hergekommen ist.
   var ueberZurueck = "splash";
   document.getElementById("splashUeberBtn").addEventListener("click", function(){
     ueberZurueck = "splash"; goToStep("ueber");
   });
   document.getElementById("profilUeberMichBtn").addEventListener("click", function(){
-    ueberZurueck = "profil"; goToStep("ueber");
+    ueberZurueck = "einstellungen"; goToStep("ueber");
   });
   document.getElementById("ueberBackBtn").addEventListener("click", function(){
     goToStep(ueberZurueck);
   });
   document.getElementById("ueberCtaBtn").addEventListener("click", function(){ goToStep("home"); });
 
-  // Impressum & Datenschutz: aus Profil und von der Abo-Seite erreichbar;
-  // der Zurück-Pfeil fuehrt dorthin, wo man hergekommen ist (wie bei "Über mich").
-  var legalZurueck = "profil";
+  // Impressum & Datenschutz: aus den Einstellungen und von der Abo-Seite
+  // erreichbar; der Zurück-Pfeil fuehrt dorthin, wo man hergekommen ist
+  // (wie bei "Über mich").
+  var legalZurueck = "einstellungen";
   document.getElementById("profilImpressumBtn").addEventListener("click", function(){
-    legalZurueck = "profil"; goToStep("impressum");
+    legalZurueck = "einstellungen"; goToStep("impressum");
   });
   document.getElementById("profilDatenschutzBtn").addEventListener("click", function(){
-    legalZurueck = "profil"; goToStep("datenschutz");
+    legalZurueck = "einstellungen"; goToStep("datenschutz");
   });
   document.getElementById("aboImpressumBtn").addEventListener("click", function(){
     legalZurueck = "abo"; goToStep("impressum");
@@ -5965,7 +5999,7 @@
     goToStep("konto");
   }
   document.getElementById("splashKontoBtn").addEventListener("click", function(){ zumKonto("splash"); });
-  document.getElementById("profilKontoBtn").addEventListener("click", function(){ zumKonto("profil"); });
+  document.getElementById("profilKontoBtn").addEventListener("click", function(){ zumKonto("einstellungen"); });
   document.getElementById("kontoBackBtn").addEventListener("click", function(){ goToStep(kontoZurueck); });
   document.getElementById("kontoAboBtn").addEventListener("click", function(){
     renderAbo(); goToStep("abo");
@@ -6005,40 +6039,17 @@
   document.getElementById("homeToCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
   // Das Insel-Feld in der Tabbar ist weg (siehe unten); der Weg zur
   // Titelseite fuehrt jetzt ueber das Foto hier und weiterhin ueber
-  // "Zur Titelseite" ganz unten im Profil.
+  // "Zur Titelseite" ganz unten in den Einstellungen.
   document.getElementById("homeHeroBtn").addEventListener("click", function(){ goToStep("splash"); });
+  // Fuehrt seit 4. Aug. 2026 zu "Mein Weg" statt zu "Profil" - dort steht
+  // jetzt das Foto samt Fortschritt (siehe Kommentar bei #medPage).
   document.getElementById("homeProfilBtn").addEventListener("click", function(){
-    renderProfil(); goToStep("profil");
+    renderMyMed(); goToStep("meditation");
   });
   document.getElementById("toSplashBtn").addEventListener("click", function(){ goToStep("splash"); });
   document.getElementById("profilIslandBtn").addEventListener("click", function(){ goToStep("island"); });
-  // "Statistiken" und "Favoriten" springen auf einen anderen Reiter. Wer so
-  // dorthin kommt, will danach normalerweise zurueck ins Profil - darum
-  // blendet sich auf der Zielseite ein Zurueck-Knopf ein. Ueber die Leiste
-  // unten aufgerufen bleibt er weg (dort ist der Reiter das Zuhause, kein
-  // Zwischenstopp). setProfilZurueck() schaltet beide Knoepfe gemeinsam.
-  function setProfilZurueck(sichtbar){
-    ["medZurueckProfilBtn", "medV2ZurueckProfilBtn"].forEach(function(id){
-      var b = document.getElementById(id);
-      if (b) b.hidden = !sichtbar;
-    });
-  }
-  ["medZurueckProfilBtn", "medV2ZurueckProfilBtn"].forEach(function(id){
-    document.getElementById(id).addEventListener("click", function(){
-      setProfilZurueck(false);
-      renderProfil();
-      goToStep("profil");
-    });
-  });
-  // Hier stand der Zuhoerer fuer "Statistiken". Die Zeile ist weg (siehe
-  // Kommentar bei der Einstellungs-Liste); "Mein Weg" in der Leiste unten
-  // zeigt genau dasselbe.
-  document.getElementById("favMenuRow").addEventListener("click", function(){
-    openCatV2("fav"); goToStep("meditation2");
-    setProfilZurueck(true);
-  });
   // "Dein Inselbewohner" klappt Insel-Woche und Inselreise auf und wieder zu
-  // (Christines Wunsch): standardmaessig sind beide zu, damit die Profil-Seite
+  // (Christines Wunsch): standardmaessig sind beide zu, damit die Seite
   // ruhig bleibt; ein Tipp zeigt sie, der naechste versteckt sie wieder. Der
   // Pfeil dreht sich mit, damit man den Zustand sieht.
   var inselbewohnerOffen = false;
@@ -6158,11 +6169,11 @@
     renderAppinfo(); goToStep("appinfo");
   });
   document.getElementById("appinfoBackBtn").addEventListener("click", function(){
-    renderProfil(); goToStep("profil");
+    renderEinstellungen(); goToStep("einstellungen");
   });
   // Von "Über die App" weiter zu den drei verwandten Seiten. legalZurueck /
   // ueberZurueck merken sich, dass es zurueck hierher geht - sonst landet
-  // man ueber den Zurueck-Pfeil im Profil und muss den Weg neu suchen.
+  // man ueber den Zurueck-Pfeil in den Einstellungen und muss den Weg neu suchen.
   document.getElementById("appinfoUeberMichBtn").addEventListener("click", function(){
     ueberZurueck = "appinfo"; goToStep("ueber");
   });
@@ -6193,16 +6204,16 @@
   });
   // Beide Zurueck-Knoepfe der Abo-Seite (oben im Kopf und unten) tun
   // dasselbe. Oben, weil Christine ihn dort erwartet hat - wie auf den
-  // anderen Unterseiten des Profils auch.
+  // anderen Unterseiten der Einstellungen auch.
   ["aboBackBtn", "aboBackTopBtn"].forEach(function(id){
     document.getElementById(id).addEventListener("click", function(){
-      renderProfil(); goToStep("profil");
+      renderEinstellungen(); goToStep("einstellungen");
     });
   });
   // "Meine Insel gestalten" hatte bisher gar keinen Zurueck-Weg im Kopf,
   // nur "Weiter zum Kompass" ganz unten.
   document.getElementById("inselBackBtn").addEventListener("click", function(){
-    renderProfil(); goToStep("profil");
+    renderEinstellungen(); goToStep("einstellungen");
   });
   document.getElementById("planJahr").addEventListener("click", function(){ planGewaehlt("jahr"); });
   document.getElementById("planMonat").addEventListener("click", function(){ planGewaehlt("monat"); });
@@ -6233,9 +6244,17 @@
       function(){
         try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(ABO_KEY); } catch (e){}
         currentEntryTs = null;
-        renderProfil();
+        renderEinstellungen();
       }
     );
+  });
+  // Zahnrad auf "Mein Weg" -> Einstellungen (4. Aug. 2026, ersetzt den
+  // frueheren Profil-Reiter, siehe Kommentar bei #medPage).
+  document.getElementById("meinWegEinstellungenBtn").addEventListener("click", function(){
+    renderEinstellungen(); goToStep("einstellungen");
+  });
+  document.getElementById("einstellungenBackBtn").addEventListener("click", function(){
+    renderMyMed(); goToStep("meditation");
   });
 
   document.querySelectorAll(".tab-item").forEach(function(btn){
@@ -6246,7 +6265,6 @@
       if (tab === "kompass"){ goToStep("compass"); return; }
       if (tab === "meditation"){ renderMyMed(); goToStep("meditation"); return; }
       if (tab === "meditation2"){ closeCatV2(); goToStep("meditation2"); return; }
-      if (tab === "profil"){ renderProfil(); goToStep("profil"); return; }
     });
   });
 
