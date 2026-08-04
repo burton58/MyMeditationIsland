@@ -23,12 +23,6 @@ Stand: 4. August 2026 (zuletzt aktualisiert: Chakren-Zuordnung für Schmerz, Kra
 - [ ] **Entscheiden, ob und wie Nutzung gemessen werden soll** (z. B. wie viele
       die Testphase abschliessen) – das ist auch eine Datenschutz-Frage, nicht
       nur eine technische.
-- [ ] **Eine Zuordnung ist noch doppelt.** „Zu fest in der Vergangenheit",
-      „zu fest in der Zukunft" und „nicht richtig im Körper" hast du
-      einmal dem Wurzelchakra und einmal dem Halschakra zugeordnet.
-      Aktuell steht dort das Wurzelchakra (deine erste Aussage). Sag mir,
-      was gilt – ich wollte keine deiner beiden Aussagen einfach
-      verschwinden lassen.
 - [ ] **Foto für den Begleiter aussuchen** (eine meditierende Person). Der
       Platz dafür ist in der App schon eingebaut – sobald du mir das Bild
       schickst, erscheint es automatisch. Bis dahin steht dort das
@@ -77,6 +71,10 @@ Stand: 4. August 2026 (zuletzt aktualisiert: Chakren-Zuordnung für Schmerz, Kra
       mehrmals meditierst (höchstens drei Zeilen plus Zusammenfassung).
 - [x] **Die Grafik hält ein ganzes Jahr aus** – ab zehn Wochen zeigt sie
       Wochen statt Tage, vorher wurde sie zu einem braunen Block.
+- [x] **„Zu fest in der Vergangenheit" bietet jetzt mehrere Wege an** –
+      zuerst ankommen im Körper, danach zur Auswahl: Nacken und
+      Halswirbel übers Halschakra (Nervensystem), runder Rücken und enge
+      Brust übers Herz, zu fest in den Gedanken übers Wurzelchakra.
 - [x] **Chakren für Schmerz, Krankheit, Hals und Verdauung eingebaut** –
       nach deinen Angaben: Schmerz führt übers Herz (Licht hinein,
       wahrnehmen, loslassen, grünes Licht als Heilfarbe), Rücken und

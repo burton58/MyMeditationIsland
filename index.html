@@ -1026,7 +1026,10 @@
   .companion-foto .ersatz{ position:absolute; font-size:1.35rem; opacity:0; }
   .companion-foto.kein-bild .ersatz{ opacity:1; }
   .chat{ max-height:230px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
-  .bubble{ padding:10px 13px; border-radius:14px; font-size:.85rem; line-height:1.5; max-width:85%; }
+  /* pre-line: bei mehrschichtigen Antworten (erst ankommen, dann die
+     weiteren Wege) setzt der Begleiter Zeilenumbrueche - sonst stuenden
+     drei Vorschlaege als ein einziger Fliesstext-Block da. */
+  .bubble{ padding:10px 13px; border-radius:14px; font-size:.85rem; line-height:1.5; max-width:85%; white-space:pre-line; }
   .bubble.ai{ background:var(--cream-2); align-self:flex-start; border-bottom-left-radius:5px; }
   .bubble.me{ background:var(--gold-grad); color:#3a2e08; align-self:flex-end; border-bottom-right-radius:5px; }
   .bubble.typing{ opacity:.6; }
@@ -1186,7 +1189,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.9";
+    var AKTUELLE_VERSION = "2026-08-04.10";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4786,7 +4789,7 @@
       mudra:"Surya Mudra" },
 
     { id:"loslassen", chakra:"hals",
-      woerter:["loslassen","los lassen","festhalt","vergangenheit","widerstand","verzeih","groll","nachtragend","kann nicht vergessen","hängt mir nach","haengt mir nach","alte geschichte"],
+      woerter:["loslassen","los lassen","festhalt","widerstand","verzeih","groll","nachtragend","kann nicht vergessen","hängt mir nach","haengt mir nach","alte geschichte"],
       intro:"Loslassen heisst nicht vergessen – nur, es nicht mehr die ganze Zeit tragen zu müssen.",
       meds:["loslassen_traegt","halschakra","verzeihen_erster","grosses_loslassen","verzeihen_tief"],
       mantra:"Ich darf jetzt loslassen.",
@@ -4814,7 +4817,7 @@
       mudra:"Anjali Mudra" },
 
     { id:"vertrauen", chakra:"sakral",
-      woerter:["vertrauen","kein vertrauen","zutrauen","mut","traue mich nicht","entscheidung","zukunft","ungewiss"],
+      woerter:["vertrauen","kein vertrauen","zutrauen","mut","traue mich nicht"],
       intro:"Vertrauen wächst in kleinen Schritten, nicht auf einmal.",
       meds:["vertrauensanker","sakralchakra","vertrauenaufbauen","tiefes_vertrauen"],
       mantra:"Ich bin mit mir selbst im Reinen.",
@@ -4872,10 +4875,33 @@
       mantra:"Was ich fühle, darf da sein.",
       mudra:"Karana Mudra" },
 
+    // "Zu fest in der Vergangenheit" ist laut Christine (4. Aug. 2026)
+    // KEIN einzelnes Chakra, sondern ein vielschichtiges Thema - das war
+    // auch die Aufloesung der Frage, ob es zum Wurzel- oder zum
+    // Halschakra gehoert: es kann beides sein, je nachdem, was koerperlich
+    // noch dazukommt. Ihre Reihenfolge:
+    //  1. IMMER zuerst ankommen - im Koerper spueren, wo man gerade ist,
+    //     und im Jetzt ankommen. Erst danach alles Weitere.
+    //  2. Nacken und Halswirbel haengen damit zusammen, ueber das
+    //     Nervensystem - dafuer beruhigende Uebungen und der Hals.
+    //  3. Ein runder Ruecken macht die Brust eng - dann die Brust oeffnen,
+    //     also das Herz.
+    //  4. Wer zu fest in den Gedanken haengt, braucht Boden - Wurzelchakra.
+    // Darum bekommt dieses Anliegen "wege": erst ein Schritt, dann eine
+    // kurze Auswahl, statt einer einzigen Empfehlung, die so tut, als
+    // gaebe es nur einen Weg.
     { id:"vergangenheit", chakra:"wurzel",
-      woerter:["vergangenheit","früher","frueher","kindheit","damals","alte wunde","alte geschichten","nachtrauern","hätte ich","haette ich","bereue","reue","schuld von damals"],
-      intro:"Die Vergangenheit lässt sich nicht ändern – aber du kannst dich hierher zurückholen.",
-      meds:["erdungsatem","wurzelchakra","loslassen_traegt","verzeihen_erster","grosses_loslassen"],
+      woerter:["vergangenheit","in der vergangenheit","früher","frueher","kindheit","meine kindheit","aus der kindheit","damals","alte wunde","alte geschichten","nachtrauern","hätte ich","haette ich","bereue","reue","schuld von damals"],
+      intro:"Zu fest in der Vergangenheit heisst meistens: zu wenig im Hier und Jetzt. Fang mit dem Ankommen an – spür, wo dein Körper gerade ist.",
+      meds:["bodyscan_kurz","erdungsatem","wurzelchakra","loslassen_traegt","grosses_loslassen"],
+      wege:[
+        { wenn:"Wenn der Nacken oder die Halswirbel mitmachen", med:"halschakra",
+          warum:"das hängt übers Nervensystem zusammen – beruhigende Übungen und der Hals lösen das" },
+        { wenn:"Wenn der Rücken rund und die Brust eng ist", med:"herzchakra",
+          warum:"dann tut es gut, die Brust wieder zu öffnen" },
+        { wenn:"Wenn du zu fest in den Gedanken hängst", med:"wurzelchakra",
+          warum:"das bringt dich zurück auf den Boden" }
+      ],
       mantra:"Ich darf jetzt loslassen.",
       mudra:"Ksepana Mudra" },
 
@@ -5026,6 +5052,23 @@
   // Herzen ankommen; grünes Licht als Farbe der Heilung).
   function hinweisSatz(a){ return (a && a.hinweis) ? (" " + a.hinweis) : ""; }
 
+  // Mehrere Wege statt einer einzigen Empfehlung. Christines Grundsatz:
+  // zuerst ankommen, danach kommt es darauf an, was koerperlich noch
+  // dazugehoert - und dafuer gibt es verschiedene Uebungen. Der Begleiter
+  // nennt sie als kurze Auswahl unter der ersten Empfehlung, statt so zu
+  // tun, als gaebe es nur einen richtigen Weg.
+  // Zeilenumbrueche sind Absicht: die Chat-Blase rendert sie (pre-line).
+  function wegeSatz(a, schonEmpfohlen){
+    if (!a || !a.wege || !a.wege.length) return "";
+    var zeilen = a.wege.map(function(w){
+      var m = MEDITATIONS.filter(function(x){ return x.id === w.med; })[0];
+      if (!m || !istFrei(w.med) || m.name === schonEmpfohlen) return null;
+      return "· " + w.wenn + ": „" + m.name + "“ – " + w.warum + ".";
+    }).filter(Boolean);
+    if (!zeilen.length) return "";
+    return "\n\nDanach kannst du weitergehen, je nachdem, was noch da ist:\n" + zeilen.join("\n");
+  }
+
   function chakraSatz(a, schonEmpfohlen, text){
     // Eine Feinabstimmung darf das Chakra des Anliegens ueberschreiben:
     // Schmerz fuehrt sonst zum Herzchakra, bei Ruecken und Wirbelsaeule
@@ -5035,6 +5078,10 @@
     var key = (regel && regel.chakra) ? regel.chakra : (a && a.chakra);
     var c = key ? CHAKREN[key] : null;
     if (!c) return "";
+    // Bringt das Anliegen mehrere Wege mit, steht das Chakra schon in
+    // dieser Auswahl - ein zusaetzlicher, allgemeiner Chakra-Satz davor
+    // wuerde dasselbe zweimal sagen und der Auswahl widersprechen.
+    if (a && a.wege && a.wege.length) return "";
     var uebung = MEDITATIONS.filter(function(m){ return m.id === c.med; })[0];
     // Wenn das Anliegen einen eigenen fachlichen Hinweis mitbringt (z. B.
     // der Schmerz-Weg), entfaellt der Verweis auf die Chakra-Uebung: sonst
@@ -5097,12 +5144,12 @@
           bonus = " Als kleine Ergänzung ein Mantra: „" + mantra.text + "“.";
         }
         return intro + " Ich hab dir eine Übung herausgesucht, die dazu passt." +
-          chakraSatz(a, med.name, text) + hinweisSatz(a) + bonus +
+          chakraSatz(a, med.name, text) + hinweisSatz(a) + bonus + wegeSatz(a, med.name) +
           " [EMPFEHLUNG: " + med.name + "]";
       }
       // Kein Meditations-Kontext (oder nichts frei): dann wenigstens
       // Chakra, Mudra und Mantra - hier fehlt ja die Übung.
-      var teile = [intro + chakraSatz(a, null, text) + hinweisSatz(a)];
+      var teile = [intro + chakraSatz(a, null, text) + hinweisSatz(a) + wegeSatz(a, null)];
       if (mudra) teile.push("Ein Mudra dafür: " + mudraSatz(mudra));
       if (mantra) teile.push("Und ein Satz dazu: „" + mantra.text + "“.");
       return teile.join(" ");

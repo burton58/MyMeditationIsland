@@ -487,7 +487,16 @@ Sie hat die Zuordnung selbst diktiert; `CHAKREN` gibt sie wörtlich wieder, es i
 - **Krankheit** steht jetzt beim **Halschakra** ("Krankheiten, die man zurückbehalten möchte") statt beim Wurzelchakra, das nur meine Annahme war.
 - Zwei neue Anliegen: **`hals_atem`** (Kloss im Hals, Heiserkeit, Husten, Asthma, "kann es nicht aussprechen") und **`verdauung`** (auch ohne das Wort "Schmerz").
 
-**Weiterhin offen:** *Vergangenheit / Zukunft / nicht richtig im Körper* hat sie einmal dem **Wurzelchakra** und einmal dem **Halschakra** zugeordnet. Im Code steht weiter das Wurzelchakra (ihre erste, ausdrückliche Aussage). Bitte klären, statt eine der beiden Aussagen still verschwinden zu lassen.
+**Aufgelöst (4. Aug. 2026):** Die Frage, ob *"zu fest in der Vergangenheit"* zum Wurzel- oder zum Halschakra gehört, war falsch gestellt — Christines Antwort: **beides, je nachdem, was körperlich dazukommt.** Das Thema ist vielschichtig, und die App soll deshalb **mehrere Wege anbieten statt eines**. Ihre Reihenfolge:
+
+1. **Immer zuerst ankommen** — im Körper spüren, wo man gerade ist, und im Jetzt ankommen (`bodyscan_kurz`). Erst danach alles Weitere.
+2. **Nacken und Halswirbel** hängen damit zusammen, über das **Nervensystem** — dafür beruhigende Übungen und das **Halschakra**.
+3. **Ein runder Rücken** macht die Brust eng — dann die Brust öffnen, also das **Herz**.
+4. Wer **zu fest in den Gedanken** hängt, braucht Boden — **Wurzelchakra**.
+
+Umgesetzt über ein optionales Feld **`wege`** am Anliegen: `wegeSatz()` hängt unter die erste Empfehlung eine kurze Auswahl ("Danach kannst du weitergehen, je nachdem, was noch da ist: …"). Bringt ein Anliegen `wege` mit, **entfällt der allgemeine Chakra-Satz** — das Chakra steckt schon in den einzelnen Wegen, sonst stünde dasselbe zweimal und würde der Auswahl widersprechen. Für die Zeilenumbrüche hat `.bubble` neu `white-space: pre-line`; ohne das stünden die drei Wege als ein Fliesstext-Block da.
+
+**Falle bei Stichwort-Überschneidungen (wieder aufgetreten):** "vergangenheit" stand sowohl bei `loslassen` als auch bei `vergangenheit`, "zukunft" sowohl bei `vertrauen` als auch bei `zukunft`. Bei gleicher Wortlänge gewinnt das Anliegen, das **weiter oben** in der Liste steht — und das war jeweils das allgemeinere. Beim Ergänzen eines Anliegens also prüfen, ob eines seiner Wörter schon woanders steht; das speziellere Anliegen muss es exklusiv haben.
 
 **Länge der Antworten:** Bringt ein Anliegen einen eigenen `hinweis` mit, entfällt der Verweis auf die Chakra-Übung ("Wenn du direkt daran arbeiten magst: …") — sonst wird die Antwort eine Wand aus fünf Sätzen, und der fachliche Hinweis ist das Wertvollere von beiden. Ein Anliegen, dessen Chakra-Text ohnehin schon dasselbe sagt (`hals_atem`), bekommt gar keinen `hinweis`.
 
