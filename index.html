@@ -676,6 +676,7 @@
   .hist-row .meta{ display:block; font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
   /* Startbare Zeile: soll sich auch anfassbar anfuehlen, sonst sieht sie
      aus wie die reinen Verlaufszeilen daneben. */
+  .fokus-summe{ padding:10px 14px; font-size:.78rem; color:var(--ink-soft); border-top:1px solid var(--line); }
   .hist-row.startbar{ cursor:pointer; }
   .hist-row.startbar:active{ background:var(--cream-2); }
   .hist-leer{ padding:18px 14px; font-size:.86rem; color:var(--ink-soft); text-align:center; margin:0; }
@@ -1185,7 +1186,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.7";
+    var AKTUELLE_VERSION = "2026-08-04.8";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3240,10 +3241,32 @@
   // Alle freien Uebungen, die beste zuerst: erst die Richtung des Kompasses,
   // dann was zur gewaehlten Zeit passt, dann die Anspannung (angespannt =
   // kurz und erdend zuerst, ruhig = tief zuerst).
+  // Wie oft eine Uebung schon gehoert wurde - fuer die Abwechslung in der
+  // Empfehlung (siehe unten). Anders als schonGemacht() (nur ja/nein).
+  function gehoertWieOft(){
+    var zaehler = {};
+    loadHistory().forEach(function(e){
+      (e.meds || []).forEach(function(m){ zaehler[m.name] = (zaehler[m.name] || 0) + 1; });
+    });
+    return zaehler;
+  }
+
   function empfehlungsPool(){
     var dir = dirFromCompass(compassBefore);
     var angespannt = compassBefore.x < 0;
     var rang = { mini:0, mittel:1, tief:2 };
+    // Abwechslung (Aug. 2026): Im Test kamen bei zehn Durchlaeufen nur
+    // fuenf verschiedene Uebungen heraus, eine davon viermal - obwohl 47
+    // in der Bibliothek stehen. Grund: die Reihenfolge haengt nur am
+    // Kompass und an der Dauer, ist bei gleichem Zustand also immer
+    // dieselbe, und ganz oben steht dann jedes Mal dieselbe Uebung. Wer
+    // sich zweimal gleich fuehlt, bekam zweimal dasselbe vorgeschlagen.
+    // Jetzt zaehlt zusaetzlich, wie oft etwas schon gehoert wurde: noch
+    // nie Gehoertes kommt zuerst, danach das laenger Zurueckliegende.
+    // Wichtig: das ist ein Kriterium NACH der Richtung, nicht davor - es
+    // sortiert innerhalb dessen, was ohnehin passt, statt etwas
+    // Unpassendes nach oben zu holen.
+    var oft = gehoertWieOft();
     var pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
     pool.sort(function(a,b){
       var ra = a.dir === dir ? 0 : 1, rb = b.dir === dir ? 0 : 1;
@@ -3251,6 +3274,8 @@
       var da = Math.abs(a.min - durationV2), db = Math.abs(b.min - durationV2);
       var pa = da <= 4 ? 0 : 1, pb = db <= 4 ? 0 : 1;
       if (pa !== pb) return pa - pb;
+      var oa = oft[a.name] || 0, ob = oft[b.name] || 0;
+      if (oa !== ob) return oa - ob;              // Unbekanntes zuerst
       if (pa === 0){
         var ta = rang[a.cat], tb = rang[b.cat];
         if (ta !== tb) return angespannt ? ta - tb : tb - ta;
@@ -3545,7 +3570,11 @@
     document.getElementById("seitHinweis").textContent = "seit " + datumKurz(startDatum()) + " " + startDatum().getFullYear();
     renderWochenzielCard();
     renderHistoryList();
-    if (!document.getElementById("fortschrittGrafik").hidden) renderFortschrittGrafik();
+    var grafikOffen = !document.getElementById("fortschrittGrafik").hidden;
+    if (grafikOffen) renderFortschrittGrafik();
+    // Hinweis mitziehen: nach der ersten Meditation an einem zweiten Tag
+    // gibt es plötzlich etwas zu sehen, dann soll die Einladung erscheinen.
+    document.getElementById("grafikHinweis").hidden = grafikOffen || !grafikHatDaten();
   }
 
   // ---- Bibliothek (Seite "Meditationen") -----------------------------
@@ -4218,10 +4247,17 @@
       return '<div class="week-row">' +
         '<span class="week-day">' + WEEKDAYS[t.datum.getDay()] +
           (t.eintraege.length > 1 ? ' · ' + t.eintraege.length + ' Mal' : '') + '</span>' +
-        '<span class="week-line"><span class="lbl">Vorher:</span> ' + moodHtml(erste.before) + '</span>' +
-          // Nur zeigen, was die Person auch wirklich angegeben hat - sonst
+        // Bei mehreren Sitzungen an einem Tag heissen die Zeilen "Zuerst"
+        // und "Zuletzt" statt "Vorher"/"Nachher". Vorher las sich ein Tag
+        // mit zehn Sitzungen wie EIN Vorher-Nachher-Paar - als waere es
+        // ueber den Tag schlechter geworden, obwohl jede einzelne Sitzung
+        // fuer sich entspannter geendet hatte.
+        '<span class="week-line"><span class="lbl">' +
+          (t.eintraege.length > 1 ? 'Zuerst:' : 'Vorher:') + '</span> ' + moodHtml(erste.before) + '</span>' +
+        // Nur zeigen, was die Person auch wirklich angegeben hat - sonst
         // stuende hier ihr Ausgangszustand als vermeintliches Ergebnis.
-        '<span class="week-line"><span class="lbl">Nachher:</span> ' +
+        '<span class="week-line"><span class="lbl">' +
+          (t.eintraege.length > 1 ? 'Zuletzt:' : 'Nachher:') + '</span> ' +
           (istBestaetigt(letzte) ? moodHtml(letzte.after) : '<span class="week-offen">nicht angegeben</span>') + '</span>' +
       '</div>';
     }).join("");
@@ -4382,8 +4418,13 @@
         // Insel-Woche darueber das Wochenziel im selben Format zeigt, stuenden
         // sonst zwei fast gleich aussehende Zahlenpaare untereinander, die
         // voellig Verschiedenes meinen (Woche vs. gesamter Weg).
+        // Aug. 2026 korrigiert: hier stand "32 / 60 bis zur nächsten
+        // Stufe", waehrend der Balken darunter 7 % zeigte. Beides stimmte
+        // fuer sich - die Zahl zaehlte ab null, der Balken ab der
+        // aktuellen Stufe -, aber nebeneinander widersprachen sie sich.
+        // Jetzt sagen beide dasselbe: wie weit INNERHALB der Stufe.
         '<span class="zahl">' + (naechste
-          ? (anzahl + ' / ' + bis + ' bis zur nächsten Stufe')
+          ? ('noch ' + (bis - anzahl) + ' bis zur nächsten Stufe')
           : (anzahl + ' Meditationen insgesamt')) + '</span></div>' +
       '<div class="bar"><span style="width:' + Math.max(4, Math.min(100, pct)) + '%"></span></div>' +
       '<div id="reiseDetails" hidden style="margin-top:12px;">' + details + '</div>';
@@ -5180,15 +5221,30 @@
     if (heute.length){
       // Heute schon etwas gehört: das zeigen und feiern, statt denselben
       // Vorschlag noch einmal danebenzustellen.
-      html = '<div class="card">' + heute.map(function(e){
-          var dir = dirVonName(e.name);
-          return '<div class="hist-row">' +
+      //
+      // Hoechstens drei Zeilen (Aug. 2026): im Test mit zehn Sitzungen an
+      // einem Tag wuchs diese Karte auf zehn Zeilen und schob Foto,
+      // Lieblingsmeditationen und Zustands-Karte weit nach unten - die
+      // Startseite war nur noch eine Liste. Bei mehr steht darunter eine
+      // Zusammenfassung statt jeder einzelnen Zeile; der ganze Verlauf
+      // steht ohnehin auf "Mein Weg".
+      var zeigen = heute.slice(-3).reverse();   // die drei jüngsten zuoberst
+      var restZahl = heute.length - zeigen.length;
+      var sekundenHeute = heute.reduce(function(s, e){ return s + (e.seconds || 0); }, 0);
+      html = '<div class="card">' + zeigen.map(function(e){
+          var dir = dirVonName(e.name), id = idVonName(e.name);
+          return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
             '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
             '<span class="body"><span class="name">' + e.name + '</span>' +
             '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + minutenAus(e.seconds) +
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
           '</div>';
-        }).join("") + '</div>';
+        }).join("") +
+        (restZahl > 0
+          ? '<div class="fokus-summe">und ' + restZahl + ' weitere heute · zusammen ' +
+            minutenAus(sekundenHeute) + ' Min</div>'
+          : '') +
+        '</div>';
         // Hier stand "Noch eine Meditation? →". Der Knopf fuehrte auf
         // "Mein Weg" - dort gibt es seit dem Aufraeumen (Aug. 2026) gar
         // keine Meditationsliste mehr, er lief also ins Leere. Ausgewaehlt
@@ -5307,6 +5363,10 @@
   // Kommentar bei ".grafik-karte" im CSS.
   var MONATE_KURZ = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
   function datumKurz(d){ return d.getDate() + ". " + MONATE_KURZ[d.getMonth()]; }
+  // Mit Jahr - noetig, sobald die Achse ueber einen Jahreswechsel geht:
+  // sonst stand an beiden Enden der Grafik "4. Aug" und ein ganzes Jahr
+  // sah aus wie ein einziger Tag.
+  function datumMitJahr(d){ return datumKurz(d) + " " + String(d.getFullYear()).slice(2); }
 
   // Startdatum = erster Besuch der App (wird beim allerersten Laden in
   // myisland.abo.v1 festgehalten). Ehrlicher als "seit der ersten
@@ -5333,12 +5393,38 @@
       });
     });
     var reihe = [], d = new Date(start);
-    while (d <= heute && reihe.length < 400){
+    while (d <= heute && reihe.length < 1200){
       var k = dayStamp(d.getTime()), w = proTag[k] || { anzahl:0, sekunden:0 };
-      reihe.push({ datum:new Date(d), anzahl:w.anzahl, minuten:minutenAus(w.sekunden) });
+      reihe.push({ datum:new Date(d), anzahl:w.anzahl, sekunden:w.sekunden, minuten:minutenAus(w.sekunden) });
       d.setDate(d.getDate() + 1);
     }
     return reihe;
+  }
+
+  // Ab wann Tage zu Wochen zusammengefasst werden.
+  // Grund (im Test mit einem Jahr Verlauf gefunden): 366 Saeulen auf 268
+  // Bildpunkten Breite ergeben 0,73 Pixel pro Tag - die Balken haben eine
+  // Mindestbreite von 2 Pixeln und ueberlappen sich dann zu einem
+  // durchgehenden braunen Block. Die Grafik zeigte nach einem Jahr gar
+  // nichts mehr. Zehn Wochen sind die Grenze, ab der eine Woche je Saeule
+  // mehr erzaehlt als ein Tag je Saeule.
+  var TAGE_BIS_WOCHEN = 70;
+  function grafikReihe(){
+    var tage = tagesreihe();
+    if (tage.length <= TAGE_BIS_WOCHEN) return { reihe:tage, proWoche:false };
+    // Wochen beginnen am Montag - dieselbe Wochengrenze wie ueberall sonst.
+    var wochen = [], aktuell = null;
+    tage.forEach(function(t){
+      var wt = (t.datum.getDay() + 6) % 7;               // 0 = Montag
+      if (!aktuell || wt === 0){
+        aktuell = { datum:new Date(t.datum), anzahl:0, sekunden:0, minuten:0 };
+        wochen.push(aktuell);
+      }
+      aktuell.anzahl += t.anzahl;
+      aktuell.sekunden += t.sekunden;
+    });
+    wochen.forEach(function(w){ w.minuten = minutenAus(w.sekunden); });
+    return { reihe:wochen, proWoche:true };
   }
 
   // Zeichnet ein schmales Saeulendiagramm als SVG. Bewusst ohne Bibliothek:
@@ -5396,21 +5482,32 @@
       teile.push('<text class="wert-text" x="' + mx + '" y="' + my + '" text-anchor="middle">' +
         reihe[maxIdx][feld] + '</text>');
     }
-    // Zeitachse: nur Anfang und Ende beschriften
-    teile.push('<text class="achs-text" x="' + LINKS + '" y="' + (H - 2) + '">' + datumKurz(reihe[0].datum) + '</text>');
+    // Zeitachse: nur Anfang und Ende beschriften. Mit Jahr, sobald der
+    // Zeitraum ueber einen Jahreswechsel geht - sonst stand an beiden
+    // Enden dasselbe ("4. Aug" ... "4. Aug") und ein ganzes Jahr sah aus
+    // wie ein einziger Tag.
+    var von = reihe[0].datum, biss = reihe[reihe.length - 1].datum;
+    var jahrNoetig = von.getFullYear() !== biss.getFullYear();
+    var vonText = jahrNoetig ? datumMitJahr(von) : datumKurz(von);
+    var bisText = jahrNoetig ? datumMitJahr(biss) : datumKurz(biss);
+    teile.push('<text class="achs-text" x="' + LINKS + '" y="' + (H - 2) + '">' + vonText + '</text>');
     teile.push('<text class="achs-text" x="' + (B - RECHTS) + '" y="' + (H - 2) + '" text-anchor="end">' +
-      datumKurz(reihe[reihe.length - 1].datum) + '</text>');
+      bisText + '</text>');
 
     return '<svg viewBox="0 0 ' + B + ' ' + H + '" role="img" aria-label="' +
-      einheit + ' pro Tag, ' + datumKurz(reihe[0].datum) + ' bis ' +
-      datumKurz(reihe[reihe.length - 1].datum) + ', Höchstwert ' + max + '">' +
+      einheit + ', ' + vonText + ' bis ' + bisText + ', Höchstwert ' + max + '">' +
       teile.join("") + '</svg>';
   }
 
   function renderFortschrittGrafik(){
     var host = document.getElementById("fortschrittGrafik");
     if (!host) return;
-    var reihe = tagesreihe();
+    // Bis zehn Wochen je Saeule ein Tag, danach je Saeule eine Woche -
+    // sonst wird die Grafik mit der Zeit zu einem durchgehenden Block
+    // (siehe Kommentar bei TAGE_BIS_WOCHEN).
+    var g = grafikReihe();
+    var reihe = g.reihe, proWoche = g.proWoche;
+    var einheitWort = proWoche ? "Woche" : "Tag";
     var hatDaten = reihe.some(function(t){ return t.anzahl > 0; });
     if (reihe.length < 2 || !hatDaten){
       host.innerHTML = '<p class="grafik-leer">Deine Entwicklung erscheint hier, sobald du an mehr als einem Tag meditiert hast.</p>';
@@ -5418,16 +5515,16 @@
     }
     host.innerHTML =
       '<div class="grafik-block">' +
-        '<p class="grafik-titel">Meditationen pro Tag</p>' +
-        '<p class="grafik-lesart">Wie oft du an einem Tag meditiert hast.</p>' +
-        balkenSvg(reihe, "anzahl", "Meditationen") +
+        '<p class="grafik-titel">Meditationen pro ' + einheitWort + '</p>' +
+        '<p class="grafik-lesart">Wie oft du ' + (proWoche ? 'in einer Woche' : 'an einem Tag') + ' meditiert hast.</p>' +
+        balkenSvg(reihe, "anzahl", "Meditationen pro " + einheitWort) +
       '</div>' +
       '<div class="grafik-block">' +
-        '<p class="grafik-titel">Minuten pro Tag</p>' +
-        '<p class="grafik-lesart">Wie lange du an einem Tag meditiert hast.</p>' +
-        balkenSvg(reihe, "minuten", "Minuten") +
+        '<p class="grafik-titel">Minuten pro ' + einheitWort + '</p>' +
+        '<p class="grafik-lesart">Wie lange du ' + (proWoche ? 'in einer Woche' : 'an einem Tag') + ' meditiert hast.</p>' +
+        balkenSvg(reihe, "minuten", "Minuten pro " + einheitWort) +
       '</div>' +
-      '<p class="grafik-auswahl" id="grafikAuswahl">Tipp auf einen Tag, um seine Zahlen zu sehen.</p>' +
+      '<p class="grafik-auswahl" id="grafikAuswahl">Tipp auf eine' + (proWoche ? ' Woche' : 'n Tag') + ', um die Zahlen zu sehen.</p>' +
       '<button class="btn-ghost full grafik-zu" id="grafikZuBtn" type="button">Grafik zuklappen</button>';
 
     // Antippen statt Mauszeiger-Hover: auf dem Handy gibt es kein Hover.
@@ -5445,7 +5542,7 @@
         b.classList.toggle("aktiv", parseInt(b.getAttribute("data-i"), 10) === i);
       });
       document.getElementById("grafikAuswahl").textContent =
-        WEEKDAYS[t.datum.getDay()] + ", " + datumKurz(t.datum) + ": " +
+        (proWoche ? ("Woche ab " + datumKurz(t.datum)) : (WEEKDAYS[t.datum.getDay()] + ", " + datumKurz(t.datum))) + ": " +
         t.anzahl + (t.anzahl === 1 ? " Meditation" : " Meditationen") + " · " + t.minuten + " Min";
     };
   }
@@ -5460,8 +5557,18 @@
     // als muesse man die Grafik selbst antippen (Christine hat genau das
     // versucht). Jetzt sagt der Knopf IN der Karte, wie man sie schliesst.
     var hinweis = document.getElementById("grafikHinweis");
-    hinweis.hidden = auf;
+    // Nur einladen, wenn es auch etwas zu sehen gibt. Solange nur an
+    // einem Tag meditiert wurde, fuehrte "Antippen für deine Entwicklung"
+    // zu einer Absage ("erscheint hier, sobald ...") - ein Versprechen,
+    // das im selben Moment zurueckgenommen wird.
+    hinweis.hidden = auf || !grafikHatDaten();
     hinweis.textContent = "Antippen für deine Entwicklung";
+  }
+  // Genug fuer eine Grafik? Dieselbe Bedingung wie in
+  // renderFortschrittGrafik(), damit Hinweis und Inhalt nie auseinandergehen.
+  function grafikHatDaten(){
+    var g = grafikReihe();
+    return g.reihe.length >= 2 && g.reihe.some(function(t){ return t.anzahl > 0; });
   }
   function grafikZuklappen(){ grafikOeffnen(false); }
 
@@ -5496,6 +5603,10 @@
 
   // ---- wiring ----
   document.getElementById("statsRowBtn").addEventListener("click", function(){
+    // Ohne Daten passiert nichts - der Hinweis darunter ist dann ohnehin
+    // ausgeblendet, die Zahlenreihe soll nicht trotzdem eine leere Karte
+    // aufklappen.
+    if (!grafikHatDaten()) return;
     grafikOeffnen(document.getElementById("fortschrittGrafik").hidden);
   });
   document.getElementById("historyMehrBtn").addEventListener("click", function(){

@@ -72,6 +72,13 @@ Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entf
       ergänzen.
 - [x] **„Über die App" ist eine echte Seite** – vorher tat der Knopf nach
       aussen nichts (der Text erschien weit unterhalb der Liste).
+- [x] **Die Empfehlung wiederholt sich nicht mehr.** Bei zehn Durchläufen
+      kamen vorher nur fünf verschiedene Übungen (eine viermal), obwohl 47
+      da sind. Jetzt kommt zuerst, was du noch nie gehört hast.
+- [x] **Startseite bleibt übersichtlich**, auch wenn du an einem Tag
+      mehrmals meditierst (höchstens drei Zeilen plus Zusammenfassung).
+- [x] **Die Grafik hält ein ganzes Jahr aus** – ab zehn Wochen zeigt sie
+      Wochen statt Tage, vorher wurde sie zu einem braunen Block.
 - [x] **Der Begleiter versteht jetzt Anliegen statt Kompass-Achsen** –
       „mein Rücken tut weh" führt zu Licht- und Körperentspannung mit
       passendem Mantra, nicht mehr zu „das kann ich nicht einordnen".
