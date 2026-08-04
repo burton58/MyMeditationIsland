@@ -1144,7 +1144,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.20";
+    var AKTUELLE_VERSION = "2026-08-03.21";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3962,8 +3962,6 @@
       tage.push({ datum:d, stempel:stempel, eintraege:eintraege,
                   heute: stempel === dayStamp(Date.now()) });
     }
-    var erledigt = tage.filter(function(t){ return t.eintraege.length; }).length;
-
     var raster = tage.map(function(t, i){
       return '<div class="week-cell' + (t.eintraege.length ? ' on' : '') + (t.heute ? ' heute' : '') + '">' +
         '<div class="tag">' + WOCHE_KURZ[i] + '</div>' +
@@ -3985,10 +3983,27 @@
       '<div class="box-head"><h4>Deine Inselwoche</h4>' +
         (details ? '<button data-auf="wochenDetails">Details</button>' : '') + '</div>' +
       '<div class="week-grid">' + raster + '</div>' +
-      '<div class="week-goal"><span>' + computeStreak() + (computeStreak() === 1 ? ' Tag' : ' Tage') +
-        ' am Stück</span><span>Ziel: 7 Tage</span></div>' +
-      '<div class="bar"><span style="width:' + Math.round(erledigt / 7 * 100) + '%"></span></div>' +
+      zielZeile() +
       (details ? '<div id="wochenDetails" hidden style="margin-top:12px;">' + details + '</div>' : '');
+
+    // Es gibt nur EIN Ziel, und zwar das selbst gesetzte Wochenziel von
+    // "Mein Weg" (Aug. 2026, Christines Entscheid). Vorher stand hier ein
+    // zweites, fest einprogrammiertes "Ziel: 7 Tage" daneben - zwei Ziele
+    // nebeneinander, von denen eines niemandem gehoerte. Ohne gesetztes
+    // Ziel bleiben Zielzeile und Balken weg; dann steht nur die Serie da.
+    function zielZeile(){
+      var serie = computeStreak();
+      var serieText = serie + (serie === 1 ? ' Tag' : ' Tage') + ' am Stück';
+      var ziel = loadWochenziel();
+      if (!ziel) return '<div class="week-goal"><span>' + serieText + '</span></div>';
+      var f = wochenFortschritt();
+      var erreicht = ziel.typ === "minuten" ? f.minuten : f.anzahl;
+      var einheit = ziel.typ === "minuten" ? "Minuten" : (ziel.wert === 1 ? "Meditation" : "Meditationen");
+      var pct = Math.min(100, Math.round(erreicht / ziel.wert * 100));
+      return '<div class="week-goal"><span>' + serieText + '</span>' +
+        '<span>' + erreicht + ' / ' + ziel.wert + ' ' + einheit + '</span></div>' +
+        '<div class="bar"><span style="width:' + pct + '%"></span></div>';
+    }
   }
 
   // Wie viele Tage am Stück zuletzt meditiert wurde.
@@ -4079,7 +4094,13 @@
       '<div class="box-head"><h4>Deine Inselreise</h4><button data-auf="reiseDetails">Details</button></div>' +
       '<div class="journey-path">' + weg + '</div>' +
       '<div class="journey-stufe"><span class="name">Stufe ' + (stufe + 1) + ' · ' + STUFEN[stufe].name + '</span>' +
-        '<span class="zahl">' + anzahl + (naechste ? ' / ' + bis : '') + ' Meditationen</span></div>' +
+        // "bis zur naechsten Stufe" statt nur "N / M Meditationen": seit die
+        // Insel-Woche darueber das Wochenziel im selben Format zeigt, stuenden
+        // sonst zwei fast gleich aussehende Zahlenpaare untereinander, die
+        // voellig Verschiedenes meinen (Woche vs. gesamter Weg).
+        '<span class="zahl">' + (naechste
+          ? (anzahl + ' / ' + bis + ' bis zur nächsten Stufe')
+          : (anzahl + ' Meditationen insgesamt')) + '</span></div>' +
       '<div class="bar"><span style="width:' + Math.max(4, Math.min(100, pct)) + '%"></span></div>' +
       '<div id="reiseDetails" hidden style="margin-top:12px;">' + details + '</div>';
 
@@ -4524,15 +4545,12 @@
     var focus = document.getElementById("focusSlot");
     var html;
 
-    if (!liste.length){
-      // Kompass noch nie benutzt: die Karte "Dein Zustand" hat schon den
-      // Knopf zum Kompass - hier keinen zweiten, gleich lautenden dazu-
-      // stellen, sondern nur ankuendigen, was hier erscheinen wird.
-      html =
-        '<div class="card empty-card">' +
-          '<p>Sobald du deinen Kompass gestellt hast, erscheint hier deine Meditation für heute.</p>' +
-        '</div>';
-    } else if (heute.length){
+    // Reihenfolge wichtig (Aug. 2026 korrigiert): Was heute WIRKLICH gelaufen
+    // ist, kommt zuerst. Vorher wurde zuerst geprueft, ob eine Empfehlung
+    // vorliegt - wer die App neu oeffnete, ohne den Kompass nochmals zu
+    // stellen, sah darum "Sobald du deinen Kompass gestellt hast ...",
+    // obwohl er an dem Tag schon meditiert hatte (Christine gemeldet).
+    if (heute.length){
       // Heute schon etwas gehört: das zeigen und feiern, statt denselben
       // Vorschlag noch einmal danebenzustellen.
       html = '<div class="card">' + heute.map(function(e){
@@ -4545,6 +4563,15 @@
           '</div>';
         }).join("") + '</div>' +
         '<button class="btn-ghost full" id="focusMehrBtn">Noch eine Meditation? →</button>';
+    } else if (!liste.length){
+      // Heute noch nichts gehört und auch keine Empfehlung: die Karte
+      // "Dein Zustand" hat schon den Knopf zum Kompass - hier keinen
+      // zweiten, gleich lautenden dazustellen, sondern nur ankuendigen,
+      // was hier erscheinen wird.
+      html =
+        '<div class="card empty-card">' +
+          '<p>Sobald du deinen Kompass gestellt hast, erscheint hier deine Meditation für heute.</p>' +
+        '</div>';
     } else {
       // Kompass gesetzt, heute noch nichts gehört: die eine Empfehlung,
       // direkt startbar. Der Zustand selbst ("eher unruhig" usw.) steht

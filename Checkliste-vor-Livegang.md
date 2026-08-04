@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 3. August 2026 (zuletzt aktualisiert: Profilbild wählbar, Zurück-Knöpfe, Vorschlag direkt im Chat)
+Stand: 3. August 2026 (zuletzt aktualisiert: nur noch ein Wochenziel, Startseite zeigt heute Gemachtes)
 
 ---
 
@@ -268,3 +268,13 @@ Stand: 3. August 2026 (zuletzt aktualisiert: Profilbild wählbar, Zurück-Knöpf
       „… steht jetzt oben als Empfehlung" (was in der Bibliothek nicht
       stimmte, da gibt es kein „oben") erscheint die Meditation jetzt als
       Karte im Chat, mit Abspiel-Knopf.
+- [x] **Nur noch ein Ziel, und zwar deins**: Die Insel-Woche im Profil zeigt
+      jetzt dein selbst gesetztes Wochenziel statt der festen „7 Tage".
+      Hast du keines gesetzt, steht dort nur deine Serie, ohne Balken.
+      Die Inselreise sagt neu „… bis zur nächsten Stufe", damit die beiden
+      Zahlen nicht verwechselt werden – die eine gilt für diese Woche, die
+      andere für deinen ganzen Weg.
+- [x] **Startseite zeigt, was du heute wirklich gemacht hast** – auch wenn du
+      den Kompass an dem Tag nicht (nochmals) gestellt hast. Vorher stand
+      dort in dem Fall „Sobald du deinen Kompass gestellt hast …", obwohl
+      du schon meditiert hattest.
