@@ -575,6 +575,11 @@
   .goal-top .sub{ font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
   .bar{ height:6px; background:var(--cream-2); border-radius:4px; overflow:hidden; }
   .bar span{ display:block; height:100%; background:var(--gold-grad); border-radius:4px; }
+  /* Erreichtes Ziel: der Balken bekommt einen ruhigen goldenen Rand, damit
+     "voll" sich von "fast voll" unterscheidet - allein an der Breite sieht
+     man den Unterschied auf dem Handy kaum. */
+  .bar.voll{ box-shadow:0 0 0 1.5px var(--gold); }
+  .goal-haken{ font-size:1.3rem; line-height:1; }
 
   .fd-greeting{ margin:0; font-size:.88rem; color:var(--ink-soft); }
   .fd-badge{
@@ -1159,7 +1164,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.1";
+    var AKTUELLE_VERSION = "2026-08-04.2";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3358,10 +3363,16 @@
     var erreicht = ziel.typ === "minuten" ? fortschritt.minuten : fortschritt.anzahl;
     var einheit = ziel.typ === "minuten" ? "Minuten" : (ziel.wert === 1 ? "Meditation" : "Meditationen");
     var pct = Math.min(100, Math.round(erreicht / ziel.wert * 100));
+    // Ein Ziel, das beim Erreichen nichts sagt, ist ein halber Blindgang:
+    // man setzt sich etwas vor, schafft es - und die App tut, als waere
+    // nichts. Darum ab hier ein eigener Zustand statt nur eines vollen
+    // Balkens.
+    var geschafft = erreicht >= ziel.wert;
     host.innerHTML =
       '<div class="goal-top"><div class="body"><div class="name">' + erreicht + ' von ' + ziel.wert + ' ' + einheit + '</div>' +
-        '<div class="sub">diese Woche</div></div></div>' +
-      '<div class="bar"><span style="width:' + pct + '%"></span></div>' +
+        '<div class="sub">' + (geschafft ? "Ziel erreicht – schön, dass du drangeblieben bist." : "diese Woche") + '</div></div>' +
+        (geschafft ? '<span class="goal-haken">🌴</span>' : '') + '</div>' +
+      '<div class="bar' + (geschafft ? ' voll' : '') + '"><span style="width:' + pct + '%"></span></div>' +
       '<button class="btn-ghost" id="wochenzielAendernBtn" style="margin-top:12px;">Ziel anpassen</button>';
     document.getElementById("wochenzielAendernBtn").addEventListener("click", zeigeWochenzielEditor);
   }
@@ -4101,9 +4112,10 @@
       var erreicht = ziel.typ === "minuten" ? f.minuten : f.anzahl;
       var einheit = ziel.typ === "minuten" ? "Minuten" : (ziel.wert === 1 ? "Meditation" : "Meditationen");
       var pct = Math.min(100, Math.round(erreicht / ziel.wert * 100));
+      var geschafft = erreicht >= ziel.wert;   // gleiche Regel wie auf "Mein Weg"
       return '<div class="week-goal"><span>' + serieText + '</span>' +
-        '<span>' + erreicht + ' / ' + ziel.wert + ' ' + einheit + '</span></div>' +
-        '<div class="bar"><span style="width:' + pct + '%"></span></div>';
+        '<span>' + (geschafft ? '🌴 ' : '') + erreicht + ' / ' + ziel.wert + ' ' + einheit + '</span></div>' +
+        '<div class="bar' + (geschafft ? ' voll' : '') + '"><span style="width:' + pct + '%"></span></div>';
     }
   }
 
