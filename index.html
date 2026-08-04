@@ -1185,7 +1185,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.6";
+    var AKTUELLE_VERSION = "2026-08-04.7";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4604,9 +4604,32 @@
   // Falle beim Ergaenzen: "meds" enthaelt IDs aus MEDITATIONS, "mantra"
   // muss wortgleich in MANTRAS stehen, "mudra" wortgleich in MUDRAS -
   // sonst faellt der jeweilige Teil still weg (siehe findeMantra/findeMudra).
+  // ---- Chakren: Christines eigene Zuordnung (4. Aug. 2026) -----------
+  // Wortlaut aus ihrer Beschreibung, nicht aus einer Vorlage:
+  //  - Wurzel: zu wenig im Hier und Jetzt, irgendwo in Vergangenheit oder
+  //    Zukunft; zu fest im Kopf, zu wenig geerdet; Muehe mit Entscheidungen.
+  //  - Sakral: Sexualitaet, Freude, Gefuehle, Vertrauen, Lebensfluss.
+  //  - Solarplexus: Aengste, zu wenig im Wollen, zu fest im Opfer.
+  //  - Herz: Verbindung zu sich selbst, zur Seele, zum eigenen Gefuehl und
+  //    Selbstwert verloren; weiss nicht, wohin man sich entwickeln will.
+  //  - Stirn: wirre Gedanken, kann nicht projektionsfrei wahrnehmen.
+  //  - Krone: das Licht fehlt, die obere Verbindung fehlt.
+  // Das HALSCHAKRA hat sie nicht genannt. Der Text hier stammt darum aus
+  // dem Untertitel ihrer eigenen Uebung ("Widerstaende loesen") - bitte
+  // gegenlesen und bei Bedarf ersetzen, erfunden werden soll hier nichts.
+  var CHAKREN = {
+    wurzel:      { name:"Wurzelchakra",       warum:"es holt dich zurück ins Hier und Jetzt und gibt dir wieder Boden unter den Füssen", med:"wurzelchakra" },
+    sakral:      { name:"Sakralchakra",       warum:"es steht für Lebensfluss, Freude und Vertrauen", med:"sakralchakra" },
+    solarplexus: { name:"Solarplexuschakra",  warum:"es stärkt deinen Willen und holt dich aus dem Gefühl, ausgeliefert zu sein", med:"solarplexus" },
+    herz:        { name:"Herzchakra",         warum:"es stellt die Verbindung zu dir selbst und zu deinem eigenen Gefühl wieder her", med:"herzchakra" },
+    hals:        { name:"Halschakra",         warum:"es hilft, alte Widerstände Stück für Stück loszulassen", med:"halschakra" },
+    stirn:       { name:"Stirnchakra",        warum:"es klärt wirre Gedanken und hilft, wieder ohne Projektion wahrzunehmen", med:"stirnchakra" },
+    krone:       { name:"Kronenchakra",       warum:"es öffnet die Verbindung nach oben, wenn das Licht fehlt", med:"kronenchakra" }
+  };
+
   var ANLIEGEN = [
     { id:"schmerz",
-      woerter:["schmerz","schmerze","weh tut","tut weh","wehtut","aua","kopfweh","kopfschmerz","migräne","rücken","ruecken","nacken","schulter","verspann","verkrampf","kiefer","zahn","bauchweh","magen","krank","entzünd","ziept","stechen"],
+      woerter:["schmerz","schmerze","weh tut","tut weh","wehtut","aua","kopfweh","kopfschmerz","migräne","migraene","rücken","ruecken","nacken","schulter","verspann","verkrampf","kiefer","zahn","bauchweh","magen","ziept","stechen","brennt","drückt"],
       intro:"Wenn etwas weh tut, hilft selten Nachdenken – eher Wärme, Lösen und ein freundlicher Umgang mit dem Körper.",
       meds:["lichtmed_kurz","kiefer","koerper","lichtmed_ganz","yoganidra"],
       // Feinabstimmung: wer den Kiefer nennt, soll die Kiefer-Übung
@@ -4618,70 +4641,70 @@
       mantra:"Mit jedem Atemzug etwas leichter.",
       mudra:"Prana Mudra" },
 
-    { id:"schlaf",
+    { id:"schlaf", chakra:"wurzel",
       woerter:["schlaf","einschlaf","durchschlaf","nachts","nicht schlafen","wach lieg","liege wach","insomn","aufgewacht","zur ruhe komm","abends nicht"],
       intro:"Zum Einschlafen braucht es kein Bemühen – nur etwas, das langsamer wird als deine Gedanken.",
       meds:["bodyscan_kurz","koerper","fantasie_winter","yoganidra"],
       mantra:"Alles darf langsam sein.",
       mudra:"Shankh Mudra" },
 
-    { id:"angst",
+    { id:"angst", chakra:"solarplexus",
       woerter:["angst","ängst","aengst","panik","sorge","sorgen","befürcht","unsicher","herzklopfen","herzrasen","beklemm","eng in der brust","zittere"],
       intro:"Bei Angst hilft zuerst der Boden unter den Füssen – nicht das Erklären.",
       meds:["erdungsatem","welle","wurzelchakra","vertrauensanker","tiefes_vertrauen"],
       mantra:"Ich muss nicht alles gleichzeitig schaffen.",
       mudra:"Kubera Mudra" },
 
-    { id:"stress",
+    { id:"stress", chakra:"wurzel",
       woerter:["stress","gestresst","druck","überfordert","ueberfordert","hektik","zu viel","zuviel","termin","keine zeit","arbeit","job","chef","büro","deadline","alles auf einmal","hetze"],
       intro:"Das klingt nach zu viel auf einmal. Ein kurzer Halt bringt oft mehr als noch ein Zahn zulegen.",
       meds:["welle","erdungsatem","feierabend","koerper","alltag_mutter","grosses_loslassen"],
       mantra:"Es ist genug für heute.",
       mudra:"Ksepana Mudra" },
 
-    { id:"wut",
+    { id:"wut", chakra:"solarplexus",
       woerter:["wut","wütend","wuetend","ärger","aerger","sauer","genervt","gereizt","aggressiv","ungeduld","platzt mir","auf die palme"],
       intro:"Ärger sitzt oft zuerst im Kiefer und in den Schultern. Da lässt er sich auch am ehesten wieder lösen.",
       meds:["kiefer","erdungsatem","geduld_kinder","loslassen_traegt"],
       mantra:"Ich darf jetzt loslassen.",
       mudra:"Apana Mudra" },
 
-    { id:"trauer",
+    { id:"trauer", chakra:"herz",
       woerter:["trauer","traurig","weinen","geweint","verlust","gestorben","tod","abschied","vermisse","liebeskummer","einsam","allein","verlassen","gebrochen"],
       intro:"Was schwer ist, will nicht weggemacht werden – nur begleitet.",
       meds:["herzberuhigen","herz","benennen","fantasie_insel","herzchakra"],
       mantra:"Was ich fühle, darf da sein.",
       mudra:"Hridaya Mudra" },
 
-    { id:"gruebeln",
+    { id:"gruebeln", chakra:"stirn",
       woerter:["gedanke","gedanken","grübl","gruebl","grübel","kreis","denke zu viel","kopfkino","durcheinander","chaos","konzentr","abschalten","komme nicht zur ruhe","nicht aufhören zu denken"],
       intro:"Kreisende Gedanken lassen sich nicht wegdenken – sie brauchen einen Platz, an dem sie sein dürfen.",
       meds:["atem","wolken","stirnchakra","feierabend","fantasie_winter"],
       mantra:"Ich muss nicht jeden Gedanken zu Ende denken.",
       mudra:"Gyan Mudra" },
 
-    { id:"selbstwert",
+    { id:"selbstwert", chakra:"herz",
       woerter:["selbstwert","selbstkritik","nicht gut genug","nicht genug","mag mich nicht","hasse mich","zweifel","versag","schäme","schaeme","scham","peinlich","annehmen","akzeptier","selbstzweifel","fehler gemacht","schuldig"],
       intro:"Sich selbst freundlich zu begegnen ist eine Übung wie jede andere – sie lässt sich lernen.",
       meds:["freundlicherblick","vertrauensanker","verzeihen_erster","vertrauenaufbauen","tiefes_vertrauen"],
       mantra:"Ich behandle mich wie einen guten Freund.",
       mudra:"Anjali Mudra" },
 
-    { id:"erschoepfung",
+    { id:"erschoepfung", chakra:"solarplexus",
       woerter:["erschöpft","erschoepft","ausgelaugt","kraftlos","keine energie","keine kraft","leer","burnout","ausgebrannt","kann nicht mehr","müde","muede","schlapp","antriebslos"],
       intro:"Wenn nichts mehr geht, braucht es kein Zusammenreissen – sondern etwas, das wieder auffüllt.",
       meds:["lichtmed_kurz","kraftimpuls","solarplexus","innerestaerke","staerke_vertiefen"],
       mantra:"Ich bin genau richtig, wie es gerade ist.",
       mudra:"Surya Mudra" },
 
-    { id:"loslassen",
+    { id:"loslassen", chakra:"hals",
       woerter:["loslassen","los lassen","festhalt","vergangenheit","widerstand","verzeih","groll","nachtragend","kann nicht vergessen","hängt mir nach","haengt mir nach","alte geschichte"],
       intro:"Loslassen heisst nicht vergessen – nur, es nicht mehr die ganze Zeit tragen zu müssen.",
       meds:["loslassen_traegt","halschakra","verzeihen_erster","grosses_loslassen","verzeihen_tief"],
       mantra:"Ich darf jetzt loslassen.",
       mudra:"Karana Mudra" },
 
-    { id:"unruhe",
+    { id:"unruhe", chakra:"wurzel",
       woerter:["unruhig","unruhe","rastlos","zappelig","kribbel","halte es nicht aus","nervös","nervoes","fahrig"],
       intro:"Unruhe verschwindet nicht auf Kommando – aber sie wird leiser, wenn der Körper Halt bekommt.",
       meds:["erdungsatem","bodyscan_kurz","wurzelchakra","welle"],
@@ -4695,14 +4718,14 @@
       mantra:"Alles darf langsam sein.",
       mudra:"Dhyana Mudra" },
 
-    { id:"dankbar",
+    { id:"dankbar", chakra:"herz",
       woerter:["dankbar","danke","gut geht","geht es gut","geht mir gut","richtig gut","sehr gut","glücklich","gluecklich","zufrieden","freue","schöner tag","schoener tag","gut drauf","leicht ums herz"],
       intro:"Das ist ein guter Moment, um das Gute auch festzuhalten.",
       meds:["dankblitz","dank","dankreise","stille"],
       mantra:"Ich bin dankbar für diesen Moment.",
       mudra:"Anjali Mudra" },
 
-    { id:"vertrauen",
+    { id:"vertrauen", chakra:"sakral",
       woerter:["vertrauen","kein vertrauen","zutrauen","mut","traue mich nicht","entscheidung","zukunft","ungewiss"],
       intro:"Vertrauen wächst in kleinen Schritten, nicht auf einmal.",
       meds:["vertrauensanker","sakralchakra","vertrauenaufbauen","tiefes_vertrauen"],
@@ -4716,12 +4739,110 @@
       mantra:"Ich muss nicht alles gleichzeitig schaffen.",
       mudra:"Shuni Mudra" },
 
-    { id:"schwanger",
+    { id:"schwanger", chakra:"sakral",
       woerter:["schwanger","baby","ungeboren","kind erwarte","bauch wächst","geburt"],
       intro:"Eine besondere Zeit – und eine gute, um die Verbindung bewusst zu spüren.",
       meds:["schwangerschaft","herzchakra","koerper"],
       mantra:"Ich bin genau richtig, wie es gerade ist.",
-      mudra:"Hridaya Mudra" }
+      mudra:"Hridaya Mudra" },
+
+    // ---- Ab hier die Lebenslagen, die Christine am 4. Aug. 2026
+    // nachgetragen hat: eigene Krankheit, allgemeines Unwohlsein, unter
+    // dem Verhalten anderer leiden, etwas Geschehenes, mit dem man nicht
+    // fertig wird, Vergangenheit, Zukunft, akute Angst vor einer
+    // Situation, nicht im Koerper sein, fehlende Verbindung zu sich,
+    // Opferrolle, fehlende Freude, Entscheidungen, fehlender Sinn.
+
+    { id:"krankheit", chakra:"wurzel",
+      woerter:["krank","krankheit","diagnose","erkrankt","behandlung","therapie","spital","krankenhaus","operation","chemo","fieber","erkältet","erkaeltet","genesung","heilung","beschwerden"],
+      intro:"Krank sein zehrt – und braucht vor allem Freundlichkeit dir selbst gegenüber, nicht noch mehr Anstrengung.",
+      meds:["lichtmed_kurz","bodyscan_kurz","lichtmed_ganz","yoganidra","koerper"],
+      mantra:"Ich bin genau richtig, wie es gerade ist.",
+      mudra:"Prana Mudra" },
+
+    { id:"unwohl", chakra:"wurzel",
+      woerter:["unwohl","nicht wohl","fühle mich nicht","fuehle mich nicht","stimmt etwas nicht","irgendwas stimmt","komisches gefühl","komisches gefuehl","seltsam","nicht bei mir","daneben","nicht gut","mies","elend","schlecht drauf"],
+      intro:"Manchmal weiss man nur, dass etwas nicht stimmt – ohne sagen zu können, was. Das reicht als Grund, kurz anzuhalten.",
+      meds:["bodyscan_kurz","erdungsatem","koerper","stille"],
+      mantra:"Was ich fühle, darf da sein.",
+      mudra:"Rudra Mudra" },
+
+    { id:"andere", chakra:"solarplexus",
+      woerter:["verletzt mich","streit","gestritten","konflikt","kritisiert","kritik","ungerecht","behandelt","respektlos","ausgenutzt","hintergangen","enttäuscht","enttaeuscht","leide unter","macht mir das leben","gemein","verletzend","angeschrien","er sagt","sie sagt","mein mann","meine frau","kollege","kollegin","nachbar"],
+      intro:"Wenn dich das Verhalten von jemandem trifft, geht es zuerst darum, dass du selbst wieder festen Stand bekommst.",
+      meds:["innerestaerke","erdungsatem","loslassen_traegt","verzeihen_erster","staerke_vertiefen"],
+      mantra:"Ich behandle mich wie einen guten Freund.",
+      mudra:"Kubera Mudra" },
+
+    { id:"nichtfertig", chakra:"hals",
+      woerter:["komme nicht darüber","komme nicht darueber","werde nicht fertig","verarbeite","nicht verarbeitet","geht mir nicht aus dem kopf","lässt mich nicht los","laesst mich nicht los","seitdem","seit dem unfall","unfall","schock","passiert ist","was passiert","kann es nicht fassen","begreife nicht"],
+      intro:"Was einen nicht loslässt, will nicht weggeschoben werden – nur in kleinen Portionen angeschaut.",
+      meds:["herzberuhigen","benennen","loslassen_traegt","grosses_loslassen","seele"],
+      mantra:"Was ich fühle, darf da sein.",
+      mudra:"Karana Mudra" },
+
+    { id:"vergangenheit", chakra:"wurzel",
+      woerter:["vergangenheit","früher","frueher","kindheit","damals","alte wunde","alte geschichten","nachtrauern","hätte ich","haette ich","bereue","reue","schuld von damals"],
+      intro:"Die Vergangenheit lässt sich nicht ändern – aber du kannst dich hierher zurückholen.",
+      meds:["erdungsatem","wurzelchakra","loslassen_traegt","verzeihen_erster","grosses_loslassen"],
+      mantra:"Ich darf jetzt loslassen.",
+      mudra:"Ksepana Mudra" },
+
+    { id:"zukunft", chakra:"wurzel",
+      woerter:["zukunft","was wird","ungewiss","was kommt","weiss nicht wie es weitergeht","weiß nicht wie es weitergeht","sorgen um morgen","angst vor morgen","was wenn","könnte passieren","koennte passieren","planen","unsicher wie es weitergeht"],
+      intro:"Die Zukunft lässt sich nicht vorwegnehmen. Was du beeinflussen kannst, ist der Moment, in dem du gerade bist.",
+      meds:["erdungsatem","wurzelchakra","atem","vertrauensanker","tiefes_vertrauen"],
+      mantra:"Ein Gedanke nach dem anderen.",
+      mudra:"Kubera Mudra" },
+
+    { id:"akut", chakra:"solarplexus",
+      woerter:["prüfung","pruefung","gleich","vorstellungsgespräch","vorstellungsgespraech","auftritt","präsentation","praesentation","arzttermin","termin heute","muss gleich","in einer stunde","aufgeregt","lampenfieber","nervös vor","nervoes vor"],
+      intro:"Kurz vor etwas Wichtigem hilft nichts Langes – nur etwas, das dich schnell wieder in den Körper holt.",
+      meds:["welle","erdungsatem","kraftimpuls","atem"],
+      mantra:"Mit jedem Atemzug etwas leichter.",
+      mudra:"Kubera Mudra" },
+
+    { id:"nichtimkoerper", chakra:"wurzel",
+      woerter:["nicht im körper","nicht im koerper","zu viel im kopf","nur im kopf","funktioniere nur","wie neben mir","neben mir","abwesend","nicht geerdet","spüre mich nicht","spuere mich nicht","wie im nebel","abgehoben","nicht präsent","nicht praesent"],
+      intro:"Wenn du weit oben im Kopf bist, hilft kein weiteres Nachdenken – sondern der Weg zurück in den Körper.",
+      meds:["erdungsatem","bodyscan_kurz","wurzelchakra","koerper","kronenchakra"],
+      mantra:"Mit jedem Atemzug etwas leichter.",
+      mudra:"Apana Mudra" },
+
+    { id:"selbstverbindung", chakra:"herz",
+      woerter:["verbindung zu mir","zu mir selbst","was ich will","was ich eigentlich will","was ich fühle","was ich fuehle","kenne mich nicht","mich selbst verloren","seele","wer ich bin","was ich brauche","keine ahnung wohin","weiss nicht wohin","fremd geworden"],
+      intro:"Sich selbst wieder zu spüren ist kein Nachdenken – es ist Zuhören nach innen.",
+      meds:["seele","herz","herzchakra","freundlicherblick","fantasie_insel"],
+      mantra:"Ich bin mit mir selbst im Reinen.",
+      mudra:"Hridaya Mudra" },
+
+    { id:"opfer", chakra:"solarplexus",
+      woerter:["nichts machen","nichts ändern","nichts aendern","ausgeliefert","hilflos","ohnmächtig","ohnmaechtig","passiert mir","passiert das immer","immer ich","nie klappt","bringt ja nichts","keinen einfluss","muss immer","sowieso nichts"],
+      intro:"Auch wenn du die Umstände nicht ändern kannst – deinen eigenen Stand kannst du stärken.",
+      meds:["innerestaerke","solarplexus","kraftimpuls","staerke_vertiefen"],
+      mantra:"Ich darf jetzt loslassen.",
+      mudra:"Prana Mudra" },
+
+    { id:"freudelos", chakra:"sakral",
+      woerter:["keine freude","mehr freude","freudlos","alles grau","alles ist grau","lustlos","keine lust","macht spass","macht spaß","freue mich auf nichts","stumpf","gleichgültig","gleichgueltig","leblos","kein antrieb"],
+      intro:"Wenn nichts mehr Freude macht, hilft kein Antreiben – eher etwas, das den Fluss wieder in Gang bringt.",
+      meds:["sakralchakra","dankblitz","lichtmed_kurz","fantasie_wald","dankreise"],
+      mantra:"Ich bin dankbar für diesen Moment.",
+      mudra:"Padma Mudra" },
+
+    { id:"entscheidung", chakra:"wurzel",
+      woerter:["entscheid","kann mich nicht entscheiden","weiss nicht was richtig","weiß nicht was richtig","hin und her","unentschlossen","zwei möglichkeiten","zwei moeglichkeiten","wahl"],
+      intro:"Entscheidungen werden selten im Kopf klarer – eher, wenn du wieder festen Boden spürst.",
+      meds:["erdungsatem","wurzelchakra","stirnchakra","stille"],
+      mantra:"Ich sehe klar, was jetzt wichtig ist.",
+      mudra:"Kubera Mudra" },
+
+    { id:"sinn", chakra:"krone",
+      woerter:["sinn","wozu das alles","kein sinn","leer","sinnlos","glaube nicht mehr","verbindung fehlt","licht fehlt","alles egal","wofür","wofuer"],
+      intro:"Wenn der Sinn fehlt, ist meist die Verbindung nach oben dünn geworden – die lässt sich wieder öffnen.",
+      meds:["kronenchakra","lichtmed_kurz","lichtmed_ganz","chakrenreise","seele"],
+      mantra:"Om.",
+      mudra:"Uttarabodhi Mudra" }
   ];
 
   var UNKLAR_SAETZE = [
@@ -4802,10 +4923,36 @@
     return mu.name + ": " + mu.how + " " + mu.why +
       (mu.dauer ? (" Am besten " + mu.dauer + " halten (wirkt auf: " + mu.chakra + "), dazu passt die Mantra-Silbe „" + mu.silbe + "“.") : "");
   }
+  // Ein Satz zum Chakra, das bei diesem Anliegen aus dem Gleichgewicht
+  // ist - Christines eigene Zuordnung (siehe CHAKREN). Nennt zusaetzlich
+  // die passende Chakra-Uebung, wenn sie nicht ohnehin schon empfohlen
+  // wurde: sonst stuende zweimal dasselbe da.
+  function chakraSatz(a, schonEmpfohlen){
+    var c = a && a.chakra ? CHAKREN[a.chakra] : null;
+    if (!c) return "";
+    var uebung = MEDITATIONS.filter(function(m){ return m.id === c.med; })[0];
+    var zusatz = (uebung && istFrei(c.med) && uebung.name !== schonEmpfohlen)
+      ? (" Wenn du direkt daran arbeiten magst: „" + uebung.name + "“.")
+      : "";
+    return " Energetisch geht es dabei ums " + c.name + " – " + c.warum + "." + zusatz;
+  }
 
   function lokaleAntwort(text, allowRecommend){
     var a = erkenneAnliegen(text);
     var streuung = textStreuung(text);
+
+    // Direkt nach einem Chakra gefragt: dann genau darüber sprechen.
+    var chakraKey = chakraAusText(text);
+    if (chakraKey && !a){
+      var c = CHAKREN[chakraKey];
+      var cMed = MEDITATIONS.filter(function(m){ return m.id === c.med; })[0];
+      // Bewusst mit Doppelpunkt: die Texte in CHAKREN beginnen mit "es …",
+      // nach "darum, dass" ergäbe das einen falschen Satz.
+      return "Beim " + c.name + " geht es darum: " + c.warum + "." +
+        (cMed && istFrei(c.med) && allowRecommend
+          ? " Ich hab dir die passende Übung herausgesucht. [EMPFEHLUNG: " + cMed.name + "]"
+          : (cMed ? " Dazu passt die Übung „" + cMed.name + "“." : ""));
+    }
     var intro = a ? a.intro : "";
     // Nur den Wortstamm pruefen (nicht "mantra"/"mudra" vollstaendig) - so
     // wird auch ein Tippfehler wie "Mudrs" oder "Mantr" noch erkannt.
@@ -4831,18 +4978,22 @@
       var med = allowRecommend ? medFuerAnliegen(a, text) : null;
       var mantra = findeMantra(a), mudra = findeMudra(a);
       if (med){
+        // Aufbau der Antwort: erkennen - Übung - Chakra - Mantra oder
+        // Mudra. Mantra und Mudra wechseln sich ab, damit die Antwort
+        // nicht jedes Mal gleich lang und gleich gebaut ist.
         var bonus = "";
         if (streuung % 2 === 0 && mudra){
           bonus = " Dazu passt das " + mudra.name + ": " + mudra.how;
         } else if (mantra){
           bonus = " Als kleine Ergänzung ein Mantra: „" + mantra.text + "“.";
         }
-        return intro + " Ich hab dir eine Übung herausgesucht, die dazu passt." + bonus +
+        return intro + " Ich hab dir eine Übung herausgesucht, die dazu passt." +
+          chakraSatz(a, med.name) + bonus +
           " [EMPFEHLUNG: " + med.name + "]";
       }
       // Kein Meditations-Kontext (oder nichts frei): dann wenigstens
-      // Mudra und Mantra - beides zusammen, weil hier die Übung fehlt.
-      var teile = [intro];
+      // Chakra, Mudra und Mantra - hier fehlt ja die Übung.
+      var teile = [intro + chakraSatz(a, null)];
       if (mudra) teile.push("Ein Mudra dafür: " + mudraSatz(mudra));
       if (mantra) teile.push("Und ein Satz dazu: „" + mantra.text + "“.");
       return teile.join(" ");
@@ -4855,6 +5006,19 @@
     var unklar = UNKLAR_SAETZE[streuung % UNKLAR_SAETZE.length];
     var maGen = waehleFuerRichtung(MANTRAS, null, streuung);
     return unklar + " Bis dahin passt vielleicht dieses Mantra: „" + maGen.text + "“.";
+  }
+
+  // Fuer den Fall, dass eine Person direkt nach einem Chakra fragt
+  // ("was ist mit meinem Herzchakra?"): dann zaehlt das mehr als die
+  // Anliegen-Erkennung, sonst landet "Herz" beim Anliegen Trauer.
+  function chakraAusText(text){
+    var t = text.toLowerCase();
+    var treffer = null;
+    Object.keys(CHAKREN).forEach(function(k){
+      if (t.indexOf(CHAKREN[k].name.toLowerCase()) !== -1) treffer = k;
+    });
+    if (!treffer && t.indexOf("drittes auge") !== -1) treffer = "stirn";
+    return treffer;
   }
 
   function setupChat(boxId, inputId, sendId, greeting, allowRecommend){

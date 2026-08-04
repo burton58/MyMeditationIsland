@@ -445,12 +445,33 @@ TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", medita
 
 **Das Problem (Christine gemeldet):** Der Begleiter kannte nur die vier Achsen der Kompass-Scheibe und suchte im Text nach Stichwörtern dafür (`RICHTUNGS_WOERTER`: "kopf/gedanke…" → nord, "gefühl/herz…" → sued, usw.). Wer "mein Rücken tut weh" schrieb, passte in keine dieser Schubladen — die Antwort war "Das kann ich noch nicht gut einordnen. Nutz doch kurz den Kompass". Der zweite Ausweichsatz fragte sogar wörtlich, ob es "eher im Kopf, im Gefühl oder im Körper" sitze. Christines Einwand trifft es genau: **Schmerz hat mit "denken oder fühlen" nichts zu tun**; was hilft, sind Licht, Körperentspannung und annehmende Sätze. Dazu kam, dass die Antworten in Achsen-Substantiven sprachen ("Denken", "Fühlen"), die auf der Scheibe gar nicht so heissen (dort steht NACHDENKLICH / EMOTIONAL) — und die als Zustandsbeschreibung ohnehin falsch sind.
 
-**Die Lösung:** `ANLIEGEN` — eine Tabelle mit derzeit **16 Anliegen** (Schmerz, Schlaf, Angst, Stress, Wut, Trauer, Grübeln, Selbstwert, Erschöpfung, Loslassen, Unruhe, Entspannen, Dankbarkeit, Vertrauen, Kinder, Schwangerschaft). Jedes trägt:
+**Die Lösung:** `ANLIEGEN` — eine Tabelle mit derzeit **29 Anliegen**. Die ersten 16 (Schmerz, Schlaf, Angst, Stress, Wut, Trauer, Grübeln, Selbstwert, Erschöpfung, Loslassen, Unruhe, Entspannen, Dankbarkeit, Vertrauen, Kinder, Schwangerschaft) entstanden aus Christines erster Meldung; die weiteren 13 hat sie am selben Tag nachgetragen, mit der Vorgabe, dass der Begleiter **alle Lebenslagen** kennen soll: eigene Krankheit, allgemeines Unwohlsein ("ich weiss nur, dass etwas nicht stimmt"), unter dem Verhalten anderer leiden, etwas Geschehenes, mit dem man nicht fertig wird (Tod, Unfall, Krankheit), Vergangenheit, Zukunft, akute Angst vor einer bevorstehenden Situation, nicht im Körper sein, fehlende Verbindung zu sich selbst, Opferrolle, fehlende Freude, Entscheidungen, fehlender Sinn. Jedes trägt:
 - `woerter` — Stichwörter in Alltagssprache, inkl. Umschreibungen ("kann nicht mehr", "liege wach", "nicht gut genug");
 - `intro` — ein eigener Einstiegssatz **ohne** Achsen-Vokabular;
 - `meds` — konkrete IDs aus `MEDITATIONS`, **kurz zuerst**, damit auch im akuten Moment etwas Machbares dasteht;
 - `mantra` / `mudra` — wortgleiche Verweise in `MANTRAS` bzw. `MUDRAS`;
-- optional `feiner` — Feinabstimmung innerhalb eines Anliegens ("Kiefer" → *Kiefer entspannen* statt der allgemeinen Lichtmeditation).
+- optional `feiner` — Feinabstimmung innerhalb eines Anliegens ("Kiefer" → *Kiefer entspannen* statt der allgemeinen Lichtmeditation);
+- optional `chakra` — der Schlüssel in `CHAKREN` (siehe unten).
+
+### 6b. Chakren — Christines eigene Zuordnung (4. Aug. 2026)
+
+Sie hat die Zuordnung selbst diktiert; `CHAKREN` gibt sie wörtlich wieder, es ist **nichts aus einer Vorlage übernommen**:
+
+| Chakra | Wann es aus dem Gleichgewicht ist (ihre Worte) | Übung |
+|---|---|---|
+| **Wurzel** | zu wenig im Hier und Jetzt, irgendwo in Vergangenheit oder Zukunft; zu fest im Kopf, zu wenig geerdet; Mühe mit Entscheidungen | Wurzelchakra – Erdung |
+| **Sakral** | Sexualität, Freude, Gefühle, Vertrauen, Lebensfluss | Sakralchakra – Vertrauen |
+| **Solarplexus** | Ängste, zu wenig im Wollen, zu fest im Opfer | Solarplexuschakra – Willensstärke |
+| **Herz** | Verbindung zu sich selbst, zur Seele, zum eigenen Gefühl und Selbstwert verloren; weiss nicht, wohin man sich entwickeln will | Herzchakra – Weite |
+| **Hals** | *von ihr nicht genannt* — Text stammt aus dem Untertitel ihrer eigenen Übung | Halschakra – Widerstände lösen |
+| **Stirn** | wirre Gedanken, kann nicht projektionsfrei wahrnehmen | Stirnchakra – Klarheit |
+| **Krone** | das Licht fehlt, die obere Verbindung fehlt | Kronenchakra – Körperfreiheit |
+
+**Offen und bewusst so gelassen:** Das **Halschakra** hat sie nicht beschrieben — der Text dort ist aus ihrem eigenen Übungstitel abgeleitet und sollte von ihr gegengelesen werden. **Schmerz und Krankheit** haben in ihrer Aufzählung kein Chakra; `schmerz` bekommt darum keinen Chakra-Satz (statt einen zu erfinden), `krankheit` steht beim Wurzelchakra, weil es dort um Erdung und Körper geht — auch das gehört von ihr bestätigt.
+
+`chakraSatz()` hängt an eine Empfehlung einen Satz an ("Energetisch geht es dabei ums Wurzelchakra – es holt dich zurück ins Hier und Jetzt …") und nennt zusätzlich die passende Chakra-Übung — **ausser sie ist ohnehin schon die Empfehlung**, sonst stünde zweimal dasselbe da. `chakraAusText()` fängt direkte Fragen ab ("Was ist mit meinem Herzchakra?"): ohne das würde "Herz" bei Trauer landen. **Falle:** Die Texte in `CHAKREN.warum` beginnen mit "es …" — nach "geht es darum, **dass**" ergäbe das einen falschen Satz, darum steht dort ein Doppelpunkt.
+
+**Falle bei den Stichwörtern (mehrfach aufgetreten):** Gesucht wird per `indexOf`, also nach exakten Teilzeichenketten. "weiss nicht was ich will" trifft **nicht** auf "ich weiss gar nicht mehr, was ich eigentlich will" — dazwischen stehen Wörter. Kurze, robuste Fragmente nehmen ("was ich will", "nichts ändern", "sowieso nichts"). Und: dasselbe Wort in zwei Anliegen entscheidet die Reihenfolge — "krank" stand in *Schmerz* und in *Krankheit*, und *Schmerz* gewann, weil es weiter oben steht; darum ist "krank" aus *Schmerz* entfernt.
 
 `erkenneAnliegen()` gewichtet Treffer nach **Wortlänge**, damit "kopfschmerz" beim Schmerz landet und nicht beim Grübeln über das kürzere "kopf". `medFuerAnliegen()` überspringt, was heute schon gehört wurde. `findeMantra()`/`findeMudra()` schlagen über Text bzw. Namen nach — findet sich nichts, fällt der Teil **still weg**, statt etwas zu erfinden.
 

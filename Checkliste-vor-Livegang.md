@@ -23,6 +23,14 @@ Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entf
 - [ ] **Entscheiden, ob und wie Nutzung gemessen werden soll** (z. B. wie viele
       die Testphase abschliessen) – das ist auch eine Datenschutz-Frage, nicht
       nur eine technische.
+- [ ] **Halschakra-Beschreibung bestätigen.** Bei deiner Chakren-Aufzählung
+      hast du das Halschakra nicht genannt. Ich habe dort den Untertitel
+      deiner eigenen Übung genommen („alte Widerstände Stück für Stück
+      loslassen") – bitte kurz durchlesen und sagen, ob das so stimmt.
+- [ ] **Chakra für Schmerzen und Krankheit festlegen.** In deiner
+      Aufzählung kam beides nicht vor. Bei Schmerzen sagt der Begleiter
+      darum gar kein Chakra, bei Krankheit habe ich das Wurzelchakra
+      genommen (Erdung, Körper). Sag mir, was richtig ist.
 - [ ] **Foto für den Begleiter aussuchen** (eine meditierende Person). Der
       Platz dafür ist in der App schon eingebaut – sobald du mir das Bild
       schickst, erscheint es automatisch. Bis dahin steht dort das
