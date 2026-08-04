@@ -10,6 +10,54 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 
 ---
 
+## 0. Entscheidungsprotokoll — was gilt und warum
+
+**Diese Liste ist verbindlich.** Sie hält fest, was Christine entschieden hat und was aus Tests hervorgegangen ist, damit keine dieser Festlegungen bei einem späteren Umbau versehentlich zurückgedreht wird. Die Einzelheiten stehen jeweils im genannten Abschnitt. Wer hier etwas ändert, ändert eine getroffene Entscheidung — das braucht Christines Zustimmung, nicht nur einen Commit.
+
+### Grundsätze (gelten überall)
+
+| Nr. | Regel | Warum |
+|---|---|---|
+| G1 | **Kein behaupteter Zustand ohne Angabe.** Die App sagt nie, wie es jemandem geht, solange die Person es nicht selbst angegeben hat. | "Zeig mir, was jetzt passt" lieferte bei unberührtem Zeiger eine Empfehlung mit der Begründung "Dein Kompass zeigt: ausgeglichen" — das war nur die Ruhestellung der Nadel. (§3.3b) |
+| G2 | **Kein Muster ohne Muster.** "meistens" erst ab der Hälfte aller Male, "liebste Übung" erst ab zweimal. | Bei fünf verschiedenen Übungen stand "Deine liebste Übung: Atem-Anker (1×)". (§3.6) |
+| G3 | **Keine Kompass-Achsen in sichtbaren Texten.** Die Wörter *Denken, Fühlen, Anspannung, Entspannung* sind Beschriftungen der Scheibe, keine Zustände. Sichtbare Texte sprechen in Adjektiven ("eher angespannt", "sehr geborgen"). | "Am Anfang zeigte dein Kompass auf Denken, jetzt auf Fühlen" las sich, als sei das Fühlen weg. (§3.5, §6a) |
+| G4 | **Was wie ein Knopf oder Link aussieht, muss auch etwas tun.** | "Über die App" klappte einen Text weit unterhalb der Liste auf; "yogaisland.ch" sah aus wie ein Link, war Text; die Lieblingsmeditationen sahen antippbar aus. (§3.7b) |
+| G5 | **Kein doppelter Weg zum selben Inhalt.** | Profil → "Statistiken" sprang auf "Mein Weg" und zeigte dort exakt dasselbe wie der Reiter unten. (§3.6) |
+| G6 | **Eine Regel, eine Stelle im Code.** | "Tage am Stück" war zweimal ausprogrammiert; zwei Kopien laufen mit der Zeit auseinander. (§3.3b) |
+| G7 | **Nichts erfinden.** Fehlen Angaben (Impressum, Chakren-Zuordnung, Begleiter-Foto), bleibt die Stelle leer oder wird als offene Frage vermerkt — sie wird nicht plausibel gefüllt. | Durchgehend; offene Punkte stehen in `Checkliste-vor-Livegang.md`. |
+
+### Entscheidungen von Christine
+
+| Datum | Entscheidung | Abschnitt |
+|---|---|---|
+| Aug. 2026 | Es gibt **nur ein Ziel**, das selbst gesetzte Wochenziel. Das früher fest einprogrammierte "Ziel: 7 Tage" ist entfallen. | §3.3, §3.6 |
+| Aug. 2026 | Die Stufen der Inselreise werden **offengelegt** ("ab 5", "ab 15" …) statt unerklärt aufzutauchen. | §3.6 |
+| Aug. 2026 | Der Begleiter existiert **einmal**, in der Bibliothek. Die Kopien auf "Mein Weg" und im Abschluss sind entfallen. | §6 |
+| Aug. 2026 | **Keine echte KI** anschliessen. Die lokale Logik ist die dauerhafte Lösung, keine Übergangslösung. | §6 |
+| 4. Aug. 2026 | Minuten zählen **nur die wirklich gehörte Zeit**; erst alle Sekunden summieren, dann einmal umrechnen. | §5 |
+| 4. Aug. 2026 | Der Zustand nach der Meditation wird **einmal gesetzt und festgehalten** ("Ja, so fühle ich mich jetzt"), nicht dauernd verstellt. Nicht bestätigte Sitzungen fliessen nicht als "keine Veränderung" in die Statistik. | §3.5 |
+| 4. Aug. 2026 | Der Begleiter arbeitet mit **Anliegen statt Kompass-Achsen** — körperliche Beschwerden sind kein Denk- oder Gefühlsthema. | §6a |
+| 4. Aug. 2026 | Der Begleiter nennt zusätzlich das **Chakra** nach Christines eigener Zuordnung. | §6b |
+| 4. Aug. 2026 | Bei **Schmerz** gilt ihr fester Weg: Licht in den Körper → wahrnehmen → loslassen → beim Herzen ankommen; **Grün ist die Farbe der Heilung**. | §6b |
+| 4. Aug. 2026 | Vielschichtige Themen bieten **mehrere Wege** an statt einer Empfehlung — zuerst ankommen, dann die weiteren Übungen je nach Beschwerde. | §6b |
+| 4. Aug. 2026 | **Die Inselreise zählt Tage, nicht Meditationen** ("so wie Calm"). | §3.6a |
+
+### Funde aus Tests (behoben, nicht zurückdrehen)
+
+| Fund | Abschnitt |
+|---|---|
+| Safari malt um fokussierte `<svg>` einen eigenen blauen Rahmen — der Fokus liegt darum auf dem umgebenden `<div>`. | §3.2 |
+| Die Empfehlung wiederholte sich (10 Durchläufe → 5 verschiedene Übungen von 47). | §3.3b |
+| "Dein heutiger Fokus" wuchs unbegrenzt und schob die halbe Startseite weg. | §3.3b |
+| Die Fortschritts-Grafik wurde nach einem Jahr zu einem durchgehenden Block. | §3.3b |
+| Ein ganzes Jahr sah auf der Zeitachse aus wie ein Tag ("4. Aug" bis "4. Aug"). | §3.3b |
+| Inselreise: Zahl und Balken sagten Verschiedenes ("32 / 60" neben 7 %). | §3.6 |
+| Insel-Woche: erstes Vorher mit letztem Nachher las sich als ein Paar. | §3.6 |
+| Die gestaltete Insel wurde nirgends gespeichert. | §4 |
+| Stichwort-Überschneidungen zwischen Anliegen: bei gleicher Wortlänge gewinnt das weiter oben stehende, also das allgemeinere. | §6a |
+
+---
+
 ## 1. Tech-Stack (aktuell)
 
 - Reines HTML + CSS + Vanilla JS (ein `<script>`-Block, IIFE)
@@ -223,13 +271,32 @@ Inhalt bewusst **nur Nachprüfbares** — keine Werbeversprechen, keine erfunden
 
 **Falle beim Ändern:** Eine neue Seite braucht **drei** Einträge, sonst bleibt sie unsichtbar: die CSS-Zeile bei `body:not(.entered)[data-step="…"]`, einen Eintrag in `STEPS` und den `goToStep()`-Aufruf.
 
+### 3.6a Inselreise: Tage statt Meditationen (4. Aug. 2026)
+
+**Christines Entscheid, nach einer Gegenüberstellung: "so wie Calm."**
+
+**Das Problem** (aus dem Langzeit-Test, §3.3b): Die Reise zählte jede abgeschlossene Übung. Wer an *einem* Nachmittag zehn Übungen hörte, stand damit gleich weit wie jemand, der neun Tage hintereinander je eine machte — teils sogar weiter. Eine Zahl, die sich an einem Nachmittag hochtreiben lässt, verliert ihre Bedeutung; und die App will Regelmässigkeit fördern, nicht Menge.
+
+**Wie es andere machen** (Wissensstand, nicht live nachgeprüft): Calm, Headspace und Insight Timer koppeln den Fortschritt an **Tage**, nicht an Sitzungen; Apple misst Achtsamkeitsminuten *pro Tag*. Gesamtsitzungen und Gesamtminuten stehen daneben als Kilometerzähler, ohne mit den Stufen zu konkurrieren.
+
+**Umgesetzt:** `renderJourney()` zählt über `dayStamp()` die **verschiedenen Tage mit mindestens einer Meditation**. Die Schwellen in `STUFEN` sind jetzt Tage: **1 / 5 / 15 / 30 / 60** (die letzte Stufe entspricht bei regelmässiger Praxis rund drei bis vier Monaten). Anzeige: "noch 4 Tage bis zur nächsten Stufe", unter den Kreisen "ab 5 Tagen", in den Details "**an 29 von 41 Tagen meditiert**" plus separat "Insgesamt 32 Meditationen".
+
+**Bewusst NICHT "Tage am Stück":** Ein verpasster Tag löscht hier nichts. Für eine Insel, die Ruhe verspricht, wäre ein Zähler, der bei Krankheit oder Ferien auf null springt, das falsche Signal. Die Serie gibt es als eigene Zahl auf "Mein Weg" — dort ist sie richtig aufgehoben.
+
+**Drei Zahlen, drei Bedeutungen** (vorher sagten Inselreise und Gesamtzahl dasselbe):
+- **Inselreise** → an wie vielen Tagen du da warst (unverlierbar)
+- **Tage am Stück** → wie regelmässig gerade (darf reissen)
+- **Meditationen & Minuten gesamt** → wie viel insgesamt (Kilometerzähler)
+
+**Falle beim Ändern:** `STUFEN[].ab` sind seit dieser Umstellung **Tage**. Wer die Zahlen anfasst, muss wissen, dass 60 nicht mehr 60 Übungen heisst.
+
 ### 3.6 Profil (`data-step="profil"`)
 - Reihenfolge auf der Seite: Inselbewohner-Karte → Insel-Woche → Inselreise → Zugangs-Status → Einstellungen. Die beiden aufklappbaren Karten standen bis Aug. 2026 **unter** der Status-Karte und erschienen dadurch weit weg von dem Knopf, der sie aufklappt — jetzt direkt darunter.
 - **Profilbild (Aug. 2026 ergänzt):** Die Karte ist jetzt ein `<div>` mit **zwei** Knöpfen — verschachtelte `<button>` sind ungültiges HTML, und die beiden tun Verschiedenes: der Avatar links (`#profilAvatarBtn`, mit kleinem Stift-Abzeichen, ohne das er nicht antippbar aussah) öffnet die Bildauswahl, der Rest klappt auf/zu. Auswahl: acht Zeichen (🌴🌺🐚🌊⛵🌅🕊️🪷) oder **eigenes Foto**. Das Foto wird vor dem Speichern auf **160×160 quadratisch verkleinert** (`<canvas>`, JPEG q=0.82) — ein Handyfoto in Originalgrösse sprengt `localStorage`. Gespeichert unter `myisland.avatar.v1`, wie alles andere nur auf dem Gerät; das Overlay sagt das auch dazu. Ein `try/catch` fängt einen vollen Speicher ab und meldet es über die Bestätigungs-Karte, statt still zu scheitern.
 - Seitenkopf "Profil · Dein Bereich", Karte "Dein Inselbewohner" (`#profilInselbewohnerBtn`) — **seit Aug. 2026 ein Auf/Zu-Schalter für "Deine Inselwoche" und "Deine Inselreise"**: beide Karten sind standardmässig **zugeklappt**, damit die Profil-Seite ruhig bleibt; ein Tipp zeigt sie, der nächste versteckt sie wieder (`setInselbewohnerOffen()`). Der Untertitel der Karte wechselt mit ("Deine Insel-Woche und Inselreise ansehen" ↔ "Weniger anzeigen"), der Pfeil "›" dreht sich um 90°. Vorher versprach der Pfeil Antippbarkeit, ohne dass ein Klick überhaupt etwas ausgelöst hätte. **Wichtig beim Ändern:** `renderWeek()`/`renderJourney()` setzen `style.display` selbst wieder auf sichtbar, sobald Verlauf da ist — darum ruft `renderProfil()` am Ende `setInselbewohnerOffen(inselbewohnerOffen)` erneut auf, sonst stünden die Karten nach jedem Profil-Aufruf wieder offen.
 - **Status-Karte** (`renderStatusCard()`) zum Zugang, danach zwei Karten aus dem echten Verlauf (blenden sich aus, solange nichts da ist):
   - **"Deine Inselwoche"** (`renderWeek()`) — sieben Kreise von Montag bis Sonntag, gefüllt an den Tagen mit einer Sitzung, der heutige Tag zusätzlich umrandet. Darunter "X Tage am Stück" (`computeStreak()`) und **das selbst gesetzte Wochenziel** aus §3.3 (`loadWochenziel()` + `wochenFortschritt()`, z. B. "2 / 5 Meditationen" oder "16 / 60 Minuten") mit Balken. **Geändert im Aug. 2026:** Vorher stand hier ein fest einprogrammiertes "Ziel: 7 Tage" — damit gab es zwei Ziele nebeneinander, von denen eines niemandem gehörte. Christines Entscheid: es soll nur **ein** Ziel geben, und zwar ihr eigenes. Ist keines gesetzt, entfallen Zielzeile und Balken; dann steht dort nur die Serie. Hinter **"Details"** stehen wie früher die Zeilen mit Vorher/Nachher je Tag. Erscheint erst nach der ersten echten (≥20 Sekunden langen) Meditation — bis dahin bewusst unsichtbar statt einer leeren Woche.
-  - **"Deine Inselreise"** (`renderJourney()`) — ein Weg aus fünf Stationen (Angekommen · Ruhiger Anker · Achtsame Entdeckerin · Vertraute Insel · Zuhause auf der Insel), die aktuelle hervorgehoben, darunter "Stufe 3 · …", der Stand (**"18 / 30 bis zur nächsten Stufe"**, auf der letzten Stufe "N Meditationen insgesamt") und ein Balken. **Schwellen offengelegt (Aug. 2026, Christines Wunsch):** Unter jedem Kreis steht "ab 0 / 5 / 15 / 30 / 60"; vorher stand die Schwelle nur im `title`-Attribut, das auf dem Handy nie erscheint — die Stufen tauchten dadurch unerklärt auf. Zusätzlich listet der **Details**-Bereich alle fünf Stufen mit Symbol, Namen und Schwelle auf (die Namen passen nicht unter die Kreise) und markiert die aktuelle mit "du bist hier". Gezählt werden **alle abgeschlossenen Meditationen seit Beginn** (nicht diese Woche) — der Balken zeigt den Fortschritt **innerhalb** der laufenden Stufe, also von ihrer Schwelle bis zur nächsten. Der Zusatz "bis zur nächsten Stufe" kam im Aug. 2026 dazu: seit die Insel-Woche darüber das Wochenziel im selben Zahlenformat zeigt, stünden sonst zwei fast gleich aussehende Zahlenpaare untereinander, die völlig Verschiedenes meinen (diese Woche vs. gesamter Weg). Gezählt werden **abgeschlossene Meditationen aus dem Verlauf** — kein Punktesystem, das sich anders einsammeln liesse. Hinter **"Details"** die bisherigen Muster (wie du meistens ankommst, liebste Übung, Rhythmus, Entwicklung).
+  - **"Deine Inselreise"** (`renderJourney()`, **zählt seit 4. Aug. 2026 Tage statt Meditationen — siehe §3.6a**) — ein Weg aus fünf Stationen (Angekommen · Ruhiger Anker · Achtsame Entdeckerin · Vertraute Insel · Zuhause auf der Insel), die aktuelle hervorgehoben, darunter "Stufe 3 · …", der Stand (**"18 / 30 bis zur nächsten Stufe"**, auf der letzten Stufe "N Meditationen insgesamt") und ein Balken. **Schwellen offengelegt (Aug. 2026, Christines Wunsch):** Unter jedem Kreis steht "ab 0 / 5 / 15 / 30 / 60"; vorher stand die Schwelle nur im `title`-Attribut, das auf dem Handy nie erscheint — die Stufen tauchten dadurch unerklärt auf. Zusätzlich listet der **Details**-Bereich alle fünf Stufen mit Symbol, Namen und Schwelle auf (die Namen passen nicht unter die Kreise) und markiert die aktuelle mit "du bist hier". Gezählt werden **alle abgeschlossenen Meditationen seit Beginn** (nicht diese Woche) — der Balken zeigt den Fortschritt **innerhalb** der laufenden Stufe, also von ihrer Schwelle bis zur nächsten. Der Zusatz "bis zur nächsten Stufe" kam im Aug. 2026 dazu: seit die Insel-Woche darüber das Wochenziel im selben Zahlenformat zeigt, stünden sonst zwei fast gleich aussehende Zahlenpaare untereinander, die völlig Verschiedenes meinen (diese Woche vs. gesamter Weg). Gezählt werden **abgeschlossene Meditationen aus dem Verlauf** — kein Punktesystem, das sich anders einsammeln liesse. Hinter **"Details"** die bisherigen Muster (wie du meistens ankommst, liebste Übung, Rhythmus, Entwicklung).
 - **Jede Unterseite hat einen Zurück-Knopf oben** (`.icon-btn` links im `.page-head`). Bis Aug. 2026 fehlte er auf **"Dein Zugang"** (dort gab es nur "Zurück" ganz unten, `#aboBackBtn` — jetzt zusätzlich `#aboBackTopBtn`) und auf **"Meine Insel gestalten"** (`#inselBackBtn`; dort sitzt er absolut positioniert, weil die `.topbar` zentriert ist und ein Flex-Element die Mitte verschöbe). Christine hatte den Knopf oben rechts gewünscht — eingebaut ist er **links**, wo die vier bereits vorhandenen sitzen; alle acht Unterseiten sind damit gleich.
 - **Einstellungen** als Liste: "Abo verwalten" (→ Abo-Seite), "Favoriten" (→ Bibliothek, Filter ⭐), "Meine Insel gestalten" (→ §4), "Konto & Anmelden", "Über mich", "Über die App" (→ §3.7b), "Impressum", "Datenschutz", "Verlauf löschen". **"Statistiken" ist am 4. Aug. 2026 ersatzlos entfernt worden** (Christines Beobachtung: "Beim Profil Statistiken sieht man genau das, was auf mein Weg ist"). Die Zeile sprang auf den Reiter "Mein Weg" — also auf exakt dieselbe Seite, die die Leiste unten sowieso zeigt, ohne einen Filter oder Ausschnitt mitzubringen. Zwei Wege zum identischen Inhalt lassen einen suchen, wo kein Unterschied ist. **"Favoriten" bleibt bewusst**, weil die Zeile den ⭐-Filter setzt und damit etwas kann, was der Reiter allein nicht tut. **"Favoriten" hat seit Aug. 2026 bewusst keinen Pfeil "›"** — die Zeile springt nur auf einen anderen Reiter (kein echtes Unterseiten-Drilldown mit Rückweg wie bei Impressum/Über mich), der Pfeil hätte das Gegenteil suggeriert. **Ergänzt (Christine, gleicher Tag):** Wer über diese beiden Zeilen dorthin kommt, will danach meist zurück ins Profil — darum blendet sich auf der Zielseite oben ein **"← Zurück zum Profil"** ein (`#medZurueckProfilBtn` auf "Mein Weg", `#medV2ZurueckProfilBtn` auf "Meditationen"). Über die Tab-Leiste aufgerufen bleibt er weg, denn dort ist der Reiter das Ziel und kein Zwischenstopp. Umgesetzt zentral: `goToStep()` blendet ihn bei **jedem** Seitenwechsel aus, die beiden Profil-Zeilen schalten ihn direkt *nach* ihrem `goToStep()` wieder ein — so kann er über keinen anderen Weg (Begleiter-Link, Kategorie-Karten, "Ganze Bibliothek", Kompass-Empfehlung …) hängen bleiben, ohne dass jede einzelne Navigation daran denken müsste. **Die frühere Zeile "Dein Begleiter" ist entfernt** — der Begleiter war schon über die Bibliothek und "Mein Weg" gut erreichbar; eine dritte Stelle im Einstellungs-Menü war redundant (Christines Entscheid nach Rückfrage).
 - Fusszeile: Hinweis, dass alles nur auf dem Gerät liegt, und "🏝️ Zur Titelseite".

@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 4. August 2026 (zuletzt aktualisiert: Chakren-Zuordnung für Schmerz, Krankheit, Hals und Verdauung)
+Stand: 4. August 2026 (zuletzt aktualisiert: Inselreise zählt Tage statt Meditationen)
 
 ---
 
@@ -71,6 +71,13 @@ Stand: 4. August 2026 (zuletzt aktualisiert: Chakren-Zuordnung für Schmerz, Kra
       mehrmals meditierst (höchstens drei Zeilen plus Zusammenfassung).
 - [x] **Die Grafik hält ein ganzes Jahr aus** – ab zehn Wochen zeigt sie
       Wochen statt Tage, vorher wurde sie zu einem braunen Block.
+- [x] **Die Inselreise zählt Tage statt Meditationen** – zehn Übungen an
+      einem Nachmittag sind ein Tag, nicht zehn Schritte. So wie bei Calm
+      und Headspace. Die Gesamtzahlen stehen weiterhin auf „Mein Weg".
+- [x] **Alle Entscheidungen stehen jetzt im Protokoll.** Ganz oben in der
+      Spezifikation (SPEC.md, Abschnitt 0) steht eine verbindliche Liste:
+      was du entschieden hast, was aus Tests kam, und warum. Damit nichts
+      davon bei einem späteren Umbau versehentlich zurückgedreht wird.
 - [x] **„Zu fest in der Vergangenheit" bietet jetzt mehrere Wege an** –
       zuerst ankommen im Körper, danach zur Auswahl: Nacken und
       Halswirbel übers Halschakra (Nervensystem), runder Rücken und enge

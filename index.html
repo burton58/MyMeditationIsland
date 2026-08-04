@@ -1189,7 +1189,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.10";
+    var AKTUELLE_VERSION = "2026-08-04.11";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4318,8 +4318,12 @@
   // Die Reise als Weg über die Insel: fünf Stufen, jede mit einem Namen.
   // Gezählt werden abgeschlossene Meditationen aus dem echten Verlauf -
   // keine Punkte, die man sonstwo einsammeln könnte.
+  // "ab" = ab wie vielen TAGEN mit mindestens einer Meditation diese
+  // Stufe gilt (seit 4. Aug. 2026; vorher waren es Meditationen).
+  // 1 / 5 / 15 / 30 / 60 Tage - die letzte Stufe entspricht bei
+  // regelmaessiger Praxis rund drei bis vier Monaten.
   var STUFEN = [
-    { ab:0,  name:"Angekommen",         icon:"⛵" },
+    { ab:1,  name:"Angekommen",         icon:"⛵" },
     { ab:5,  name:"Ruhiger Anker",      icon:"⚓" },
     { ab:15, name:"Achtsame Entdeckerin", icon:"🧭" },
     { ab:30, name:"Vertraute Insel",    icon:"🌴" },
@@ -4332,8 +4336,24 @@
     if (!list.length){ box.innerHTML = ""; box.style.display = "none"; return; }
     box.style.display = "";
 
-    var anzahl = 0;
-    list.forEach(function(e){ anzahl += (e.meds || []).length; });
+    // Gezaehlt werden TAGE, an denen meditiert wurde - nicht einzelne
+    // Meditationen (Christines Entscheid am 4. Aug. 2026, "so wie Calm").
+    //
+    // Vorher zaehlte die Reise jede abgeschlossene Uebung. Im Langzeit-Test
+    // fiel auf: wer an EINEM Nachmittag zehn Uebungen hoert, steht damit
+    // gleich weit wie jemand, der neun Tage hintereinander je eine macht -
+    // teils sogar weiter. Eine Zahl, die sich an einem Nachmittag
+    // hochtreiben laesst, verliert ihre Bedeutung; und die App will
+    // Regelmaessigkeit foerdern, nicht Menge. Alle grossen Apps in dem
+    // Bereich (Calm, Headspace, Insight Timer) zaehlen darum Tage.
+    //
+    // Bewusst NICHT "Tage am Stueck": ein verpasster Tag loescht hier
+    // nichts. Die Serie gibt es als eigene Zahl auf "Mein Weg" - dort ist
+    // sie richtig aufgehoben. Die Gesamtzahlen (Meditationen, Minuten)
+    // bleiben ebenfalls dort und sind der Kilometerzaehler.
+    var tageMitMeditation = {};
+    list.forEach(function(e){ tageMitMeditation[dayStamp(e.ts)] = true; });
+    var anzahl = Object.keys(tageMitMeditation).length;
 
     var stufe = 0;
     for (var i = 0; i < STUFEN.length; i++){ if (anzahl >= STUFEN[i].ab) stufe = i; }
@@ -4342,10 +4362,10 @@
     var bis = naechste ? naechste.ab : von;
     var pct = naechste ? Math.round((anzahl - von) / (bis - von) * 100) : 100;
 
-    // Unter jeder Station steht, ab wie vielen Meditationen sie beginnt -
-    // vorher stand die Schwelle nur im "title", der auf dem Handy nie
-    // erscheint. So ist von aussen sichtbar, wie der Weg aufgebaut ist,
-    // statt dass die Stufen unerklaert auftauchen (Christines Wunsch).
+    // Unter jeder Station steht, ab wie vielen TAGEN sie beginnt - vorher
+    // stand die Schwelle nur im "title", der auf dem Handy nie erscheint.
+    // So ist von aussen sichtbar, wie der Weg aufgebaut ist, statt dass
+    // die Stufen unerklaert auftauchen (Christines Wunsch).
     var weg = STUFEN.map(function(st, i){
       var cls = i < stufe ? "erreicht" : (i === stufe ? "jetzt" : "");
       return '<div class="journey-halt">' +
@@ -4354,16 +4374,22 @@
       '</div>';
     }).join("");
 
-    var tage = Math.max(1, Math.round((list[list.length-1].ts - list[0].ts) / 86400000) + 1);
-    var details = '<div class="recap-row"><span class="k">Bisher</span><span class="v">' +
-      list.length + ' Besuche in ' + tage + (tage === 1 ? ' Tag' : ' Tagen') + '</span></div>';
+    // "an 26 von 41 Tagen" statt nur "32 Besuche": zeigt genau das,
+    // worauf die Stufe beruht, und daneben die Gesamtzahl der Uebungen.
+    var spanne = Math.max(1, Math.round((list[list.length-1].ts - list[0].ts) / 86400000) + 1);
+    var uebungen = 0;
+    list.forEach(function(e){ uebungen += (e.meds || []).length; });
+    var details = '<div class="recap-row"><span class="k">Bisher</span><span class="v">an ' +
+      anzahl + ' von ' + spanne + (spanne === 1 ? ' Tag' : ' Tagen') + ' meditiert</span></div>' +
+      '<div class="recap-row"><span class="k">Insgesamt</span><span class="v">' +
+      uebungen + (uebungen === 1 ? ' Meditation' : ' Meditationen') + '</span></div>';
     // Alle fuenf Stufen mit Namen und Schwelle ausgeschrieben - unter den
     // Kreisen ist nur Platz fuer die Zahl, die Namen passen dort nicht.
-    details += '<p class="journey-lead" style="margin:12px 0 6px;">So ist der Weg aufgebaut – gezählt werden alle Meditationen seit Beginn:</p>';
+    details += '<p class="journey-lead" style="margin:12px 0 6px;">So ist der Weg aufgebaut – gezählt werden die Tage, an denen du meditiert hast. Mehrere Meditationen an einem Tag zählen als ein Tag:</p>';
     details += STUFEN.map(function(st, i){
       return '<div class="recap-row' + (i === stufe ? ' jetzt' : '') + '">' +
         '<span class="k">' + st.icon + ' ' + st.name + '</span>' +
-        '<span class="v">ab ' + st.ab + (i === stufe ? ' · du bist hier' : '') + '</span></div>';
+        '<span class="v">ab ' + st.ab + (st.ab === 1 ? ' Tag' : ' Tagen') + (i === stufe ? ' · du bist hier' : '') + '</span></div>';
     }).join("");
 
     if (list.length >= 5){
@@ -4427,8 +4453,8 @@
         // aktuellen Stufe -, aber nebeneinander widersprachen sie sich.
         // Jetzt sagen beide dasselbe: wie weit INNERHALB der Stufe.
         '<span class="zahl">' + (naechste
-          ? ('noch ' + (bis - anzahl) + ' bis zur nächsten Stufe')
-          : (anzahl + ' Meditationen insgesamt')) + '</span></div>' +
+          ? ('noch ' + (bis - anzahl) + ((bis - anzahl) === 1 ? ' Tag' : ' Tage') + ' bis zur nächsten Stufe')
+          : ('an ' + anzahl + ' Tagen meditiert')) + '</span></div>' +
       '<div class="bar"><span style="width:' + Math.max(4, Math.min(100, pct)) + '%"></span></div>' +
       '<div id="reiseDetails" hidden style="margin-top:12px;">' + details + '</div>';
 
