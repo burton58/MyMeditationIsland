@@ -1186,7 +1186,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.13";
+    var AKTUELLE_VERSION = "2026-08-04.14";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1530,13 +1530,6 @@
 
     <div class="section-label">Dein Wochenziel</div>
     <div class="card" id="wochenzielCard"></div>
-
-    <!-- Vom Profil hierher (4. Aug. 2026): vorher eine Menüzeile, die auf
-         die Bibliothek sprang - jetzt die Übungen direkt hier, startbar
-         und mit Stern zum Abwählen. Gleiche Zeilenart wie in der
-         Bibliothek (.lib-row), damit sich nichts unterschiedlich anfühlt. -->
-    <div class="section-label">Deine Favoriten</div>
-    <div class="card list-card" id="favoritenListe"></div>
 
     <div class="section-label">Deine letzten Meditationen</div>
     <div class="card" id="historyList"></div>
@@ -3590,7 +3583,6 @@
     // stand dort nur "Dein Fortschritt", ohne Zeitraum.
     document.getElementById("seitHinweis").textContent = "seit " + datumKurz(startDatum()) + " " + startDatum().getFullYear();
     renderWochenzielCard();
-    renderFavoritenSektion();
     renderHistoryList();
     var grafikOffen = !document.getElementById("fortschrittGrafik").hidden;
     if (grafikOffen) renderFortschrittGrafik();
@@ -3624,35 +3616,6 @@
     var i = favoriten.indexOf(id);
     if (i === -1) favoriten.push(id); else favoriten.splice(i, 1);
     try { localStorage.setItem(FAV_KEY, JSON.stringify(favoriten)); } catch (e){}
-  }
-
-  // "Deine Favoriten" auf Mein Weg (4. Aug. 2026, vom Profil hierher
-  // gezogen): vorher nur eine Menüzeile, die auf die Bibliothek sprang -
-  // jetzt die vollstaendige Liste direkt hier, startbar und mit Stern zum
-  // Abwaehlen. Dieselbe Zeilenart wie in der Bibliothek (.lib-row), damit
-  // sich nichts unterschiedlich anfuehlt.
-  function renderFavoritenSektion(){
-    var host = document.getElementById("favoritenListe");
-    if (!host) return;
-    var gemacht = schonGemacht();
-    var liste = MEDITATIONS.filter(function(m){ return istFavorit(m.id); });
-    if (!liste.length){
-      host.innerHTML = '<p class="lib-leer">Markiere eine Übung mit dem Stern, dann steht sie hier.</p>';
-      return;
-    }
-    host.innerHTML = liste.map(function(m){
-      var frei = istFrei(m.id);
-      return '<div class="lib-row' + (frei ? '' : ' locked') + '" data-play="' + m.id + '">' +
-        '<span class="row-thumb">' + katIcon(m.dir) + '</span>' +
-        '<span class="lib-row-body">' +
-          '<span class="lib-row-name">' + m.name + (frei ? '' : ' 🔒') +
-            (gemacht[m.name] ? '<span class="lib-done">schon gemacht</span>' : '') + '</span>' +
-          '<span class="lib-row-desc">' + m.min + ' Min · ' + katName(m.dir) + '</span>' +
-        '</span>' +
-        '<button class="fav-btn on" data-fav="' + m.id + '" title="Nicht mehr merken">★</button>' +
-        '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
-      '</div>';
-    }).join("");
   }
 
   // Welche Uebungen schon einmal gelaufen sind - aus dem echten Verlauf.
@@ -3739,7 +3702,6 @@
       e.stopPropagation();
       toggleFavorit(favEl.getAttribute("data-fav"));
       renderMedListV2();
-      renderFavoritenSektion();   // haelt "Mein Weg" mit der Bibliothek synchron
       return;
     }
     var playEl = e.target.closest("[data-play]");
