@@ -54,6 +54,18 @@ Stand: 3. August 2026 (zuletzt aktualisiert: toter Knopf auf der Startseite entf
 
 ## Schon erledigt
 
+- [x] **Minuten zählen nur noch die wirklich gehörte Zeit** – vorher wurde
+      jede einzelne Meditation auf volle Minuten aufgerundet, wodurch neun
+      Sitzungen zu je gut vier Minuten als 45 statt 37 Minuten erschienen.
+      Jetzt werden erst alle Sekunden zusammengezählt und dann einmal
+      umgerechnet.
+- [x] **„Statistiken" im Profil entfernt** – die Zeile zeigte genau
+      dieselbe Seite wie „Mein Weg" in der Leiste unten, ohne etwas zu
+      ergänzen.
+- [x] **„Über die App" ist eine echte Seite** – vorher tat der Knopf nach
+      aussen nichts (der Text erschien weit unterhalb der Liste).
+- [x] **„yogaisland.ch" ist jetzt anklickbar** (bei „Über mich" und im
+      Impressum) – vorher sah es aus wie ein Link, war aber nur Text.
 - [x] Impressum ergänzt (Yoga Island – Christine Maranta Gutmann, Heinrichstrasse 241,
       8005 Zürich, chris@yogaisland.ch) – erreichbar über Profil und die Abo-Seite.
 - [x] Datenschutzerklärung ergänzt (ehrlich beschrieben: alles bleibt auf dem

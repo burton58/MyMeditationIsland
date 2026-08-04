@@ -79,7 +79,8 @@
   body:not(.entered)[data-step="ueber"]       .ueber-page,
   body:not(.entered)[data-step="konto"]       .konto-page,
   body:not(.entered)[data-step="impressum"]   .impressum-page,
-  body:not(.entered)[data-step="datenschutz"] .datenschutz-page{ display:block; }
+  body:not(.entered)[data-step="datenschutz"] .datenschutz-page,
+  body:not(.entered)[data-step="appinfo"]     .appinfo-page{ display:block; }
   body:not(.entered):not([data-step="island"]) .layout,
   body:not(.entered):not([data-step="island"]) .topbar,
   body:not(.entered):not([data-step="island"]) .stepper{ display:none; }
@@ -928,10 +929,20 @@
   .ueber-karte p{ margin:0 0 12px; font-size:.9rem; line-height:1.6; color:var(--ink-soft); text-align:left; }
   .ueber-karte p:last-child{ margin-bottom:0; }
   .ueber-web{ font-size:.84rem !important; color:var(--gold-deep) !important; text-align:center !important; }
+  .ueber-web a{ color:inherit; }
   .legal-karte{ text-align:left; }
   .legal-karte h3{ font-size:.78rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--gold-deep); margin:22px 0 8px; }
   .legal-karte h3:first-child{ margin-top:0; }
   .legal-karte a{ color:var(--gold-deep); }
+  /* "Über die App": der Einstiegssatz darf mittig und etwas groesser stehen,
+     der Rest der Seite liest sich wie Impressum/Datenschutz. */
+  .appinfo-lead{ text-align:center !important; font-size:.98rem !important; line-height:1.55 !important; color:var(--ink) !important; }
+  /* Drei nachpruefbare Zahlen nebeneinander - keine Werbeaussagen, sondern
+     das, was die App selbst weiss (Anzahl Meditationen, Themen, Stand). */
+  .appinfo-zahlen{ display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; padding:16px 12px; }
+  .appinfo-zahlen .z{ text-align:center; }
+  .appinfo-zahlen .z b{ display:block; font-size:1.15rem; font-weight:800; color:var(--gold-deep); font-variant-numeric:tabular-nums; }
+  .appinfo-zahlen .z span{ display:block; margin-top:2px; font-size:.72rem; color:var(--ink-soft); }
   .legal-links{ text-align:center; margin:14px 0 0; font-size:.78rem; color:var(--ink-soft); }
   .legal-links button{ border:none; background:none; font:inherit; color:var(--gold-deep); cursor:pointer; padding:0; text-decoration:underline; }
 
@@ -1148,7 +1159,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-03.23";
+    var AKTUELLE_VERSION = "2026-08-04.1";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1660,9 +1671,13 @@
       <button class="menu-row" id="profilAboBtn">
         <span class="row-icon">💳</span><span class="row-text">Abo verwalten</span><span class="chev">›</span>
       </button>
-      <button class="menu-row" id="profilStatsBtn">
-        <span class="row-icon">📊</span><span class="row-text">Statistiken</span>
-      </button>
+      <!-- Hier stand bis Aug. 2026 eine Zeile "Statistiken". Sie sprang auf
+           den Reiter "Mein Weg" - also auf genau dieselbe Seite, die die
+           Leiste unten sowieso zeigt, ohne irgendetwas zu ergaenzen. Zwei
+           Wege zum selben Inhalt lassen einen suchen, wo kein Unterschied
+           ist; darum ist sie weg. "Favoriten" bleibt, weil die Zeile den
+           Stern-Filter mitbringt und damit etwas kann, was der Reiter
+           allein nicht tut. -->
       <button class="menu-row" id="favMenuRow">
         <span class="row-icon">⭐</span><span class="row-text">Favoriten</span>
       </button>
@@ -1687,11 +1702,6 @@
       <button class="menu-row danger" id="profilResetBtn">
         <span class="row-icon">🗑️</span><span class="row-text">Verlauf löschen</span><span class="chev">›</span>
       </button>
-    </div>
-
-    <div class="card compass-info" id="aboutBox" hidden style="margin-top:12px;">
-      <p><strong>My Meditation Island</strong> – geführte Meditationen auf Schweizerdeutsch, von drei Minuten bis zur halben Stunde.</p>
-      <p>Der Kompass fragt, wie es dir gerade geht, und stellt daraus zusammen, was passt. Alles läuft direkt auf deinem Gerät.</p>
     </div>
 
     <p class="muted-note" id="storageNote">Dein Verlauf bleibt nur auf diesem Gerät – kein Konto, kein Server.</p>
@@ -1760,7 +1770,10 @@
       weil Worte in der eigenen Sprache am tiefsten ankommen.</p>
       <p>Der Kompass ist dabei mein Herzstück: Statt einer langen Liste fragst du dich zuerst,
       wie es dir gerade wirklich geht – und bekommst genau das, was dazu passt.</p>
-      <p class="ueber-web">Mehr über meine Arbeit: yogaisland.ch</p>
+      <!-- Als echter Link, nicht nur als Text: "yogaisland.ch" sieht aus
+           wie etwas zum Antippen, und wer es antippt, soll auch dort
+           landen. Vorher stand hier reiner Text - ein Blindgang. -->
+      <p class="ueber-web"><a href="https://www.yogaisland.ch" target="_blank" rel="noopener">Mehr über meine Arbeit: yogaisland.ch ↗</a></p>
     </div>
 
     <div class="btn-row"><button class="btn-dark" id="ueberCtaBtn">7 Tage gratis starten</button></div>
@@ -1784,7 +1797,7 @@
       <p>Yoga Island – Christine Maranta Gutmann<br>Heinrichstrasse 241<br>8005 Zürich, Schweiz</p>
       <h3>Kontakt</h3>
       <p>E-Mail: <a href="mailto:chris@yogaisland.ch">chris@yogaisland.ch</a><br>
-      Mehr über meine Arbeit: yogaisland.ch</p>
+      Mehr über meine Arbeit: <a href="https://www.yogaisland.ch" target="_blank" rel="noopener">yogaisland.ch ↗</a></p>
     </div>
   </div>
 
@@ -1839,6 +1852,78 @@
       <h3>Kontakt</h3>
       <p>Fragen zum Datenschutz? <a href="mailto:chris@yogaisland.ch">chris@yogaisland.ch</a></p>
     </div>
+  </div>
+
+  <!-- ============ ÜBER DIE APP ============
+       Vorher war "Über die App" ein Aufklapper: der Knopf stand mitten in
+       der Einstellungs-Liste, der Text erschien aber erst unterhalb der
+       ganzen Liste - man tippte, sah nichts und tippte wieder weg. Jetzt
+       ist es eine eigene Seite mit Zurueck-Knopf, genau wie Impressum und
+       Datenschutz. Inhalt bewusst nur Nachpruefbares: was die App ist, wie
+       sie gedacht ist, was sie NICHT kann, und wohin man von hier kommt. -->
+  <div class="page appinfo-page" id="appinfoPage">
+    <div class="page-head">
+      <button class="icon-btn" id="appinfoBackBtn" title="Zurück">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="ttl center">
+        <h1>Über die App</h1>
+        <p>Was My Island ist und wie sie gedacht ist</p>
+      </div>
+      <span class="icon-btn blank"></span>
+    </div>
+
+    <div class="card ueber-karte">
+      <p class="appinfo-lead">My Meditation Island ist eine kleine Insel für zwischendurch:
+      geführte Meditationen auf Schweizerdeutsch, von wenigen Minuten bis zur halben Stunde.</p>
+    </div>
+
+    <div class="card appinfo-zahlen" id="appinfoZahlen"></div>
+
+    <div class="section-label">So ist es gedacht</div>
+    <div class="card ueber-karte legal-karte">
+      <h3>Der Kompass</h3>
+      <p>Statt einer langen Liste fragst du dich zuerst, wie es dir gerade wirklich geht – angespannt oder
+      entspannt, wach oder müde. Daraus stellt die Insel zusammen, was jetzt passt.</p>
+
+      <h3>Die Bibliothek</h3>
+      <p>Wenn du schon weisst, was du suchst, gehst du direkt auf <strong>Meditationen</strong> – dort liegt
+      alles nach Themen sortiert, mit Lupe zum Suchen und Stern zum Merken.</p>
+
+      <h3>Dein Weg</h3>
+      <p>Jede abgeschlossene Meditation wird mitgezählt: Tage hintereinander, Minuten, deine Entwicklung als
+      Grafik. Gezählt wird nur die Zeit, die du wirklich gehört hast.</p>
+
+      <h3>Dein Begleiter</h3>
+      <p>Der Begleiter hilft beim Aussuchen und kennt zu jeder Meditation ein passendes Mudra oder Mantra.
+      Er ersetzt keine Beratung und keine Behandlung.</p>
+    </div>
+
+    <div class="section-label">Gut zu wissen</div>
+    <div class="card ueber-karte legal-karte">
+      <p>Diese App ist <strong>kein medizinisches Angebot</strong>. Sie hilft beim Zurruhekommen, ersetzt aber
+      keine ärztliche oder therapeutische Behandlung. Wenn es dir anhaltend schlecht geht, sprich bitte mit
+      einem Menschen, der dich begleiten kann.</p>
+      <p>Meditiere nie beim Autofahren oder überall dort, wo du aufmerksam sein musst.</p>
+      <p>Alles bleibt auf deinem Gerät – es gibt keinen Server, der deinen Verlauf sammelt. Was das genau
+      heisst, steht unter Datenschutz.</p>
+    </div>
+
+    <div class="section-label">Weiter</div>
+    <div class="card list-card">
+      <button class="menu-row" id="appinfoUeberMichBtn">
+        <span class="row-icon">🙋‍♀️</span><span class="row-text">Über mich</span><span class="chev">›</span>
+      </button>
+      <button class="menu-row" id="appinfoDatenschutzBtn">
+        <span class="row-icon">🔒</span><span class="row-text">Datenschutz</span><span class="chev">›</span>
+      </button>
+      <button class="menu-row" id="appinfoImpressumBtn">
+        <span class="row-icon">📜</span><span class="row-text">Impressum</span><span class="chev">›</span>
+      </button>
+    </div>
+
+    <p class="muted-note">Etwas gefunden, das nicht stimmt? Schreib an
+    <a href="mailto:chris@yogaisland.ch">chris@yogaisland.ch</a>.</p>
   </div>
 
   <!-- ============ KONTO / ANMELDEN ============ -->
@@ -2863,6 +2948,7 @@
     konto:      { label:"", sub:"" },
     impressum:  { label:"", sub:"" },
     datenschutz:{ label:"", sub:"" },
+    appinfo:    { label:"", sub:"" },
     home:       { label:"", sub:"" },
     island:     { label:"Insel gestalten · optional",   sub:"Wähle, wie deine Insel aussieht." },
     compass:    { label:"Schritt 1 von 3 · Kompass",    sub:"Stell den Zeiger auf deine Richtung." },
@@ -2904,6 +2990,17 @@
   // Anspannung), nur die Zeichnung ist waagrecht gespiegelt. Alle Stellen,
   // die eine Nadel setzen, rechnen deshalb über diese zwei Funktionen.
   var COMPASS_MAXR = 135;
+  // Minuten aus Sekunden - IMMER erst alle Sekunden summieren und dann
+  // einmal umrechnen, nie je Meditation aufrunden. Frueher stand hier
+  // Math.ceil pro Uebung: neun Sitzungen zu je 4:10 ergaben damit 9x5=45
+  // statt der tatsaechlichen 37 Minuten. Gezaehlt wird ausserdem nur die
+  // wirklich gehoerte Zeit (session.elapsed), nie die Nennlaenge - wer
+  // frueher aufhoert, bekommt auch nur das angerechnet.
+  function minutenAus(sekunden){
+    if (!sekunden) return 0;
+    return Math.max(1, Math.round(sekunden / 60));   // nie "0 Min" fuer echte Zeit
+  }
+
   function nadelX(x){ return 200 - x * COMPASS_MAXR; }
   function nadelY(y){ return 200 + y * COMPASS_MAXR; }
 
@@ -3235,15 +3332,15 @@
   // gelaufen sind - aus demselben Verlauf wie alle anderen Statistiken.
   function wochenFortschritt(){
     var start = montagDieserWoche().getTime();
-    var anzahl = 0, minuten = 0;
+    var anzahl = 0, sekunden = 0;
     loadHistory().forEach(function(e){
       if (e.ts < start) return;
       (e.meds || []).forEach(function(m){
         anzahl++;
-        minuten += Math.ceil((m.seconds || 0) / 60);
+        sekunden += (m.seconds || 0);
       });
     });
-    return { anzahl:anzahl, minuten:minuten };
+    return { anzahl:anzahl, minuten:minutenAus(sekunden) };
   }
 
   function renderWochenzielCard(){
@@ -4577,7 +4674,7 @@
           return '<div class="hist-row">' +
             '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
             '<span class="body"><span class="name">' + e.name + '</span>' +
-            '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + Math.max(1, Math.round(e.seconds / 60)) +
+            '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + minutenAus(e.seconds) +
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
           '</div>';
         }).join("") + '</div>';
@@ -4657,15 +4754,15 @@
   // ---- Fortschritt: drei Zahlen aus dem echten Verlauf ----------------
   function renderStats(){
     var minuten = 0, anzahl = 0, tage = {};
+    var sekunden = 0;
     loadHistory().forEach(function(e){
       (e.meds || []).forEach(function(m){
         anzahl++;
-        // Aufrunden statt runden: eine echte, gezaehlte Meditation soll nie
-        // mit "0 Minuten gesamt" danebenstehen, auch wenn sie kurz war.
-        minuten += Math.ceil((m.seconds || 0) / 60);
+        sekunden += (m.seconds || 0);
       });
       tage[dayStamp(e.ts)] = true;
     });
+    minuten = minutenAus(sekunden);
     // Tage am Stueck: von heute (oder gestern) rueckwaerts zaehlen, solange
     // an jedem Tag etwas gelaufen ist.
     var streak = 0, tag = new Date();
@@ -4709,16 +4806,16 @@
     var proTag = {};
     loadHistory().forEach(function(e){
       var k = dayStamp(e.ts);
-      if (!proTag[k]) proTag[k] = { anzahl:0, minuten:0 };
+      if (!proTag[k]) proTag[k] = { anzahl:0, sekunden:0 };
       (e.meds || []).forEach(function(m){
         proTag[k].anzahl++;
-        proTag[k].minuten += Math.ceil((m.seconds || 0) / 60);
+        proTag[k].sekunden += (m.seconds || 0);
       });
     });
     var reihe = [], d = new Date(start);
     while (d <= heute && reihe.length < 400){
-      var k = dayStamp(d.getTime()), w = proTag[k] || { anzahl:0, minuten:0 };
-      reihe.push({ datum:new Date(d), anzahl:w.anzahl, minuten:w.minuten });
+      var k = dayStamp(d.getTime()), w = proTag[k] || { anzahl:0, sekunden:0 };
+      reihe.push({ datum:new Date(d), anzahl:w.anzahl, minuten:minutenAus(w.sekunden) });
       d.setDate(d.getDate() + 1);
     }
     return reihe;
@@ -4870,7 +4967,7 @@
           return '<div class="hist-row">' +
             '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
             '<span class="body"><span class="name">' + e.name + '</span>' +
-            '<span class="meta">' + datumWort(e.ts) + ' · ' + Math.max(1, Math.round(e.seconds / 60)) +
+            '<span class="meta">' + datumWort(e.ts) + ' · ' + minutenAus(e.seconds) +
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
           '</div>';
         }).join("")
@@ -5124,10 +5221,9 @@
       goToStep("profil");
     });
   });
-  document.getElementById("profilStatsBtn").addEventListener("click", function(){
-    renderMyMed(); goToStep("meditation");
-    setProfilZurueck(true);   // nach goToStep, das ihn zuerst ausblendet
-  });
+  // Hier stand der Zuhoerer fuer "Statistiken". Die Zeile ist weg (siehe
+  // Kommentar bei der Einstellungs-Liste); "Mein Weg" in der Leiste unten
+  // zeigt genau dasselbe.
   document.getElementById("favMenuRow").addEventListener("click", function(){
     openCatV2("fav"); goToStep("meditation2");
     setProfilZurueck(true);
@@ -5246,10 +5342,39 @@
     btn.textContent = ziel.hidden ? "Details" : "Weniger";
   });
 
+  // "Über die App" war bis Aug. 2026 ein Blindgang: der Knopf klappte einen
+  // Text auf, der unterhalb der ganzen Einstellungs-Liste lag - man tippte
+  // und sah nichts. Jetzt ist es eine eigene Seite mit Zurueck-Knopf.
   document.getElementById("profilAboutBtn").addEventListener("click", function(){
-    var box = document.getElementById("aboutBox");
-    box.hidden = !box.hidden;
+    renderAppinfo(); goToStep("appinfo");
   });
+  document.getElementById("appinfoBackBtn").addEventListener("click", function(){
+    renderProfil(); goToStep("profil");
+  });
+  // Von "Über die App" weiter zu den drei verwandten Seiten. legalZurueck /
+  // ueberZurueck merken sich, dass es zurueck hierher geht - sonst landet
+  // man ueber den Zurueck-Pfeil im Profil und muss den Weg neu suchen.
+  document.getElementById("appinfoUeberMichBtn").addEventListener("click", function(){
+    ueberZurueck = "appinfo"; goToStep("ueber");
+  });
+  document.getElementById("appinfoDatenschutzBtn").addEventListener("click", function(){
+    legalZurueck = "appinfo"; goToStep("datenschutz");
+  });
+  document.getElementById("appinfoImpressumBtn").addEventListener("click", function(){
+    legalZurueck = "appinfo"; goToStep("impressum");
+  });
+  // Die drei Zahlen kommen aus der App selbst, nicht aus einem festen Text -
+  // so stimmen sie auch nach der naechsten neuen Meditation noch.
+  function renderAppinfo(){
+    var host = document.getElementById("appinfoZahlen");
+    if (!host) return;
+    var laengen = MEDITATIONS.map(function(m){ return m.min; });
+    var kurz = Math.min.apply(null, laengen), lang = Math.max.apply(null, laengen);
+    host.innerHTML =
+      '<div class="z"><b>' + MEDITATIONS.length + '</b><span>Meditationen</span></div>' +
+      '<div class="z"><b>' + KATEGORIEN.length + '</b><span>Themen</span></div>' +
+      '<div class="z"><b>' + kurz + '–' + lang + '</b><span>Minuten lang</span></div>';
+  }
 
   document.getElementById("needMudraBtn").addEventListener("click", zeigeMudra);
   document.getElementById("needMantraBtn").addEventListener("click", zeigeMantra);
