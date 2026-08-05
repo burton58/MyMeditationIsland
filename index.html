@@ -1232,7 +1232,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.24";
+    var AKTUELLE_VERSION = "2026-08-04.25";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1633,6 +1633,12 @@
          jede Zeile in #libList bekommt einen eigenen Knopf dafuer, siehe
          renderMedListV2() / mudraMantraFuerUebung() weiter unten. -->
 
+    <!-- Ruhiger Übergang zwischen den Fotokacheln und der Liste (4. Aug.
+         2026, Christine: Fotos oben, einfarbige Symbole in der Liste
+         wirkten ohne Trennung wie ein Stilbruch). Zeigt zusaetzlich, welche
+         Kategorie gerade gewaehlt ist - nicht nur farblich am Foto zu
+         erkennen, sondern auch als Text (§ Wahrheits-Regeln). -->
+    <div class="section-label" id="libListLabel"></div>
     <div class="lib-list" id="libList"></div>
   </div>
 
@@ -3790,6 +3796,12 @@
     document.getElementById("libMeta").innerHTML = suchwort
       ? ("<strong>" + pool.length + "</strong> " + (pool.length === 1 ? "Treffer" : "Treffer") + " für „" + suchwort + "“")
       : ("<strong>" + pool.length + "</strong> geführte Meditationen");
+
+    // Beschriftung ueber der Liste - sagt in Worten, welche Kategorie
+    // gerade gewaehlt ist (nicht nur am Foto oben erkennbar).
+    document.getElementById("libListLabel").textContent = currentCatV2 === "fav"
+      ? "Deine Favoriten"
+      : (currentCatV2 ? katName(currentCatV2) : "Alle Übungen");
 
     var host = document.getElementById("libList");
     host.innerHTML = pool.length ? pool.map(function(m){
