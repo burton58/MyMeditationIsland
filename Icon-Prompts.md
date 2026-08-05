@@ -167,7 +167,7 @@ am meisten.**
 |---|---|---|
 | 💛 | Kompass, solange der Zeiger unberührt ist | Ein offener Kreis, angedeutet gestrichelt — „noch nicht gesetzt" |
 | 🌅 | Abschluss-Seite, Ausgangszustand | Sonnenaufgang über einer Wasserlinie |
-| ✨ | Mantra pro Übung in der Bibliothek — die einzige verbliebene Stelle (4. Aug. 2026) | Drei feine Strahlen, die von einem Punkt ausgehen |
+| ✨ | „Ein Mantra für mich“ auf der Abschluss-Seite — die einzige Mantra-Stelle der App (Stand 4. Aug. 2026) | Drei feine Strahlen, die von einem Punkt ausgehen |
 | 💬 | Begleiter (bis dein Foto da ist) | Eine ruhige, runde Sprechblase |
 | 🧘 | Notbehelf, wenn zu einer Übung kein Kategorie-Bild passt | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
 | 🌴 | Wochenziel erreicht | Eine Palme mit einem kleinen Haken daneben |
