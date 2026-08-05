@@ -729,10 +729,12 @@
   .lib-leer{ font-size:.86rem; color:var(--ink-soft); text-align:center; }
   .fav-btn{ border:none; background:none; cursor:pointer; font-size:1.05rem; padding:4px; color:#c3cec8; flex:0 0 auto; }
   .fav-btn.on{ color:var(--gold); }
-  /* Mudra/Mantra-Knopf pro Uebung (4. Aug. 2026) - bewusst dezent wie der
-     Stern, damit Play weiterhin der klar staerkste Knopf der Zeile bleibt. */
-  .mm-btn{ border:none; background:none; cursor:pointer; font-size:1.05rem; padding:4px; opacity:.55; flex:0 0 auto; }
-  .mm-btn:active{ opacity:.9; }
+  /* Mudra/Mantra-Knopf pro Uebung (4. Aug. 2026) - zurueckhaltender als
+     Play, aber mit Farbe statt blosser Transparenz, sonst wirkt ein Emoji
+     nur ausgewaschen statt dezent und faellt kaum auf (Christine hat ihn
+     zuerst nicht gefunden). */
+  .mm-btn{ border:none; background:none; cursor:pointer; font-size:1.15rem; padding:4px; color:var(--gold-deep); flex:0 0 auto; }
+  .mm-btn:active{ opacity:.7; }
   .lib-info{
     margin:-3px 0 9px; padding:11px 13px; background:var(--cream-2); border-radius:13px;
     display:flex; flex-direction:column; gap:8px;
@@ -1196,7 +1198,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.20";
+    var AKTUELLE_VERSION = "2026-08-04.21";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
