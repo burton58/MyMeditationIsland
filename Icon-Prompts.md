@@ -167,8 +167,7 @@ am meisten.**
 | 💛 | Kompass, solange der Zeiger unberührt ist | Ein offener Kreis, angedeutet gestrichelt — „noch nicht gesetzt" |
 | 🌅 | Abschluss-Seite, Ausgangszustand | Sonnenaufgang über einer Wasserlinie |
 | 🤲 | „Ein Mudra für mich" (Abschluss-Seite) | Zwei offene Handflächen von oben |
-| ✨ | „Ein Mantra für mich" (Abschluss-Seite) | Drei feine Strahlen, die von einem Punkt ausgehen |
-| 🪷 | Mudra & Mantra pro Übung (Bibliothek, 4. Aug. 2026) | Lotusblüte, einfache Linienzeichnung — bewusst anders als 🤲 oben, weil dieser Knopf beides zusammen öffnet, nicht nur ein Mudra |
+| ✨ | „Ein Mantra für mich" (Abschluss-Seite) **und** Mantra pro Übung (Bibliothek, 4. Aug. 2026) | Drei feine Strahlen, die von einem Punkt ausgehen — dasselbe Symbol an beiden Stellen, weil beide dasselbe tun (ein Mantra zeigen) |
 | 💬 | Begleiter (bis dein Foto da ist) | Eine ruhige, runde Sprechblase |
 | 🧘 | Notbehelf, wenn zu einer Übung kein Kategorie-Bild passt | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
 | 🌴 | Wochenziel erreicht | Eine Palme mit einem kleinen Haken daneben |
