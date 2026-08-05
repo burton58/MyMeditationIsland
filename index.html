@@ -704,14 +704,47 @@
   .such-leeren[hidden]{ display:none; }
 
   .lib-meta{ margin:0 0 14px; font-size:.83rem; color:var(--ink-soft); }
-  .chips{ display:flex; gap:7px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; scrollbar-width:none; }
-  .chips::-webkit-scrollbar{ display:none; }
+  /* Bildkacheln statt Text-Chips fuer die vier Stimmungs-Kategorien
+     (4. Aug. 2026, Christines Vorschlag): "Alle"/"Favoriten" bleiben kleine
+     Chips oben, die vier eigentlichen Kategorien werden zu grossen,
+     antippbaren Fotos - siehe renderLibFilters(). */
+  .lib-filters{ margin-bottom:14px; }
+  .lib-chips-row{ display:flex; gap:7px; overflow-x:auto; padding-bottom:4px; margin-bottom:10px; scrollbar-width:none; }
+  .lib-chips-row::-webkit-scrollbar{ display:none; }
   .lib-chip{
     border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit; white-space:nowrap;
     padding:9px 14px; border-radius:20px; font-size:.8rem; font-weight:600; color:var(--ink); flex:0 0 auto;
     display:inline-flex; align-items:center; gap:6px;
   }
   .lib-chip.active{ background:var(--gold-grad); color:#3a2e08; border-color:var(--gold); }
+  .lib-cat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .lib-cat-tile{
+    position:relative; border:none; padding:0; margin:0; border-radius:16px; overflow:hidden; cursor:pointer;
+    aspect-ratio:4/3; box-shadow:0 3px 14px rgba(28,59,51,.14); font-family:inherit;
+  }
+  .lib-cat-tile.active{ outline:3px solid var(--gold); outline-offset:-3px; }
+  /* Der Goldrahmen allein geht bei warmtonigen Fotos (z.B. Wald in
+     Abendlicht) leicht unter - ein Haekchen oben rechts ist unabhaengig
+     von den Bildfarben eindeutig erkennbar. */
+  .lib-cat-check{
+    position:absolute; top:8px; right:8px; z-index:2; width:22px; height:22px; border-radius:50%;
+    background:var(--gold-grad); color:#3a2e08; display:none; align-items:center; justify-content:center;
+    font-size:.72rem; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.3);
+  }
+  .lib-cat-tile.active .lib-cat-check{ display:flex; }
+  .lib-cat-foto{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .lib-cat-tile::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,51,44,0) 45%, rgba(16,28,24,.78) 100%);
+  }
+  .lib-cat-label{
+    position:absolute; left:10px; right:10px; bottom:9px; z-index:1; text-align:left;
+    display:flex; align-items:center; gap:6px; color:#fff; font-weight:700; font-size:.8rem;
+    text-shadow:0 1px 5px rgba(0,0,0,.4);
+  }
+  /* Die Kategorie-Icons sind fest goldbraun (PNG) - auf dem Foto werden sie
+     stattdessen weiss dargestellt (Filter statt zweitem Bildsatz). */
+  .lib-cat-label img{ width:17px; height:17px; filter:brightness(0) invert(1); flex:0 0 auto; }
   .lib-list{ display:flex; flex-direction:column; gap:9px; }
   .lib-group-title{ font-family:var(--serif); font-weight:700; font-size:1rem; margin:14px 0 2px; }
   .lib-group-title span{ font-family:inherit; font-size:.74rem; font-weight:600; color:var(--ink-soft); }
@@ -1198,7 +1231,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.22";
+    var AKTUELLE_VERSION = "2026-08-04.23";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1574,7 +1607,7 @@
       <button class="such-leeren" id="libSucheLeeren" type="button" title="Suche löschen" hidden>✕</button>
     </div>
     <p class="lib-meta" id="libMeta"></p>
-    <div class="chips" id="libFilters"></div>
+    <div class="lib-filters" id="libFilters"></div>
     <!-- Begleiter-Chat: 4. Aug. 2026 auf Christines Entscheid deaktiviert,
          NICHT geloescht (siehe SPEC.md §6a "Deaktiviert, nicht geloescht").
          Zum Reaktivieren: diesen Kommentar-Rahmen entfernen UND
@@ -3688,22 +3721,46 @@
     return namen;
   }
 
+  // Ein Foto je Kategorie (4. Aug. 2026, Christines Vorschlag) - eines der
+  // acht bestehenden Stimmungsfotos (§5a), dieselben, die schon waehrend
+  // einzelner Meditationen im Hintergrund laufen. Kein neues Bild noetig,
+  // nur je Kategorie eines ausgewaehlt, das im Ton am besten passt.
+  var LIB_KAT_FOTO = {
+    nord:"bg-lichtraum.jpg",       // Gedanken beruhigen - klares Licht
+    sued:"bg-herzraum.jpg",        // Gefuehle verstehen
+    west:"bg-waldlichtung.jpg",    // Stress loesen - erden im Wald
+    ost:"bg-bergsee.jpg"           // Entspannen - stiller See
+  };
+
   function renderLibFilters(){
     var host = document.getElementById("libFilters");
-    var chips = [{ dir:null, icon:"", name:"Alle" }, { dir:"fav", icon:"⭐", name:"Favoriten" }].concat(KATEGORIEN);
-    host.innerHTML = chips.map(function(k){
-      var aktiv = (k.dir || null) === currentCatV2;
-      // Die echten Kategorien (nord/sued/west/ost) bekommen das Linien-Icon
-      // als Bild; "Alle" und "Favoriten" sind keine KATEGORIEN-Eintraege
-      // und bleiben Text bzw. das Stern-Emoji.
-      var iconHtml = (k.dir && k.dir !== "fav") ? katIcon(k.dir) : (k.icon ? '<span>' + k.icon + '</span>' : '');
-      return '<button class="lib-chip' + (aktiv ? ' active' : '') + '"' +
-        (k.dir ? ' data-dir="' + k.dir + '"' : '') + '>' +
-        iconHtml + k.name + '</button>';
+
+    // "Alle" und "Favoriten" bleiben kleine Text-Chips - sie sind kein
+    // Gefuehlszustand, ein Foto dafuer waere nur Dekoration ohne Aussage.
+    var chipsHtml = [{ dir:null, icon:"", name:"Alle" }, { dir:"fav", icon:"⭐", name:"Favoriten" }]
+      .map(function(k){
+        var aktiv = (k.dir || null) === currentCatV2;
+        return '<button class="lib-chip' + (aktiv ? ' active' : '') + '"' +
+          (k.dir ? ' data-dir="' + k.dir + '"' : '') + '>' +
+          (k.icon ? '<span>' + k.icon + '</span>' : '') + k.name + '</button>';
+      }).join("");
+
+    // Die vier eigentlichen Kategorien: grosse, antippbare Fotokacheln
+    // statt schmaler Chips - deutlich prominenter, wie gewuenscht.
+    var gridHtml = KATEGORIEN.map(function(k){
+      var aktiv = k.dir === currentCatV2;
+      return '<button class="lib-cat-tile' + (aktiv ? ' active' : '') + '" data-dir="' + k.dir + '">' +
+        '<img class="lib-cat-foto" src="' + LIB_KAT_FOTO[k.dir] + '" alt="">' +
+        '<span class="lib-cat-check">✓</span>' +
+        '<span class="lib-cat-label"><img src="' + k.icon + '" alt="">' + k.name + '</span>' +
+      '</button>';
     }).join("");
-    var aktivChip = host.querySelector(".lib-chip.active");
-    if (aktivChip) aktivChip.scrollIntoView({ block:"nearest", inline:"center", behavior:"smooth" });
-    Array.prototype.forEach.call(host.querySelectorAll(".lib-chip"), function(btn){
+
+    host.innerHTML =
+      '<div class="lib-chips-row">' + chipsHtml + '</div>' +
+      '<div class="lib-cat-grid">' + gridHtml + '</div>';
+
+    Array.prototype.forEach.call(host.querySelectorAll("button"), function(btn){
       btn.addEventListener("click", function(){
         currentCatV2 = btn.getAttribute("data-dir") || null;
         renderMedListV2();
