@@ -729,6 +729,16 @@
   .lib-leer{ font-size:.86rem; color:var(--ink-soft); text-align:center; }
   .fav-btn{ border:none; background:none; cursor:pointer; font-size:1.05rem; padding:4px; color:#c3cec8; flex:0 0 auto; }
   .fav-btn.on{ color:var(--gold); }
+  /* Mudra/Mantra-Knopf pro Uebung (4. Aug. 2026) - bewusst dezent wie der
+     Stern, damit Play weiterhin der klar staerkste Knopf der Zeile bleibt. */
+  .mm-btn{ border:none; background:none; cursor:pointer; font-size:1.05rem; padding:4px; opacity:.55; flex:0 0 auto; }
+  .mm-btn:active{ opacity:.9; }
+  .lib-info{
+    margin:-3px 0 9px; padding:11px 13px; background:var(--cream-2); border-radius:13px;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .mm-zeile b{ display:block; font-size:.85rem; font-family:var(--serif); margin-bottom:2px; }
+  .mm-zeile span{ display:block; font-size:.78rem; line-height:1.5; color:var(--ink-soft); }
   /* Gemeinsames Bild-Feld für Listenzeilen. Nur ein leiser, flacher Ton als
      Grund - das Icon selbst (gross, .kat-icon) soll die Aufmerksamkeit
      bekommen, nicht ein zusaetzlicher Ring/Verlauf um das Feld herum. */
@@ -1186,7 +1196,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.19";
+    var AKTUELLE_VERSION = "2026-08-04.20";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1563,15 +1573,12 @@
     </div>
     <p class="lib-meta" id="libMeta"></p>
     <div class="chips" id="libFilters"></div>
-    <!-- Seit Aug. 2026 ein echter Chat statt eines Knopfes, der auf eine
-         andere Seite sprang: hier steht die Bibliothek, hier ist die Frage
-         "welche passt zu mir?" naheliegend - also wird sie auch hier
-         beantwortet. Zweite Chat-Instanz mit denselben Faehigkeiten wie
-         die auf "Mein Weg" (allowRecommend = true), eigene Element-IDs. -->
+    <!-- Begleiter-Chat: 4. Aug. 2026 auf Christines Entscheid deaktiviert,
+         NICHT geloescht (siehe SPEC.md §6a "Deaktiviert, nicht geloescht").
+         Zum Reaktivieren: diesen Kommentar-Rahmen entfernen UND
+         BEGLEITER_AKTIV weiter unten im Skript auf true setzen - beides
+         zusammen, sonst erscheint die Karte ohne Funktion oder umgekehrt.
     <div class="ki-card">
-      <!-- Das Foto (begleiter.jpg) liefert Christine nach. Bis es da ist,
-           faengt onerror den Fehlschlag ab und zeigt weiter das 💬-Zeichen -
-           sobald die Datei im Ordner liegt, erscheint sie von selbst. -->
       <div class="ki-ico companion-foto">
         <img src="begleiter.jpg" alt="" onerror="this.parentElement.classList.add('kein-bild'); this.remove();">
         <span class="ersatz">💬</span>
@@ -1585,6 +1592,10 @@
         </div>
       </div>
     </div>
+    -->
+    <!-- Mudra & Mantra pro Uebung (4. Aug. 2026, ersetzt den Begleiter oben):
+         jede Zeile in #libList bekommt einen eigenen Knopf dafuer, siehe
+         renderMedListV2() / mudraMantraFuerUebung() weiter unten. -->
 
     <div class="lib-list" id="libList"></div>
   </div>
@@ -1696,8 +1707,9 @@
 
     <!-- Die Begleiter-Karte stand hier bis Aug. 2026. Nach einer beendeten
          Meditation braucht es kein Gespraech mehr - der Abschluss soll ruhig
-         ausklingen. Der Begleiter bleibt auf "Mein Weg" und in der
-         Bibliothek erreichbar. -->
+         ausklingen. Der Begleiter-Chat selbst ist seit 4. Aug. 2026
+         deaktiviert (siehe #medLibPage) - Mudra/Mantra bleiben aber ueberall
+         erreichbar: hier nach Stimmung, in der Bibliothek pro Uebung. -->
 
     <div class="btn-row">
       <button class="btn-ghost" id="restartBtn">Kompass neu setzen</button>
@@ -1876,13 +1888,6 @@
       Server, an den sie geschickt werden, und kein Konto, das sie sammelt. Löschst du deine Browserdaten oder
       wechselst du dein Gerät, sind sie weg; eine Wiederherstellung ist aktuell nicht möglich.</p>
 
-      <h3>Dein Begleiter (Chat)</h3>
-      <p>Der Begleiter-Chat versucht, eine Anfrage an einen KI-Dienst (Anthropic, USA) zu senden. Aktuell ist dafür
-      kein gültiger Zugang hinterlegt; die Anfrage schlägt darum immer fehl, und es kommt keine echte Antwort von
-      dort zurück – stattdessen antwortet die App direkt auf deinem Gerät. Trotzdem baut dein Browser dabei
-      technisch eine Verbindung zu einem Server in den USA auf (u. a. mit deiner IP-Adresse). Wer das nicht möchte,
-      nutzt den Begleiter-Chat einfach nicht – der Rest der App funktioniert unabhängig davon.</p>
-
       <h3>Hosting</h3>
       <p>Diese Seite liegt bei GitHub Pages (GitHub Inc., Teil von Microsoft). Wie bei jedem Website-Aufruf
       verarbeitet der Hosting-Anbieter dabei automatisch technische Zugriffsdaten (z. B. IP-Adresse, Zeitpunkt) –
@@ -1946,9 +1951,9 @@
       <p>Jede abgeschlossene Meditation wird mitgezählt: Tage hintereinander, Minuten, deine Entwicklung als
       Grafik. Gezählt wird nur die Zeit, die du wirklich gehört hast.</p>
 
-      <h3>Dein Begleiter</h3>
-      <p>Der Begleiter hilft beim Aussuchen und kennt zu jeder Meditation ein passendes Mudra oder Mantra.
-      Er ersetzt keine Beratung und keine Behandlung.</p>
+      <h3>Mudra & Mantra</h3>
+      <p>Zu jeder Meditation in der Bibliothek gehört ein passendes Mudra oder Mantra – antippbar direkt bei der
+      jeweiligen Übung. Das ersetzt keine Beratung und keine Behandlung.</p>
     </div>
 
     <div class="section-label">Gut zu wissen</div>
@@ -3738,24 +3743,66 @@
         '</span>' +
         '<button class="fav-btn' + (fav ? ' on' : '') + '" data-fav="' + m.id + '" title="Als Favorit merken">' +
           (fav ? '★' : '☆') + '</button>' +
+        '<button class="mm-btn" data-info="' + m.id + '" title="Passendes Mudra & Mantra">🤲</button>' +
         '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
-      '</div>';
+      '</div>' +
+      '<div class="lib-info" id="mmInfo-' + m.id + '" hidden></div>';
     }).join("") : (suchwort
-      ? '<p class="lib-leer">Nichts gefunden zu „' + suchwort + '“. Versuch ein anderes Wort – oder frag oben den Begleiter.</p>'
+      ? '<p class="lib-leer">Nichts gefunden zu „' + suchwort + '“. Versuch ein anderes Wort.</p>'
       : '<p class="lib-leer">Hier ist noch nichts. Tippe bei einer Übung auf den Stern, dann steht sie hier.</p>');
+  }
+
+  // Mudra & Mantra pro Uebung (4. Aug. 2026, ersetzt den Begleiter-Chat als
+  // Weg dazu): fest zur Kompass-Richtung der Uebung passend, nicht geraten
+  // wie beim Chat - dieselben Listen (MUDRAS/MANTRAS) wie beim Kompass
+  // selbst (§3.5, waehlePassend()). textStreuung(m.id) verteilt die Wahl
+  // ueber den Pool der Richtung, damit nicht alle Uebungen derselben
+  // Richtung dasselbe Paar zeigen. +3 beim Mantra-Index, damit Mudra und
+  // Mantra nicht regelmaessig denselben Pool-Platz treffen.
+  function mudraMantraFuerUebung(m){
+    var streuung = textStreuung(m.id);
+    var mudraPool = MUDRAS.filter(function(x){ return x.dir === m.dir; });
+    var mantraPool = MANTRAS.filter(function(x){ return x.dir === m.dir; });
+    return {
+      mudra: mudraPool.length ? mudraPool[streuung % mudraPool.length] : null,
+      mantra: mantraPool.length ? mantraPool[(streuung + 3) % mantraPool.length] : null
+    };
+  }
+
+  function toggleMudraMantraInfo(id){
+    var box = document.getElementById("mmInfo-" + id);
+    if (!box) return;
+    if (!box.hidden){ box.hidden = true; return; }
+    // Nur eine Karte gleichzeitig offen, sonst waechst die Liste bei
+    // mehrfachem Antippen immer weiter nach unten.
+    Array.prototype.forEach.call(document.querySelectorAll(".lib-info:not([hidden])"), function(el){ el.hidden = true; });
+    var m = MEDITATIONS.filter(function(x){ return x.id === id; })[0];
+    if (!m) return;
+    var paar = mudraMantraFuerUebung(m);
+    box.innerHTML =
+      (paar.mudra ? '<div class="mm-zeile"><b>🤲 ' + paar.mudra.name + '</b><span>' + paar.mudra.how + '</span></div>' : '') +
+      (paar.mantra ? '<div class="mm-zeile"><b>✨ „' + paar.mantra.text + '“</b><span>' + paar.mantra.why + '</span></div>' : '');
+    box.hidden = false;
   }
 
   // Wird von den Kategorien auf "My Meditation" aufgerufen.
   function openCatV2(dir){ currentCatV2 = dir; renderMedListV2(); }
   function closeCatV2(){ currentCatV2 = null; renderMedListV2(); }
 
-  // Ein Tipp auf eine Zeile oder auf Play startet sofort; der Stern merkt vor.
+  // Ein Tipp auf eine Zeile oder auf Play startet sofort; der Stern merkt
+  // vor; das Mudra/Mantra-Zeichen klappt nur die Info auf, startet nichts.
   document.addEventListener("click", function(e){
     var favEl = e.target.closest("[data-fav]");
     if (favEl){
       e.stopPropagation();
       toggleFavorit(favEl.getAttribute("data-fav"));
       renderMedListV2();
+      return;
+    }
+    var infoEl = e.target.closest("[data-info]");
+    if (infoEl){
+      e.stopPropagation();
+      toggleMudraMantraInfo(infoEl.getAttribute("data-info"));
       return;
     }
     var playEl = e.target.closest("[data-play]");
@@ -5996,11 +6043,18 @@
     zeichneReise();
   });
 
-  // Ein Chat, und zwar in der Bibliothek - dort, wo die Meditationen
-  // stehen. Die Instanz auf "Mein Weg" ist im Aug. 2026 entfallen (sie
-  // doppelte diese hier), die auf der Abschluss-Seite ebenfalls (§3.5).
-  setupChat("chatBoxLib", "chatInputLib", "chatSendLib",
-    "Hi! Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?", true);
+  // Begleiter-Chat: 4. Aug. 2026 auf Christines Entscheid DEAKTIVIERT
+  // (verlaesslicher: Suche/Kategorien + Mudra/Mantra pro Uebung statt
+  // Freitext-Raten, siehe SPEC.md §6a "Deaktiviert, nicht geloescht").
+  // Der ganze Code (ANLIEGEN, erkenneAnliegen, lokaleAntwort, setupChat
+  // usw.) bleibt unveraendert stehen, nur dieser Aufruf ist eingezaeunt -
+  // BEGLEITER_AKTIV = true setzen UND die HTML-Karte in #medLibPage weiter
+  // unten wieder einkommentieren, dann ist er mit einem Schritt zurueck.
+  var BEGLEITER_AKTIV = false;
+  if (BEGLEITER_AKTIV){
+    setupChat("chatBoxLib", "chatInputLib", "chatSendLib",
+      "Hi! Kann ich dir helfen, die passende Meditation zu finden – und optional dazu ein Mudra oder Mantra?", true);
+  }
 
   // "Jetzt starten": hier beginnt die Probezeit. Sie wird festgehalten,
   // damit später sichtbar ist, seit wann sie läuft - gesperrt wird

@@ -5,7 +5,7 @@ wirklich Geld verdient werden kann. Frag mich jederzeit „wie ist der Stand?"
 oder „zeig mir die Checkliste" – ich halte diese Datei aktuell und hake ab,
 was erledigt ist.
 
-Stand: 4. August 2026 (zuletzt aktualisiert: „Profil" aufgeteilt in „Mein Weg" und „Einstellungen")
+Stand: 4. August 2026 (zuletzt aktualisiert: Begleiter-Chat deaktiviert, Mudra & Mantra pro Übung eingebaut)
 
 ---
 
@@ -23,14 +23,9 @@ Stand: 4. August 2026 (zuletzt aktualisiert: „Profil" aufgeteilt in „Mein We
 - [ ] **Entscheiden, ob und wie Nutzung gemessen werden soll** (z. B. wie viele
       die Testphase abschliessen) – das ist auch eine Datenschutz-Frage, nicht
       nur eine technische.
-- [ ] **Foto für den Begleiter aussuchen** (eine meditierende Person). Der
-      Platz dafür ist in der App schon eingebaut – sobald du mir das Bild
-      schickst, erscheint es automatisch. Bis dahin steht dort das
-      Sprechblasen-Zeichen. Passender Prompt für ChatGPT: *Grundstil aus
-      der Bild-Anleitung einfügen, dann:* „Motiv: eine ruhige Person in
-      aufrechter Meditationshaltung, von der Seite oder leicht von hinten,
-      vor weichem goldenem Licht. Kein erkennbares Gesicht. Quadratisch,
-      Person mittig – das Bild wird rund zugeschnitten."
+- [x] ~~Foto für den Begleiter aussuchen~~ – **entfällt vorerst** (4. Aug. 2026):
+      der Begleiter-Chat ist deaktiviert, siehe „Schon erledigt" unten. Sollte
+      er reaktiviert werden, steht der Platz für das Foto weiterhin bereit.
 
 ## 2. Das erledige ich im Code, sobald du mir sagst „jetzt"
 
@@ -55,6 +50,22 @@ Stand: 4. August 2026 (zuletzt aktualisiert: „Profil" aufgeteilt in „Mein We
 
 ## Schon erledigt
 
+- [x] **Begleiter-Chat deaktiviert, dafür Mudra & Mantra direkt pro Übung
+      in der Bibliothek.** Nach ausführlichem Testen (ein 17 Nachrichten
+      langes, realistisches Gespräch) und Vergleich mit anderen Apps: Calm,
+      Insight Timer und Balance personalisieren über antippbare Kacheln,
+      nicht über ein Freitext-Chatfeld – das kann nichts missverstehen.
+      Dein eigener Kompass macht das schon genauso. Der Chat blieb dagegen
+      Wörter-Raten und brauchte heute allein drei Nachbesserungen (falsche
+      Treffer, fehlende Wörter, Wiederholungen). Deine Entscheidung: die
+      verlässliche Lösung. Jede Übung in der Bibliothek hat jetzt einen
+      eigenen Knopf 🤲, der ein fest dazu passendes Mudra und Mantra zeigt –
+      keine Wortliste, sondern eine feste Zuordnung wie beim Mudra/Mantra
+      nach der Meditation, das es schon gab. Der Chat ist **nicht gelöscht**,
+      nur unsichtbar geschaltet: die ganze Logik (alle 31 Themen mit ihren
+      Stichwörtern) steht weiterhin in `SPEC.md` – sag einfach „aktivier den
+      Begleiter-Chat wieder", dann kommt er zurück, ohne dass irgendetwas
+      neu geschrieben werden muss.
 - [x] **„Profil" aufgeteilt in „Mein Weg" (persönlich) und „Einstellungen"
       (Verwaltung, hinter einem Zahnrad).** Deine Beobachtung: Profil war
       „ein Gemisch aus wenig Persönlichem und viel Administrativem" – Foto

@@ -46,6 +46,7 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 | 4. Aug. 2026 | **Auf jede Chat-Eingabe folgt eine Übungs-Empfehlung, auch wenn kein Anliegen erkannt wird.** Christine: "Man soll testen und auf alles soll eine Empfehlung folgen." | §6a |
 | 4. Aug. 2026 | **Der Begleiter darf am selben Tag nicht zweimal exakt dieselbe Übung vorschlagen**, wenn ähnlich gefragt wird. Christine: "Bei Kopfweh und Schmerzen lösen ist 2x genau die gleiche Antwort gekommen. Das wirkt nicht professionell." | §6a |
 | 4. Aug. 2026 | **Der Begleiter bleibt** (nicht gelöscht) — nach Test mit einem 17 Nachrichten langen, realistischen Gespräch: zuverlässig, deckt viel ab, aber ehrlich eine Wortliste, kein echtes Verstehen. **Jedes Anliegen bekommt ein zweites Mantra**, damit sich nicht nur die Übung, sondern auch der Begleit-Satz abwechselt. | §6a |
+| 4. Aug. 2026 | **Kurswechsel, gleicher Tag: Der Begleiter-Chat wird doch deaktiviert.** Christine, nach Vergleich mit Calm/Insight Timer/Balance: "Ich bin für die verlässliche Lösung." Ersetzt durch Suche/Kategorien (bereits vorhanden) + **Mudra & Mantra pro Übung** in der Bibliothek — eine feste Zuordnung wie beim Mudra/Mantra nach der Meditation, kein Wörter-Raten mehr. **Ausdrücklicher Auftrag: nicht löschen, nur deaktivieren** — die ganze Logik bleibt im Code UND hier in der Spezifikation stehen, damit "aktivier den Begleiter-Chat wieder" jederzeit reicht. | §6a "Deaktiviert, nicht gelöscht" |
 | 4. Aug. 2026 | **Die Empfehlung muss durch die ganze Bibliothek wandern, nicht nur durch eine Handvoll.** Christine: "es kommt sehr oft immer Herzraum oder Ankommen am See, Waldlichtung … es gibt vierzig Meditationen und die sollen einfach alle immer wieder vorkommen." | §3.3d |
 | 4. Aug. 2026 | **"Deine Favoriten" auf "Mein Weg" wieder entfernt.** Eine startbare Liste ist ein Werkzeug zum Loslegen ("Handeln"), kein Rückblick ("Reflektieren") — die Rolle gehört exklusiv der Startseite ("Deine Lieblingsmeditationen"). Ausserdem war "Deine Lieblingsmeditationen" (Startseite, automatisch die meistgehörten) für Christine kaum von "Deine Favoriten" (Mein Weg, selbst markiert) zu unterscheiden, obwohl beides unterschiedliche Daten sind — zwei fast gleich aussehende Listen auf zwei Seiten lasen sich als Dopplung. | §3.3, §3.3a |
 
@@ -256,11 +257,11 @@ Die 7er-Runde im ersten Fall ist kein Rest des Fehlers, sondern die richtige Ant
 ### 3.3a Meditationen — die Bibliothek (`data-step="meditation2"`)
 
 - **Kopf** "Meditationen · Alle Übungen zum Stöbern", darunter die Bestandszahl ("**40** geführte Meditationen"). Hiess früher "Meditationsleiter" (Tab: "Übungen") — siehe Namens-Aufräumung in §2; der Untertitel "Lass dich begleiten" wurde beim Audit vom Aug. 2026 durch etwas Konkreteres ersetzt (er beschrieb nicht, was die Seite eigentlich ist: eine Liste zum Stöbern, kein Chat). Die Spanne "3–30 Minuten" stand früher neben der Zahl und ist entfernt — sie verwirrte, weil bei jeder Übung ohnehin ihre eigene Dauer steht.
-- **Suchfeld mit Lupe** (`#libSuche`, Aug. 2026 ergänzt) ganz oben: filtert **während des Tippens**, ohne Absenden. Gesucht wird in Titel, Kurzbeschreibung **und** Bereichsname, damit auch "Stress", "Wald" oder "Chakra" etwas findet und nicht nur der exakte Titel. Die Suche wirkt **zusätzlich** zum gewählten Chip, nicht statt seiner. Die Bestandszeile darunter wechselt dann auf "N Treffer für „…“", und bei null Treffern steht ein eigener Satz mit Verweis auf den Begleiter. Ein ✕-Knopf im Feld setzt die Suche zurück (das graue System-✕ von `input[type=search]` ist per CSS abgeschaltet, damit es nicht doppelt erscheint).
+- **Suchfeld mit Lupe** (`#libSuche`, Aug. 2026 ergänzt) ganz oben: filtert **während des Tippens**, ohne Absenden. Gesucht wird in Titel, Kurzbeschreibung **und** Bereichsname, damit auch "Stress", "Wald" oder "Chakra" etwas findet und nicht nur der exakte Titel. Die Suche wirkt **zusätzlich** zum gewählten Chip, nicht statt seiner. Die Bestandszeile darunter wechselt dann auf "N Treffer für „…“", und bei null Treffern steht ein eigener Satz (**seit 4. Aug. 2026 ohne Verweis auf den Begleiter**, siehe unten). Ein ✕-Knopf im Feld setzt die Suche zurück (das graue System-✕ von `input[type=search]` ist per CSS abgeschaltet, damit es nicht doppelt erscheint).
 - **Filter-Chips** (`#libFilters`): Alle · ⭐ Favoriten · 🧠 Gedanken beruhigen · ❤️ Gefühle verstehen · 💪 Stress lösen · 🌿 Entspannen; aktiver Chip in Gold, scrollt sich selbst in den sichtbaren Bereich.
-- **Liste wie in der Vorlage:** je Übung eine weisse Karte mit Bild-Feld (Symbol des Bereichs), Name, "5 Min · Gedanken beruhigen", **Stern** (Favorit) und **Play**. Bereits gemachte Übungen bekommen "schon gemacht" (`schonGemacht()`).
+- **Liste wie in der Vorlage:** je Übung eine weisse Karte mit Bild-Feld (Symbol des Bereichs), Name, "5 Min · Gedanken beruhigen", **Stern** (Favorit), **🤲 Mudra & Mantra** (neu, siehe unten) und **Play**. Bereits gemachte Übungen bekommen "schon gemacht" (`schonGemacht()`).
 - **Antippen startet sofort** — die frühere Mehrfachauswahl mit Auswahl-Leiste ist entfallen, mehrere Übungen hintereinander laufen jetzt über den Trainingsmodus (§3.2).
-- **Begleiter-Karte** über der Liste (goldene Karte "Dein Begleiter") — **seit Aug. 2026 ein echter Chat mit Eingabefeld und Sprechblasen** statt eines Knopfes "Empfehlung erhalten →", der auf "Mein Weg" sprang. Begründung: Hier steht die Bibliothek, hier ist die Frage "welche passt zu mir?" naheliegend — also wird sie auch hier beantwortet, statt die Person auf eine andere Seite zu schicken. Zweite `setupChat()`-Instanz (`#chatBoxLib`/`#chatInputLib`/`#chatSendLib`) mit denselben Fähigkeiten wie die auf "Mein Weg" (`allowRecommend = true`, also auch mit `[EMPFEHLUNG:]`-Tag). Die beiden Chats laufen unabhängig voneinander (eigener Verlauf je Instanz). **CSS-Falle dabei:** `.bubble.ai` hat normalerweise `--cream-2` als Hintergrund — genau die Farbe der goldenen Karte, die Blasen wären dort unsichtbar gewesen; in der `.ki-card` sind sie darum hell (`#fffdf7`). Der Text darunter beschreibt seit Aug. 2026 explizit, was er kann ("Er findet dir eine passende Meditation und schlägt dir auf Wunsch auch ein Mudra oder Mantra vor.") — bewusst ohne das Wort "KI", damit klar bleibt, dass es sich um einen einfachen, lokal rechnenden Helfer handelt und nicht um einen echten KI-Dienst (§6).
+- **Mudra & Mantra pro Übung** (`mudraMantraFuerUebung()`, `toggleMudraMantraInfo()`, 4. Aug. 2026 — **ersetzt die Begleiter-Karte**, siehe §6a "Deaktiviert, nicht gelöscht"): Ein eigener, dezenter Knopf 🤲 je Zeile (`data-info`, gleiche Zurückhaltung wie der Stern — Play soll der klar stärkste Knopf der Zeile bleiben) klappt darunter eine Karte mit dem zur Übung passenden Mudra **und** Mantra auf, ohne die Übung zu starten (eigener Klick-Zweig vor `data-play`, mit `stopPropagation()`). **Fest zugeordnet, nicht geraten:** Beide kommen aus den bestehenden `MUDRAS`/`MANTRAS`-Listen, gefiltert auf die Kompass-Richtung (`dir`) der Übung — dieselbe Zuordnung, mit der auch der Kompass selbst arbeitet (§3.5, `waehlePassend()`). `textStreuung(m.id)` verteilt die Wahl innerhalb des Richtungs-Pools, damit nicht alle Übungen derselben Richtung dasselbe Paar zeigen; beim Mantra zusätzlich ein Versatz von 3, damit Mudra und Mantra nicht regelmässig auf denselben Pool-Platz treffen. Es ist immer nur eine Karte gleichzeitig offen (eine neu geöffnete schliesst die vorherige), sonst wächst die Liste bei mehrfachem Antippen unbegrenzt nach unten.
 - **Favoriten** liegen wie der Verlauf nur auf dem Gerät (`localStorage`, Schlüssel `myisland.favoriten.v1`); sichtbar über den Chip ⭐ in der Bibliothek und über "Deine Lieblingsmeditationen" auf der Startseite (§3.3). Ein eigener Abschnitt auf "Mein Weg" bestand kurz (4. Aug. 2026), ist aber wieder entfernt — siehe §3.3 Punkt 9.
 
 ### 3.4 Spieler (Vollbild, `body.entered.in-session`)
@@ -592,6 +593,34 @@ TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", medita
 - **Der echte API-Aufruf hat bewusst keinen Schlüssel** (öffentliches Repo) und schlägt darum in der Praxis immer fehl. Statt dessen antwortet `lokaleAntwort()` im Fehlerfall inhaltlich echt, ganz ohne Netz.
 
 ### 6a. Anliegen statt Kompass-Achsen (4. Aug. 2026) — die grösste Änderung am Begleiter
+
+> ## ⚠️ Deaktiviert, nicht gelöscht (4. Aug. 2026)
+>
+> Der gesamte Begleiter-Chat, wie in diesem Abschnitt beschrieben, ist **aktuell nicht sichtbar und nicht
+> erreichbar** — Christines Entscheid nach ausführlichem Test und Vergleich mit anderen Apps (siehe
+> Entscheidungsprotokoll oben): "Ich bin für die verlässliche Lösung." Ersetzt durch **Suche/Kategorien
+> (bereits vorhanden) + Mudra & Mantra pro Übung** (§3.3a).
+>
+> **Nichts davon ist gelöscht.** Der komplette Code — `ANLIEGEN` mit allen 31 Themen und ihren Stichwörtern,
+> `erkenneAnliegen()`, `medFuerAnliegen()`, `lokaleAntwort()`, `setupChat()`, das Vorschlags-Gedächtnis, die
+> doppelten Mantras, alles — steht unverändert in `index.html`. Nur zwei Stellen sind eingezäunt:
+>
+> 1. **HTML** (in `#medLibPage`, „Bibliothek"): die ganze `.ki-card` mit dem Chat ist in einen
+>    HTML-Kommentar `<!-- ... -->` gepackt, direkt dort, wo sie vorher stand.
+> 2. **JavaScript** (ganz am Ende der Datei, wo bisher `setupChat(...)` direkt aufgerufen wurde): eine neue
+>    Variable `var BEGLEITER_AKTIV = false;` steht davor, der Aufruf steckt jetzt in
+>    `if (BEGLEITER_AKTIV){ ... }`.
+>
+> **Um ihn wieder zu aktivieren** (auf Christines Auftrag "aktivier den Begleiter-Chat wieder" oder Ähnliches):
+> beide Stellen rückgängig machen — den HTML-Kommentar um die `.ki-card` entfernen **und** `BEGLEITER_AKTIV`
+> auf `true` setzen. Beides zusammen, sonst erscheint entweder eine Karte ohne Funktion oder es gibt eine
+> Funktion ohne sichtbare Karte. Zusätzlich zwei Text-Stellen, die beim Deaktivieren mit angepasst wurden und
+> beim Reaktivieren zurückgeholt werden sollten: der Datenschutz-Abschnitt "Dein Begleiter (Chat)" (stand vor
+> "Hosting") und der Abschnitt "Dein Begleiter" in "Über die App" (jetzt "Mudra & Mantra") — beide Texte
+> finden sich im Verlaufsprotokoll dieser Datei bzw. der Commit-Historie.
+>
+> Der Rest dieses Abschnitts (§6a/§6b) beschreibt die Logik **so, wie sie war und bei Reaktivierung wieder
+> ist** — bewusst stehengelassen, nicht als "erledigt" markiert oder gelöscht.
 
 **Das Problem (Christine gemeldet):** Der Begleiter kannte nur die vier Achsen der Kompass-Scheibe und suchte im Text nach Stichwörtern dafür (`RICHTUNGS_WOERTER`: "kopf/gedanke…" → nord, "gefühl/herz…" → sued, usw.). Wer "mein Rücken tut weh" schrieb, passte in keine dieser Schubladen — die Antwort war "Das kann ich noch nicht gut einordnen. Nutz doch kurz den Kompass". Der zweite Ausweichsatz fragte sogar wörtlich, ob es "eher im Kopf, im Gefühl oder im Körper" sitze. Christines Einwand trifft es genau: **Schmerz hat mit "denken oder fühlen" nichts zu tun**; was hilft, sind Licht, Körperentspannung und annehmende Sätze. Dazu kam, dass die Antworten in Achsen-Substantiven sprachen ("Denken", "Fühlen"), die auf der Scheibe gar nicht so heissen (dort steht NACHDENKLICH / EMOTIONAL) — und die als Zustandsbeschreibung ohnehin falsch sind.
 
