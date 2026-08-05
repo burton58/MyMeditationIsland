@@ -46,7 +46,7 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 | 4. Aug. 2026 | **Auf jede Chat-Eingabe folgt eine Übungs-Empfehlung, auch wenn kein Anliegen erkannt wird.** Christine: "Man soll testen und auf alles soll eine Empfehlung folgen." | §6a |
 | 4. Aug. 2026 | **Der Begleiter darf am selben Tag nicht zweimal exakt dieselbe Übung vorschlagen**, wenn ähnlich gefragt wird. Christine: "Bei Kopfweh und Schmerzen lösen ist 2x genau die gleiche Antwort gekommen. Das wirkt nicht professionell." | §6a |
 | 4. Aug. 2026 | **Der Begleiter bleibt** (nicht gelöscht) — nach Test mit einem 17 Nachrichten langen, realistischen Gespräch: zuverlässig, deckt viel ab, aber ehrlich eine Wortliste, kein echtes Verstehen. **Jedes Anliegen bekommt ein zweites Mantra**, damit sich nicht nur die Übung, sondern auch der Begleit-Satz abwechselt. | §6a |
-| 4. Aug. 2026 | **ENDSTAND Mudra & Mantra (nach mehreren Zwischenschritten am selben Tag — dies ist die gültige Fassung):** **Weder Mudras noch Mantras kommen in der Oberfläche noch vor.** Zuerst fielen die Mudras weg ("Mudra ist nirgends in der App drin"), dann das Mantra pro Übung in der Bibliothek ("dort findet man nur die Meditationen ohne Mantra"), zuletzt auch die Mantra-Karte auf der Abschluss-Seite ("Mantra löschen und die Frage danach"). Die Abschluss-Seite endet jetzt mit Rückblick, Vergleichssatz und den zwei Wegen weiter. **Die Listen `MUDRAS` und `MANTRAS` bleiben in der Datei** — der deaktivierte Begleiter nutzt sie (§6a); sie werden aktuell nur nirgends angezeigt. | §3.5, §3.3a |
+| 4. Aug. 2026 | **ENDSTAND Mudra & Mantra (nach mehreren Zwischenschritten am selben Tag — dies ist die gültige Fassung):** **Weder Mudras noch Mantras kommen in der App vor.** Schrittweise entstanden: erst fielen die Mudras aus der Oberfläche, dann das Mantra pro Übung in der Bibliothek, dann die Mantra-Karte auf der Abschluss-Seite, zuletzt **alles Übrige zum Thema Mantra** ("alles was mit Mantra zu tun hat löschen") — die komplette `MANTRAS`-Liste (20 Einträge), `findeMantra()`, der Mantra-Zweig im Begleiter, die `mantra`-Felder aller 31 Anliegen und die Mantra-Erwähnungen in Chat-Begrüssung und System-Anweisung. **Auch der (deaktivierte) Begleiter bietet also keine Mantras mehr an.** `MUDRAS` bleibt als einzige der beiden Listen in der Datei — der Begleiter nutzt sie noch (§6a). | §3.5, §3.3a, §6a |
 | 4. Aug. 2026 | **Die vier Kategorien in der Bibliothek werden zu grossen Fotokacheln statt schmaler Text-Chips.** Christine, nachdem sie ins Suchfeld "ich suche was, um runterzukommen" geschrieben hatte und nichts fand (die Suche kann nur Stichwörter finden, keine Sätze) — daraus die Idee, die Kategorien prominenter und bildbasiert zu machen. Kein neues Bild nötig: dieselben acht Stimmungsfotos, die schon während einzelner Meditationen laufen (§5a). | §3.3a |
 | 4. Aug. 2026 | **Kurswechsel, gleicher Tag: Der Begleiter-Chat wird doch deaktiviert.** Christine, nach Vergleich mit Calm/Insight Timer/Balance: "Ich bin für die verlässliche Lösung." Ersetzt durch Suche/Kategorien (bereits vorhanden) + **Mudra & Mantra pro Übung** in der Bibliothek — eine feste Zuordnung wie beim Mudra/Mantra nach der Meditation, kein Wörter-Raten mehr. **Ausdrücklicher Auftrag: nicht löschen, nur deaktivieren** — die ganze Logik bleibt im Code UND hier in der Spezifikation stehen, damit "aktivier den Begleiter-Chat wieder" jederzeit reicht. | §6a "Deaktiviert, nicht gelöscht" |
 | 4. Aug. 2026 | **Die Empfehlung muss durch die ganze Bibliothek wandern, nicht nur durch eine Handvoll.** Christine: "es kommt sehr oft immer Herzraum oder Ankommen am See, Waldlichtung … es gibt vierzig Meditationen und die sollen einfach alle immer wieder vorkommen." | §3.3d |
@@ -457,16 +457,15 @@ MEDITATIONS[] = {
 - **47 handgeschriebene Meditationen insgesamt** (14 mini / 17 mittel / 16 tief) — siehe §5a für die volle Titelliste. Kein Generator mehr: `generateLibrary()`/`THEMES`/`PHRASES` wurden entfernt, jeder Eintrag ist ein einzeln geschriebenes Skript.
 - Das Feld `cat` ("mini"/"mittel"/"tief") steuert jetzt die Empfehlungs-Reihenfolge auf "Für dich" (§3.3, kurz-zuerst bei Anspannung) und liefert über `TIEFE[cat]` den zweiten Empfehlungsgrund. Als sichtbare Gliederung wird es nicht mehr benutzt — beide Seiten gruppieren nach Kompass-Richtung bzw. Nutzen-Kategorie.
 
-### Mudras & Mantras (Abschluss-Seite)
+### Mudras (nur noch Datenbestand)
 ```js
 MUDRAS[]  = { dir, name, how, why, dauer?, chakra?, silbe? }   // 21 Eintraege, Erklaerung auf Hochdeutsch
-MANTRAS[] = { dir, text, why }        // 20 Eintraege, 5 je Richtung, auf Hochdeutsch
-
-waehlePassend(liste, c)  // filtert auf die zu c passende Richtung, waehlt daraus DETERMINISTISCH
-                          // (aus c.x/c.y berechneter Index, kein Math.random()) genau 1 Eintrag -
-                          // dieselbe Nadel-Position liefert also immer dasselbe Ergebnis
-zeigeMudra()/zeigeMantra()  // rendern die Karte in #mudraBox/#mantraBox, Richtung/Position kommt aus compassAfter
+// MANTRAS[] gab es hier bis zum 4. Aug. 2026 (20 Eintraege, 5 je Richtung) -
+//           komplett geloescht, siehe Entscheidungsprotokoll.
+// waehlePassend(), zeigeMudra() und zeigeMantra() sind mit der Karte auf der
+//           Abschluss-Seite entfallen (§3.5).
 ```
+**Stand 4. Aug. 2026: `MUDRAS` wird nirgends mehr angezeigt.** Die Liste bleibt nur, weil der deaktivierte Begleiter sie nutzt (`findeMudra()`/`mudraSatz()`, §6a) — nicht löschen, sonst fällt der beim Reaktivieren halb aus. Der Rest dieses Abschnitts beschreibt den Datenbestand, wie er dort weiterlebt.
 - **`dauer`/`chakra`/`silbe` (Aug. 2026 ergänzt):** Christine hat einen eigenen Mudra-Guide (mit den 7 wichtigsten Mudras, je mit Chakra, Wirkung, empfohlener Dauer und Mantra-Silbe). Die 7 Mudras aus `MUDRAS[]`, die dort namentlich vorkommen (Gyan, Hakini, Hridaya, Anjali, Apana, Prana, Surya), haben `dauer`/`chakra`/`silbe` wörtlich aus diesem Dokument übernommen; `zeigeMudra()` und die direkte "gib mir ein Mudra"-Antwort in `lokaleAntwort()` zeigen die Zeile, wenn sie vorhanden ist. **Surya Mudra** (dir: "ost", passt zu Müdigkeit/Erschöpfung/Energie-Stichwörtern) gab es vorher nur im Guide, nicht in der App — jetzt als 21. Eintrag ergänzt, `how` dafür ist eine eigene, sachlich korrekte Anleitung (nicht im Guide enthalten, da der dort nur Wirkung/Anwendung/Dauer/Mantra zeigt, keine Handhaltungs-Anleitung). Für die übrigen 14, nur in der App vorhandenen Mudras wurde bewusst nichts erfunden — dort bleiben alle drei Felder leer und die Zeile entfällt einfach.
 
 ## 5a. Themenvielfalt (umgesetzt)
@@ -609,7 +608,9 @@ TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", medita
 >
 > **Nichts davon ist gelöscht.** Der komplette Code — `ANLIEGEN` mit allen 31 Themen und ihren Stichwörtern,
 > `erkenneAnliegen()`, `medFuerAnliegen()`, `lokaleAntwort()`, `setupChat()`, das Vorschlags-Gedächtnis, die
-> doppelten Mantras, alles — steht unverändert in `index.html`. Nur zwei Stellen sind eingezäunt:
+> Vorschlags-Gedächtnis, alles — steht in `index.html`. Nur zwei Stellen sind eingezäunt:
+> (**Ausnahme, 4. Aug. 2026:** die Mantra-Fähigkeit ist ihm nachträglich gelöscht worden — er
+> empfiehlt bei Reaktivierung Meditationen, Chakra-Hinweise und Mudras, aber keine Mantras.)
 >
 > 1. **HTML** (in `#medLibPage`, „Bibliothek"): die ganze `.ki-card` mit dem Chat ist in einen
 >    HTML-Kommentar `<!-- ... -->` gepackt, direkt dort, wo sie vorher stand.
@@ -634,7 +635,7 @@ TAB_FOR_STEP = { home:"home", compass:"kompass", meditation:"meditation", medita
 - `woerter` — Stichwörter in Alltagssprache, inkl. Umschreibungen ("kann nicht mehr", "liege wach", "nicht gut genug");
 - `intro` — ein eigener Einstiegssatz **ohne** Achsen-Vokabular;
 - `meds` — konkrete IDs aus `MEDITATIONS`, **kurz zuerst**, damit auch im akuten Moment etwas Machbares dasteht;
-- `mantra` / `mudra` — wortgleiche Verweise in `MANTRAS` bzw. `MUDRAS`;
+- `mudra` — wortgleicher Verweis in `MUDRAS` (das frühere Feld `mantra` ist am 4. Aug. 2026 aus allen 31 Anliegen gelöscht worden, siehe Entscheidungsprotokoll);
 - optional `feiner` — Feinabstimmung innerhalb eines Anliegens ("Kiefer" → *Kiefer entspannen* statt der allgemeinen Lichtmeditation);
 - optional `chakra` — der Schlüssel in `CHAKREN` (siehe unten).
 
@@ -664,7 +665,7 @@ Christines Auftrag: den Begleiter testen und ehrlich beurteilen, ob er bleiben s
 **Recherche zu anderen Apps:** Calm, Insight Timer und Balance personalisieren über **antippbare Kacheln/Stimmungs-Chips**, nicht über ein Freitext-Chatfeld — das kann nichts missverstehen. Headspace hat seit 2024 mit "Ebb" einen echten Chat-Begleiter, der aber auf einer echten, kostenpflichtigen KI läuft, nicht auf einer Wortliste. Diese App hat das Antipp-Prinzip mit dem **Kompass** bereits, der Begleiter ist eine zusätzliche Freitext-Ebene obendrauf — die einzige Art, die ohne laufende Kosten und ohne Schlüssel in der Datei geht (siehe CLAUDE.md).
 
 **Entschieden: bleibt**, mit zwei ehrlich benannten, bauartbedingten Grenzen (kein Bug, keine echte KI):
-1. **Beim genauen Lesen wiederholten sich Chakra-Satz und Mantra wortgleich**, wenn zwei ähnliche Nachrichten kurz hintereinander dasselbe Anliegen trafen (z. B. "Ich bin gestresst wegen der Arbeit" und "Mein Chef nervt mich total" — beide `stress`, identischer Satz, nur die Übung unterschied sich dank obigem Fix bereits). Jedes Anliegen hatte bisher **genau ein** festes Mantra. Behoben: `mantra` ist jetzt ein **Feld mit zwei Texten** je Anliegen (beide wortgleich aus dem bestehenden `MANTRAS`-Bestand, nichts Neues erfunden), `findeMantra(a, streuung)` wählt zwischen ihnen wie schon die Übung. Mit zwei Optionen bleibt eine Restchance auf Zufallsgleichheit (~50 %) — deutlich seltener als vorher (100 %), aber nicht ausgeschlossen.
+1. **Beim genauen Lesen wiederholten sich Chakra-Satz und Mantra wortgleich**, wenn zwei ähnliche Nachrichten kurz hintereinander dasselbe Anliegen trafen (z. B. "Ich bin gestresst wegen der Arbeit" und "Mein Chef nervt mich total"). Damals behoben mit **zwei Mantras je Anliegen**. **Überholt (gleicher Tag):** Mantras sind inzwischen ganz gelöscht — der Wiederholungs-Effekt betrifft heute nur noch den Chakra-Satz, der bewusst fest je Anliegen bleibt.
 2. **Gelegentliche Fehleinordnung bleibt möglich** ("Sorgen um die Zukunft" traf eher `angst` als `zukunft`, weil "sorge" und "sorgen" beide zaehlen und zusammen mehr Punkte geben als "zukunft" allein) — eine Grenze des Wörterzählens, meist noch thematisch nah genug, aber kein echtes Verstehen. Nicht behoben, da eine Lösung ohne echte Sprach-KI hier nur neue Sonderfaelle schaffen wuerde, keine grundsaetzliche Verbesserung.
 3. **Der Einstiegssatz (`intro`) bleibt bewusst pro Anliegen fest** — er ist die wiedererkennbare "Handschrift" des jeweiligen Themas (z. B. "Wenn etwas weh tut, hilft selten Nachdenken …" bei Schmerz), kein Zufallstext. Ihn zu vervielfachen hätte 31× zwei bis drei neue Sätze bedeutet, ohne das eigentlich gemeldete Problem (identische Übung) zu lösen — das war schon durch Fund 1 oben erledigt.
 
@@ -709,7 +710,7 @@ Umgesetzt über ein optionales Feld **`wege`** am Anliegen: `wegeSatz()` hängt 
 `erkenneAnliegen()` gewichtet Treffer nach **Wortlänge**, damit "kopfschmerz" beim Schmerz landet und nicht beim Grübeln über das kürzere "kopf". `medFuerAnliegen()` überspringt, was heute schon gehört wurde. `findeMantra()`/`findeMudra()` schlagen über Text bzw. Namen nach — findet sich nichts, fällt der Teil **still weg**, statt etwas zu erfinden.
 
 **Fallen beim Ergänzen:**
-- `meds` müssen echte IDs aus `MEDITATIONS` sein, `mantra` wortgleich in `MANTRAS`, `mudra` wortgleich in `MUDRAS` — sonst verschwindet der jeweilige Teil kommentarlos.
+- `meds` müssen echte IDs aus `MEDITATIONS` sein, `mudra` wortgleich in `MUDRAS` — sonst verschwindet der jeweilige Teil kommentarlos.
 - In `feiner` gewinnt die **erste** zutreffende Regel. Umgekehrt wäre "Kiefer verspannt" bei der allgemeineren Regel gelandet, weil sie später steht.
 - Kein Achsen-Vokabular in `intro` — dieselbe Regel wie bei `updateShift()` (§3.5).
 
