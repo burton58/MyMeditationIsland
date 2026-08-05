@@ -1239,7 +1239,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.33";
+    var AKTUELLE_VERSION = "2026-08-04.34";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1326,13 +1326,18 @@
     <div class="section-label first">Dein heutiger Fokus</div>
     <div id="focusSlot"></div>
 
-    <!-- Erscheint erst, wenn eine Meditation mindestens zweimal gehoert
-         wurde - vorher waere jede "Rangliste" nur eine Wiederholung des
-         Verlaufs. renderLieblinge() blendet den ganzen Block sonst aus. -->
-    <div id="lieblingeSlot" hidden>
-      <div class="section-label">Deine Lieblingsmeditationen</div>
-      <div class="card" id="lieblingeList"></div>
-    </div>
+    <!-- ENTWURF (4. Aug. 2026): Ersatz fuer "Deine Lieblingsmeditationen" -
+         Christine hatte bemerkt, dass der Name mit den echten (Stern-)
+         Favoriten verwechselt wird, und wollte sehen, wie ein Fortschritts-
+         Ausschnitt stattdessen aussieht. Dieselbe Zahlenreihe wie auf
+         "Mein Weg" (#statsRowBtn), eigene IDs (homeStat*), damit es die
+         IDs dort nicht doppelt gibt. Tippen fuehrt auf "Mein Weg". -->
+    <div class="section-label">Dein Fortschritt</div>
+    <button class="card stats-row" id="homeStatsRowBtn" type="button">
+      <div class="stat"><div class="n" id="homeStatStreak">0</div><div class="l">Tage am Stück</div></div>
+      <div class="stat"><div class="n" id="homeStatCount">0</div><div class="l">Meditationen</div></div>
+      <div class="stat"><div class="n" id="homeStatMinutes">0</div><div class="l">Minuten gesamt</div></div>
+    </button>
 
     <div class="section-label">Dein Zustand</div>
     <div class="card state-card">
@@ -5597,9 +5602,17 @@
       zeigeEmpfehlung();
     });
 
-    renderLieblinge();
+    renderHomeFortschritt();   // ENTWURF: ersetzt renderLieblinge()
   }
 
+  // ENTWURF, 4. Aug. 2026: renderHome() ruft diese Funktion aktuell NICHT
+  // mehr auf (siehe dort) - Christine hat bemerkt, dass "Deine
+  // Lieblingsmeditationen" mit den echten (Stern-)Favoriten verwechselt
+  // wird, und wollte probeweise "Dein Fortschritt" stattdessen sehen
+  // (renderHomeFortschritt(), oben bei renderStats()). Absichtlich noch
+  // nicht geloescht, solange die Entscheidung offen ist - erst raus, wenn
+  // klar ist, dass der Fortschritt bleibt.
+  //
   // "Deine Lieblingsmeditationen": die drei meistgehoerten aus dem ganzen
   // Verlauf, mit Platz 1-3. Bewusst NICHT dasselbe wie die Favoriten mit
   // Stern (die waehlt man selbst aus, §3.3a) - das hier ergibt sich von
@@ -5637,24 +5650,38 @@
   }
 
   // ---- Fortschritt: drei Zahlen aus dem echten Verlauf ----------------
-  function renderStats(){
-    var minuten = 0, anzahl = 0, tage = {};
-    var sekunden = 0;
+  // Tage am Stueck / Anzahl / Minuten - eine Stelle fuer die Zaehlung,
+  // genutzt von "Mein Weg" (renderStats()) UND vom Fortschritts-Ausschnitt
+  // auf der Startseite (renderHomeFortschritt()). Zwei Kopien derselben
+  // Regel gehen irgendwann auseinander, dann zeigen zwei Stellen
+  // verschiedene Zahlen fuer dasselbe (§3.3b, "Eine Regel, eine Stelle").
+  function berechneFortschritt(){
+    var anzahl = 0, sekunden = 0;
     loadHistory().forEach(function(e){
       (e.meds || []).forEach(function(m){
         anzahl++;
         sekunden += (m.seconds || 0);
       });
-      tage[dayStamp(e.ts)] = true;
     });
-    minuten = minutenAus(sekunden);
-    // Tage am Stueck ueber computeStreak(), nicht nochmals von Hand: die
-    // Zaehlung stand hier frueher ein zweites Mal im Code. Zwei Kopien
-    // derselben Regel gehen irgendwann auseinander, und dann zeigen zwei
-    // Stellen auf derselben Seite verschiedene Zahlen fuer dasselbe.
-    document.getElementById("statStreak").textContent = computeStreak();
-    document.getElementById("statCount").textContent = anzahl;
-    document.getElementById("statMinutes").textContent = minuten;
+    return { streak: computeStreak(), anzahl: anzahl, minuten: minutenAus(sekunden) };
+  }
+
+  function renderStats(){
+    var f = berechneFortschritt();
+    document.getElementById("statStreak").textContent = f.streak;
+    document.getElementById("statCount").textContent = f.anzahl;
+    document.getElementById("statMinutes").textContent = f.minuten;
+  }
+
+  // ENTWURF (4. Aug. 2026): derselbe Fortschritt, kompakt auf der
+  // Startseite statt "Deine Lieblingsmeditationen". Antippen fuehrt auf
+  // "Mein Weg" - dort steht dieselbe Zahlenreihe nochmal, aufklappbar zur
+  // Grafik; hier ist es nur ein Blick, kein zweiter Weg zu denselben Daten.
+  function renderHomeFortschritt(){
+    var f = berechneFortschritt();
+    document.getElementById("homeStatStreak").textContent = f.streak;
+    document.getElementById("homeStatCount").textContent = f.anzahl;
+    document.getElementById("homeStatMinutes").textContent = f.minuten;
   }
 
   // Ab einer Woche steht das Datum statt nur des Wochentags. Vorher hiess
@@ -6184,6 +6211,11 @@
   // Fuehrt seit 4. Aug. 2026 zu "Mein Weg" statt zu "Profil" - dort steht
   // jetzt das Foto samt Fortschritt (siehe Kommentar bei #medPage).
   document.getElementById("homeProfilBtn").addEventListener("click", function(){
+    renderMyMed(); goToStep("meditation");
+  });
+  // ENTWURF: der Fortschritts-Ausschnitt auf der Startseite fuehrt genau
+  // dorthin, wo dieselben Zahlen nochmal stehen - kein zweiter, eigener Weg.
+  document.getElementById("homeStatsRowBtn").addEventListener("click", function(){
     renderMyMed(); goToStep("meditation");
   });
   document.getElementById("toSplashBtn").addEventListener("click", function(){ goToStep("splash"); });
