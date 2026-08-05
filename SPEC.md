@@ -53,6 +53,7 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 | Safari malt um fokussierte `<svg>` einen eigenen blauen Rahmen — der Fokus liegt darum auf dem umgebenden `<div>`. | §3.2 |
 | Die Empfehlung wiederholte sich (10 Durchläufe → 5 verschiedene Übungen von 47). | §3.3b |
 | Die Empfehlung wiederholte sich **immer noch**: bei gleichbleibender Kompass-Stellung 12× dieselbe Übung, weil nur *abgeschlossene* Sitzungen zählten. | §3.3d |
+| Der Begleiter erkannte "Knieweh" nicht (Christine gemeldet, Screenshot) und fragte nach einem Stichwort, obwohl eines dastand. Der Anliegen "Schmerz" kannte Rücken, Nacken, Kiefer usw., aber keine Wörter für Knie, Hüfte oder Fuss. | §6a |
 | "Dein heutiger Fokus" wuchs unbegrenzt und schob die halbe Startseite weg. | §3.3b |
 | Die Fortschritts-Grafik wurde nach einem Jahr zu einem durchgehenden Block. | §3.3b |
 | Ein ganzes Jahr sah auf der Zeitachse aus wie ein Tag ("4. Aug" bis "4. Aug"). | §3.3b |
@@ -618,6 +619,7 @@ Sie hat die Zuordnung selbst diktiert; `CHAKREN` gibt sie wörtlich wieder, es i
 - **Körperstellen überschreiben das Chakra:** Rücken/Wirbelsäule → **Solarplexus**, Verstopfung → **Hals**, sonstige Verdauung → **Sakral** (oder Solarplexus). Dafür trägt eine `feiner`-Regel neben `med` optional auch `chakra`; `feineRegel()` wird von `medFuerAnliegen()` **und** `chakraSatz()` benutzt, damit Übung und Chakra nie auseinanderlaufen.
 - **Krankheit** steht jetzt beim **Halschakra** ("Krankheiten, die man zurückbehalten möchte") statt beim Wurzelchakra, das nur meine Annahme war.
 - Zwei neue Anliegen: **`hals_atem`** (Kloss im Hals, Heiserkeit, Husten, Asthma, "kann es nicht aussprechen") und **`verdauung`** (auch ohne das Wort "Schmerz").
+- **Lücke in den Wörtern (4. Aug. 2026, Christine gemeldet per Screenshot):** "Knieweh" traf auf keines der `schmerz`-Stichwörter, der Begleiter fragte nach einem Stichwort, obwohl eines dastand — Rücken, Nacken, Kiefer usw. waren erfasst, Knie/Hüfte/Fuss fehlten schlicht. Ergänzt in `woerter` **und** als eigene `feiner`-Zeile (→ `koerper`, dieselbe Übung wie bei Nacken/Schulter — kein neues Chakra erfunden, da Christine für Knie/Hüfte/Fuss keine eigene Zuordnung genannt hat, siehe G7).
 
 **Aufgelöst (4. Aug. 2026):** Die Frage, ob *"zu fest in der Vergangenheit"* zum Wurzel- oder zum Halschakra gehört, war falsch gestellt — Christines Antwort: **beides, je nachdem, was körperlich dazukommt.** Das Thema ist vielschichtig, und die App soll deshalb **mehrere Wege anbieten statt eines**. Ihre Reihenfolge:
 
