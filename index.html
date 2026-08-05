@@ -1186,7 +1186,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.14";
+    var AKTUELLE_VERSION = "2026-08-04.15";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3261,6 +3261,31 @@
     return zaehler;
   }
 
+  // Was zuletzt VORGESCHLAGEN wurde - unabhaengig davon, ob es dann auch
+  // gehoert wurde (4. Aug. 2026, Christine gemeldet: "es kommt sehr oft
+  // immer Herzraum oder Ankommen am See"). Genau das war die Luecke:
+  // gehoertWieOft() zaehlt nur abgeschlossene Sitzungen. Wer den Kompass
+  // zweimal aehnlich stellt und die Uebung nicht startet, bekam darum
+  // exakt denselben Vorschlag noch einmal - die Reihenfolge haengt sonst
+  // nur an Richtung, Dauer und Typ und ist bei gleichem Zustand identisch.
+  // Mit diesem Gedaechtnis rutscht alles, was gerade erst dran war, nach
+  // hinten, und die App wandert durch die ganze Bibliothek.
+  var VORSCHLAG_SPEICHER = "myisland.vorschlaege.v1";
+  var VORSCHLAG_MERKEN = 20;   // etwas mehr als die groesste Richtung (14)
+
+  function letzteVorschlaege(){
+    try {
+      var roh = JSON.parse(localStorage.getItem(VORSCHLAG_SPEICHER) || "null");
+      return (roh && roh.ids) || [];
+    } catch(e){ return []; }
+  }
+
+  function merkeVorschlag(ids){
+    var alt = letzteVorschlaege().filter(function(id){ return ids.indexOf(id) === -1; });
+    var neu = ids.concat(alt).slice(0, VORSCHLAG_MERKEN);   // juengste zuerst
+    try { localStorage.setItem(VORSCHLAG_SPEICHER, JSON.stringify({ v:1, ids:neu })); } catch(e){}
+  }
+
   function empfehlungsPool(){
     var dir = dirFromCompass(compassBefore);
     var angespannt = compassBefore.x < 0;
@@ -3277,20 +3302,45 @@
     // sortiert innerhalb dessen, was ohnehin passt, statt etwas
     // Unpassendes nach oben zu holen.
     var oft = gehoertWieOft();
+    var letzte = letzteVorschlaege();
     var pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
+
+    // Wie frisch ein Vorschlag noch ist: 0 = noch nie vorgeschlagen (darf
+    // zuerst), grosse Zahl = gerade eben vorgeschlagen (kommt zuletzt).
+    // Dadurch wandert die App der Reihe nach durch alles, was zum Zustand
+    // und zur Zeit passt, statt immer oben stehenzubleiben.
+    function frische(m){
+      var i = letzte.indexOf(m.id);
+      return i === -1 ? 0 : (VORSCHLAG_MERKEN - i);
+    }
+
+    // Eine feste Zufallszahl je Uebung fuer diesen einen Aufruf. Direkt
+    // Math.random() im Vergleich waere ein unzulaessiger Sortiervergleich
+    // (er muss fuer dasselbe Paar immer dasselbe sagen).
+    var zufall = {};
+    pool.forEach(function(m){ zufall[m.id] = Math.random(); });
+
     pool.sort(function(a,b){
       var ra = a.dir === dir ? 0 : 1, rb = b.dir === dir ? 0 : 1;
       if (ra !== rb) return ra - rb;
       var da = Math.abs(a.min - durationV2), db = Math.abs(b.min - durationV2);
       var pa = da <= 4 ? 0 : 1, pb = db <= 4 ? 0 : 1;
       if (pa !== pb) return pa - pb;
+      // Abwechslung steht jetzt VOR dem Feinschliff nach Typ (mini/tief):
+      // vorher entschied bei gleichem Zustand immer der Typ, und in einer
+      // Richtung passt oft nur eine einzige Uebung in dieses Raster - die
+      // kam dann jedes Mal. Richtung und Zeitfenster bleiben davor, es
+      // wird also nie etwas Unpassendes nach oben geholt.
+      var fa = frische(a), fb = frische(b);
+      if (fa !== fb) return fa - fb;
       var oa = oft[a.name] || 0, ob = oft[b.name] || 0;
       if (oa !== ob) return oa - ob;              // Unbekanntes zuerst
       if (pa === 0){
         var ta = rang[a.cat], tb = rang[b.cat];
         if (ta !== tb) return angespannt ? ta - tb : tb - ta;
       }
-      return da - db;
+      if (da !== db) return da - db;
+      return zufall[a.id] - zufall[b.id];         // sonst gaebe es wieder eine feste Erste
     });
     // Was der Begleiter vorgeschlagen hat, steht ganz oben.
     if (empfohlenVomChat){
@@ -3353,6 +3403,10 @@
     var bereichText = bereiche.length > 1
       ? bereiche.slice(0, -1).join(", ") + " und " + bereiche[bereiche.length - 1]
       : bereiche[0];
+
+    // Merken, was gezeigt wurde - damit beim naechsten Mal etwas anderes
+    // oben steht, auch wenn die Uebung gar nicht gestartet wurde.
+    merkeVorschlag(picks.map(function(m){ return m.id; }));
 
     empfehlung = picks;
     empfehlungGrund = "Dein Kompass zeigt: " + moodWort(compassBefore).toLowerCase() + ". " +
@@ -6204,7 +6258,14 @@
     zeigeBestaetigung(
       "Deine Insel-Woche und deine Inselreise werden gelöscht. Das lässt sich nicht rückgängig machen.",
       function(){
-        try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(ABO_KEY); } catch (e){}
+        // Das Vorschlags-Gedaechtnis gehoert zum Verlauf: bleibt es stehen,
+        // waehrend alles andere weg ist, meidet die App wochenlang genau
+        // die Uebungen, an die sich sonst niemand mehr erinnert.
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(ABO_KEY);
+          localStorage.removeItem(VORSCHLAG_SPEICHER);
+        } catch (e){}
         currentEntryTs = null;
         renderEinstellungen();
       }

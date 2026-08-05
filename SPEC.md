@@ -43,6 +43,7 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 | 4. Aug. 2026 | **Die Inselreise zählt Tage, nicht Meditationen** ("so wie Calm"). | §3.3c |
 | 4. Aug. 2026 | **"Profil" als Reiter und Seite entfallen — Foto/Fortschritt nach "Mein Weg", Verwaltung nach "Einstellungen" hinter einem Zahnrad.** So machen es Calm, Headspace, Insight Timer, Duolingo, Strava: eine Seite über sich selbst, alles Administrative hinter einem Zahnrad, kein eigener Reiter dafür. | §2, §3.3, §3.6 |
 | 4. Aug. 2026 | **Alle 43 Emoji sollen durch eigene Symbole ersetzt werden.** Prompts dafür in `Icon-Prompts.md`, nach Sichtbarkeit geordnet. | `Icon-Prompts.md` |
+| 4. Aug. 2026 | **Die Empfehlung muss durch die ganze Bibliothek wandern, nicht nur durch eine Handvoll.** Christine: "es kommt sehr oft immer Herzraum oder Ankommen am See, Waldlichtung … es gibt vierzig Meditationen und die sollen einfach alle immer wieder vorkommen." | §3.3d |
 | 4. Aug. 2026 | **"Deine Favoriten" auf "Mein Weg" wieder entfernt.** Eine startbare Liste ist ein Werkzeug zum Loslegen ("Handeln"), kein Rückblick ("Reflektieren") — die Rolle gehört exklusiv der Startseite ("Deine Lieblingsmeditationen"). Ausserdem war "Deine Lieblingsmeditationen" (Startseite, automatisch die meistgehörten) für Christine kaum von "Deine Favoriten" (Mein Weg, selbst markiert) zu unterscheiden, obwohl beides unterschiedliche Daten sind — zwei fast gleich aussehende Listen auf zwei Seiten lasen sich als Dopplung. | §3.3, §3.3a |
 
 ### Funde aus Tests (behoben, nicht zurückdrehen)
@@ -51,6 +52,7 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 |---|---|
 | Safari malt um fokussierte `<svg>` einen eigenen blauen Rahmen — der Fokus liegt darum auf dem umgebenden `<div>`. | §3.2 |
 | Die Empfehlung wiederholte sich (10 Durchläufe → 5 verschiedene Übungen von 47). | §3.3b |
+| Die Empfehlung wiederholte sich **immer noch**: bei gleichbleibender Kompass-Stellung 12× dieselbe Übung, weil nur *abgeschlossene* Sitzungen zählten. | §3.3d |
 | "Dein heutiger Fokus" wuchs unbegrenzt und schob die halbe Startseite weg. | §3.3b |
 | Die Fortschritts-Grafik wurde nach einem Jahr zu einem durchgehenden Block. | §3.3b |
 | Ein ganzes Jahr sah auf der Zeitachse aus wie ein Tag ("4. Aug" bis "4. Aug"). | §3.3b |
@@ -221,6 +223,32 @@ Christines Auftrag: die App wie eine Nutzerin durchspielen, zehn Durchläufe hin
 
 **Geprüft und in Ordnung:** Minutenzählung (echte Hörzeit, 269 Min bei 32 Sitzungen), Serie, Wochenziel, Favoriten-Filter, Suche inkl. Leermeldung, Datumsangaben ("Gestern", "Sonntag", "27. Jul"), Abo-Seite, alle Zurück-Wege, keine einzige JavaScript-Meldung in drei Durchläufen auf drei Bildschirmgrössen.
 
+### 3.3d Abwechslung in der Empfehlung (4. Aug. 2026)
+
+Christines Meldung: *"es kommt sehr oft immer Herzraum oder Ankommen am See, Waldlichtung. Also es gibt vierzig Meditationen und das sollen einfach alle immer wieder vorkommen."* Nachgemessen, und sie hatte recht — **bei unveränderter Kompass-Stellung kam 12× hintereinander exakt dieselbe Übung**, quer über wechselnde Stimmungen und Dauern nur 21 verschiedene von 47.
+
+**Zwei Ursachen, beide behoben:**
+
+1. **Es zählten nur abgeschlossene Sitzungen.** Der Abwechslungs-Zähler aus §3.3b (`gehoertWieOft()`) liest den Verlauf — der füllt sich aber erst, wenn eine Meditation wirklich zu Ende gehört wurde. Wer den Kompass stellt, den Vorschlag ansieht und *nicht* startet, änderte damit gar nichts: die Sortierung hängt sonst nur an Richtung, Dauer und Typ und ist bei gleichem Zustand identisch. Neu merkt sich die App, was **vorgeschlagen** wurde, unabhängig vom Starten — `letzteVorschlaege()` / `merkeVorschlag()`, gespeichert in `localStorage` unter **`myisland.vorschlaege.v1`** (`{ v:1, ids:[…] }`, jüngste zuerst, `VORSCHLAG_MERKEN = 20` — etwas mehr als die grösste Richtung mit 14 Übungen). `merkeVorschlag()` läuft am Ende von `baueEmpfehlung()`, das genau einmal je `zeigeEmpfehlung()` aufgerufen wird.
+
+2. **Der Feinschliff nach Typ entschied vor der Abwechslung.** Die Reihenfolge war: Richtung → Zeitfenster (±4 Min) → wie oft gehört → **Typ** (angespannt = `mini` zuerst, ruhig = `tief` zuerst) → Zeitnähe. In einer Richtung passt oft nur **eine einzige** Übung in dieses Raster — im Bereich "Gefühle verstehen" bei 10 Min und angespannt ist das genau "Fantasiereise: Ankommen am See". Die kam dann jedes Mal. Der Typ ist jetzt ein Kriterium **nach** der Abwechslung, und ganz am Ende steht eine feste Zufallszahl je Übung, damit bei völlig Gleichwertigem nicht wieder dieselbe oben landet.
+
+**Die Reihenfolge in `empfehlungsPool()` lautet jetzt:** Richtung → Zeitfenster (±4 Min) → **Frische** (noch nie vorgeschlagen zuerst, dann das am längsten Zurückliegende) → wie oft gehört → Typ → Zeitnähe → Zufall.
+
+**Wichtig beim Ändern:** Richtung und Zeitfenster stehen bewusst **vor** der Frische. Die Abwechslung sortiert damit nur innerhalb dessen, was zum Zustand und zur gewählten Zeit ohnehin passt — sie holt nie etwas Unpassendes nach oben, nur damit es "auch mal dran war". Die Zufallszahl wird **einmal je Aufruf in eine Tabelle geschrieben** und nicht direkt im Vergleich gewürfelt; ein Vergleich muss für dasselbe Paar immer dasselbe sagen, sonst ist die Sortierung ungültig.
+
+**Nachgemessen (Playwright, jeweils dieselben Durchläufe gegen die alte und die neue Fassung):**
+
+| | vorher | nachher |
+|---|---|---|
+| Gleiche Stimmung, 12× hintereinander | **1** verschiedene Übung | **7** verschiedene, dann beginnt die Runde neu |
+| 60 Durchgänge quer durch Stimmungen und Dauern | 21 verschiedene, häufigste 6× | **32** verschiedene, häufigste **3×** |
+| Direkte Wiederholung hintereinander | 0 | 0 |
+
+Die 7er-Runde im ersten Fall ist kein Rest des Fehlers, sondern die richtige Antwort: bei *exakt* gleicher Stimmung und Dauer passen im betroffenen Bereich genau sieben Übungen ins Zeitfenster, und die App geht sie der Reihe nach durch, bevor sie von vorn beginnt.
+
+**Verlauf löschen räumt das Gedächtnis mit auf** (`VORSCHLAG_SPEICHER` in `profilResetBtn`): bliebe es stehen, während alles andere weg ist, würde die App wochenlang genau die Übungen meiden, an die sich sonst niemand mehr erinnert.
+
 ### 3.3a Meditationen — die Bibliothek (`data-step="meditation2"`)
 
 - **Kopf** "Meditationen · Alle Übungen zum Stöbern", darunter die Bestandszahl ("**40** geführte Meditationen"). Hiess früher "Meditationsleiter" (Tab: "Übungen") — siehe Namens-Aufräumung in §2; der Untertitel "Lass dich begleiten" wurde beim Audit vom Aug. 2026 durch etwas Konkreteres ersetzt (er beschrieb nicht, was die Seite eigentlich ist: eine Liste zum Stöbern, kein Chat). Die Spanne "3–30 Minuten" stand früher neben der Zahl und ist entfernt — sie verwirrte, weil bei jeder Übung ohnehin ihre eigene Dauer steht.
@@ -365,6 +393,12 @@ NUTZEN[dir]         // "Beruhigt kreisende Gedanken" o.ae. - warum eine Uebung e
 TIEFE[cat]          // "Kurz und sofort spuerbar" o.ae. - zweiter Grund je Uebung
 KATEGORIEN[]        // { dir, icon, name } - Kategorien nach NUTZEN benannt statt nach Kompass-Achse
 empfehlungen()      // Top-4 fuer den aktuellen Zustand: Zieldauer zuerst, dann Anspannung (§3.3)
+empfehlungsPool()   // ALLE freien Uebungen, beste zuerst. Reihenfolge: Richtung → Zeitfenster
+                        //   (±4 Min) → Frische (zuletzt vorgeschlagen rutscht nach hinten) → wie oft
+                        //   gehoert → Typ (mini/tief) → Zeitnaehe → feste Zufallszahl. Siehe §3.3d;
+                        //   Richtung und Zeitfenster stehen bewusst VOR der Frische.
+letzteVorschlaege() // die zuletzt VORGESCHLAGENEN ids aus myisland.vorschlaege.v1 (juengste zuerst)
+merkeVorschlag(ids) // schreibt sie dorthin zurueck, gedeckelt auf VORSCHLAG_MERKEN = 20 (§3.3d)
 starteMeditation(id)// startet EINE Uebung direkt - der Kern des Coach-Gefuehls
 moodStaerke(c)      // → 0..1, wie weit die Nadel vom Zentrum weg liegt (max(|x|,|y|))
 moodSatz(c)         // → "Du fühlst dich etwas|eher|sehr <wort>" - Schwellen 0.42 / 0.72;
@@ -622,7 +656,7 @@ Auch der System-Prompt für den (nicht angeschlossenen) echten Dienst weist das 
 
 1. **Architektur**: von "ein HTML-File mit `data-step`" zu echten Routen/Komponenten migrieren.
 2. **Assets**: Fotos aus base64 lösen, als echte Dateien (WebP/AVIF) mit `srcset` einbinden.
-3. **Persistenz**: Verlauf und Abo-Testphase liegen inzwischen in `localStorage` (geräte-gebunden, siehe §5 in `index.html`, Schlüssel `myisland.verlauf.v1`/`myisland.abo.v1`) — kein Server, kein geräteübergreifendes Konto. Bei echtem Verkauf braucht es dafür ein richtiges Konto/Backend (siehe Zahlungsanbieter-Hinweis unten).
+3. **Persistenz**: Verlauf und Abo-Testphase liegen inzwischen in `localStorage` (geräte-gebunden, siehe §5 in `index.html`, Schlüssel `myisland.verlauf.v1`/`myisland.abo.v1`/`myisland.vorschlaege.v1`) — kein Server, kein geräteübergreifendes Konto. Bei echtem Verkauf braucht es dafür ein richtiges Konto/Backend (siehe Zahlungsanbieter-Hinweis unten).
 4. **Meditationstexte**: alle 47 Übungen sind inzwischen handgeschrieben (siehe §5a) — keine generierten Platzhaltertexte mehr.
 5. **"Profil"-Tab**: existierte zwischenzeitlich (Status-Karte, Insel-Woche, Inselreise, Verlauf löschen). Der "Schlaf"-Tab wurde entfernt statt als Platzhalter stehen zu lassen. **Update 4. Aug. 2026:** Der Profil-Tab selbst ist inzwischen auch wieder entfallen — aufgeteilt in "Mein Weg" (das Persönliche) und "Einstellungen" (das Administrative, hinter einem Zahnrad, kein eigener Tab mehr). Siehe §3.3/§3.6.
 6. **Barrierefreiheit**: Kompass jetzt per Pfeiltasten bedienbar (Fokus auf der Scheibe, `tabindex="0"`, `role="group"`), zusätzlich zum bestehenden Pointer-Drag — beide Wege laufen über dieselbe `setFromPoint()`, also identische Rundung/Begrenzung/Spiegelung. `aria-label` beschreibt den aktuellen Zustand in Worten und aktualisiert sich bei jeder Änderung (§3.2). Sichtbarer Fokus-Ring in Gold, nur bei echter Tastatur-Bedienung (`:focus-visible`). **Fehler behoben (Aug. 2026, Christine gemeldet — zwei Anläufe):** `tabindex="0"` bedeutet, dass der Kompass bei *jeder* Interaktion fokussiert wird, auch beim gewöhnlichen Ziehen mit Finger/Maus; dabei erschien ein blauer System-Fokusrahmen. Erster Versuch war `outline:none` auf dem `<svg>` — reichte nicht: **Safari (macOS wie iOS) zeichnet um ein fokussiertes SVG-Element einen eigenen Rahmen, den `outline:none` dort nicht zuverlässig unterdrückt.** Endgültige Lösung: `tabindex`, `role`, `aria-label` und der `keydown`-Handler sitzen jetzt auf dem umgebenden `<div class="compass-wrap">` statt auf dem `<svg>` — auf einem gewöhnlichen DIV greift `outline:none` in allen Browsern. Der goldene Ring (`.compass-wrap:focus-visible`, mit `border-radius:50%`, damit er der runden Scheibe folgt) bleibt der einzige Fokus-Hinweis. Die Tastatur-Bedienung selbst ist unverändert. Offen bleibt eine vollständige Sprachausgabe-Führung durch die restliche App.
