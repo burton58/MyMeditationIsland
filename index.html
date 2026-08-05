@@ -1239,7 +1239,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.34";
+    var AKTUELLE_VERSION = "2026-08-05.35";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1326,10 +1326,11 @@
     <div class="section-label first">Dein heutiger Fokus</div>
     <div id="focusSlot"></div>
 
-    <!-- ENTWURF (4. Aug. 2026): Ersatz fuer "Deine Lieblingsmeditationen" -
+    <!-- Ersatz fuer "Deine Lieblingsmeditationen" (4. Aug. 2026, endgueltig
+         entschieden - Christine: "Gefaellt mir. Kann man so machen."):
          Christine hatte bemerkt, dass der Name mit den echten (Stern-)
-         Favoriten verwechselt wird, und wollte sehen, wie ein Fortschritts-
-         Ausschnitt stattdessen aussieht. Dieselbe Zahlenreihe wie auf
+         Favoriten verwechselt wird; probeweise als Fortschritts-Ausschnitt
+         gezeigt und fuer gut befunden. Dieselbe Zahlenreihe wie auf
          "Mein Weg" (#statsRowBtn), eigene IDs (homeStat*), damit es die
          IDs dort nicht doppelt gibt. Tippen fuehrt auf "Mein Weg". -->
     <div class="section-label">Dein Fortschritt</div>
@@ -5552,11 +5553,18 @@
       var sekundenHeute = heute.reduce(function(s, e){ return s + (e.seconds || 0); }, 0);
       html = '<div class="card">' + zeigen.map(function(e){
           var dir = dirVonName(e.name), id = idVonName(e.name);
+          // ▶-Knopf ergaenzt (4. Aug. 2026): die Zeile war schon immer
+          // antippbar (startet die Uebung neu) - das war aber unsichtbar,
+          // anders als bei "Deine Lieblingsmeditationen" mit demselben
+          // Verhalten. Christine gemeldet, dass das komisch aussieht.
+          // Genau dieser Knopf ist jetzt der sichtbare Unterschied zu
+          // "Mein Weg": dort ist der Verlauf reine Aufzeichnung ohne Knopf.
           return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
             '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
             '<span class="body"><span class="name">' + e.name + '</span>' +
             '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + minutenAus(e.seconds) +
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
+            (id ? '<button class="play-btn" data-play="' + id + '">▶</button>' : '') +
           '</div>';
         }).join("") +
         (restZahl > 0
@@ -5602,16 +5610,21 @@
       zeigeEmpfehlung();
     });
 
-    renderHomeFortschritt();   // ENTWURF: ersetzt renderLieblinge()
+    renderHomeFortschritt();   // ersetzt seit 4. Aug. 2026 renderLieblinge()
   }
 
-  // ENTWURF, 4. Aug. 2026: renderHome() ruft diese Funktion aktuell NICHT
-  // mehr auf (siehe dort) - Christine hat bemerkt, dass "Deine
-  // Lieblingsmeditationen" mit den echten (Stern-)Favoriten verwechselt
-  // wird, und wollte probeweise "Dein Fortschritt" stattdessen sehen
-  // (renderHomeFortschritt(), oben bei renderStats()). Absichtlich noch
-  // nicht geloescht, solange die Entscheidung offen ist - erst raus, wenn
-  // klar ist, dass der Fortschritt bleibt.
+  // Endgueltig entfallen (4. Aug. 2026, Christine: "Gefaellt mir. Kann man
+  // so machen."): renderHome() ruft diese Funktion nicht mehr auf, "Deine
+  // Lieblingsmeditationen" wurde mit den echten (Stern-)Favoriten
+  // verwechselt und ist durch "Dein Fortschritt" ersetzt
+  // (renderHomeFortschritt(), oben bei renderStats()).
+  // BEWUSST NICHT GELOESCHT ("man weiss ja nie", Christines Wunsch) - der
+  // ganze Code bleibt hier stehen, nur unbenutzt. Um ihn zurueckzuholen:
+  // den Aufruf oben von renderHomeFortschritt() zurueck auf
+  // renderLieblinge() aendern UND das dazugehoerige HTML in #homePage
+  // (der Kommentar bei #homeStatsRowBtn) wieder auf den alten
+  // #lieblingeSlot-Block zuruecksetzen - siehe Git-Historie vom 4. Aug. 2026
+  // fuer den genauen vorherigen Stand.
   //
   // "Deine Lieblingsmeditationen": die drei meistgehoerten aus dem ganzen
   // Verlauf, mit Platz 1-3. Bewusst NICHT dasselbe wie die Favoriten mit
@@ -5673,10 +5686,11 @@
     document.getElementById("statMinutes").textContent = f.minuten;
   }
 
-  // ENTWURF (4. Aug. 2026): derselbe Fortschritt, kompakt auf der
-  // Startseite statt "Deine Lieblingsmeditationen". Antippen fuehrt auf
-  // "Mein Weg" - dort steht dieselbe Zahlenreihe nochmal, aufklappbar zur
-  // Grafik; hier ist es nur ein Blick, kein zweiter Weg zu denselben Daten.
+  // Derselbe Fortschritt, kompakt auf der Startseite statt "Deine
+  // Lieblingsmeditationen" (4. Aug. 2026, endgueltig entschieden). Antippen
+  // fuehrt auf "Mein Weg" - dort steht dieselbe Zahlenreihe nochmal,
+  // aufklappbar zur Grafik; hier ist es nur ein Blick, kein zweiter Weg zu
+  // denselben Daten.
   function renderHomeFortschritt(){
     var f = berechneFortschritt();
     document.getElementById("homeStatStreak").textContent = f.streak;
@@ -6213,8 +6227,8 @@
   document.getElementById("homeProfilBtn").addEventListener("click", function(){
     renderMyMed(); goToStep("meditation");
   });
-  // ENTWURF: der Fortschritts-Ausschnitt auf der Startseite fuehrt genau
-  // dorthin, wo dieselben Zahlen nochmal stehen - kein zweiter, eigener Weg.
+  // Der Fortschritts-Ausschnitt auf der Startseite fuehrt genau dorthin,
+  // wo dieselben Zahlen nochmal stehen - kein zweiter, eigener Weg.
   document.getElementById("homeStatsRowBtn").addEventListener("click", function(){
     renderMyMed(); goToStep("meditation");
   });
