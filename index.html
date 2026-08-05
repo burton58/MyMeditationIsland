@@ -773,7 +773,8 @@
     display:flex; flex-direction:column; gap:8px;
   }
   .mm-zeile b{ display:block; font-size:.85rem; font-family:var(--serif); margin-bottom:2px; }
-  .mm-zeile span{ display:block; font-size:.78rem; line-height:1.5; color:var(--ink-soft); }
+  .mm-zeile span{ display:block; font-size:.78rem; line-height:1.5; color:var(--ink-soft); margin-top:3px; }
+  .mm-zeile span.meta{ font-weight:700; letter-spacing:.02em; color:var(--gold-deep); }
   /* Gemeinsames Bild-Feld für Listenzeilen. Nur ein leiser, flacher Ton als
      Grund - das Icon selbst (gross, .kat-icon) soll die Aufmerksamkeit
      bekommen, nicht ein zusaetzlicher Ring/Verlauf um das Feld herum. */
@@ -1231,7 +1232,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.23";
+    var AKTUELLE_VERSION = "2026-08-04.24";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3839,7 +3840,18 @@
     if (!m) return;
     var paar = mudraMantraFuerUebung(m);
     box.innerHTML =
-      (paar.mudra ? '<div class="mm-zeile"><b>🤲 ' + paar.mudra.name + '</b><span>' + paar.mudra.how + '</span></div>' : '') +
+      // Bisher stand beim Mudra nur "wie" (how), nicht "wofuer" (why) - beim
+      // Mantra stand "warum" schon immer dabei (why). Christine gemeldet:
+      // "was bringt dieses Mudra? Dies soll auch stehen." Jetzt beide Saetze,
+      // plus - falls vorhanden - Dauer/Chakra/Mantra-Silbe wie im Abschluss-
+      // Kaertchen (zeigeMudra()), damit beide Stellen dieselben Angaben zeigen.
+      (paar.mudra ? '<div class="mm-zeile"><b>🤲 ' + paar.mudra.name + '</b>' +
+        '<span>' + paar.mudra.how + '</span>' +
+        '<span>' + paar.mudra.why + '</span>' +
+        (paar.mudra.dauer ? '<span class="meta">' + paar.mudra.dauer +
+          (paar.mudra.chakra ? ' · ' + paar.mudra.chakra : '') +
+          (paar.mudra.silbe ? ' · Mantra-Silbe „' + paar.mudra.silbe + '“' : '') + '</span>' : '') +
+      '</div>' : '') +
       (paar.mantra ? '<div class="mm-zeile"><b>✨ „' + paar.mantra.text + '“</b><span>' + paar.mantra.why + '</span></div>' : '');
     box.hidden = false;
   }
