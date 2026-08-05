@@ -2,8 +2,9 @@
 
 Stand: 4. August 2026
 
-Die App benutzt aktuell **rund 40 verschiedene Emoji** (das 🤲 für Mudras ist am
-4. Aug. 2026 entfallen, siehe unten). Emoji sehen auf jedem Gerät
+Die App benutzt aktuell **rund 40 verschiedene Emoji** (die Zeichen 🤲 für Mudras
+und ✨ für Mantras sind am 4. Aug. 2026 entfallen — beides kommt in der App nicht
+mehr vor). Emoji sehen auf jedem Gerät
 anders aus (iPhone, Android und Windows zeichnen dieselbe Palme verschieden) und
 wirken neben deinen eigenen, ruhigen Bildern schnell billig. Diese Datei listet
 alle auf und liefert die Prompts, um sie durch eigene Symbole zu ersetzen.
@@ -167,7 +168,6 @@ am meisten.**
 |---|---|---|
 | 💛 | Kompass, solange der Zeiger unberührt ist | Ein offener Kreis, angedeutet gestrichelt — „noch nicht gesetzt" |
 | 🌅 | Abschluss-Seite, Ausgangszustand | Sonnenaufgang über einer Wasserlinie |
-| ✨ | „Ein Mantra für mich“ auf der Abschluss-Seite — die einzige Mantra-Stelle der App (Stand 4. Aug. 2026) | Drei feine Strahlen, die von einem Punkt ausgehen |
 | 💬 | Begleiter (bis dein Foto da ist) | Eine ruhige, runde Sprechblase |
 | 🧘 | Notbehelf, wenn zu einer Übung kein Kategorie-Bild passt | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
 | 🌴 | Wochenziel erreicht | Eine Palme mit einem kleinen Haken daneben |

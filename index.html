@@ -1051,18 +1051,10 @@
   @media (prefers-reduced-motion: reduce){ .compass-wrap.winkt{ animation:none; } }
   .compass-wrap.gesperrt svg{ cursor:default; }
   .compass-wrap.gesperrt .rose-needle-tip{ cursor:default !important; }
-  /* Karte "Brauchst du noch etwas?" auf der Abschluss-Seite. Die frueheren
-     .mudra-card-Regeln sind am 4. Aug. 2026 entfallen - Mudras kommen in
-     der Oberflaeche nicht mehr vor, es wird keine solche Karte mehr gebaut. */
-  .need-more{ padding:15px; margin-top:12px; }
-  /* Ueberschrift etwas groesser als die frueheren .85rem: sie ist jetzt die
-     eigentliche Aussage der Karte, nicht mehr nur die Frage ueber zwei
-     Knoepfen (4. Aug. 2026, siehe Kommentar bei der Karte). */
-  .need-more h4{ margin:0 0 4px; font-size:.95rem; font-family:var(--serif); }
-  .need-more-sub{ margin:0 0 12px; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
-  .mantra-card{ margin-top:12px; padding:14px; background:var(--cream-2); border-radius:13px; }
-  .mantra-card h5{ margin:0 0 6px; font-size:.95rem; font-family:var(--serif); }
-  .mantra-card .why{ margin:0; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
+  /* Die Regeln .need-more* / .mudra-card / .mantra-card sind am 4. Aug.
+     2026 entfallen - die Mudra-/Mantra-Karte auf der Abschluss-Seite gibt
+     es nicht mehr. .mini-btn bleibt: Pause/Vorspulen/Fertig im Spieler und
+     "Zum Ausprobieren freischalten" nutzen die Klasse. */
   .mini-btn{
     border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit;
     padding:11px 14px; border-radius:12px; font-size:.83rem; font-weight:600; color:var(--ink);
@@ -1247,7 +1239,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.31";
+    var AKTUELLE_VERSION = "2026-08-04.32";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1763,25 +1755,18 @@
          was passiert - keine Frage mehr.
          "Noch eine Meditation" ist schon im Aug. 2026 entfallen (direkt
          danach gleich die naechste anzubieten passt nicht zum Ausklang). -->
-    <!-- Erst nach dem Bestaetigen sichtbar, genau wie Rueckblick und
-         Vergleichssatz darueber: das Mantra wird aus compassAfter gewaehlt.
-         Solange die Nadel nur in ihrer Ruhestellung steht, hat niemand
-         gesagt, wie es ihm geht - ein "passend dazu, wie du dich jetzt
-         fuehlst" waere dann eine Behauptung (Grundsatz G1, siehe SPEC.md). -->
-    <div class="card need-more" id="mantraKarte" hidden>
-      <h4>Ein Mantra für diesen Moment</h4>
-      <p class="need-more-sub">Ein kurzer Satz, passend dazu, wie du dich jetzt fühlst.</p>
-      <button class="btn-ghost full" id="needMantraBtn">✨ Mantra anzeigen</button>
-      <div id="mantraBox"></div>
-    </div>
-
-    <!-- Die Begleiter-Karte stand hier bis Aug. 2026. Nach einer beendeten
-         Meditation braucht es kein Gespraech mehr - der Abschluss soll ruhig
-         ausklingen. Der Begleiter-Chat selbst ist seit 4. Aug. 2026
-         deaktiviert (siehe #medLibPage). Mudras gibt es seit dem 4. Aug.
-         2026 gar nicht mehr in der Oberflaeche (Christines Entscheid); das
-         Mantra bleibt an zwei Stellen: hier auf der Abschluss-Seite nach
-         Stimmung, in der Bibliothek pro Uebung. -->
+    <!-- Hier stand zuletzt die Mantra-Karte ("Ein Mantra für diesen Moment"
+         mit dem Knopf "Mantra anzeigen"). Am 4. Aug. 2026 auf Christines
+         Entscheid ersatzlos entfallen - zusammen mit ihrer Ueberschrift und
+         der Erklaerzeile darunter. Damit endet die Abschluss-Seite ruhig
+         mit Rueckblick, Vergleichssatz und den zwei Wegen weiter.
+         Weder Mudra noch Mantra kommen in der Oberflaeche noch vor; die
+         Listen MUDRAS/MANTRAS bleiben in der Datei, weil der (deaktivierte)
+         Begleiter sie nutzt - siehe SPEC.md §6a.
+         Ebenfalls hier entfallen: die Begleiter-Karte (Aug. 2026) und
+         "Noch eine Meditation" - beides aus demselben Grund: direkt nach
+         einer Meditation gleich das naechste Angebot danebenzustellen passt
+         nicht zum Ausklang. -->
 
     <div class="btn-row">
       <button class="btn-ghost" id="restartBtn">Kompass neu setzen</button>
@@ -3869,12 +3854,12 @@
   // Hier standen mantraFuerUebung() und toggleMudraMantraInfo() - das
   // aufklappbare Mantra je Uebung in der Bibliothek. Am 4. Aug. 2026
   // eingebaut (als Ersatz fuer den deaktivierten Begleiter-Chat, zuerst
-  // zusammen mit einem Mudra) und am selben Tag wieder entfallen:
-  // In der Bibliothek stehen nur die Meditationen selbst, das Mantra sitzt
-  // auf der Abschluss-Seite - dort passt es zum Zustand NACH der Meditation
-  // statt zu einer Uebung, die man noch gar nicht gehoert hat.
-  // MANTRAS wird jetzt nur noch von zeigeMantra() (Abschluss-Seite) und vom
-  // deaktivierten Begleiter genutzt.
+  // zusammen mit einem Mudra) und am selben Tag wieder entfallen: In der
+  // Bibliothek stehen nur die Meditationen selbst.
+  // Am selben Tag ist auch die Mantra-Karte auf der Abschluss-Seite
+  // entfallen. Mudra und Mantra kommen damit in der ganzen Oberflaeche
+  // nicht mehr vor; MUDRAS/MANTRAS haengen nur noch am deaktivierten
+  // Begleiter (siehe SPEC.md §6a).
 
   // Wird von den Kategorien auf "My Meditation" aufgerufen.
   function openCatV2(dir){ currentCatV2 = dir; renderMedListV2(); }
@@ -4126,30 +4111,14 @@
     { dir:"ost", text:"Om Mani Padme Hum.", why:"Bekanntes buddhistisches Mitgefühls-Mantra für inneren Frieden." }
   ];
 
-  // Aus einer Liste den zur Kompass-Richtung passenden Eintrag waehlen -
-  // deterministisch aus der genauen Nadel-Position berechnet, NICHT
-  // zufaellig. Dieselbe Kompass-Position zeigt darum immer denselben
-  // Eintrag; nur eine Verschiebung der Nadel aendert das Ergebnis.
-  function waehlePassend(liste, c){
-    var dir = dirFromCompass(c);
-    var pool = liste.filter(function(e){ return e.dir === dir; });
-    if (!pool.length) pool = liste; // Absicherung, falls eine Richtung leer waere
-    var idx = Math.floor(Math.abs(c.x * 1000 + c.y * 137)) % pool.length;
-    return pool[idx];
-  }
-
-  // Das Gegenstueck zeigeMudra() gab es hier bis zum 4. Aug. 2026 - Mudras
-  // kommen in der Oberflaeche gar nicht mehr vor (Christines Entscheid).
-  // Die MUDRAS-Liste bleibt nur noch fuer den deaktivierten Begleiter in
-  // der Datei (findeMudra()/mudraSatz(), siehe SPEC.md §6a).
-  function zeigeMantra(){
-    var m = waehlePassend(MANTRAS, compassAfter);
-    document.getElementById("mantraBox").innerHTML =
-      '<div class="mantra-card">' +
-        '<h5>✨ ' + m.text + '</h5>' +
-        '<p class="why">' + m.why + '</p>' +
-      '</div>';
-  }
+  // Hier standen waehlePassend(), zeigeMudra() und zeigeMantra() - die
+  // Bausteine der Mudra-/Mantra-Karte auf der Abschluss-Seite. Alle drei
+  // sind am 4. Aug. 2026 entfallen (Christines Entscheide, in Schritten:
+  // erst das Mudra, zuletzt auch das Mantra samt Karte).
+  // Die Listen MUDRAS und MANTRAS bleiben in der Datei: der deaktivierte
+  // Begleiter nutzt sie (findeMudra()/findeMantra()/mudraSatz(), §6a).
+  // Sie werden also aktuell nirgends angezeigt - nicht loeschen, sonst
+  // faellt der Begleiter beim Reaktivieren halb aus.
 
   // ---- Verlauf ----
   // Liegt ausschliesslich lokal im Browser dieses Geraets. Kein Server, kein
@@ -4758,10 +4727,9 @@
       row("Meditationen", medSummary);
     updateShift();
     updateCurrentEntry();
-    // Ein zuvor angezeigtes Mantra zuruecksetzen - es gehoerte zum alten
-    // Zustand. (Frueher wurde hier auch #mudraBox geleert; den Mudra-Knopf
-    // gibt es seit dem 4. Aug. 2026 nicht mehr.)
-    document.getElementById("mantraBox").innerHTML = "";
+    // (Hier wurden frueher #mudraBox und #mantraBox geleert - beide Karten
+    //  auf dieser Seite sind am 4. Aug. 2026 entfallen, die Felder gibt es
+    //  nicht mehr.)
 
     function row(k, v){
       return '<div class="recap-row"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>';
@@ -6079,7 +6047,6 @@
     document.getElementById("recapBox").hidden = !ja;
     document.getElementById("shiftBox").hidden = !ja;
     document.getElementById("outroAendernBtn").hidden = !ja;
-    document.getElementById("mantraKarte").hidden = !ja;
     document.getElementById("outroSub").textContent = ja
       ? "Festgehalten – das ist dein Zustand nach der Meditation."
       : "Stell den Zeiger noch einmal ein.";
@@ -6430,8 +6397,6 @@
       '<div class="z"><b>' + KATEGORIEN.length + '</b><span>Themen</span></div>' +
       '<div class="z"><b>' + kurz + '–' + lang + '</b><span>Minuten lang</span></div>';
   }
-
-  document.getElementById("needMantraBtn").addEventListener("click", zeigeMantra);
 
   document.getElementById("profilAboBtn").addEventListener("click", function(){
     renderAbo(); goToStep("abo");
