@@ -718,6 +718,11 @@
   }
   .lib-chip.active{ background:var(--gold-grad); color:#3a2e08; border-color:var(--gold); }
   .lib-cat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  /* Mehr Luft zwischen den Fotokacheln und der Liste darunter (4. Aug. 2026,
+     Christine: "Abstand von Bilder zur ersten Meditation groesser"). Die
+     Ueberschrift traegt den Abstand, damit die Kacheln als eigener Block
+     stehen und die Liste sichtbar neu anfaengt. */
+  #libListLabel{ margin-top:30px; }
   .lib-cat-tile{
     position:relative; border:none; padding:0; margin:0; border-radius:16px; overflow:hidden; cursor:pointer;
     aspect-ratio:4/3; box-shadow:0 3px 14px rgba(28,59,51,.14); font-family:inherit;
@@ -749,10 +754,15 @@
   .lib-group-title{ font-family:var(--serif); font-weight:700; font-size:1rem; margin:14px 0 2px; }
   .lib-group-title span{ font-family:inherit; font-size:.74rem; font-weight:600; color:var(--ink-soft); }
   .lib-row{
-    display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer; font-family:inherit;
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; cursor:pointer; font-family:inherit;
     background:var(--card); border:1px solid transparent; border-radius:16px; padding:11px 13px; color:var(--ink);
     box-shadow:0 3px 14px rgba(28,59,51,.07);
   }
+  /* Nur in der Bibliotheks-Liste ein kleineres Bild-Feld (4. Aug. 2026):
+     64px sind fuer eine 47 Zeilen lange Liste zu gross - der Titel bekommt
+     die Breite besser als das Symbol. Bewusst NICHT .row-thumb allgemein
+     aendern: dieselbe Klasse traegt auch die Verlaufs- und Chat-Zeilen. */
+  .lib-row .row-thumb{ width:52px; height:52px; border-radius:14px; }
   .lib-row.locked{ opacity:.55; }
   .lib-row-body{ flex:1; min-width:0; }
   .lib-row-name{ display:block; font-weight:600; font-size:.92rem; }
@@ -760,13 +770,27 @@
   .lib-done{ display:inline-block; margin-left:6px; font-size:.62rem; font-weight:700; color:var(--gold-deep);
     background:var(--cream-2); padding:2px 7px; border-radius:8px; vertical-align:middle; }
   .lib-leer{ font-size:.86rem; color:var(--ink-soft); text-align:center; }
-  .fav-btn{ border:none; background:none; cursor:pointer; font-size:1.05rem; padding:4px; color:#c3cec8; flex:0 0 auto; }
+  /* Die drei Knoepfe je Zeile als eigene Gruppe mit engem Innenabstand
+     (4. Aug. 2026): so trennt der grosse 10px-Abstand nur noch Bild, Text
+     und Knopfgruppe - der Titel bekommt dadurch spuerbar mehr Breite. */
+  .lib-row-actions{ display:flex; align-items:center; gap:1px; flex:0 0 auto; }
+  /* Trefferflaechen: gemessen waren Stern 23x29 und Mantra 31x30 - auf dem
+     Handy kaum zu treffen (Richtwert 44px, hier 38px wie beim Play-Knopf
+     daneben, mehr passt neben den Titel nicht). Das Zeichen selbst bleibt
+     gleich gross, nur die antippbare Flaeche waechst. */
+  .fav-btn{
+    border:none; background:none; cursor:pointer; font-size:1.05rem; padding:0; color:#c3cec8;
+    flex:0 0 auto; width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+  }
   .fav-btn.on{ color:var(--gold); }
   /* Mantra-Knopf pro Uebung (4. Aug. 2026, seit gleichem Tag nur noch
      Mantra, kein Mudra) - zurueckhaltender als Play, aber mit Farbe statt
      blosser Transparenz, sonst wirkt ein Emoji nur ausgewaschen statt
      dezent und faellt kaum auf (Christine hat ihn zuerst nicht gefunden). */
-  .mm-btn{ border:none; background:none; cursor:pointer; font-size:1.15rem; padding:4px; color:var(--gold-deep); flex:0 0 auto; }
+  .mm-btn{
+    border:none; background:none; cursor:pointer; font-size:1.15rem; padding:0; color:var(--gold-deep);
+    flex:0 0 auto; width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+  }
   .mm-btn:active{ opacity:.7; }
   .lib-info{
     margin:-3px 0 9px; padding:11px 13px; background:var(--cream-2); border-radius:13px;
@@ -1054,11 +1078,12 @@
     padding:11px 14px; border-radius:12px; font-size:.83rem; font-weight:600; color:var(--ink);
   }
   .mini-btn.primary{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; font-weight:700; }
-  .mudra-card, .mantra-card{ margin-top:12px; padding:14px; background:var(--cream-2); border-radius:13px; }
-  .mudra-card h5, .mantra-card h5{ margin:0 0 6px; font-size:.95rem; font-family:var(--serif); }
-  .mudra-card .how{ margin:0 0 6px; font-size:.83rem; line-height:1.55; }
-  .mudra-card .why, .mantra-card .why{ margin:0; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
-  .mudra-card .meta{ margin:8px 0 0; font-size:.74rem; font-weight:700; letter-spacing:.02em; color:var(--gold-deep); }
+  /* Die .mudra-card-Regeln sind am 4. Aug. 2026 entfallen - der Mudra-Knopf
+     auf der Abschluss-Seite gibt es nicht mehr, es wird keine solche Karte
+     mehr gebaut. .mantra-card bleibt. */
+  .mantra-card{ margin-top:12px; padding:14px; background:var(--cream-2); border-radius:13px; }
+  .mantra-card h5{ margin:0 0 6px; font-size:.95rem; font-family:var(--serif); }
+  .mantra-card .why{ margin:0; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
 
   /* ---------- Begleiter ----------
      Die .companion-Karte auf "Mein Weg" ist im Aug. 2026 entfallen (sie
@@ -1238,7 +1263,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.27";
+    var AKTUELLE_VERSION = "2026-08-04.28";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1742,25 +1767,27 @@
     <!-- "Noch eine Meditation" ist hier bewusst entfallen (Aug. 2026):
          direkt nach einer Meditation gleich die naechste anzubieten passt
          nicht zum Ausklang. Wer wirklich weitermachen will, geht ueber
-         "Kompass neu setzen" - dann stimmt auch der Zustand wieder. Mudra
-         und Mantra bleiben, weil sie den Moment abrunden statt zu verlaengern. -->
+         "Kompass neu setzen" - dann stimmt auch der Zustand wieder. Das
+         Mantra bleibt, weil es den Moment abrundet statt ihn zu verlaengern.
+         Der Mudra-Knopf, der hier danebenstand, ist am 4. Aug. 2026 auf
+         Christines Entscheid entfallen ("Entferne Mudra bei den
+         Meditationen") - die MUDRAS-Liste selbst bleibt in der Datei, sie
+         gehoert zum deaktivierten Begleiter (siehe SPEC.md §6a). -->
     <div class="card need-more">
       <h4>Brauchst du noch etwas?</h4>
       <div class="need-more-actions">
-        <button class="mini-btn" id="needMudraBtn">🤲 Ein Mudra für mich</button>
         <button class="mini-btn" id="needMantraBtn">✨ Ein Mantra für mich</button>
       </div>
-      <div id="mudraBox"></div>
       <div id="mantraBox"></div>
     </div>
 
     <!-- Die Begleiter-Karte stand hier bis Aug. 2026. Nach einer beendeten
          Meditation braucht es kein Gespraech mehr - der Abschluss soll ruhig
          ausklingen. Der Begleiter-Chat selbst ist seit 4. Aug. 2026
-         deaktiviert (siehe #medLibPage). Mudra und Mantra bleiben beide
-         erreichbar, aber an getrennten Stellen: hier (Abschluss-Seite) nach
-         Stimmung beides zusammen; in der Bibliothek pro Uebung nur noch das
-         Mantra (Christines Entscheid, gleicher Tag). -->
+         deaktiviert (siehe #medLibPage). Mudras gibt es seit dem 4. Aug.
+         2026 gar nicht mehr in der Oberflaeche (Christines Entscheid); das
+         Mantra bleibt an zwei Stellen: hier auf der Abschluss-Seite nach
+         Stimmung, in der Bibliothek pro Uebung. -->
 
     <div class="btn-row">
       <button class="btn-ghost" id="restartBtn">Kompass neu setzen</button>
@@ -3820,12 +3847,23 @@
         '<span class="lib-row-body">' +
           '<span class="lib-row-name">' + m.name + (frei ? '' : ' 🔒') +
             (gemacht[m.name] ? '<span class="lib-done">schon gemacht</span>' : '') + '</span>' +
-          '<span class="lib-row-desc">' + m.min + ' Min · ' + katName(m.dir) + '</span>' +
+          // Bereichsname nur, solange keine Kategorie gewaehlt ist (4. Aug.
+          // 2026): steht oben schon die Kachel "Stress lösen" in Gold, sagt
+          // "· Stress lösen" an jeder einzelnen Zeile dasselbe ein zweites
+          // Mal - und kostet genau die Breite, die dem Titel fehlt.
+          '<span class="lib-row-desc">' + m.min + ' Min' +
+            (currentCatV2 && currentCatV2 !== "fav" ? '' : ' · ' + katName(m.dir)) + '</span>' +
         '</span>' +
-        '<button class="fav-btn' + (fav ? ' on' : '') + '" data-fav="' + m.id + '" title="Als Favorit merken">' +
-          (fav ? '★' : '☆') + '</button>' +
-        '<button class="mm-btn" data-info="' + m.id + '" title="Passendes Mantra">✨</button>' +
-        '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
+        // Die drei Knoepfe stehen in einer eigenen Gruppe mit engem Abstand
+        // (4. Aug. 2026): vorher trennte sie derselbe 12px-Abstand wie Bild
+        // und Text, dadurch blieben dem Titel nur 126px und 35 von 47 Namen
+        // brachen auf zwei bis drei Zeilen um.
+        '<span class="lib-row-actions">' +
+          '<button class="fav-btn' + (fav ? ' on' : '') + '" data-fav="' + m.id + '" title="Als Favorit merken">' +
+            (fav ? '★' : '☆') + '</button>' +
+          '<button class="mm-btn" data-info="' + m.id + '" title="Passendes Mantra">✨</button>' +
+          '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
+        '</span>' +
       '</div>' +
       '<div class="lib-info" id="mmInfo-' + m.id + '" hidden></div>';
     }).join("") : (suchwort
@@ -4134,16 +4172,11 @@
     return pool[idx];
   }
 
-  function zeigeMudra(){
-    var m = waehlePassend(MUDRAS, compassAfter);
-    document.getElementById("mudraBox").innerHTML =
-      '<div class="mudra-card">' +
-        '<h5>🤲 ' + m.name + '</h5>' +
-        '<p class="how">' + m.how + '</p>' +
-        '<p class="why">' + m.why + '</p>' +
-        (m.dauer ? '<p class="meta">' + m.dauer + (m.chakra ? " · " + m.chakra : "") + (m.silbe ? " · Mantra: " + m.silbe : "") + '</p>' : '') +
-      '</div>';
-  }
+  // Hier stand zeigeMudra() - das Gegenstueck zu zeigeMantra() fuer den
+  // Mudra-Knopf auf der Abschluss-Seite. Am 4. Aug. 2026 auf Christines
+  // Entscheid entfallen ("Entferne Mudra bei den Meditationen"). MUDRAS
+  // selbst bleibt: die Liste gehoert zum deaktivierten Begleiter
+  // (findeMudra()/mudraSatz(), siehe SPEC.md §6a).
   function zeigeMantra(){
     var m = waehlePassend(MANTRAS, compassAfter);
     document.getElementById("mantraBox").innerHTML =
@@ -4760,7 +4793,9 @@
       row("Meditationen", medSummary);
     updateShift();
     updateCurrentEntry();
-    document.getElementById("mudraBox").innerHTML = "";
+    // (Hier wurde frueher zusaetzlich #mudraBox geleert - der Mudra-Knopf
+    //  auf dieser Seite ist am 4. Aug. 2026 entfallen.)
+    document.getElementById("mantraBox").innerHTML = "";
 
     function row(k, v){
       return '<div class="recap-row"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>';
@@ -6429,7 +6464,6 @@
       '<div class="z"><b>' + kurz + '–' + lang + '</b><span>Minuten lang</span></div>';
   }
 
-  document.getElementById("needMudraBtn").addEventListener("click", zeigeMudra);
   document.getElementById("needMantraBtn").addEventListener("click", zeigeMantra);
 
   document.getElementById("profilAboBtn").addEventListener("click", function(){
