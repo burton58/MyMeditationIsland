@@ -1055,8 +1055,11 @@
      .mudra-card-Regeln sind am 4. Aug. 2026 entfallen - Mudras kommen in
      der Oberflaeche nicht mehr vor, es wird keine solche Karte mehr gebaut. */
   .need-more{ padding:15px; margin-top:12px; }
-  .need-more h4{ margin:0 0 10px; font-size:.85rem; }
-  .need-more-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+  /* Ueberschrift etwas groesser als die frueheren .85rem: sie ist jetzt die
+     eigentliche Aussage der Karte, nicht mehr nur die Frage ueber zwei
+     Knoepfen (4. Aug. 2026, siehe Kommentar bei der Karte). */
+  .need-more h4{ margin:0 0 4px; font-size:.95rem; font-family:var(--serif); }
+  .need-more-sub{ margin:0 0 12px; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
   .mantra-card{ margin-top:12px; padding:14px; background:var(--cream-2); border-radius:13px; }
   .mantra-card h5{ margin:0 0 6px; font-size:.95rem; font-family:var(--serif); }
   .mantra-card .why{ margin:0; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
@@ -1244,7 +1247,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.30";
+    var AKTUELLE_VERSION = "2026-08-04.31";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1746,20 +1749,29 @@
     <div class="card shift-box" id="shiftBox" hidden></div>
     <button class="btn-ghost full outro-aendern" id="outroAendernBtn" hidden>Zustand nochmals ändern</button>
 
-    <!-- "Brauchst du noch etwas?" - das Mantra passend zum Zustand NACH der
-         Meditation. Endstand nach mehreren Schritten am 4. Aug. 2026
-         (Christines Entscheide, in dieser Reihenfolge): der Mudra-Knopf
-         daneben ist ersatzlos weg - Mudras kommen in der ganzen App nicht
-         mehr vor. Das Mantra dagegen gehoert genau hierher und nirgends
-         sonst: bei den einzelnen Uebungen in der Bibliothek ist es wieder
-         entfallen, dort stehen nur noch die Meditationen selbst.
+    <!-- Das Mantra passend zum Zustand NACH der Meditation. Endstand nach
+         mehreren Schritten am 4. Aug. 2026 (Christines Entscheide, in
+         dieser Reihenfolge): der Mudra-Knopf daneben ist ersatzlos weg -
+         Mudras kommen in der ganzen App nicht mehr vor. Das Mantra dagegen
+         gehoert genau hierher und nirgends sonst: bei den einzelnen
+         Uebungen in der Bibliothek ist es wieder entfallen, dort stehen nur
+         noch die Meditationen selbst.
+         Die Karte hiess bis dahin "Brauchst du noch etwas?" mit einem
+         Knopf "Ein Mantra für mich" darunter. Christine: eine Frage nach
+         einer Auswahl, obwohl es nur eine Moeglichkeit gibt, ergibt keinen
+         Sinn. Jetzt sagt die Ueberschrift, was es gibt, und der Knopf sagt,
+         was passiert - keine Frage mehr.
          "Noch eine Meditation" ist schon im Aug. 2026 entfallen (direkt
          danach gleich die naechste anzubieten passt nicht zum Ausklang). -->
-    <div class="card need-more">
-      <h4>Brauchst du noch etwas?</h4>
-      <div class="need-more-actions">
-        <button class="mini-btn" id="needMantraBtn">✨ Ein Mantra für mich</button>
-      </div>
+    <!-- Erst nach dem Bestaetigen sichtbar, genau wie Rueckblick und
+         Vergleichssatz darueber: das Mantra wird aus compassAfter gewaehlt.
+         Solange die Nadel nur in ihrer Ruhestellung steht, hat niemand
+         gesagt, wie es ihm geht - ein "passend dazu, wie du dich jetzt
+         fuehlst" waere dann eine Behauptung (Grundsatz G1, siehe SPEC.md). -->
+    <div class="card need-more" id="mantraKarte" hidden>
+      <h4>Ein Mantra für diesen Moment</h4>
+      <p class="need-more-sub">Ein kurzer Satz, passend dazu, wie du dich jetzt fühlst.</p>
+      <button class="btn-ghost full" id="needMantraBtn">✨ Mantra anzeigen</button>
       <div id="mantraBox"></div>
     </div>
 
@@ -6067,6 +6079,7 @@
     document.getElementById("recapBox").hidden = !ja;
     document.getElementById("shiftBox").hidden = !ja;
     document.getElementById("outroAendernBtn").hidden = !ja;
+    document.getElementById("mantraKarte").hidden = !ja;
     document.getElementById("outroSub").textContent = ja
       ? "Festgehalten – das ist dein Zustand nach der Meditation."
       : "Stell den Zeiger noch einmal ein.";
