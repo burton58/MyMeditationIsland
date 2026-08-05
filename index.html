@@ -1186,7 +1186,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.17";
+    var AKTUELLE_VERSION = "2026-08-04.18";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -5106,15 +5106,39 @@
     var heute = heutigeMeditationen().map(function(e){ return e.name; });
     var reihenfolge = a.meds.slice();
     var passend = feineRegel(a, text);
+    var gepinnt = null;
     if (passend && passend.med){
-      reihenfolge = [passend.med].concat(reihenfolge.filter(function(id){ return id !== passend.med; }));
+      // Die per Stichwort direkt passende Uebung (z.B. "Kiefer" -> Kiefer
+      // entspannen) bleibt immer vorn - das ist inhaltliche Passung, keine
+      // Frage der Abwechslung.
+      gepinnt = passend.med;
+      reihenfolge = reihenfolge.filter(function(id){ return id !== passend.med; });
     }
+    // Abwechslung (4. Aug. 2026, Christine gemeldet: "bei Kopfweh und
+    // Schmerzen lösen kam 2x genau die gleiche Antwort"). Vorher zaehlte
+    // nur, was HEUTE schon zu Ende gehoert wurde - wer zweimal aehnlich
+    // fragte, ohne zu starten, bekam darum immer den ersten Eintrag aus
+    // a.meds. Dasselbe Vorschlags-Gedaechtnis wie beim Kompass (§3.3d):
+    // noch nie vorgeschlagene Uebungen zuerst, danach die am laengsten
+    // zurueckliegende.
+    var letzte = letzteVorschlaege();
+    reihenfolge.sort(function(idA, idB){
+      var ra = letzte.indexOf(idA), rb = letzte.indexOf(idB);
+      if (ra === -1 && rb === -1) return 0;
+      if (ra === -1) return -1;
+      if (rb === -1) return 1;
+      return rb - ra;   // groesserer Index in "letzte" = laenger her = zuerst
+    });
+    if (gepinnt) reihenfolge.unshift(gepinnt);
+
     var kandidaten = reihenfolge
       .map(function(id){ return MEDITATIONS.filter(function(m){ return m.id === id; })[0]; })
       .filter(function(m){ return m && istFrei(m.id); });
     if (!kandidaten.length) return null;
     var frisch = kandidaten.filter(function(m){ return heute.indexOf(m.name) === -1; });
-    return (frisch[0] || kandidaten[0]);
+    var gewaehlt = frisch[0] || kandidaten[0];
+    merkeVorschlag([gewaehlt.id]);
+    return gewaehlt;
   }
 
   // Wenn gar kein Anliegen erkannt wird, soll trotzdem eine Uebung
@@ -5127,13 +5151,22 @@
 
   function allgemeineEmpfehlung(streuung){
     var heute = heutigeMeditationen().map(function(e){ return e.name; });
+    var letzte = letzteVorschlaege();
     var kandidaten = ALLGEMEINE_MEDS
       .map(function(id){ return MEDITATIONS.filter(function(m){ return m.id === id; })[0]; })
       .filter(function(m){ return m && istFrei(m.id); });
     if (!kandidaten.length) return null;
     var frisch = kandidaten.filter(function(m){ return heute.indexOf(m.name) === -1; });
     var pool = frisch.length ? frisch : kandidaten;
-    return pool[streuung % pool.length];
+    // Auch hier zuerst, was noch nie oder am laengsten nicht vorgeschlagen
+    // wurde - sonst kaeme bei mehreren unerkannten Nachrichten hintereinander
+    // per Zufall trotzdem oefter dieselbe der vier Uebungen.
+    var nieVorgeschlagen = pool.filter(function(m){ return letzte.indexOf(m.id) === -1; });
+    var wahl = nieVorgeschlagen.length
+      ? nieVorgeschlagen[streuung % nieVorgeschlagen.length]
+      : pool[streuung % pool.length];
+    merkeVorschlag([wahl.id]);
+    return wahl;
   }
   // Mantra/Mudra ueber den genauen Text bzw. Namen holen. Findet sich
   // nichts (z. B. weil ein Eintrag umbenannt wurde), faellt der Teil
@@ -5372,9 +5405,18 @@
            "[EMPFEHLUNG: <Name>]. Wenn nichts klar passt, verweise freundlich auf den Kompass, statt zu raten.")
         : "";
 
+      // Zeitlimit (4. Aug. 2026, Christine gemeldet: "es kam keine Antwort"):
+      // ohne Key schlaegt dieser Aufruf zwar praktisch immer fehl, aber ohne
+      // Frist koennte eine haengende Verbindung die "…"-Anzeige beliebig
+      // lange stehen lassen, bevor die lokale Antwort einspringt. Nach 6
+      // Sekunden wird abgebrochen und sofort lokal geantwortet.
+      var abbruch = new AbortController();
+      var frist = setTimeout(function(){ abbruch.abort(); }, 6000);
+
       fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
         headers:{ "Content-Type":"application/json" },
+        signal: abbruch.signal,
         body: JSON.stringify({
           model:"claude-sonnet-4-6",
           max_tokens:1000,
@@ -5386,13 +5428,14 @@
           messages: history
         })
       })
-      .then(function(r){ return r.json(); })
+      .then(function(r){ clearTimeout(frist); return r.json(); })
       .then(function(data){
         var txt = (data.content || []).map(function(c){ return c.text || ""; }).join("").trim();
         if (!txt) throw new Error("leer");
         zeigeAntwort(typing, txt, true);
       })
       .catch(function(){
+        clearTimeout(frist);
         // Kein Schluessel angeschlossen (siehe Kommentar oben bei
         // lokaleAntwort) - hier antwortet die App lokal, aber inhaltlich
         // genauso konkret: Mudra, Mantra, passende Meditation oder Kompass.
