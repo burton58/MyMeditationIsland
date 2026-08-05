@@ -772,6 +772,12 @@
     margin:-3px 0 9px; padding:11px 13px; background:var(--cream-2); border-radius:13px;
     display:flex; flex-direction:column; gap:8px;
   }
+  /* Falle beim Aendern: "display:flex" oben gilt per CSS-Herkunftsregel
+     staerker als das Browser-Standardverhalten fuer [hidden] - ohne diese
+     Zeile bleibt die Box auch zugeklappt sichtbar hoch (Polster, aber ohne
+     Inhalt) und reisst dadurch eine grosse Luecke zwischen die Zeilen
+     (Christine gemeldet: "Abstand zwischen den Meditationen zu gross"). */
+  .lib-info[hidden]{ display:none; }
   .mm-zeile b{ display:block; font-size:.85rem; font-family:var(--serif); margin-bottom:2px; }
   .mm-zeile span{ display:block; font-size:.78rem; line-height:1.5; color:var(--ink-soft); margin-top:3px; }
   .mm-zeile span.meta{ font-weight:700; letter-spacing:.02em; color:var(--gold-deep); }
@@ -1232,7 +1238,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-04.25";
+    var AKTUELLE_VERSION = "2026-08-04.26";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

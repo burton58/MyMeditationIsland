@@ -64,6 +64,7 @@ Aktueller Stand ist ein **einzelnes, selbstständiges HTML-File** (`index.html`)
 | Ein ganzes Jahr sah auf der Zeitachse aus wie ein Tag ("4. Aug" bis "4. Aug"). | §3.3b |
 | Inselreise: Zahl und Balken sagten Verschiedenes ("32 / 60" neben 7 %). | §3.3b |
 | Insel-Woche: erstes Vorher mit letztem Nachher las sich als ein Paar. | §3.6 |
+| `.lib-info{ display:flex }` überschrieb das Ausblenden per `[hidden]` (Herkunftsregel: Autor-CSS schlägt Browser-Standard, unabhängig von Reihenfolge/Spezifität) — zugeklappte Mudra/Mantra-Boxen blieben mit vollem Innenabstand stehen und rissen 46px statt 9px Lücke zwischen die Zeilen. | §3.3a |
 | Die gestaltete Insel wurde nirgends gespeichert. | §4 |
 | Stichwort-Überschneidungen zwischen Anliegen: bei gleicher Wortlänge gewinnt das weiter oben stehende, also das allgemeinere. | §6a |
 
