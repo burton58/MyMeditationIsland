@@ -1284,7 +1284,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-06.47";
+    var AKTUELLE_VERSION = "2026-08-06.48";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1425,7 +1425,6 @@
          2026: "erscheint nur, wenn man auch eine Meditation heute gehört
          hat"). -->
     <div id="focusSection">
-      <div class="section-label first">Mein heutiger Fokus</div>
       <div id="focusSlot"></div>
     </div>
 
@@ -5914,7 +5913,14 @@
     // "dass man dann weitermachen kann und nicht wieder am Anfang startet").
     var offen = ladeOffen();
 
-    if (!heute.length && !offen){
+    // Die angefangene Uebung steht als Teilstueck schon im Verlauf (die
+    // gehoerten Minuten zaehlen ja). Sie gehoert unter "Angefangen" und
+    // darf darum unter "Heute gehört" nicht ein zweites Mal auftauchen.
+    var heuteOhneOffen = heute.filter(function(e){
+      return !(offen && e.ts === offen.histTs && e.name === offen.name);
+    });
+
+    if (!heuteOhneOffen.length && !offen){
       focusWrap.hidden = true;
     } else {
       focusWrap.hidden = false;
@@ -5923,18 +5929,9 @@
       // Zustands-Karte weit nach unten - die Startseite war nur noch eine
       // Liste. Bei mehr steht darunter eine Zusammenfassung statt jeder
       // einzelnen Zeile; der ganze Verlauf steht ohnehin auf "Mein Weg".
-      var zeigen = heute.slice(-3).reverse();   // die drei jüngsten zuoberst
-      var restZahl = heute.length - zeigen.length;
-      var sekundenHeute = heute.reduce(function(s, e){ return s + (e.seconds || 0); }, 0);
-
-      // Die angefangene Uebung steht schon als Teilstueck im Verlauf (die
-      // gehoerten Minuten zaehlen ja). Genau diese Zeile wird hier nicht
-      // als "erledigt" gezeigt, sondern als "angefangen" mit Weiter-Knopf -
-      // sonst staende dieselbe Meditation zweimal da.
-      function istOffeneZeile(e){
-        return !!offen && e.ts === offen.histTs && e.name === offen.name;
-      }
-      var offenSchonDrin = zeigen.some(istOffeneZeile);
+      var zeigen = heuteOhneOffen.slice(-3).reverse();   // die drei jüngsten zuoberst
+      var restZahl = heuteOhneOffen.length - zeigen.length;
+      var sekundenHeute = heuteOhneOffen.reduce(function(s, e){ return s + (e.seconds || 0); }, 0);
 
       function weiterZeile(){
         var m = medVonName(offen.name);
@@ -5948,16 +5945,30 @@
         return '<div class="hist-row startbar offen-row" data-weiter="1">' +
           '<span class="row-thumb">' + rowFoto(m) + '</span>' +
           '<span class="body"><span class="name">' + offen.name + '</span>' +
-          '<span class="meta">Angefangen · noch ' + restMin + ' Min übrig</span></span>' +
+          // "Angefangen" steht schon in der Ueberschrift darueber - hier
+          // nur noch, wie viel fehlt.
+          '<span class="meta">noch ' + restMin + ' Min übrig</span></span>' +
           '<button class="verwerf-btn" data-verwerf="1" title="Nicht weitermachen">✕</button>' +
           '<button class="play-btn" data-weiter="1" title="Weitermachen">▶</button>' +
         '</div>';
       }
 
-      html = '<div class="card">' +
-        (offen && !offenSchonDrin ? weiterZeile() : '') +
-        zeigen.map(function(e){
-          if (istOffeneZeile(e)) return weiterZeile();
+      // Zwei eigene Abschnitte statt einer vagen Sammelueberschrift
+      // (6. Aug. 2026, Christine: "Mein heutiger Fokus ist verwirrend").
+      // Grund war, dass unter dem einen Wort zwei verschiedene Dinge lagen:
+      // heute Gehoertes und eine unterbrochene Uebung, die auch von einem
+      // frueheren Tag stammen kann. Jeder Block sagt jetzt selbst, was er
+      // ist - ein Dach darueber braucht es nicht, es muesste wieder vage
+      // sein. Beide Woerter kommen ausserdem ohne "mein/dein" aus.
+      html = '';
+      if (offen){
+        html += '<div class="section-label first">Angefangen</div>' +
+                '<div class="card">' + weiterZeile() + '</div>';
+      }
+      if (zeigen.length){
+        html += '<div class="section-label' + (offen ? '' : ' first') + '">Heute gehört</div>' +
+          '<div class="card">' +
+          zeigen.map(function(e){
           var m = medVonName(e.name), dir = m ? m.dir : null, id = m ? m.id : null;
           // ▶-Knopf: die Zeile ist antippbar (startet die Uebung neu) -
           // Christines Regel "Ich möchte immer Knöpfe" (5. Aug. 2026).
@@ -5974,6 +5985,7 @@
             minutenAus(sekundenHeute) + ' Min</div>'
           : '') +
         '</div>';
+      }
       focus.innerHTML = html;
     }
     /* Dormant seit 5. Aug. 2026 (Christine: "erscheint nur, wenn man auch
