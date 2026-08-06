@@ -1,7 +1,7 @@
 # Alle Emoji der App — und wie du daraus eigene Bilder machst
 
 Stand: 5. August 2026 — **direkt aus der App ausgelesen**, nicht aus dem
-Gedächtnis. Die App benutzt aktuell **39 verschiedene farbige Emoji** an 65
+Gedächtnis. Die App benutzt aktuell **38 verschiedene farbige Emoji** an 64
 Stellen (Kommentare im Programmtext und abgeschaltete Teile nicht mitgezählt).
 
 Emoji sehen auf jedem Gerät anders aus (iPhone, Android und Windows zeichnen
@@ -173,27 +173,28 @@ Klein am linken Rand jeder Menüzeile.
 
 ---
 
-## Gruppe 7 — Einzelne, verstreute Symbole (6 Stück)
+## Gruppe 7 — Einzelne, verstreute Symbole (5 Stück)
 
 | Emoji | Wo | Ersatz-Motiv |
 |---|---|---|
-| ☀️ 🌴 🌙 | Begrüssung je nach Tageszeit (Sonne vor 11, Palme bis 22, Mond nachts) | Sonne, Palme, Mond — passen zu Gruppe 5 und 2 |
+| ☀️ 🌴 🌙 | Begrüssung je nach Tageszeit (Mond nachts bis 5, Sonne bis 11, Palme bis 22, dann wieder Mond) | Sonne, Palme, Mond — passen zu Gruppe 5 und 2 |
 | 🌴 | Wochenziel erreicht | Eine Palme mit einem kleinen Haken daneben |
-| ⭐ | Filter „Favoriten" in der Bibliothek | Ein Stern — **siehe Hinweis unten** |
 | 🔒 | gesperrte Übung in der Liste | Kleines Vorhängeschloss, passend zu Gruppe 3 |
 | 🇨🇭 | Abzeichen „Schweizerdeutsch" auf Mein Weg | Ein schlichtes Schweizerkreuz im Kreis, goldbraun statt rot |
 | 🧘 | Notbehelf, falls zu einer Übung gar kein Foto passt (kommt praktisch nie vor) | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
 
-### Hinweis zum Stern — hier stimmt etwas nicht zusammen
+### Der Stern — am 5. Aug. 2026 angeglichen
 
-Die App benutzt für Favoriten **zwei verschiedene Zeichen**:
+Die App benutzte für Favoriten zwei verschiedene Zeichen: ein buntes ⭐ beim
+Filter-Knopf „Favoriten" und ein schlichtes ★/☆ an jeder einzelnen Übung —
+derselbe Gedanke, einmal gelb-bunt, einmal goldbraun. Auf Christines Wunsch
+(„gerne angleichen") benutzt jetzt **beides dasselbe ★ in Goldbraun**
+(`.chip-stern`, gleiche Farbe wie `.fav-btn.on`). Damit ist **kein Emoji mehr
+im Spiel** — der Stern zählt jetzt zu den Schriftzeichen ganz unten und
+braucht streng genommen gar kein eigenes Bild mehr.
 
-- **⭐** (farbiges Emoji) beim Filter-Knopf „Favoriten" oben in der Bibliothek
-- **★ / ☆** (einfarbige Schriftzeichen) beim Stern an jeder einzelnen Übung
-
-Deshalb ist der eine Stern gelb-bunt und der andere goldbraun-schlicht.
-Sag mir Bescheid, wenn ich das angleichen soll — am ruhigsten wirkt es, wenn
-beide dasselbe schlichte Zeichen benutzen.
+Ein eigener Stern lohnt sich trotzdem, sobald die anderen Symbole eigene
+Bilder sind — dann passt er besser ins Ganze:
 
 **Prompt für den Stern (zwei Fassungen nötig):**
 
@@ -210,8 +211,9 @@ Diese Zeichen sind **keine Emoji**, sondern normale Schriftzeichen. Sie sind
 einfarbig und sehen auf jedem Gerät gleich aus:
 
 **▶** Abspielen · **✓** Haken · **✕** Schliessen · **✎** Stift am Profilbild ·
-**★ ☆** Favoriten-Stern an den Übungen · **↗** führt zu einer fremden Seite ·
-**›** Pfeil in den Menüzeilen
+**★ ☆** Favoriten-Stern — an den Übungen **und** seit 5. Aug. 2026 auch beim
+Filter „Favoriten" · **↗** führt zu einer fremden Seite · **›** Pfeil in den
+Menüzeilen
 
 Ausserdem schon erledigt:
 - Die vier **Kategorie-Bilder** hast du schon.

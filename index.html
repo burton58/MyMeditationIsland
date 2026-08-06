@@ -728,6 +728,13 @@
     display:inline-flex; align-items:center; gap:6px;
   }
   .lib-chip.active{ background:var(--gold-grad); color:#3a2e08; border-color:var(--gold); }
+  /* Derselbe Stern wie an jeder Uebung (.fav-btn.on): einfarbig statt buntes
+     Emoji, damit beide Stellen gleich aussehen (5. Aug. 2026, Christines
+     Wunsch "gerne angleichen"). Ist der Chip ausgewaehlt, liegt er auf
+     goldenem Grund - dort muss der Stern die dunkle Schriftfarbe erben,
+     sonst verschwindet Gold auf Gold. */
+  .lib-chip .chip-stern{ color:var(--gold); font-size:1rem; line-height:1; }
+  .lib-chip.active .chip-stern{ color:inherit; }
   .lib-cat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   /* Mehr Luft zwischen den Fotokacheln und der Liste darunter (4. Aug. 2026,
      Christine: "Abstand von Bilder zur ersten Meditation groesser"). Die
@@ -1256,7 +1263,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.40";
+    var AKTUELLE_VERSION = "2026-08-05.41";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3890,12 +3897,18 @@
 
     // "Alle" und "Favoriten" bleiben kleine Text-Chips - sie sind kein
     // Gefuehlszustand, ein Foto dafuer waere nur Dekoration ohne Aussage.
-    var chipsHtml = [{ dir:null, icon:"", name:"Alle" }, { dir:"fav", icon:"⭐", name:"Favoriten" }]
+    //
+    // Der Stern hier war bis 5. Aug. 2026 ein ⭐ (buntes Emoji), waehrend der
+    // Stern an jeder Uebung darunter ein ★/☆ (einfarbiges Schriftzeichen)
+    // ist - zwei verschiedene Sterne fuer dieselbe Sache, einer gelb-bunt,
+    // einer goldbraun. Beim Auslesen aller Emoji aufgefallen, Christine:
+    // "Gerne angleichen." Jetzt ueberall dasselbe ★ in Goldbraun.
+    var chipsHtml = [{ dir:null, icon:"", name:"Alle" }, { dir:"fav", icon:"★", name:"Favoriten" }]
       .map(function(k){
         var aktiv = (k.dir || null) === currentCatV2;
         return '<button class="lib-chip' + (aktiv ? ' active' : '') + '"' +
           (k.dir ? ' data-dir="' + k.dir + '"' : '') + '>' +
-          (k.icon ? '<span>' + k.icon + '</span>' : '') + k.name + '</button>';
+          (k.icon ? '<span class="chip-stern">' + k.icon + '</span>' : '') + k.name + '</button>';
       }).join("");
 
     // Die vier eigentlichen Kategorien: grosse, antippbare Fotokacheln
