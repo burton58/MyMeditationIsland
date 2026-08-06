@@ -1275,7 +1275,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.43";
+    var AKTUELLE_VERSION = "2026-08-05.44";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1404,7 +1404,7 @@
         <h1 id="greeting">Guten Morgen ☀️</h1>
         <p>Deine Insel wartet auf dich.</p>
       </div>
-      <button class="icon-btn" id="homeProfilBtn" title="Mein Weg">
+      <button class="icon-btn" id="homeProfilBtn" title="Dein Weg">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
       </button>
     </div>
@@ -1617,7 +1617,7 @@
          (vorher: die Profil-Seite, siehe dort). -->
     <div class="page-head">
       <div class="ttl">
-        <h1>Mein Weg</h1>
+        <h1>Dein Weg</h1>
         <p class="fd-greeting" id="fdGreeting">Was du schon geschafft hast</p>
       </div>
       <span class="fd-badge">🇨🇭 Schweizerdeutsch</span>
@@ -1906,7 +1906,7 @@
         <span class="row-icon">💳</span><span class="row-text">Abo verwalten</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilIslandBtn">
-        <span class="row-icon">🏝️</span><span class="row-text">Meine Insel gestalten</span><span class="chev">›</span>
+        <span class="row-icon">🏝️</span><span class="row-text">Deine Insel gestalten</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilKontoBtn">
         <span class="row-icon">🔑</span><span class="row-text">Konto &amp; Anmelden</span><span class="chev">›</span>
@@ -2461,7 +2461,7 @@
     </button>
     <button class="tab-item" data-tab="meditation">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5.5" r="2.2"/><path d="M5 21c1.5-4 4-6 7-6s5.5 2 7 6"/><path d="M4 12h16"/></svg>
-      <span>Mein Weg</span>
+      <span>Dein Weg</span>
     </button>
   </nav>
 
@@ -6801,8 +6801,9 @@
       renderEinstellungen(); goToStep("einstellungen");
     });
   });
-  // "Meine Insel gestalten" hatte bisher gar keinen Zurueck-Weg im Kopf,
-  // nur "Weiter zum Kompass" ganz unten.
+  // "Deine Insel gestalten" (bis 5. Aug. 2026 "Meine Insel gestalten",
+  // siehe Anrede-Vereinheitlichung in SPEC.md §2) hatte bisher gar keinen
+  // Zurueck-Weg im Kopf, nur "Weiter zum Kompass" ganz unten.
   document.getElementById("inselBackBtn").addEventListener("click", function(){
     renderEinstellungen(); goToStep("einstellungen");
   });
