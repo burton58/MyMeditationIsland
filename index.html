@@ -797,13 +797,19 @@
   /* Die Regeln .mm-btn / .lib-info / .mm-zeile sind am 4. Aug. 2026
      entfallen - das aufklappbare Mantra je Uebung gibt es nicht mehr.
      Mantras kommen inzwischen ueberhaupt nicht mehr vor (siehe unten). */
-  /* Gemeinsames Bild-Feld für Listenzeilen. Nur ein leiser, flacher Ton als
-     Grund - das Icon selbst (gross, .kat-icon) soll die Aufmerksamkeit
-     bekommen, nicht ein zusaetzlicher Ring/Verlauf um das Feld herum. */
+  /* Gemeinsames Bild-Feld für Listenzeilen. Seit 5. Aug. 2026 steckt darin
+     ein echtes Foto (.row-foto) statt der flachen Strichzeichnung, damit die
+     Zeilen zu den Fotokacheln der Kategorien passen - siehe rowFoto() im
+     Skript. "overflow:hidden" ist dafuer noetig, sonst schaut das eckige
+     Bild ueber die abgerundeten Ecken hinaus. Der cremefarbene Grund bleibt:
+     er ist noch sichtbar, solange das Foto laedt, und traegt weiterhin den
+     Notbehelf 🧘, wenn zu einer Uebung gar kein Bild passt. */
   .row-thumb{
     width:64px; height:64px; border-radius:16px; flex:0 0 auto; background:var(--cream-2);
     display:flex; align-items:center; justify-content:center; font-size:1.25rem;
+    overflow:hidden;
   }
+  .row-thumb .row-foto{ width:100%; height:100%; object-fit:cover; display:block; }
   .row-thumb .kat-icon{ width:76%; height:76%; }
 
   /* ---------- Profil ---------- */
@@ -1250,7 +1256,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.38";
+    var AKTUELLE_VERSION = "2026-08-05.39";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3443,9 +3449,54 @@
     var k = KATEGORIEN.filter(function(x){ return x.dir === dir; })[0];
     return k ? k.name : "";
   }
+  // Nur noch fuer die Fotokacheln der Bibliothek gebraucht (dort liegt das
+  // Zeichen weiss auf dem Bild). In den Listenzeilen ist es seit dem
+  // 5. Aug. 2026 durch ein echtes Foto ersetzt - siehe rowFoto() unten.
+  // BEWUSST NICHT GELOESCHT ("man weiss ja nie"): wer die Strichzeichnung in
+  // den Zeilen zurueckhaben will, ersetzt rowFoto(...) wieder durch
+  // katIcon(...) und nimmt overflow:hidden bei .row-thumb heraus.
   function katIcon(dir){
     var k = KATEGORIEN.filter(function(x){ return x.dir === dir; })[0];
     return k ? '<img class="kat-icon" src="' + k.icon + '" alt="">' : "🧘";
+  }
+
+  // Welches Foto zu welcher Kategorie gehoert - eine Stelle fuer beides:
+  // die grossen Fotokacheln oben in der Bibliothek (bg-*.jpg, ganze Breite)
+  // und die kleinen quadratischen Miniaturen in den Listenzeilen
+  // (thumb-*.jpg, 160x160, aus demselben Bild zugeschnitten).
+  var LIB_KAT_FOTO = {
+    nord:"bg-lichtraum.jpg",       // Gedanken beruhigen - klares Licht
+    sued:"bg-herzraum.jpg",        // Gefuehle verstehen
+    west:"bg-waldlichtung.jpg",    // Stress loesen - erden im Wald
+    ost:"bg-bergsee.jpg"           // Entspannen - stiller See
+  };
+
+  // Das kleine Bild links in jeder Listenzeile.
+  //
+  // Bis 5. Aug. 2026 stand hier die flache, goldbraune Strichzeichnung der
+  // Kategorie (icon-*.png). Seit die Kategorien oben als grosse Fotokacheln
+  // erscheinen, passte das nicht mehr zusammen - Christine: "die Bilder
+  // jetzt als Kategorien sehen super aus, aber dann die unteren
+  // Meditationen mit den Icons passt layouttechnisch nicht zusammen."
+  // Jetzt zeigt jede Zeile ein Foto, und zwar moeglichst genau das, das
+  // waehrend dieser Meditation im Hintergrund laeuft (m.bg) - die Zeile ist
+  // damit eine echte Vorschau. Hat eine Uebung kein eigenes Bild, springt
+  // das Foto ihrer Kategorie ein, dasselbe wie auf der Kachel oben.
+  function rowFoto(m){
+    var datei = (m && m.bg) || (m && LIB_KAT_FOTO[m.dir]) || "";
+    // thumb-*.jpg statt bg-*.jpg: dasselbe Motiv, aber quadratisch
+    // zugeschnitten und auf 160px verkleinert (rund 5 KB statt 100 KB) -
+    // bei 47 Zeilen macht das den Unterschied.
+    return datei
+      ? '<img class="row-foto" src="' + datei.replace("bg-", "thumb-") + '" alt="">'
+      : "🧘";
+  }
+
+  // Die Uebung hinter einem gespeicherten Namen (Verlauf, heutiger Fokus).
+  // Gibt null zurueck, wenn eine Uebung inzwischen umbenannt oder entfernt
+  // wurde - dann bleibt die Zeile eben eine reine Verlaufszeile.
+  function medVonName(name){
+    return MEDITATIONS.filter(function(x){ return x.name === name; })[0] || null;
   }
 
   // Die Empfehlung selbst: eine Uebung (Einzelmeditation) oder ein Programm
@@ -3504,7 +3555,7 @@
     opts = opts || {};
     return '<div class="' + (opts.cls || "focus-card") + '" data-play="' + m.id + '">' +
       (opts.num ? '<span class="num">' + opts.num + '</span>' : '') +
-      '<span class="row-thumb">' + katIcon(m.dir) + '</span>' +
+      '<span class="row-thumb">' + rowFoto(m) + '</span>' +
       '<span class="lib-row-body">' +
         '<span class="lib-row-name">' + m.name + '</span>' +
         '<span class="lib-row-desc">' + m.min + ' Min · ' + katName(m.dir) + '</span>' +
@@ -3577,15 +3628,16 @@
     startSession();
   }
 
+  // Diese beiden holten je EINE Angabe zu einem gespeicherten Namen. Seit
+  // dem 5. Aug. 2026 brauchen die Listenzeilen ausser Richtung und Nummer
+  // auch noch das Foto der Uebung - sie suchen die Uebung darum einmal ueber
+  // medVonName() (oben bei rowFoto()) und lesen alles daran ab, statt
+  // dieselbe Liste zwei- bis dreimal zu durchsuchen. Beide hier bleiben
+  // unbenutzt stehen ("man weiss ja nie").
   function dirVonName(name){
     var m = MEDITATIONS.filter(function(x){ return x.name === name; })[0];
     return m ? m.dir : null;
   }
-  // Fuer Listen, die nur den Namen gespeichert haben (Verlauf,
-  // Lieblingsmeditationen): die Uebung dahinter finden, damit sich die
-  // Zeile antippen und starten laesst. Gibt null zurueck, wenn eine
-  // Uebung inzwischen umbenannt oder entfernt wurde - dann bleibt die
-  // Zeile eben eine reine Verlaufszeile, statt ins Leere zu fuehren.
   function idVonName(name){
     var m = MEDITATIONS.filter(function(x){ return x.name === name; })[0];
     return m ? m.id : null;
@@ -3774,12 +3826,9 @@
   // acht bestehenden Stimmungsfotos (§5a), dieselben, die schon waehrend
   // einzelner Meditationen im Hintergrund laufen. Kein neues Bild noetig,
   // nur je Kategorie eines ausgewaehlt, das im Ton am besten passt.
-  var LIB_KAT_FOTO = {
-    nord:"bg-lichtraum.jpg",       // Gedanken beruhigen - klares Licht
-    sued:"bg-herzraum.jpg",        // Gefuehle verstehen
-    west:"bg-waldlichtung.jpg",    // Stress loesen - erden im Wald
-    ost:"bg-bergsee.jpg"           // Entspannen - stiller See
-  };
+  // LIB_KAT_FOTO stand bis 5. Aug. 2026 hier - jetzt weiter oben bei
+  // rowFoto(), weil die Zuordnung Kategorie -> Foto seither auch von den
+  // Listenzeilen gebraucht wird und nur an einer Stelle stehen soll.
 
   function renderLibFilters(){
     var host = document.getElementById("libFilters");
@@ -3849,7 +3898,7 @@
     host.innerHTML = pool.length ? pool.map(function(m){
       var frei = istFrei(m.id), fav = istFavorit(m.id);
       return '<div class="lib-row' + (frei ? '' : ' locked') + '" data-play="' + m.id + '">' +
-        '<span class="row-thumb">' + katIcon(m.dir) + '</span>' +
+        '<span class="row-thumb">' + rowFoto(m) + '</span>' +
         '<span class="lib-row-body">' +
           '<span class="lib-row-name">' + m.name + (frei ? '' : ' 🔒') +
             (gemacht[m.name] ? '<span class="lib-done">schon gemacht</span>' : '') + '</span>' +
@@ -4260,7 +4309,9 @@
   // beruhigen" sagt mehr als "Denken".
   // Icons sind seit Aug. 2026 eigene, ruhige Linienzeichnungen (Christines
   // Bilder) statt Emoji - Emoji sehen je nach Handy unterschiedlich aus und
-  // wirkten weniger hochwertig. katIcon() unten baut daraus ein <img>.
+  // wirkten weniger hochwertig. Sie stehen seit dem 5. Aug. 2026 nur noch
+  // auf den Fotokacheln der Bibliothek (dort weiss auf dem Bild) und in der
+  // Filterzeile; in den Listenzeilen zeigt rowFoto() stattdessen ein Foto.
   var KATEGORIEN = [
     { dir:"nord", icon:"icon-gedanken.png", name:"Gedanken beruhigen" },
     { dir:"sued", icon:"icon-gefuehle.png", name:"Gefühle verstehen" },
@@ -5578,11 +5629,11 @@
       var restZahl = heute.length - zeigen.length;
       var sekundenHeute = heute.reduce(function(s, e){ return s + (e.seconds || 0); }, 0);
       html = '<div class="card">' + zeigen.map(function(e){
-          var dir = dirVonName(e.name), id = idVonName(e.name);
+          var m = medVonName(e.name), dir = m ? m.dir : null, id = m ? m.id : null;
           // ▶-Knopf: die Zeile ist antippbar (startet die Uebung neu) -
           // Christines Regel "Ich möchte immer Knöpfe" (5. Aug. 2026).
           return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
-            '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
+            '<span class="row-thumb">' + rowFoto(m) + '</span>' +
             '<span class="body"><span class="name">' + e.name + '</span>' +
             '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + minutenAus(e.seconds) +
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
@@ -5680,9 +5731,9 @@
     // dann kann man sie von dort nicht starten - genau danach greift man
     // aber. Der allgemeine Klick-Zuhoerer nimmt data-play auf.
     document.getElementById("lieblingeList").innerHTML = top.map(function(e){
-      var dir = dirVonName(e.name), id = idVonName(e.name);
+      var m = medVonName(e.name), dir = m ? m.dir : null, id = m ? m.id : null;
       return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
-        '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
+        '<span class="row-thumb">' + rowFoto(m) + '</span>' +
         '<span class="body"><span class="name">' + e.name + '</span>' +
         '<span class="meta">' + e.anzahl + ' Mal gehört' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
         (id ? '<button class="play-btn" data-play="' + id + '">▶</button>' : '') +
@@ -5973,9 +6024,9 @@
     }
     host.innerHTML = eintraege.length
       ? eintraege.map(function(e){
-          var dir = dirVonName(e.name), id = idVonName(e.name);
+          var m = medVonName(e.name), dir = m ? m.dir : null, id = m ? m.id : null;
           return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
-            '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
+            '<span class="row-thumb">' + rowFoto(m) + '</span>' +
             '<span class="body"><span class="name">' + e.name + '</span>' +
             '<span class="meta">' + datumWort(e.ts) + ' · ' + minutenAus(e.seconds) +
               ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +

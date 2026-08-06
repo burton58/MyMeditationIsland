@@ -169,7 +169,7 @@ am meisten.**
 | 💛 | Kompass, solange der Zeiger unberührt ist | Ein offener Kreis, angedeutet gestrichelt — „noch nicht gesetzt" |
 | 🌅 | Abschluss-Seite, Ausgangszustand | Sonnenaufgang über einer Wasserlinie |
 | 💬 | Begleiter (bis dein Foto da ist) | Eine ruhige, runde Sprechblase |
-| 🧘 | Notbehelf, wenn zu einer Übung kein Kategorie-Bild passt | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
+| 🧘 | Notbehelf, wenn zu einer Übung gar kein Foto passt (kommt praktisch nicht vor) | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
 | 🌴 | Wochenziel erreicht | Eine Palme mit einem kleinen Haken daneben |
 | ☀️ 🌴 🌙 | Begrüssung je nach Tageszeit | Sonne, Palme, Mond — passen zu Gruppe 5 |
 | ⭐ | Favoriten-Stern an jeder Übung | Ein Stern, zusätzlich **gefüllt** als zweite Fassung für „gemerkt" |
@@ -188,6 +188,9 @@ am meisten.**
 - **▶** (Abspielen) und **↗** (führt zu einer anderen Seite) sind keine Emoji,
   sondern Schriftzeichen. Sie sehen überall gleich aus.
 - Die vier **Kategorie-Bilder** hast du schon.
+- **Das kleine Bild links neben jeder Meditation** ist seit dem 5. Aug. 2026
+  ein Foto — es zeigt genau das Bild, das während dieser Meditation im
+  Hintergrund läuft. Dafür braucht es nichts mehr zu zeichnen.
 - Der **Pfeil ›** in den Menüzeilen ist ebenfalls ein Schriftzeichen.
 
 ---

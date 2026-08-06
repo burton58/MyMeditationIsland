@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v29";
+const CACHE_NAME = "myisland-cache-v30";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -28,7 +28,17 @@ const SHELL_FILES = [
   "./icon-gedanken.png",
   "./icon-gefuehle.png",
   "./icon-stress.png",
-  "./icon-entspannen.png"
+  "./icon-entspannen.png",
+  // Quadratische Miniaturen (160x160) derselben acht Fotos - das kleine
+  // Bild links in jeder Listenzeile, seit 5. Aug. 2026.
+  "./thumb-waldlichtung.jpg",
+  "./thumb-bergspitze.jpg",
+  "./thumb-winterlandschaft.jpg",
+  "./thumb-bergsee.jpg",
+  "./thumb-lichtraum.jpg",
+  "./thumb-warmeszuhause.jpg",
+  "./thumb-herzraum.jpg",
+  "./thumb-reinigend.jpg"
 ];
 
 self.addEventListener("install", function(event){
