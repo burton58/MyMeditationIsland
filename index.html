@@ -1263,7 +1263,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.41";
+    var AKTUELLE_VERSION = "2026-08-05.42";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3682,9 +3682,39 @@
 
   // Eine Uebung direkt starten - ein Tipp, ein Start. Das ist der Kern des
   // Coach-Gefuehls: nicht erst auswaehlen, haken setzen und bestaetigen.
+  //
+  // vonVorn=true (der Normalfall) heisst: von null an, und ein evtl.
+  // gemerkter Stand DIESER Uebung wird verworfen - wer bewusst neu startet,
+  // will neu starten. Die bereits gehoerten Minuten bleiben trotzdem im
+  // Verlauf stehen, verloren geht nichts.
   function starteMeditation(id){
     if (!istFrei(id)){ renderAbo(); goToStep("abo"); return; }
+    var offen = ladeOffen();
+    if (offen && offen.id === id) loescheOffen();
+    fortsetzenSek = 0;
+    laufenderHistTs = null;
     chosenMedIds = [id];
+    document.body.classList.add("entered", "in-session");
+    render({ animateBoatIn: state.arrival === "boat" });
+    startSession();
+  }
+
+  // Die unterbrochene Meditation an derselben Stelle weiterfuehren.
+  // Der zugehoerige Verlaufseintrag wird uebernommen (laufenderHistTs),
+  // damit die Minuten am Ende nicht doppelt zaehlen, sondern der eine
+  // Eintrag auf die Gesamtzeit waechst.
+  function setzeMeditationFort(){
+    var offen = ladeOffen();
+    if (!offen) return;
+    if (!istFrei(offen.id)){ renderAbo(); goToStep("abo"); return; }
+    fortsetzenSek = offen.seconds;
+    // Nur weiterschreiben, wenn der Eintrag vom selben Tag ist. Wer am
+    // naechsten Tag weitermacht, bekommt einen eigenen Eintrag - sonst
+    // wanderten die neuen Minuten rueckwirkend auf gestern und die Serie
+    // stimmte nicht mehr.
+    laufenderHistTs = (offen.tag === dayStamp(Date.now())) ? offen.histTs : null;
+    loescheOffen();
+    chosenMedIds = [offen.id];
     document.body.classList.add("entered", "in-session");
     render({ animateBoatIn: state.arrival === "boat" });
     startSession();
@@ -4020,6 +4050,11 @@
       renderMedListV2();
       return;
     }
+    // "Weitermachen" bei einer unterbrochenen Meditation (Startseite).
+    // Muss VOR data-play stehen: die Zeile traegt beides nicht gleichzeitig,
+    // aber die Reihenfolge macht die Absicht eindeutig.
+    var weiterEl = e.target.closest("[data-weiter]");
+    if (weiterEl){ setzeMeditationFort(); return; }
     var playEl = e.target.closest("[data-play]");
     if (playEl) starteMeditation(playEl.getAttribute("data-play"));
   });
@@ -4051,6 +4086,10 @@
 
   // ---- guided session (plays through the selected meditations one after another) ----
   var session = { timer:null, elapsed:0, total:0, paused:false, queue:[], index:0 };
+  // Sekunden, bei denen die naechste Sitzung einsteigen soll (Fortsetzen
+  // einer unterbrochenen Meditation). Wird von loadQueueItem() einmal
+  // aufgebraucht und danach wieder auf 0 gesetzt.
+  var fortsetzenSek = 0;
 
   function fmt(sec){
     var m = Math.floor(sec/60), s = sec % 60;
@@ -4090,7 +4129,11 @@
   function loadQueueItem(){
     var med = session.queue[session.index];
     session.total = med.min * 60;
-    session.elapsed = 0;
+    // Beim Fortsetzen einer unterbrochenen Meditation dort einsteigen, wo
+    // aufgehoert wurde - nur beim ERSTEN Stueck einer Sitzung, danach
+    // faengt jedes weitere wieder bei null an.
+    session.elapsed = fortsetzenSek > 0 ? Math.min(fortsetzenSek, session.total - 1) : 0;
+    fortsetzenSek = 0;
     document.getElementById("sessionPos").textContent = session.queue.length > 1
       ? ("Meditation " + (session.index + 1) + " von " + session.queue.length)
       : "Meditation";
@@ -4159,6 +4202,9 @@
     zeichneReise();
     renderMoodStatus(document.getElementById("compassReadout2"), compassAfter);
     recordSession();
+    // Ordentlich beendet: nichts bleibt offen. Sonst stuende die Uebung
+    // weiterhin als "angefangen" auf der Startseite, obwohl sie fertig ist.
+    loescheOffen();
     setOutroBestaetigt(false);   // jede Sitzung beginnt wieder offen
     goToStep("outro");
   });
@@ -4279,6 +4325,23 @@
     var echteMeds = completedLog.filter(function(l){ return l.seconds >= MINDESTDAUER_SEK; });
     if (!echteMeds.length){ currentEntryTs = null; return; }
     var list = loadHistory();
+
+    // Wurde diese Sitzung zwischendurch schon einmal gesichert (Abbruch
+    // oder App weggelegt), gibt es dafuer bereits einen Eintrag. Dann
+    // diesen fortschreiben statt einen zweiten anzulegen - sonst stuenden
+    // fuer eine Meditation, die man in zwei Anlaeufen gehoert hat, die
+    // Minuten doppelt in der Statistik.
+    if (laufenderHistTs !== null){
+      for (var j = list.length - 1; j >= 0; j--){
+        if (list[j].ts === laufenderHistTs){
+          list[j].meds = echteMeds.map(function(l){ return { name:l.name, min:l.min, seconds:l.seconds }; });
+          saveHistory(list);
+          currentEntryTs = laufenderHistTs;
+          return;
+        }
+      }
+    }
+
     currentEntryTs = Date.now();
     list.push({
       ts: currentEntryTs,
@@ -4313,6 +4376,90 @@
   // Eintraege aus der Zeit vor dem Bestaetigen-Knopf haben kein Merkmal -
   // die zaehlen als bestaetigt, dort wurde der Wert ja beim Ziehen gesetzt.
   function istBestaetigt(e){ return e.bestaetigt !== false; }
+
+  // ---- Unterbrochene Meditation ---------------------------------------
+  // 5. Aug. 2026, Christines Auftrag. Vorher galt: Wer waehrend einer
+  // Meditation auf ✕ tippte, verlor ALLES - auch eine zu 100 % gehoerte
+  // Uebung. Nachgemessen: dieselbe Meditation, 5:00 von 5:00, einmal mit
+  // "Fertig →" beendet (gespeichert) und einmal mit ✕ (spurlos weg). Das
+  // ✕ sitzt oben links, genau dort, wo man instinktiv hintippt.
+  //
+  // Jetzt gilt: Was gehoert wurde, bleibt gezaehlt, UND man kann an
+  // derselben Stelle weitermachen ("nicht wieder am Anfang starten, so wie
+  // das die anderen auch machen" - Insight Timer verkauft genau das als
+  // kostenpflichtigen Zusatz, hier ist es einfach dabei).
+  //
+  // Es wird immer nur EINE offene Meditation gemerkt (die zuletzt
+  // unterbrochene). Mehrere gleichzeitig offen zu halten waere fuer eine
+  // Startseite mit einer Zeile nur Verwirrung.
+  var OFFEN_KEY = "myisland.offen.v1";
+
+  function ladeOffen(){
+    try {
+      var o = JSON.parse(localStorage.getItem(OFFEN_KEY) || "null");
+      // Nur gueltig, solange es die Uebung noch gibt (koennte umbenannt
+      // oder entfernt worden sein) und noch Zeit uebrig ist.
+      if (!o || !o.id) return null;
+      var m = MEDITATIONS.filter(function(x){ return x.id === o.id; })[0];
+      if (!m || o.seconds >= m.min * 60) { loescheOffen(); return null; }
+      return o;
+    } catch (e){ return null; }
+  }
+  function speichereOffen(o){
+    try { localStorage.setItem(OFFEN_KEY, JSON.stringify(o)); } catch (e){}
+  }
+  function loescheOffen(){
+    try { localStorage.removeItem(OFFEN_KEY); } catch (e){}
+  }
+
+  // Der Verlaufseintrag, der zur GERADE LAUFENDEN Sitzung gehoert. Wird
+  // gesetzt, sobald zum ersten Mal etwas davon gesichert wurde (Abbruch
+  // oder App weggelegt). Damit landet dieselbe Sitzung nicht mehrfach im
+  // Verlauf, wenn sie mehrmals unterbrochen und fortgesetzt wird - der
+  // eine Eintrag waechst stattdessen mit.
+  var laufenderHistTs = null;
+
+  // Den Stand der laufenden Meditation sichern, ohne die Sitzung zu
+  // beenden. Wird beim Abbrechen ueber ✕ aufgerufen und wenn die App
+  // mitten in einer Meditation weggelegt wird (auf dem iPhone der
+  // haeufigere Fall - dort wird die App nur schlafen gelegt).
+  function sichereStand(){
+    var med = session.queue[session.index];
+    if (!med) return;
+    var sek = session.elapsed;
+    // Ganz kurz reingeschaut zaehlt weiterhin nicht - sonst entstuende aus
+    // einem Fehlgriff ein Eintrag und ein Tag in der Serie.
+    if (sek < MINDESTDAUER_SEK) return;
+
+    var list = loadHistory();
+    var eintrag = null;
+    if (laufenderHistTs !== null){
+      for (var i = list.length - 1; i >= 0; i--){
+        if (list[i].ts === laufenderHistTs){ eintrag = list[i]; break; }
+      }
+    }
+    if (eintrag){
+      // Schon ein Eintrag da: mitwachsen lassen statt einen zweiten anlegen.
+      eintrag.meds = [{ name:med.name, min:med.min, seconds:sek }];
+    } else {
+      laufenderHistTs = Date.now();
+      currentEntryTs = laufenderHistTs;
+      list.push({
+        ts: laufenderHistTs,
+        before: { x:compassBefore.x, y:compassBefore.y },
+        after:  { x:compassBefore.x, y:compassBefore.y },
+        bestaetigt: false,
+        meds: [{ name:med.name, min:med.min, seconds:sek }]
+      });
+    }
+    saveHistory(list);
+
+    speichereOffen({
+      id: med.id, name: med.name, min: med.min,
+      seconds: sek, ts: Date.now(),
+      histTs: laufenderHistTs, tag: dayStamp(Date.now())
+    });
+  }
 
   // ---- Stimmung als Bild und Wort ----
   // "next": kurzer Satz, was diese \u00DCbungen f\u00fcr GENAU dieses Wort bewirken -
@@ -5684,7 +5831,12 @@
     // Empfehlung" / "Empfehlung da, aber heute noch nichts gehoert") bleiben
     // unten auskommentiert BEWUSST im Code stehen ("Alten Code im
     // Hintergrund behalten, man weiss ja nie") statt geloescht zu werden.
-    if (!heute.length){
+    // Eine unterbrochene Meditation zeigt sich hier ebenfalls - auch wenn
+    // heute sonst nichts gelaufen ist (5. Aug. 2026, Christines Auftrag:
+    // "dass man dann weitermachen kann und nicht wieder am Anfang startet").
+    var offen = ladeOffen();
+
+    if (!heute.length && !offen){
       focusWrap.hidden = true;
     } else {
       focusWrap.hidden = false;
@@ -5696,7 +5848,33 @@
       var zeigen = heute.slice(-3).reverse();   // die drei jüngsten zuoberst
       var restZahl = heute.length - zeigen.length;
       var sekundenHeute = heute.reduce(function(s, e){ return s + (e.seconds || 0); }, 0);
-      html = '<div class="card">' + zeigen.map(function(e){
+
+      // Die angefangene Uebung steht schon als Teilstueck im Verlauf (die
+      // gehoerten Minuten zaehlen ja). Genau diese Zeile wird hier nicht
+      // als "erledigt" gezeigt, sondern als "angefangen" mit Weiter-Knopf -
+      // sonst staende dieselbe Meditation zweimal da.
+      function istOffeneZeile(e){
+        return !!offen && e.ts === offen.histTs && e.name === offen.name;
+      }
+      var offenSchonDrin = zeigen.some(istOffeneZeile);
+
+      function weiterZeile(){
+        var m = medVonName(offen.name);
+        // "noch X Min übrig" statt "noch X von Y Min": Letzteres liest sich
+        // auch als "X von Y geschafft" und meint das Gegenteil.
+        var restMin = Math.max(1, Math.round((offen.min * 60 - offen.seconds) / 60));
+        return '<div class="hist-row startbar offen-row" data-weiter="1">' +
+          '<span class="row-thumb">' + rowFoto(m) + '</span>' +
+          '<span class="body"><span class="name">' + offen.name + '</span>' +
+          '<span class="meta">Angefangen · noch ' + restMin + ' Min übrig</span></span>' +
+          '<button class="play-btn" data-weiter="1" title="Weitermachen">▶</button>' +
+        '</div>';
+      }
+
+      html = '<div class="card">' +
+        (offen && !offenSchonDrin ? weiterZeile() : '') +
+        zeigen.map(function(e){
+          if (istOffeneZeile(e)) return weiterZeile();
           var m = medVonName(e.name), dir = m ? m.dir : null, id = m ? m.id : null;
           // ▶-Knopf: die Zeile ist antippbar (startet die Uebung neu) -
           // Christines Regel "Ich möchte immer Knöpfe" (5. Aug. 2026).
@@ -6122,6 +6300,8 @@
   document.getElementById("recommendBtn").addEventListener("click", zeigeEmpfehlung);
   document.getElementById("startRecBtn").addEventListener("click", function(){
     if (!empfehlung.length) return;
+    fortsetzenSek = 0;
+    laufenderHistTs = null;   // frische Sitzung, kein Fortschreiben
     chosenMedIds = empfehlung.map(function(m){ return m.id; });
     document.body.classList.add("entered", "in-session");
     render({ animateBoatIn: state.arrival === "boat" });
@@ -6148,19 +6328,55 @@
     });
   })();
 
-  document.getElementById("backBtn").addEventListener("click", function(){
+  // ✕ waehrend einer laufenden Meditation. Bis 5. Aug. 2026 warf dieser
+  // Knopf die ganze Sitzung weg - ohne Rueckfrage und ohne dass die schon
+  // gehoerten Minuten irgendwo blieben. Jetzt: kurz nachfragen, den Stand
+  // sichern, und die Uebung laesst sich spaeter an derselben Stelle
+  // fortsetzen (Startseite, "Dein heutiger Fokus").
+  function verlasseSitzung(){
     stopSession();
     document.body.classList.remove("entered", "in-session");
     render({ animateBoatIn:false });
+    renderHome();   // damit die angefangene Meditation sofort auftaucht
+  }
+  document.getElementById("backBtn").addEventListener("click", function(){
+    var med = session.queue[session.index];
+    // Wer nur kurz hineingeschaut hat (unter 20 Sek.), wird nicht gefragt -
+    // da gibt es nichts zu sichern und die Rueckfrage waere nur im Weg.
+    if (!med || session.elapsed < MINDESTDAUER_SEK){ verlasseSitzung(); return; }
+    var restSek = session.total - session.elapsed;
+    zeigeBestaetigung(
+      "Meditation beenden? Deine " + minutenAus(session.elapsed) + " Min werden gespeichert" +
+        (restSek > 0 ? " – du kannst später an dieser Stelle weitermachen." : "."),
+      function(){
+        sichereStand();
+        verlasseSitzung();
+      },
+      { jaText:"Beenden", neinText:"Weiter meditieren", gefahr:false }
+    );
   });
   function beendeSitzung(){
     chosenMedIds = [];
     completedLog = [];
     session.queue = [];
     currentEntryTs = null;
+    laufenderHistTs = null;
     goToStep("home");
   }
   document.getElementById("finishOutroBtn").addEventListener("click", beendeSitzung);
+
+  // Wird die App mitten in einer Meditation weggelegt oder geschlossen,
+  // ist der Stand sonst weg - auf dem iPhone der haeufigere Fall, weil die
+  // App dort beim Wegschalten nur schlafen gelegt und irgendwann still
+  // beendet wird. "visibilitychange" ist dafuer der zuverlaessige Moment;
+  // "beforeunload" laeuft auf iOS oft gar nicht. Mehrfaches Sichern
+  // schadet nicht: sichereStand() schreibt immer denselben Eintrag fort.
+  document.addEventListener("visibilitychange", function(){
+    if (document.visibilityState === "hidden" &&
+        document.body.classList.contains("in-session")){
+      sichereStand();
+    }
+  });
 
   // ---- Abschluss-Seite: Zustand einmal setzen, dann festhalten ---------
   // Christines Wunsch: "nur ein Knopf, der sagt: ja, das ist mein Zustand -
@@ -6203,6 +6419,7 @@
     completedLog = [];
     session.queue = [];
     currentEntryTs = null;
+    laufenderHistTs = null;
     empfohlenVomChat = null;
     syncVorherNadel();   // Nadel und Zustandstext auf den neuen Startwert ziehen
     goToStep("compass");
@@ -6554,9 +6771,20 @@
 
   // Eigene Bestaetigungs-Karte statt des grauen Browser-Dialogs - allgemein
   // gehalten, falls spaeter eine weitere Stelle eine braucht.
-  function zeigeBestaetigung(text, wennJa){
+  // opts (seit 5. Aug. 2026, fuer die Rueckfrage beim Abbrechen einer
+  // Meditation): { jaText, neinText, gefahr }. Ohne opts bleibt alles wie
+  // vorher - "Abbrechen"/"Löschen" in Rot, wie beim Verlauf-Löschen.
+  // Nicht jede Rueckfrage ist eine Warnung: "Meditation beenden" ist eine
+  // normale Entscheidung und soll nicht rot und bedrohlich aussehen.
+  function zeigeBestaetigung(text, wennJa, opts){
+    opts = opts || {};
     var overlay = document.getElementById("confirmOverlay");
     document.getElementById("confirmText").textContent = text;
+    var jaBtn = document.getElementById("confirmJaBtn");
+    var neinBtn = document.getElementById("confirmAbbrechenBtn");
+    jaBtn.textContent = opts.jaText || "Löschen";
+    neinBtn.textContent = opts.neinText || "Abbrechen";
+    jaBtn.classList.toggle("danger", opts.gefahr !== false);
     overlay.hidden = false;
     requestAnimationFrame(function(){ overlay.classList.add("show"); });
     function schliessen(){
