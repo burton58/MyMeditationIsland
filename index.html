@@ -681,6 +681,18 @@
     display:flex; align-items:center; justify-content:center; font-size:1.05rem;
   }
   .hist-row .body{ flex:1; min-width:0; }
+  /* ✕ zum Verwerfen einer angefangenen Meditation. Bewusst zurueckhaltend
+     (grau, kein Rahmen) neben dem goldenen ▶ - Weitermachen ist der
+     Normalfall, Verwerfen die Ausnahme. Die Trefferflaeche ist trotzdem
+     38px wie beim Stern in der Bibliothek, damit man sie auf dem Handy
+     sicher trifft; das Zeichen selbst bleibt klein. Der Abstand nach links
+     ist negativ gegen den 13px-Zeilenabstand, damit ✕ und ▶ als Paar
+     zusammenstehen statt gleich weit auseinander wie Bild/Text/Knopf. */
+  .verwerf-btn{
+    border:none; background:none; cursor:pointer; font-size:.95rem; padding:0; color:#b7c2bc;
+    flex:0 0 auto; width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+    margin-right:-7px;
+  }
   .hist-row .name{ display:block; font-weight:600; font-size:.9rem; }
   .hist-row .meta{ display:block; font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
   /* Startbare Zeile: soll sich auch anfassbar anfuehlen, sonst sieht sie
@@ -1263,7 +1275,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.42";
+    var AKTUELLE_VERSION = "2026-08-05.43";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4050,6 +4062,29 @@
       renderMedListV2();
       return;
     }
+    // "Nicht weitermachen" - muss VOR data-weiter stehen, weil das ✕ in
+    // einer Zeile sitzt, die selbst data-weiter traegt. Ohne diese
+    // Reihenfolge wuerde ein Tipp aufs ✕ die Meditation starten.
+    var verwerfEl = e.target.closest("[data-verwerf]");
+    if (verwerfEl){
+      e.stopPropagation();
+      var o = ladeOffen();
+      if (!o) return;
+      zeigeBestaetigung(
+        "„" + o.name + "“ nicht weitermachen? Die " + minutenAus(o.seconds) +
+          " Min, die du schon gehört hast, bleiben in deinem Verlauf.",
+        function(){
+          loescheOffen();
+          laufenderHistTs = null;
+          renderHome();
+        },
+        // "Wegräumen" statt "Löschen": Die gehörten Minuten bleiben ja -
+        // "Löschen" wuerde das Gegenteil versprechen. Und kurz genug, damit
+        // der Knopf einzeilig bleibt.
+        { jaText:"Wegräumen", neinText:"Zurück", gefahr:false }
+      );
+      return;
+    }
     // "Weitermachen" bei einer unterbrochenen Meditation (Startseite).
     // Muss VOR data-play stehen: die Zeile traegt beides nicht gleichzeitig,
     // aber die Reihenfolge macht die Absicht eindeutig.
@@ -5863,10 +5898,15 @@
         // "noch X Min übrig" statt "noch X von Y Min": Letzteres liest sich
         // auch als "X von Y geschafft" und meint das Gegenteil.
         var restMin = Math.max(1, Math.round((offen.min * 60 - offen.seconds) / 60));
+        // ✕ zum Verwerfen (5. Aug. 2026, Christines Frage "kann man bei
+        // deinem heutigen Fokus auch Meditationen weglöschen?"): Ohne das
+        // blieb eine angefangene Uebung fuer immer stehen - man kam nur
+        // wieder heraus, indem man sie zu Ende hoerte oder neu startete.
         return '<div class="hist-row startbar offen-row" data-weiter="1">' +
           '<span class="row-thumb">' + rowFoto(m) + '</span>' +
           '<span class="body"><span class="name">' + offen.name + '</span>' +
           '<span class="meta">Angefangen · noch ' + restMin + ' Min übrig</span></span>' +
+          '<button class="verwerf-btn" data-verwerf="1" title="Nicht weitermachen">✕</button>' +
           '<button class="play-btn" data-weiter="1" title="Weitermachen">▶</button>' +
         '</div>';
       }
@@ -6812,8 +6852,14 @@
           localStorage.removeItem(ABO_KEY);
           localStorage.removeItem(VORSCHLAG_SPEICHER);
         } catch (e){}
+        // Die angefangene Meditation gehoert zum Verlauf und muss mit weg
+        // (5. Aug. 2026 nachgetragen): Sonst blieb sie auf der Startseite
+        // stehen und zeigte auf einen Eintrag, den es nicht mehr gibt.
+        loescheOffen();
         currentEntryTs = null;
+        laufenderHistTs = null;
         renderEinstellungen();
+        renderHome();
       }
     );
   });
