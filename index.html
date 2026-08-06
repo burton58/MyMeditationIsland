@@ -1275,7 +1275,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.44";
+    var AKTUELLE_VERSION = "2026-08-05.45";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1441,7 +1441,11 @@
       <div class="body">
         <h3>Wie geht es dir gerade?</h3>
         <p id="homeStateText">Stell den Zeiger im Kompass dorthin, wo du gerade stehst.</p>
-        <button class="btn-dark" id="homeToCompassBtn">Zum Kompass →</button>
+        <!-- Knopf nennt seit 5. Aug. 2026 das Ergebnis statt des Ortes
+             ("Zum Kompass →" sagte nur, wohin es geht). Christine: auf der
+             Startseite sei nicht verstaendlich, dass man ueber den Kompass
+             passende Meditationen bekommt. -->
+        <button class="btn-dark" id="homeToCompassBtn">Meditation für jetzt finden →</button>
       </div>
       <div class="compass-wrap mini" id="compassWrapHome">
         <div class="compass-photo"></div>
@@ -2101,7 +2105,7 @@
     <div class="card ueber-karte legal-karte">
       <h3>Der Kompass</h3>
       <p>Statt einer langen Liste fragst du dich zuerst, wie es dir gerade wirklich geht – angespannt oder
-      entspannt, wach oder müde. Daraus stellt die Insel zusammen, was jetzt passt.</p>
+      entspannt, im Kopf oder im Gefühl. Daraus stellt die Insel zusammen, was jetzt passt.</p>
 
       <h3>Die Bibliothek</h3>
       <p>Wenn du schon weisst, was du suchst, gehst du direkt auf <strong>Meditationen</strong> – dort liegt
@@ -3811,8 +3815,17 @@
     // nichts. Darum ab hier ein eigener Zustand statt nur eines vollen
     // Balkens.
     var geschafft = erreicht >= ziel.wert;
+    // Ist das Ziel erreicht, entfaellt das "von X" (5. Aug. 2026): Bei einem
+    // Wochenziel von 1 stand sonst "16 von 1 Meditation" - rechnerisch
+    // richtig, aber schief zu lesen. Erreicht zaehlt die Leistung, und dass
+    // das Ziel erreicht ist, sagt die Zeile darunter ohnehin. Die Einheit
+    // richtet sich dann nach der wirklich gezeigten Zahl.
+    var zeile = geschafft
+      ? erreicht + ' ' + (ziel.typ === "minuten" ? "Minuten"
+                          : (erreicht === 1 ? "Meditation" : "Meditationen"))
+      : erreicht + ' von ' + ziel.wert + ' ' + einheit;
     host.innerHTML =
-      '<div class="goal-top"><div class="body"><div class="name">' + erreicht + ' von ' + ziel.wert + ' ' + einheit + '</div>' +
+      '<div class="goal-top"><div class="body"><div class="name">' + zeile + '</div>' +
         '<div class="sub">' + (geschafft ? "Ziel erreicht – schön, dass du drangeblieben bist." : "diese Woche") + '</div></div>' +
         (geschafft ? '<span class="goal-haken">🌴</span>' : '') + '</div>' +
       '<div class="bar' + (geschafft ? ' voll' : '') + '"><span style="width:' + pct + '%"></span></div>' +
@@ -5849,7 +5862,7 @@
     document.getElementById("greeting").textContent = gruss.text + " " + gruss.icon;
     document.getElementById("homeStateText").textContent = kompassBenutzt
       ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
-      : "Nutze den Kompass, um deinen momentanen Zustand anzugeben.";
+      : "Angespannt oder entspannt, im Kopf oder im Gefühl – zeig es am Kompass.";
 
     var heute = heutigeMeditationen();
     var liste = empfehlung;
