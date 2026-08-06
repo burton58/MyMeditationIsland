@@ -1256,7 +1256,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.39";
+    var AKTUELLE_VERSION = "2026-08-05.40";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1272,9 +1272,64 @@
   // Zug). Er fragt online aber immer zuerst das Netz, bevor er den
   // Speicher benutzt, damit er nicht selbst zu einer neuen Quelle fuer
   // veraltete Inhalte wird.
+  //
+  // ---- Selbsterneuerung (5. Aug. 2026) -------------------------------
+  // Warum das noetig war: Die AKTUELLE_VERSION-Pruefung oben steht INNERHALB
+  // von index.html und kann sich darum nie selbst reparieren - liegt eine
+  // alte Fassung der Datei im Speicher des iPhones, vergleicht die ALTE
+  // Nummer gegen sich selbst, findet "passt schon" und laedt nichts nach.
+  // Genau das ist passiert: Die neue Fassung war nachweislich seit 25
+  // Minuten online, Christine sah trotzdem den alten Stand.
+  // Dazu kommt das Verhalten von iOS: Eine vom Home-Bildschirm gestartete
+  // App wird beim Wegschalten nur schlafen gelegt, nicht beendet - beim
+  // Zurueckkommen laedt das iPhone gar nichts neu, es weckt die alte Seite
+  // einfach wieder auf. Es findet also gar keine Anfrage statt, die etwas
+  // Neues holen koennte.
+  //
+  // Loesung: bei jedem Zurueckkommen in die App aktiv beim Server nachfragen
+  // (reg.update() holt sw.js immer frisch aus dem Netz, nie aus dem
+  // Speicher - das schreibt der Browser-Standard so vor). Ist dort eine
+  // neue Fassung, laedt die Seite sich einmal selbst neu. Geprueft wird
+  // sw.js, weil die Datei nur 2,5 KB gross ist (index.html: 420 KB) und
+  // ihr CACHE_NAME ohnehin bei jeder Aenderung mit hochgezaehlt wird - es
+  // bleibt also bei einer Stelle, die gepflegt werden muss.
   if ("serviceWorker" in navigator){
     window.addEventListener("load", function(){
-      navigator.serviceWorker.register("sw.js").catch(function(){});
+      navigator.serviceWorker.register("sw.js").then(function(reg){
+        if (!reg) return;
+
+        function neuLaden(){
+          // Waehrend einer laufenden Meditation NICHT neu laden - das waere
+          // mitten in der Uebung ein Abbruch. Die neue Fassung kommt beim
+          // naechsten Zurueckkommen in die App von selbst.
+          if (document.body.classList.contains("in-session")) return;
+          location.reload();
+        }
+
+        reg.addEventListener("updatefound", function(){
+          var neu = reg.installing;
+          if (!neu) return;
+          neu.addEventListener("statechange", function(){
+            // "installed" + es gab schon einen alten Service Worker
+            // (controller) = es ist wirklich eine NEUE Fassung, nicht der
+            // allererste Besuch. Ohne diese Bedingung wuerde die Seite beim
+            // ersten Oeffnen unnoetig einmal neu laden.
+            if (neu.state === "installed" && navigator.serviceWorker.controller){
+              neuLaden();
+            }
+          });
+        });
+
+        // Beim Start und bei jedem Zurueckkommen in die App nachfragen.
+        // Genau dieser zweite Fall ist der wichtige auf dem iPhone.
+        function nachschauen(){
+          if (document.visibilityState === "visible"){
+            try { reg.update(); } catch (e){}
+          }
+        }
+        document.addEventListener("visibilitychange", nachschauen);
+        nachschauen();
+      }).catch(function(){});
     });
   }
 </script>
