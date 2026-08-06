@@ -1,16 +1,20 @@
 # Alle Emoji der App — und wie du daraus eigene Bilder machst
 
-Stand: 4. August 2026
+Stand: 5. August 2026 — **direkt aus der App ausgelesen**, nicht aus dem
+Gedächtnis. Die App benutzt aktuell **39 verschiedene farbige Emoji** an 65
+Stellen (Kommentare im Programmtext und abgeschaltete Teile nicht mitgezählt).
 
-Die App benutzt aktuell **rund 40 verschiedene Emoji** (die Zeichen 🤲 für Mudras
-und ✨ für Mantras sind am 4. Aug. 2026 entfallen — beides kommt in der App nicht
-mehr vor). Emoji sehen auf jedem Gerät
-anders aus (iPhone, Android und Windows zeichnen dieselbe Palme verschieden) und
-wirken neben deinen eigenen, ruhigen Bildern schnell billig. Diese Datei listet
-alle auf und liefert die Prompts, um sie durch eigene Symbole zu ersetzen.
+Emoji sehen auf jedem Gerät anders aus (iPhone, Android und Windows zeichnen
+dieselbe Palme verschieden) und wirken neben deinen eigenen, ruhigen Bildern
+schnell billig. Diese Datei listet alle auf und liefert die Prompts, um sie
+durch eigene Symbole zu ersetzen.
 
-**Schon erledigt:** Die vier Kategorien (Gedanken beruhigen, Gefühle verstehen,
-Stress lösen, Entspannen) haben bereits deine eigenen Bilder.
+**Schon erledigt:**
+- Die vier Kategorien (Gedanken beruhigen, Gefühle verstehen, Stress lösen,
+  Entspannen) haben bereits deine eigenen Bilder.
+- Das kleine Bild links neben jeder Meditation ist seit dem 5. Aug. 2026 ein
+  **Foto** — es zeigt das Bild, das während dieser Meditation läuft. Da ist
+  nichts mehr zu zeichnen.
 
 ---
 
@@ -31,9 +35,9 @@ auf 240 × 240 Pixel verkleinern und mir schicken. Ich baue es ein.
 
 ---
 
-## Gruppe 1 — Zustände am Kompass (9 Stück, am wichtigsten)
+## Gruppe 1 — Zustände am Kompass (11 Stück, am wichtigsten)
 
-Diese neun stehen gross neben dem Zustandswort, auf der Kompass- und der
+Diese stehen **gross** neben dem Zustandswort, auf der Kompass- und der
 Abschluss-Seite. Sie sind die sichtbarsten Emoji der App. **Hier lohnt es sich
 am meisten.**
 
@@ -48,6 +52,8 @@ am meisten.**
 | 😟 | unruhig | Eine Zickzacklinie, die nach rechts hin in eine gerade Linie ausläuft |
 | 💚 | geborgen | Zwei Bögen, die einander umschliessen wie zwei schützende Hände |
 | 😌 | entspannt | Eine lange, ruhig ausschwingende Welle mit einem Punkt darüber |
+| 💛 | Zeiger noch nicht gesetzt | Ein offener Kreis, angedeutet gestrichelt — „noch nicht gesetzt" |
+| 🌅 | Abschluss-Seite, Ausgangszustand | Sonnenaufgang über einer Wasserlinie |
 
 **Prompt (Beispiel für „geborgen"):**
 
@@ -62,11 +68,11 @@ am meisten.**
 
 | Emoji | Station |
 |---|---|
-| ⛵ | Angekommen |
-| ⚓ | Ruhiger Anker |
-| 🧭 | Achtsame Entdeckerin |
-| 🌴 | Vertraute Insel |
-| 🏝️ | Zuhause auf der Insel |
+| ⛵ | Angekommen (ab 1 Tag) |
+| ⚓ | Ruhiger Anker (ab 5 Tagen) |
+| 🧭 | Achtsame Entdeckerin (ab 15 Tagen) |
+| 🌴 | Vertraute Insel (ab 30 Tagen) |
+| 🏝️ | Zuhause auf der Insel (ab 60 Tagen) |
 
 **Prompt:**
 
@@ -80,7 +86,7 @@ am meisten.**
 
 ---
 
-## Gruppe 3 — Die Zugangs-Karte im Profil (4 Stück)
+## Gruppe 3 — Die Zugangs-Karte (4 Stück)
 
 | Emoji | Bedeutung |
 |---|---|
@@ -100,12 +106,13 @@ am meisten.**
 
 ---
 
-## Gruppe 4 — Die Einstellungs-Liste im Profil (8 Stück)
+## Gruppe 4 — Die Einstellungs-Liste (8 Stück)
+
+Klein am linken Rand jeder Menüzeile.
 
 | Emoji | Zeile |
 |---|---|
 | 💳 | Abo verwalten |
-| ⭐ | Favoriten |
 | 🏝️ | Meine Insel gestalten |
 | 🔑 | Konto & Anmelden |
 | 🙋‍♀️ | Über mich |
@@ -116,31 +123,35 @@ am meisten.**
 
 **Prompt:**
 
-> *[Grundstil einfügen]* Erstelle neun kleine, zusammengehörige Menü-Icons als
+> *[Grundstil einfügen]* Erstelle acht kleine, zusammengehörige Menü-Icons als
 > einzelne Bilder, alle in derselben Strichstärke und optischen Grösse:
-> Karte/Zahlung, Stern, Insel, Schlüssel, Person, Info-Kreis, Schriftrolle,
-> Schloss, Papierkorb. Sehr schlicht — sie stehen klein am linken Rand einer
-> Liste und dürfen nicht um Aufmerksamkeit kämpfen.
+> Karte/Zahlung, Insel mit Palme, Schlüssel, Person, Info-Kreis, Schriftrolle,
+> Vorhängeschloss, Papierkorb. Sehr schlicht — sie stehen klein am linken Rand
+> einer Liste und dürfen nicht um Aufmerksamkeit kämpfen.
 
 ---
 
-## Gruppe 5 — Insel gestalten (7 Stück)
+## Gruppe 5 — Insel gestalten (8 Stück)
 
 | Emoji | Auswahl |
 |---|---|
 | ☀️ | Sonnig |
 | ☁️ | Wolkig |
-| 🌊 | Ruhig & türkis / Wellig & tiefblau |
-| 🙋‍♀️ / 🙋‍♂️ | Frau / Mann |
+| 🌊 | Ruhig & türkis |
+| 🌊 | Wellig & tiefblau (dasselbe Zeichen zweimal — hier lohnen sich zwei **verschiedene** Bilder) |
+| 🙋‍♀️ | Frau |
+| 🙋‍♂️ | Mann |
 | ⛵ | Mit dem Boot |
 | 🏖️ | Schon auf der Insel |
 
 **Prompt:**
 
-> *[Grundstil einfügen]* Erstelle sieben kleine Auswahl-Icons als einzelne
-> Bilder: Sonne, Wolke, eine ruhige flache Welle, eine höhere Welle, eine
-> weibliche Silhouette, eine männliche Silhouette, ein Segelboot, eine
-> Strandliege. Die Silhouetten ohne Gesicht, nur Umriss.
+> *[Grundstil einfügen]* Erstelle acht kleine Auswahl-Icons als einzelne
+> Bilder: Sonne, Wolke, eine ruhige flache Welle, eine höhere bewegte Welle,
+> eine weibliche Silhouette, eine männliche Silhouette, ein Segelboot, eine
+> Strandliege. Die Silhouetten ohne Gesicht, nur Umriss. Die beiden Wellen
+> müssen sich deutlich unterscheiden — die eine ruhig und flach, die andere
+> höher und bewegter.
 
 ---
 
@@ -162,17 +173,27 @@ am meisten.**
 
 ---
 
-## Gruppe 7 — Einzelne, verstreute Symbole
+## Gruppe 7 — Einzelne, verstreute Symbole (6 Stück)
 
 | Emoji | Wo | Ersatz-Motiv |
 |---|---|---|
-| 💛 | Kompass, solange der Zeiger unberührt ist | Ein offener Kreis, angedeutet gestrichelt — „noch nicht gesetzt" |
-| 🌅 | Abschluss-Seite, Ausgangszustand | Sonnenaufgang über einer Wasserlinie |
-| 💬 | Begleiter (bis dein Foto da ist) | Eine ruhige, runde Sprechblase |
-| 🧘 | Notbehelf, wenn zu einer Übung gar kein Foto passt (kommt praktisch nicht vor) | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
+| ☀️ 🌴 🌙 | Begrüssung je nach Tageszeit (Sonne vor 11, Palme bis 22, Mond nachts) | Sonne, Palme, Mond — passen zu Gruppe 5 und 2 |
 | 🌴 | Wochenziel erreicht | Eine Palme mit einem kleinen Haken daneben |
-| ☀️ 🌴 🌙 | Begrüssung je nach Tageszeit | Sonne, Palme, Mond — passen zu Gruppe 5 |
-| ⭐ | Favoriten-Stern an jeder Übung | Ein Stern, zusätzlich **gefüllt** als zweite Fassung für „gemerkt" |
+| ⭐ | Filter „Favoriten" in der Bibliothek | Ein Stern — **siehe Hinweis unten** |
+| 🔒 | gesperrte Übung in der Liste | Kleines Vorhängeschloss, passend zu Gruppe 3 |
+| 🇨🇭 | Abzeichen „Schweizerdeutsch" auf Mein Weg | Ein schlichtes Schweizerkreuz im Kreis, goldbraun statt rot |
+| 🧘 | Notbehelf, falls zu einer Übung gar kein Foto passt (kommt praktisch nie vor) | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
+
+### Hinweis zum Stern — hier stimmt etwas nicht zusammen
+
+Die App benutzt für Favoriten **zwei verschiedene Zeichen**:
+
+- **⭐** (farbiges Emoji) beim Filter-Knopf „Favoriten" oben in der Bibliothek
+- **★ / ☆** (einfarbige Schriftzeichen) beim Stern an jeder einzelnen Übung
+
+Deshalb ist der eine Stern gelb-bunt und der andere goldbraun-schlicht.
+Sag mir Bescheid, wenn ich das angleichen soll — am ruhigsten wirkt es, wenn
+beide dasselbe schlichte Zeichen benutzen.
 
 **Prompt für den Stern (zwei Fassungen nötig):**
 
@@ -185,13 +206,20 @@ am meisten.**
 
 ## Was **nicht** ersetzt werden muss
 
-- **▶** (Abspielen) und **↗** (führt zu einer anderen Seite) sind keine Emoji,
-  sondern Schriftzeichen. Sie sehen überall gleich aus.
+Diese Zeichen sind **keine Emoji**, sondern normale Schriftzeichen. Sie sind
+einfarbig und sehen auf jedem Gerät gleich aus:
+
+**▶** Abspielen · **✓** Haken · **✕** Schliessen · **✎** Stift am Profilbild ·
+**★ ☆** Favoriten-Stern an den Übungen · **↗** führt zu einer fremden Seite ·
+**›** Pfeil in den Menüzeilen
+
+Ausserdem schon erledigt:
 - Die vier **Kategorie-Bilder** hast du schon.
-- **Das kleine Bild links neben jeder Meditation** ist seit dem 5. Aug. 2026
-  ein Foto — es zeigt genau das Bild, das während dieser Meditation im
-  Hintergrund läuft. Dafür braucht es nichts mehr zu zeichnen.
-- Der **Pfeil ›** in den Menüzeilen ist ebenfalls ein Schriftzeichen.
+- Das **kleine Bild neben jeder Meditation** ist jetzt ein Foto.
+
+**Nicht sichtbar, darum nicht nötig:** 💬 gehört zum Begleiter-Chat, der
+abgeschaltet ist. Falls der Chat je zurückkommt, wäre das Motiv eine ruhige,
+runde Sprechblase.
 
 ---
 
@@ -199,7 +227,7 @@ am meisten.**
 
 1. **Gruppe 1** (Zustände) — am sichtbarsten, ganz gross neben dem Kompass
 2. **Gruppe 2** (Inselreise) — die zweite Stelle, an der Symbole gross stehen
-3. **Gruppe 3** (Zugangs-Karte) — steht bereits als offener Punkt auf der Checkliste
+3. **Gruppe 3** (Zugangs-Karte)
 4. **Gruppe 6** (Profilbilder) — sichtbar, aber jeder wählt nur eines
 5. **Gruppe 4 und 5** (Menü, Insel gestalten) — klein und am Rand
 6. **Gruppe 7** — nach Bedarf
