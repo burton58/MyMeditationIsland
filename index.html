@@ -261,25 +261,36 @@
 
      Wichtig: Die Startseite benutzt NICHT das hochformatige insel.jpg
      (720x1027), sondern einen eigens dafuer zugeschnittenen Ausschnitt
-     insel-start.jpg (720x678, fast quadratisch). Grund: das Hochformat war
-     viel schmaler als der Streifen breit ist - jeder Ausschnitt musste
-     darum etwas abschneiden (erst die Insel, dann das Boot), und "contain"
-     liess links/rechts breite Raender stehen. Der neue Zuschnitt enthaelt
-     genau den wichtigen Teil (Himmel bis unter das Boot, Insel und Boot
-     vollstaendig) und hat fast dasselbe Seitenverhaeltnis wie der Streifen
-     auf den meisten iPhones - dadurch ist das Bild vollstaendig zu sehen
-     und fuellt den Platz trotzdem gut aus. insel.jpg bleibt unveraendert
-     fuer Titelseite und Sitzungs-Hintergrund, wo Hochformat richtig ist. */
+     insel-start.jpg. Grund: das Hochformat war viel schmaler als der
+     Streifen breit ist - jeder Ausschnitt musste darum etwas abschneiden
+     (erst die Insel, dann das Boot), und "contain" liess links/rechts
+     breite Raender stehen. Der Zuschnitt enthaelt genau den wichtigen Teil
+     (wenig Himmel oberhalb der Insel, Insel und Boot vollstaendig, etwas
+     mehr Wasser unterhalb des Bootes als Himmel oberhalb der Insel) - dadurch
+     ist das Bild vollstaendig zu sehen und fuellt den Platz trotzdem gut
+     aus. insel.jpg bleibt unveraendert fuer Titelseite und
+     Sitzungs-Hintergrund, wo Hochformat richtig ist.
+
+     Zuschnitt enger gezogen (5. Aug. 2026, Christine: "das Bild kleiner
+     machen, aber so, dass das Boot noch drauf ist und die Insel mit wenig
+     Himmel oberhalb der Insel und wenig mehr unterhalb des Bootes und das
+     Bild dann fixieren"): vorher 720x678 (fast quadratisch, mit reichlich
+     leerem Wasser unter dem Boot), jetzt 720x505 (breiter/flacher) -
+     dasselbe Motiv, nur oben und unten enger beschnitten. Das macht das
+     Foto insgesamt niedriger auf der Seite ("kleiner"), ohne dass Boot oder
+     Insel etwas verlieren. "Fixiert" heisst: die Seitenverhaeltnis-Regel
+     unten (aspect-ratio) ist exakt auf diesen neuen Zuschnitt eingestellt -
+     das Bild behaelt diese Form immer, unabhaengig vom Geraet. */
   .home-hero-photo{
     /* Frueher "flex:1 1 0" mit min-/max-height: das Foto war damit der
        Puffer der Seite und wurde zusammengedrueckt, sobald die Liste im
        heutigen Fokus laenger wurde (bei vielen Meditationen bis auf die
        152px Mindesthoehe hinunter). Jetzt "flex:0 0 auto" plus das exakte
-       Seitenverhaeltnis der Datei (720x678): das Bild ist damit auf jedem
+       Seitenverhaeltnis der Datei (720x505): das Bild ist damit auf jedem
        Geraet immer gleich gross, immer vollstaendig zu sehen (contain hat
        bei genau diesem Verhaeltnis nichts abzuschneiden und keine Raender
        zu lassen) - und wenn die Liste waechst, waechst einfach die Seite. */
-    flex:0 0 auto; aspect-ratio:720 / 678; overflow:hidden;
+    flex:0 0 auto; aspect-ratio:720 / 505; overflow:hidden;
     margin:0 -16px 14px;
     /* Jetzt ein Knopf (fuehrt zur Titelseite) statt eines reinen Bildes -
        alle Button-Grundformatierung wieder auf null, damit es weiter genau
@@ -1239,7 +1250,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.37";
+    var AKTUELLE_VERSION = "2026-08-05.38";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
