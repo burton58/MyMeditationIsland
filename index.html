@@ -1239,7 +1239,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-05.36";
+    var AKTUELLE_VERSION = "2026-08-05.37";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1320,25 +1320,30 @@
 
     <button class="home-hero-photo" id="homeHeroBtn" title="Zur Titelseite" type="button"><img src="insel-start.jpg" alt="Deine Insel"></button>
 
-    <!-- Eine Karte statt zwei getrennter Bereiche: entweder das, was heute
-         schon gehört wurde, oder - noch nichts gehört - die eine
-         Empfehlung mit Startknopf. Kein Zwischentext ohne Handlung. -->
-    <div class="section-label first">Dein heutiger Fokus</div>
-    <div id="focusSlot"></div>
+    <!-- Ganzer Block per JS ein-/ausgeblendet (renderHome()): sichtbar nur,
+         wenn heute schon eine Meditation gelaufen ist (Christine, 5. Aug.
+         2026: "erscheint nur, wenn man auch eine Meditation heute gehört
+         hat"). -->
+    <div id="focusSection">
+      <div class="section-label first">Dein heutiger Fokus</div>
+      <div id="focusSlot"></div>
+    </div>
 
-    <!-- Ersatz fuer "Deine Lieblingsmeditationen" (4. Aug. 2026, endgueltig
-         entschieden - Christine: "Gefaellt mir. Kann man so machen."):
-         Christine hatte bemerkt, dass der Name mit den echten (Stern-)
-         Favoriten verwechselt wird; probeweise als Fortschritts-Ausschnitt
-         gezeigt und fuer gut befunden. Dieselbe Zahlenreihe wie auf
-         "Mein Weg" (#statsRowBtn), eigene IDs (homeStat*), damit es die
-         IDs dort nicht doppelt gibt. Tippen fuehrt auf "Mein Weg". -->
+    <!-- "Dein Fortschritt" auf der Startseite - 5. Aug. 2026 auf Christines
+         Wunsch entfernt ("Startseite, dein Fortschritt löschen"), nur einen
+         Tag nachdem es "Deine Lieblingsmeditationen" ersetzt hatte.
+         BEWUSST NICHT GELOESCHT, nur auskommentiert (Christines Regel "Alten
+         Code im Hintergrund behalten, man weiss ja nie"). Zum Zurueckholen:
+         diesen Kommentar entfernen UND in renderHome() den Aufruf von
+         renderHomeFortschritt() wieder einschalten (siehe dort) UND unten den
+         homeStatsRowBtn-Klick-Zuhoerer wieder scharf schalten.
     <div class="section-label">Dein Fortschritt</div>
     <button class="card stats-row" id="homeStatsRowBtn" type="button">
       <div class="stat"><div class="n" id="homeStatStreak">0</div><div class="l">Tage am Stück</div></div>
       <div class="stat"><div class="n" id="homeStatCount">0</div><div class="l">Meditationen</div></div>
       <div class="stat"><div class="n" id="homeStatMinutes">0</div><div class="l">Minuten gesamt</div></div>
     </button>
+    -->
 
     <div class="section-label">Dein Zustand</div>
     <div class="card state-card">
@@ -3532,12 +3537,19 @@
     renderHome();
   }
 
+  // Text UND Symbol an einer Stelle (frueher zwei getrennte Stundenpruefungen,
+  // hier und beim Rendern der Startseite) - genau das hat den Fehler
+  // verursacht, den Christine gemeldet hat: nach Mitternacht (z. B. 0:30 Uhr)
+  // fiel die Stunde (0) mit in "kleiner als 11" und zeigte "Guten Morgen"
+  // statt einer eigenen Nacht-Begruessung. Jetzt eine eigene erste Stufe fuer
+  // die Stunden nach Mitternacht vor dem Morgen.
   function begruessung(){
     var h = new Date().getHours();
-    if (h < 11) return "Guten Morgen";
-    if (h < 17) return "Schön, dass du da bist";
-    if (h < 22) return "Guten Abend";
-    return "Schön, dass du noch da bist";
+    if (h < 5) return { text:"Gute Nacht", icon:"🌙" };
+    if (h < 11) return { text:"Guten Morgen", icon:"☀️" };
+    if (h < 17) return { text:"Schön, dass du da bist", icon:"🌴" };
+    if (h < 22) return { text:"Guten Abend", icon:"🌴" };
+    return { text:"Schön, dass du noch da bist", icon:"🌙" };
   }
 
   function gruende(m){
@@ -5521,9 +5533,8 @@
   // bei Calm, Headspace & Co.: entweder "heute schon erledigt" oder "das
   // empfehlen wir dir jetzt" mit Startknopf, nie beides gleichzeitig.
   function renderHome(){
-    var stunde = new Date().getHours();
-    document.getElementById("greeting").textContent =
-      begruessung() + (stunde < 11 ? " ☀️" : (stunde < 22 ? " 🌴" : " 🌙"));
+    var gruss = begruessung();
+    document.getElementById("greeting").textContent = gruss.text + " " + gruss.icon;
     document.getElementById("homeStateText").textContent = kompassBenutzt
       ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
       : "Nutze den Kompass, um deinen momentanen Zustand anzugeben.";
@@ -5531,34 +5542,34 @@
     var heute = heutigeMeditationen();
     var liste = empfehlung;
     var focus = document.getElementById("focusSlot");
+    var focusWrap = document.getElementById("focusSection");
     var html;
 
-    // Reihenfolge wichtig (Aug. 2026 korrigiert): Was heute WIRKLICH gelaufen
-    // ist, kommt zuerst. Vorher wurde zuerst geprueft, ob eine Empfehlung
-    // vorliegt - wer die App neu oeffnete, ohne den Kompass nochmals zu
-    // stellen, sah darum "Sobald du deinen Kompass gestellt hast ...",
-    // obwohl er an dem Tag schon meditiert hatte (Christine gemeldet).
-    if (heute.length){
-      // Heute schon etwas gehört: das zeigen und feiern, statt denselben
-      // Vorschlag noch einmal danebenzustellen.
-      //
+    // 5. Aug. 2026, Christine: "Dein heutiger Fokus erscheint nur, wenn man
+    // auch eine Meditation heute gehört hat." Der ganze Block (Ueberschrift
+    // + Karte) ist darum jetzt weg, solange heute noch nichts gelaufen ist -
+    // vorher stand hier sonst ein Hinweistext oder eine Empfehlung, obwohl
+    // beides schon anderswo (Karte "Dein Zustand" mit "Zum Kompass")
+    // erreichbar ist. Die beiden fruehereren Zustaende ("noch keine
+    // Empfehlung" / "Empfehlung da, aber heute noch nichts gehoert") bleiben
+    // unten auskommentiert BEWUSST im Code stehen ("Alten Code im
+    // Hintergrund behalten, man weiss ja nie") statt geloescht zu werden.
+    if (!heute.length){
+      focusWrap.hidden = true;
+    } else {
+      focusWrap.hidden = false;
       // Hoechstens drei Zeilen (Aug. 2026): im Test mit zehn Sitzungen an
-      // einem Tag wuchs diese Karte auf zehn Zeilen und schob Foto,
-      // Lieblingsmeditationen und Zustands-Karte weit nach unten - die
-      // Startseite war nur noch eine Liste. Bei mehr steht darunter eine
-      // Zusammenfassung statt jeder einzelnen Zeile; der ganze Verlauf
-      // steht ohnehin auf "Mein Weg".
+      // einem Tag wuchs diese Karte auf zehn Zeilen und schob Foto und
+      // Zustands-Karte weit nach unten - die Startseite war nur noch eine
+      // Liste. Bei mehr steht darunter eine Zusammenfassung statt jeder
+      // einzelnen Zeile; der ganze Verlauf steht ohnehin auf "Mein Weg".
       var zeigen = heute.slice(-3).reverse();   // die drei jüngsten zuoberst
       var restZahl = heute.length - zeigen.length;
       var sekundenHeute = heute.reduce(function(s, e){ return s + (e.seconds || 0); }, 0);
       html = '<div class="card">' + zeigen.map(function(e){
           var dir = dirVonName(e.name), id = idVonName(e.name);
-          // ▶-Knopf ergaenzt (4. Aug. 2026): die Zeile war schon immer
-          // antippbar (startet die Uebung neu) - das war aber unsichtbar,
-          // anders als bei "Deine Lieblingsmeditationen" mit demselben
-          // Verhalten. Christine gemeldet, dass das komisch aussieht.
-          // Genau dieser Knopf ist jetzt der sichtbare Unterschied zu
-          // "Mein Weg": dort ist der Verlauf reine Aufzeichnung ohne Knopf.
+          // ▶-Knopf: die Zeile ist antippbar (startet die Uebung neu) -
+          // Christines Regel "Ich möchte immer Knöpfe" (5. Aug. 2026).
           return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
             '<span class="row-thumb">' + (dir ? katIcon(dir) : "🧘") + '</span>' +
             '<span class="body"><span class="name">' + e.name + '</span>' +
@@ -5572,12 +5583,15 @@
             minutenAus(sekundenHeute) + ' Min</div>'
           : '') +
         '</div>';
-        // Hier stand "Noch eine Meditation? →". Der Knopf fuehrte auf
-        // "Mein Weg" - dort gibt es seit dem Aufraeumen (Aug. 2026) gar
-        // keine Meditationsliste mehr, er lief also ins Leere. Ausgewaehlt
-        // wird ueber den Kompass oder den Reiter "Meditationen", beide
-        // stehen unten in der Leiste. Christine hat es bemerkt.
-    } else if (!liste.length){
+      focus.innerHTML = html;
+    }
+    /* Dormant seit 5. Aug. 2026 (Christine: "erscheint nur, wenn man auch
+       eine Meditation heute gehört hat") - vorher liefen diese beiden Faelle
+       im else-Zweig oben mit, wenn "heute" leer war. Zum Zurueckholen: die
+       Bedingung oben wieder auf die urspruengliche Reihenfolge (heute.length
+       / !liste.length / sonst) umstellen und focusWrap.hidden immer auf
+       false setzen.
+    else if (!liste.length){
       // Heute noch nichts gehört und auch keine Empfehlung: die Karte
       // "Dein Zustand" hat schon den Knopf zum Kompass - hier keinen
       // zweiten, gleich lautenden dazustellen, sondern nur ankuendigen,
@@ -5598,8 +5612,7 @@
           ? '<button class="btn-ghost full" id="focusMehrBtn">Weitere Empfehlungen ansehen →</button>'
           : "");
     }
-
-    focus.innerHTML = html;
+    */
 
     // Die weiteren Empfehlungen stehen auf der Kompass-Seite (#recResult),
     // nicht auf "Mein Weg" - der Knopf zeigte bis Aug. 2026 auf dieselbe
@@ -5610,7 +5623,11 @@
       zeigeEmpfehlung();
     });
 
-    renderHomeFortschritt();   // ersetzt seit 4. Aug. 2026 renderLieblinge()
+    // "Dein Fortschritt" auf der Startseite ist seit 5. Aug. 2026 entfernt
+    // (Christine: "Startseite, dein Fortschritt löschen") - siehe den
+    // Kommentar beim auskommentierten #homeStatsRowBtn-Block in #homePage.
+    // renderHomeFortschritt() bleibt unbenutzt im Code stehen.
+    // renderHomeFortschritt();
   }
 
   // Endgueltig entfallen (4. Aug. 2026, Christine: "Gefaellt mir. Kann man
@@ -6228,9 +6245,12 @@
   document.getElementById("homeProfilBtn").addEventListener("click", function(){
     renderMyMed(); goToStep("meditation");
   });
-  // Der Fortschritts-Ausschnitt auf der Startseite fuehrt genau dorthin,
-  // wo dieselben Zahlen nochmal stehen - kein zweiter, eigener Weg.
-  document.getElementById("homeStatsRowBtn").addEventListener("click", function(){
+  // "Dein Fortschritt" auf der Startseite ist seit 5. Aug. 2026 entfernt,
+  // #homeStatsRowBtn gibt es darum im DOM nicht mehr - Zuhoerer bewusst mit
+  // Existenz-Pruefung stehen gelassen (nicht geloescht), fuer eine
+  // Reaktivierung reicht dann wieder ein normaler getElementById(...).
+  var homeStatsRowBtnEl = document.getElementById("homeStatsRowBtn");
+  if (homeStatsRowBtnEl) homeStatsRowBtnEl.addEventListener("click", function(){
     renderMyMed(); goToStep("meditation");
   });
   document.getElementById("toSplashBtn").addEventListener("click", function(){ goToStep("splash"); });
