@@ -1284,7 +1284,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-06.48";
+    var AKTUELLE_VERSION = "2026-08-06.49";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3657,6 +3657,66 @@
     return picks;
   }
 
+  // ---- Vorschlag ohne Kompass-Eingabe ---------------------------------
+  // 6. Aug. 2026. Christines Frage: "Anhand von was wird die Meditation
+  // vorgeschlagen? Kompass ist ja nicht ausgefuellt."
+  //
+  // Sie hat damit einen echten Fehler in meinem ersten Vorschlag gefunden:
+  // Der unberuehrte Zeiger steht auf 0/0, und dirFromCompass() liefert
+  // daraus immer "sued" - jede Nutzerin haette morgens denselben Vorschlag
+  // bekommen, begruendet mit einem Zustand, den nie jemand angegeben hat.
+  // Genau das verbietet sich die App an anderer Stelle schon ausdruecklich
+  // (siehe #recFehlt und den Kommentar bei zeigeEmpfehlung()).
+  //
+  // Grundlage ist darum NUR, was ohne Eingabe wirklich bekannt ist:
+  //   1. die Uhrzeit (objektiv)
+  //   2. was lange nicht gehoert / nicht vorgeschlagen wurde (echte Daten)
+  // Beides behauptet nichts ueber das Gefuehl. So machen es auch die
+  // Vorbilder: Headspace gliedert seinen "Today"-Tab nach der Tageszeit,
+  // Calm veroeffentlicht taeglich eine feste Sitzung fuer alle. Beide
+  // nennen es nach dem TAG, nie nach der Person ("Daily Calm", "Today") -
+  // ein "fuer dich" ohne Datengrundlage waere eine leere Behauptung.
+  function tageszeitBereich(){
+    var h = new Date().getHours();
+    if (h < 5)  return "ost";    // Nacht - zur Ruhe kommen
+    if (h < 11) return "nord";   // Morgen - in den Tag finden
+    if (h < 17) return "west";   // Tag - Anspannung loesen
+    return "ost";                // Abend/Nacht - entspannen
+  }
+  function tageszeitTitel(){
+    var h = new Date().getHours();
+    if (h < 5)  return "Für die Nacht";
+    if (h < 11) return "Für den Morgen";
+    if (h < 17) return "Für den Tag";
+    if (h < 22) return "Für den Abend";
+    return "Für die Nacht";
+  }
+  function tagesVorschlag(){
+    var bereich = tageszeitBereich();
+    var oft = gehoertWieOft(), letzte = letzteVorschlaege();
+    var pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && istFrei(m.id); });
+    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
+    if (!pool.length) return null;
+    // Noch nie Gehoertes zuerst, danach das laenger Zurueckliegende -
+    // dieselbe Regel wie bei der Kompass-Empfehlung, damit ueber die Zeit
+    // wirklich alle Uebungen drankommen (Christines Wunsch, §3.3d).
+    pool = pool.slice().sort(function(a, b){
+      var oa = oft[a.name] || 0, ob = oft[b.name] || 0;
+      if (oa !== ob) return oa - ob;
+      var la = letzte.indexOf(a.id), lb = letzte.indexOf(b.id);
+      if (la === -1) la = -1e6;
+      if (lb === -1) lb = -1e6;
+      return la - lb;
+    });
+    // Innerhalb eines Tages stabil (der Tag im Jahr aendert sich nicht),
+    // ueber die Tage hinweg wandernd - sonst staende bei jemandem, der
+    // laenger nicht meditiert, wochenlang derselbe Vorschlag.
+    var d = new Date();
+    var tagImJahr = Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 86400000);
+    var enge = pool.slice(0, 5);
+    return enge[tagImJahr % enge.length];
+  }
+
   // Eine Zeile in einer Empfehlungs- oder Bibliotheksliste.
   function medZeile(m, opts){
     opts = opts || {};
@@ -5921,7 +5981,33 @@
     });
 
     if (!heuteOhneOffen.length && !offen){
-      focusWrap.hidden = true;
+      // Heute noch nichts gelaufen und nichts offen: EIN Vorschlag, direkt
+      // startbar (6. Aug. 2026). Vorher stand hier gar nichts - die
+      // Startseite war damit ein Wegweiser statt einer Startrampe, und rund
+      // 30 % der Flaeche blieben leer. Calm, Headspace und Insight Timer
+      // zeigen an dieser Stelle alle etwas Startbares.
+      //
+      // Wurde der Kompass benutzt, ist dessen Empfehlung die bessere
+      // Grundlage - dann sagt die Ueberschrift das auch. Sonst traegt sie
+      // die Tageszeit, auf der der Vorschlag wirklich beruht.
+      var vorschlag = liste.length ? liste[0] : tagesVorschlag();
+      if (!vorschlag){
+        focusWrap.hidden = true;
+      } else {
+        focusWrap.hidden = false;
+        focus.innerHTML =
+          '<div class="section-label first">' +
+            (liste.length ? "Passt zu deinem Zustand" : tageszeitTitel()) + '</div>' +
+          '<div class="card">' +
+            '<div class="hist-row startbar" data-play="' + vorschlag.id + '">' +
+              '<span class="row-thumb">' + rowFoto(vorschlag) + '</span>' +
+              '<span class="body"><span class="name">' + vorschlag.name + '</span>' +
+              '<span class="meta">' + vorschlag.min + ' Min · ' + katName(vorschlag.dir) +
+                '</span></span>' +
+              '<button class="play-btn" data-play="' + vorschlag.id + '">▶</button>' +
+            '</div>' +
+          '</div>';
+      }
     } else {
       focusWrap.hidden = false;
       // Hoechstens drei Zeilen (Aug. 2026): im Test mit zehn Sitzungen an
