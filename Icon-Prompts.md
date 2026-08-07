@@ -160,11 +160,23 @@ Strichstärke — bei 46 Pixeln Anzeigegrösse blieb davon nichts übrig.
 
 ---
 
-## Gruppe 1 — Zustände am Kompass (11 Stück, am wichtigsten)
+## Gruppe 1 — Zustände am Kompass (11 Stück) ✓ ERLEDIGT
+
+> **Diese Gruppe ist fertig und seit dem 7. Aug. 2026 in der App.** Alle elf
+> Bilder sind eingebaut — am Kompass, auf der Abschluss-Seite, in der
+> Insel-Woche und im Rückblick. Hier steht nichts mehr offen. Die Liste bleibt
+> als Nachschlagewerk stehen (welches Bild gehört zu welchem Zustand).
+>
+> Zwei Kleinigkeiten musste ich beim Einbauen nachbessern, falls die nächste
+> Gruppe ähnlich ausfällt: Nummer 6 (die Wellen) kam in einem **rötlicheren
+> Braun** als die anderen zehn — ich habe es angeglichen. Und weil das Motiv
+> sehr **flach und breit** ist, wirkte es in der Zeile schwächer als die
+> runden Motive; es wird darum etwas grösser dargestellt. Beides ist beim
+> Einbauen zu beheben und **kein Grund, ein Bild neu machen zu lassen**.
 
 Diese stehen **gross** neben dem Zustandswort, auf der Kompass- und der
-Abschluss-Seite. Sie sind die sichtbarsten Emoji der App. **Hier lohnt es sich
-am meisten.**
+Abschluss-Seite. Sie waren die sichtbarsten Emoji der App. **Hier hat es sich
+am meisten gelohnt.**
 
 | Emoji | Zustand | Was das Symbol zeigen soll |
 |---|---|---|
@@ -372,8 +384,9 @@ runde Sprechblase.
 
 ## Reihenfolge, falls du nicht alles auf einmal machst
 
-1. **Gruppe 1** (Zustände) — am sichtbarsten, ganz gross neben dem Kompass
+1. ~~**Gruppe 1** (Zustände)~~ — **fertig, seit 7. Aug. 2026 in der App**
 2. **Gruppe 2** (Inselreise) — die zweite Stelle, an der Symbole gross stehen
+   → **hier weitermachen**
 3. **Gruppe 3** (Zugangs-Karte)
 4. **Gruppe 6** (Profilbilder) — sichtbar, aber jeder wählt nur eines
 5. **Gruppe 4 und 5** (Menü, Insel gestalten) — klein und am Rand

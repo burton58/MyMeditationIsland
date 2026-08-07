@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v44";
+const CACHE_NAME = "myisland-cache-v45";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -38,7 +38,21 @@ const SHELL_FILES = [
   "./thumb-lichtraum.jpg",
   "./thumb-warmeszuhause.jpg",
   "./thumb-herzraum.jpg",
-  "./thumb-reinigend.jpg"
+  "./thumb-reinigend.jpg",
+  // Die elf gezeichneten Stimmungsbilder - seit 7. Aug. 2026 stehen sie
+  // ueberall dort, wo vorher ein Emoji war (Kompass, Abschluss-Seite,
+  // Insel-Woche, Rueckblick).
+  "./icon-ausgeglichen.png",
+  "./icon-gruebelnd.png",
+  "./icon-angespannt.png",
+  "./icon-gedankenvoll.png",
+  "./icon-gelassen.png",
+  "./icon-aufgewuehlt.png",
+  "./icon-unruhig.png",
+  "./icon-geborgen.png",
+  "./icon-entspannt.png",
+  "./icon-unberuehrt.png",
+  "./icon-sonnenaufgang.png"
 ];
 
 self.addEventListener("install", function(event){

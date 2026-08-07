@@ -416,6 +416,10 @@
     box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4), 0 2px 8px rgba(28,59,51,.1);
     display:flex; align-items:center; justify-content:center; font-size:1.2rem;
   }
+  /* Das gezeichnete Zustandsbild im runden Feld. 30px statt der vollen 46,
+     damit der helle Kreis ringsum als Rahmen sichtbar bleibt - genau so
+     stand vorher das Emoji darin. */
+  .readout-card .glyph img{ width:30px; height:30px; display:block; }
   .readout-card .k{
     font-size:.68rem; color:var(--gold-deep); margin-bottom:4px; font-weight:800;
     text-transform:uppercase; letter-spacing:.08em;
@@ -425,7 +429,11 @@
   .compass-readout .v.fading{ opacity:0; }
   .compass-readout .why{ font-size:.85rem; line-height:1.5; color:var(--ink-soft); transition:opacity .15s ease; }
   .compass-readout .why.fading{ opacity:0; }
-  .mood-emoji{ font-size:1.05rem; }
+  .mood-emoji{ font-size:1.05rem; }   /* alt, seit 7. Aug. 2026 durch .mood-icon ersetzt */
+  /* Zustandsbild mitten in einer Zeile ("Vorher: [Bild] ausgeglichen").
+     vertical-align:-4px setzt es auf die Schriftlinie, sonst haengt es zu
+     hoch; margin-right ersetzt das Leerzeichen, das ein Emoji mitbrachte. */
+  .mood-icon{ width:20px; height:20px; vertical-align:-4px; margin-right:2px; }
 
   /* Kleiner, ganz sachlicher Beleg von Regelmaessigkeit - kein Punktesystem,
      nur ein Fakt aus dem echten Verlauf, der still wieder verschwindet,
@@ -1288,7 +1296,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-06.53";
+    var AKTUELLE_VERSION = "2026-08-07.54";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1568,7 +1576,7 @@
     </div>
 
     <div class="card readout-card">
-      <div class="glyph" id="stateGlyph">💛</div>
+      <div class="glyph" id="stateGlyph"><img src="icon-unberuehrt.png" alt="" aria-hidden="true"></div>
       <div class="body">
         <div class="k">Gerade bei dir</div>
         <div class="compass-readout" id="compassReadout"></div>
@@ -1856,7 +1864,7 @@
     </div>
 
     <div class="card readout-card">
-      <div class="glyph" id="stateGlyph2">🌅</div>
+      <div class="glyph" id="stateGlyph2"><img src="icon-sonnenaufgang.png" alt="" aria-hidden="true"></div>
       <div class="body">
         <div class="k">Jetzt</div>
         <div class="compass-readout" id="compassReadout2"></div>
@@ -4611,43 +4619,64 @@
   // damit die Auswertung nicht nur ein Wort ist, sondern sich anfuehlt, als
   // haette jemand hingeschaut. "next" bleibt die Begruendung, wohin die
   // Uebungen von hier aus fuehren.
-  var MOOD_BALANCED = { emoji:"😊", word:"ausgeglichen",
+  //
+  // "icon": seit 7. Aug. 2026 steht in jedem Zustand ein gezeichnetes Bild
+  // statt eines Emoji (Christines eigene Linienzeichnungen, gleiche Familie
+  // wie die Kategorie-Icons). Grund: Emoji sehen auf jedem Geraet anders aus
+  // - auf dem iPhone bunt und glaenzend - und passten nicht zum ruhigen,
+  // goldbraunen Rest der App. Die alten "emoji"-Werte bleiben absichtlich
+  // stehen: faellt ein Bild aus, kann man in moodIconHtml() eine Zeile
+  // aendern und ist sofort wieder bei den Emoji.
+  var MOOD_BALANCED = { emoji:"😊", icon:"icon-ausgeglichen.png", word:"ausgeglichen",
     bullets:["innerlich im Gleichgewicht", "nichts drängt gerade"],
     next:"Diese Übungen helfen dir, dieses Gleichgewicht zu halten." };
   var MOODS = {
     "Denken_Anspannung":  {
-      vert:{emoji:"🤔",word:"grüblerisch",
+      vert:{emoji:"🤔",icon:"icon-gruebelnd.png",word:"grüblerisch",
         bullets:["viele kreisende Gedanken", "innerlich unruhig"],
         next:"Diese Übungen führen dich zu ruhigeren, klareren Gedanken."},
-      horiz:{emoji:"😰",word:"angespannt",
+      horiz:{emoji:"😰",icon:"icon-angespannt.png",word:"angespannt",
         bullets:["Spannung sitzt im Körper", "schwer abzuschalten"],
         next:"Diese Übungen bringen dir mehr Entspannung."}
     },
     "Denken_Entspannung": {
-      vert:{emoji:"💭",word:"gedankenvoll",
+      vert:{emoji:"💭",icon:"icon-gedankenvoll.png",word:"gedankenvoll",
         bullets:["viel im Kopf, aber ruhig", "nachdenklich gestimmt"],
         next:"Diese Übungen führen zu weniger, dafür klareren und ruhigeren Gedanken."},
-      horiz:{emoji:"🧠",word:"gelassen",
+      horiz:{emoji:"🧠",icon:"icon-gelassen.png",word:"gelassen",
         bullets:["klarer Kopf", "ruhige Gedanken"],
         next:"Diese Übungen machen dich noch gelassener und zufriedener."}
     },
     "Fühlen_Anspannung": {
-      vert:{emoji:"😔",word:"aufgewühlt",
+      vert:{emoji:"😔",icon:"icon-aufgewuehlt.png",word:"aufgewühlt",
         bullets:["starke Gefühle nah an der Oberfläche", "innerlich in Bewegung"],
         next:"Diese Übungen helfen dir zu ausgeglichenen, entspannten Gefühlen."},
-      horiz:{emoji:"😟",word:"unruhig",
+      horiz:{emoji:"😟",icon:"icon-unruhig.png",word:"unruhig",
         bullets:["schwer zur Ruhe zu kommen", "innerlich rastlos"],
         next:"Diese Übungen bringen dich zurück zur Ruhe."}
     },
     "Fühlen_Entspannung": {
-      vert:{emoji:"💚",word:"geborgen",
+      vert:{emoji:"💚",icon:"icon-geborgen.png",word:"geborgen",
         bullets:["bei dir angekommen", "warm und ruhig"],
         next:"Diese Übungen vertiefen diese Ruhe noch mehr."},
-      horiz:{emoji:"😌",word:"entspannt",
+      horiz:{emoji:"😌",icon:"icon-entspannt.png",word:"entspannt",
         bullets:["der Körper ist locker", "der Atem geht ruhig"],
         next:"Diese Übungen bauen dieses gute Gefühl weiter aus."}
     }
   };
+  // Zwei Bilder, die zu keinem Zustand gehoeren, sondern zu einem Moment:
+  // solange der Zeiger noch unberuehrt in der Mitte steht (gestrichelter
+  // Kreis - noch nichts gesetzt), und die Abschluss-Seite vor dem ersten
+  // Antippen (Sonnenaufgang - etwas geht zu Ende und faengt an).
+  var ICON_UNBERUEHRT = "icon-unberuehrt.png";
+  var ICON_SONNE      = "icon-sonnenaufgang.png";
+
+  // Einzige Stelle, an der ein Zustandsbild entsteht. Wer zurueck zu den
+  // Emoji will, ersetzt den Rumpf durch:  return m.emoji;
+  function moodIconHtml(m, klasse){
+    var datei = (m && m.icon) || ICON_UNBERUEHRT;
+    return '<img class="' + klasse + '" src="' + datei + '" alt="" aria-hidden="true">';
+  }
 
   // Warum eine Uebung empfohlen wird - abgeleitet aus dem, was schon in den
   // Daten steht (Richtung + Dauerstufe), statt 40 Texte von Hand zu pflegen.
@@ -4692,13 +4721,15 @@
   // Rückblick der Abschluss-Seite und in den Vorher/Nachher-Zeilen der
   // Insel-Woche auf Mein Weg. Damit steht dort dasselbe, was auch die grosse
   // Anzeige unter dem Kompass sagt (moodWort()), statt einer gröberen
-  // Fassung ohne Abstufung. Kleingeschrieben, weil es hinter dem Emoji
-  // mitten in der Zeile steht und kein Satzanfang ist.
+  // Fassung ohne Abstufung. Kleingeschrieben, weil es hinter dem Bild
+  // mitten in der Zeile steht und kein Satzanfang ist - das galt bis zum
+  // 7. Aug. 2026 nur fuer die abgestuften Woerter, weshalb in derselben
+  // Liste "sehr geborgen" neben "Ausgeglichen" stand. Jetzt durchgehend.
   function moodHtml(c){
     var m = moodOf(c);
     var wort = moodWort(c);
-    if (m !== MOOD_BALANCED) wort = wort.charAt(0).toLowerCase() + wort.slice(1);
-    return '<span class="mood-emoji">' + m.emoji + '</span> ' + wort;
+    wort = wort.charAt(0).toLowerCase() + wort.slice(1);
+    return moodIconHtml(m, "mood-icon") + ' ' + wort;
   }
   // Wie weit die Nadel vom Zentrum weg liegt (0 = Mitte, 1 = ganz aussen).
   // Daraus wird die Abstufung des Feedbacks: "etwas" / "eher" / "sehr".
@@ -4770,7 +4801,13 @@
     // Seiten. Auf der Abschluss-Seite blieb es bisher fest auf 🌅 stehen,
     // waehrend die Zeile daneben laengst etwas anderes sagte.
     var glyph = document.getElementById(abschluss ? "stateGlyph2" : "stateGlyph");
-    if (glyph) glyph.textContent = unberuehrt ? "💛" : m.emoji;
+    if (glyph){
+      var datei = unberuehrt ? ICON_UNBERUEHRT : m.icon;
+      var bild  = glyph.querySelector("img");
+      // Nur wechseln, wenn sich das Bild wirklich aendert - sonst flackert
+      // es bei jedem Ziehen der Nadel neu.
+      if (bild && bild.getAttribute("src") !== datei) bild.setAttribute("src", datei);
+    }
   }
 
   // ---- Wochenansicht ----
