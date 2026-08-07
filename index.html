@@ -1288,7 +1288,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-06.52";
+    var AKTUELLE_VERSION = "2026-08-06.53";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1505,8 +1505,9 @@
     </div>
 
     <div class="card compass-info" id="compassInfo">
-      <p>Oben und unten zeigst du, ob gerade eher dein <strong>Kopf</strong> arbeitet oder dein <strong>Gefühl</strong>.
-      Links und rechts, wie <strong>entspannt</strong> oder <strong>angespannt</strong> du dabei bist.</p>
+      <p>Oben und unten zeigst du, ob du dich gerade eher <strong>nachdenklich</strong> oder eher
+      <strong>emotional</strong> fühlst. Links und rechts, wie <strong>entspannt</strong> oder
+      <strong>angespannt</strong> du dabei bist.</p>
       <p>Der Zeiger darf überall in der Scheibe stehen – auch dazwischen. In der Mitte heisst: ausgeglichen.</p>
       <button class="btn-ghost" id="compassInfoOk" style="margin-top:4px;">Verstanden</button>
     </div>
@@ -1544,26 +1545,24 @@
             <line x1="32" y1="200" x2="368" y2="200"/>
           </g>
 
-          <!-- Beschriftung wieder IM Zifferblatt (6. Aug. 2026, Christine:
-               "Er ist viel zu kleiner, er muss viel groesser sein").
-               Aussen gestellt kosteten die Woerter links und rechts je 82
-               von 400 Einheiten - die Scheibe schrumpfte dadurch auf 170px.
-               Drinnen kostet die Beschriftung GAR KEINE Breite, darum ist
-               die Scheibe jetzt groesser als je zuvor (Radius 172 statt
-               frueher 150). Damit sie auf jedem Foto lesbar bleibt, behaelt
-               sie den dunklen Ton aus Christines Entwurf und bekommt einen
-               hellen Schein statt der frueheren weissen Schrift mit
-               dunklem Schatten (siehe .dial-label). -->
-          <text class="dial-label" x="200" y="70"  text-anchor="middle">Nachdenklich</text>
-          <text class="dial-label" x="200" y="344" text-anchor="middle">Emotional</text>
-          <text class="dial-label" x="50"  y="204" text-anchor="start">Entspannt</text>
-          <text class="dial-label" x="350" y="204" text-anchor="end">Angespannt</text>
-
           <line id="needleLine" x1="200" y1="200" x2="200" y2="200" class="rose-needle" stroke-linecap="round" filter="url(#compassSvgShadow)"/>
           <circle id="needleHalo" cx="200" cy="200" r="0" class="rose-needle-halo"/>
           <circle id="needleTip" cx="200" cy="200" r="12" class="rose-needle-tip" style="cursor:grab;" filter="url(#compassSvgShadow)"/>
           <circle cx="200" cy="200" r="10" class="rose-hub"/>
           <circle cx="200" cy="200" r="3.6" class="rose-hub-dot"/>
+
+          <!-- Beschriftung IM Zifferblatt und ZULETZT gezeichnet.
+               Innen kostet sie keine Breite - darum ist die Scheibe so gross
+               (Radius 172). Zuletzt, weil der Nadelknopf sonst Buchstaben
+               abdeckt: Auf Christines Bild vom 6. Aug. 2026 verdeckte er das
+               "L" von EMOTIONAL. Der Zeiger bleibt darunter gut sichtbar - er
+               ist lang und golden, die Woerter sind kurz und hell hinterlegt.
+               Lesbar auf jedem Foto durch den hellen Schein (.dial-label);
+               die Woerter sind dieselben wie im Erklaerkasten. -->
+          <text class="dial-label" x="200" y="70"  text-anchor="middle">Nachdenklich</text>
+          <text class="dial-label" x="200" y="344" text-anchor="middle">Emotional</text>
+          <text class="dial-label" x="50"  y="204" text-anchor="start">Entspannt</text>
+          <text class="dial-label" x="350" y="204" text-anchor="end">Angespannt</text>
         </svg>
       </div>
     </div>
@@ -1829,21 +1828,6 @@
             <line x1="200" y1="32" x2="200" y2="368"/>
             <line x1="32" y1="200" x2="368" y2="200"/>
           </g>
-
-          <!-- Beschriftung wieder IM Zifferblatt (6. Aug. 2026, Christine:
-               "Er ist viel zu kleiner, er muss viel groesser sein").
-               Aussen gestellt kosteten die Woerter links und rechts je 82
-               von 400 Einheiten - die Scheibe schrumpfte dadurch auf 170px.
-               Drinnen kostet die Beschriftung GAR KEINE Breite, darum ist
-               die Scheibe jetzt groesser als je zuvor (Radius 172 statt
-               frueher 150). Damit sie auf jedem Foto lesbar bleibt, behaelt
-               sie den dunklen Ton aus Christines Entwurf und bekommt einen
-               hellen Schein statt der frueheren weissen Schrift mit
-               dunklem Schatten (siehe .dial-label). -->
-          <text class="dial-label" x="200" y="70"  text-anchor="middle">Nachdenklich</text>
-          <text class="dial-label" x="200" y="344" text-anchor="middle">Emotional</text>
-          <text class="dial-label" x="50"  y="204" text-anchor="start">Entspannt</text>
-          <text class="dial-label" x="350" y="204" text-anchor="end">Angespannt</text>
           <!-- Deine Reise: wo du angekommen bist (heller Punkt) und wohin du
                dich während der Meditation bewegt hast (gestrichelte Spur). -->
           <line id="journeyLine" x1="200" y1="200" x2="200" y2="200" class="rose-journey"/>
@@ -1854,6 +1838,19 @@
           <circle id="needleTip2" cx="200" cy="200" r="12" class="rose-needle-tip" style="cursor:grab;" filter="url(#compassSvg2Shadow)"/>
           <circle cx="200" cy="200" r="10" class="rose-hub"/>
           <circle cx="200" cy="200" r="3.6" class="rose-hub-dot"/>
+
+          <!-- Beschriftung IM Zifferblatt und ZULETZT gezeichnet.
+               Innen kostet sie keine Breite - darum ist die Scheibe so gross
+               (Radius 172). Zuletzt, weil der Nadelknopf sonst Buchstaben
+               abdeckt: Auf Christines Bild vom 6. Aug. 2026 verdeckte er das
+               "L" von EMOTIONAL. Der Zeiger bleibt darunter gut sichtbar - er
+               ist lang und golden, die Woerter sind kurz und hell hinterlegt.
+               Lesbar auf jedem Foto durch den hellen Schein (.dial-label);
+               die Woerter sind dieselben wie im Erklaerkasten. -->
+          <text class="dial-label" x="200" y="70"  text-anchor="middle">Nachdenklich</text>
+          <text class="dial-label" x="200" y="344" text-anchor="middle">Emotional</text>
+          <text class="dial-label" x="50"  y="204" text-anchor="start">Entspannt</text>
+          <text class="dial-label" x="350" y="204" text-anchor="end">Angespannt</text>
         </svg>
       </div>
     </div>
@@ -1878,7 +1875,7 @@
 
     <div class="card recap" id="recapBox" style="margin-top:16px;" hidden></div>
     <div class="card shift-box" id="shiftBox" hidden></div>
-    <button class="btn-ghost full outro-aendern" id="outroAendernBtn" hidden>Stimmung nochmals ändern</button>
+    <button class="btn-ghost full outro-aendern" id="outroAendernBtn" hidden>Nochmals ändern</button>
 
     <!-- Das Mantra passend zum Zustand NACH der Meditation. Endstand nach
          mehreren Schritten am 4. Aug. 2026 (Christines Entscheide, in
@@ -2138,7 +2135,7 @@
     <div class="card ueber-karte legal-karte">
       <h3>Der Kompass</h3>
       <p>Statt einer langen Liste fragst du dich zuerst, wie es dir gerade wirklich geht – angespannt oder
-      entspannt, im Kopf oder im Gefühl. Daraus stellt die Insel zusammen, was jetzt passt.</p>
+      entspannt, nachdenklich oder emotional. Daraus stellt die Insel zusammen, was jetzt passt.</p>
 
       <h3>Die Bibliothek</h3>
       <p>Wenn du schon weisst, was du suchst, gehst du direkt auf <strong>Meditationen</strong> – dort liegt
@@ -4615,7 +4612,7 @@
   // haette jemand hingeschaut. "next" bleibt die Begruendung, wohin die
   // Uebungen von hier aus fuehren.
   var MOOD_BALANCED = { emoji:"😊", word:"ausgeglichen",
-    bullets:["Kopf und Gefühl im Gleichgewicht", "nichts drängt gerade"],
+    bullets:["innerlich im Gleichgewicht", "nichts drängt gerade"],
     next:"Diese Übungen helfen dir, dieses Gleichgewicht zu halten." };
   var MOODS = {
     "Denken_Anspannung":  {
@@ -4764,11 +4761,11 @@
     var abschluss = (el.id === "compassReadout2");
     ueberblenden(t.wort, moodWort(c));
     ueberblenden(t.why, unberuehrt
-      ? "Bewege den Zeiger, um deine Stimmung anzugeben."
+      ? "Bewege den Zeiger, um zu zeigen, wie es dir geht."
       : (abschluss ? m.bullets.join(" · ") : m.next));
     el.setAttribute("aria-label",
       moodWort(c) + ". Position: " + (c.x < 0 ? "Anspannung" : "Entspannung") +
-      ", " + (c.y < 0 ? "Denken" : "Fühlen"));
+      ", " + (c.y < 0 ? "nachdenklich" : "emotional"));
     // Das Symbol neben der Karte zeigt denselben Zustand - auf BEIDEN
     // Seiten. Auf der Abschluss-Seite blieb es bisher fest auf 🌅 stehen,
     // waehrend die Zeile daneben laengst etwas anderes sagte.
