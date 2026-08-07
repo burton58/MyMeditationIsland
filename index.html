@@ -1331,7 +1331,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.57";
+    var AKTUELLE_VERSION = "2026-08-08.58";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2761,7 +2761,17 @@
              "Du muesch nüt alles uf einisch lösen. Stuck für Stuck reicht.",
              "Sag innerlich: Ich derf das loh gah, wenn ich sowiit bi.",
              "Chumm langsam zrugg, mit öppis meh Wiiti im Hals."] },
-    { id:"solarplexus", dir:"ost", cat:"mittel", bg:"bg-bergspitze.jpg", name:"Solarplexuschakra – Willensstärke", min:7, desc:"Innerlichi Chraft und Wille wieder spüre.",
+    // 8. Aug. 2026 von "ost" (Entspannen) nach "west" umgezogen. Christine
+    // sah sie um 23:15 Uhr unter "Für die Nacht": "Solarplexus Willensstärke
+    // ist nicht entspannend und zum schlafen sondern mehr für am Tag wenn
+    // man den Willen stärken will." Der Text gibt ihr recht - die Übung
+    // beginnt mit "Sitz oder stand ufrecht ane" und endet mit "Nimm die
+    // Chraft mit i dä Rest vom Tag". In "ost" stand als Begründung
+    // "Vertieft deine Ruhe" - schlicht falsch. "west" ist ausserdem der
+    // Bereich, aus dem die Startseite zwischen 11 und 17 Uhr vorschlägt,
+    // und dort stehen die drei anderen Kraft-Übungen schon (Kraft-Impuls,
+    // Innere Stärke, Innere Stärke vertiefen).
+    { id:"solarplexus", dir:"west", cat:"mittel", bg:"bg-bergspitze.jpg", name:"Solarplexuschakra – Willensstärke", min:7, desc:"Innerlichi Chraft und Wille wieder spüre.",
       steps:["Sitz oder stand ufrecht ane.",
              "Stell dir im Mage es warms, gelbs Liecht vor.",
              "Mit jedem Ischnuufe wird das Liecht öppis stärcher.",
