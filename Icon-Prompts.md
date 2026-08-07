@@ -18,14 +18,16 @@ durch eigene Symbole zu ersetzen.
 
 ---
 
-## Wo wir stehen (Stand 7. Aug. 2026, abends)
+## Wo wir stehen (Stand 7. Aug. 2026, spätabends)
 
-**19 von 39 sind fertig. 20 fehlen noch** — davon 2 zum Nachbessern und
-18, die es noch gar nicht gibt.
+**23 von 39 sind fertig, 15 davon schon in der App. 16 fehlen noch** —
+davon 1 zum Nachbessern und 15, die es noch gar nicht gibt.
 
-### ✅ Fertig und in der App (11)
+### ✅ Fertig und in der App (15)
 
-Nummer **1 bis 11** — die Stimmungen am Kompass. Da ist nichts mehr zu tun.
+- **1 bis 11** — die Stimmungen am Kompass
+- **17, 18, 19, 20** — die Zugangs-Karte in den Einstellungen
+  (offenes Tor, Haken im Kreis, Sanduhr, Vorhängeschloss)
 
 ### ✅ Gut, aufbereitet, warten nur noch auf ihre Nachbarn (8)
 
@@ -34,39 +36,36 @@ Gruppe auf einmal — sonst stünden gezeichnete Bilder und Emoji nebeneinander.
 
 | Nr. | Motiv | wartet auf |
 |---|---|---|
-| 12 | Segelboot | **14 und 16** — die fünf Stationen der Inselreise stehen nebeneinander |
-| 13 | Anker | dieselben |
-| 15 | einzelne Palme | dieselben |
-| 17 | offenes Tor | **20** — dann ist die Zugangs-Karte komplett |
-| 18 | Haken im Kreis | 20 |
-| 19 | Sanduhr | 20 |
-| 22 | Schlüssel | 21, 24, 25, 26 — die Einstellungs-Liste hat acht Zeilen |
-| 23 | Umriss einer Person | dieselben |
+| 12 | Segelboot | **16** — dann sind die fünf Stationen der Inselreise komplett |
+| 13 | Anker | 16 |
+| 14 | Kompassrose | 16 |
+| 15 | einzelne Palme | 16 |
+| 21 | Zahlkarte | 25, 26 — die Einstellungs-Liste hat acht Zeilen |
+| 22 | Schlüssel | 25, 26 |
+| 23 | Umriss einer Person | 25, 26 |
+| 24 | Info-Kreis mit i | 25, 26 |
 
-### 🔁 Nochmal machen (2)
+### 🔁 Nochmal machen (1)
 
 | Nr. | Motiv | was schiefging |
 |---|---|---|
-| 14 | Kompassrose | Buchstaben N/W/E/S drauf, waren nicht gewünscht |
 | 16 | Insel mit zwei Palmen | ausgefüllte Fläche statt Umriss, bei 28 px ein dunkler Fleck |
 
-### ⬜ Noch gar nicht da (18)
+### ⬜ Noch gar nicht da (15)
 
-**20** Vorhängeschloss · **21** Zahlkarte · **24** Info-Kreis mit i · **25**
-Schriftrolle · **26** Papierkorb · **27** Sonne · **28** Wolke · **29** flache
-Welle · **30** bewegte Welle · **31** Umriss eines Mannes · **32** Strandliege
-· **33** Hibiskusblüte · **34** Muschel · **35** Taube · **36** Lotusblüte ·
-**37** Mondsichel · **38** Schweizerkreuz im Kreis · **39** Umriss einer
-sitzenden Person im Schneidersitz
+**25** Schriftrolle · **26** Papierkorb · **27** Sonne · **28** Wolke · **29**
+flache Welle · **30** bewegte Welle · **31** Umriss eines Mannes · **32**
+Strandliege · **33** Hibiskusblüte · **34** Muschel · **35** Taube · **36**
+Lotusblüte · **37** Mondsichel · **38** Schweizerkreuz im Kreis · **39**
+Umriss einer sitzenden Person im Schneidersitz
 
 ### In welcher Reihenfolge
 
-1. **Nur die 20** (Vorhängeschloss) — dann ist die Zugangs-Karte komplett und
-   wird eingebaut. Ein einziges Bild noch.
-2. **14 und 16** — dann sind die fünf Stationen der Inselreise komplett.
-3. **21, 24, 25, 26** — dann die Einstellungs-Liste.
-4. **27, 37** (Sonne, Mond) — die Begrüssung oben auf der Startseite.
-5. Der Rest: 28–32 (Insel gestalten), 33–36 (Profilbilder), 38, 39.
+1. **Nur die 16** (Insel mit zwei Palmen) — dann ist die Inselreise komplett
+   und wird eingebaut. Ein einziges Bild noch.
+2. **25 und 26** (Schriftrolle, Papierkorb) — dann die Einstellungs-Liste.
+3. **27, 37** (Sonne, Mond) — die Begrüssung oben auf der Startseite.
+4. Der Rest: 28–32 (Insel gestalten), 33–36 (Profilbilder), 38, 39.
 
 ### Worauf bei diesen Nummern besonders zu achten ist
 
@@ -76,42 +75,54 @@ sitzenden Person im Schneidersitz
 - **31, 39** (die beiden übrigen Personen) — im Text stand früher
   „Silhouette", das ist genau die ausgefüllte Form. Steht jetzt als
   **Umriss** da.
-- **14** — ausdrücklich *keine Buchstaben, keine Zahlen*.
 - **38** — goldbraun, **nicht** rot, auch wenn es ein Schweizerkreuz ist.
 
-### Was am 7. Aug. abends geliefert wurde
+### Zwei Bilder mit einer Einschränkung
 
-Fünf Bilder, **alle fünf brauchbar** — die erste Lieferung ohne Ausschuss.
-Die Nummern 15, 18, 19, 22 und 23. Zwei Kleinigkeiten mussten nachbearbeitet
-werden, beide ohne Rückfrage lösbar:
+Beide sind eingebaut bzw. abgelegt und brauchen **keine** neue Runde — aber
+falls sie später stören, steht hier warum:
 
-- **Die Striche waren zu fein** (1,7–5,2 % statt der verlangten 6 %). Sie
-  wurden beim Aufbereiten maschinell verstärkt und treffen jetzt genau das
-  Gewicht der bestehenden Bilder.
-- **Das Karomuster war aufgemalt.** Die Bilder sahen aus, als hätten sie einen
-  durchsichtigen Hintergrund, tatsächlich waren sie voll deckend — das übliche
-  graue Schachbrett steckte als echte Bildpunkte drin. Weil das Muster grau
-  und die Linien goldbraun sind, liess es sich über die Farbigkeit sauber
-  wegrechnen. **Kein Grund, ein Bild neu machen zu lassen** — aber im
-  Grundtext steht jetzt zusätzlich, dass kein Schachbrett gemalt werden soll.
+- **Nr. 14 Kompassrose** — sehr fein gearbeitet, mit acht Zacken, Doppelring
+  und Mittelkreis. Gross ist sie schön; bei 28 px verdichtet sich das zu einem
+  Stern-Muster, das weniger klar liest als die einfacheren Motive daneben.
+  Falls es später auffällt: eine Fassung mit **nur vier Zacken und einem
+  einzigen Ring** anfragen.
+- **Nr. 21 Zahlkarte** — hochkant statt quer gezeichnet, mit einem Strich
+  oben. Sie liest sich dadurch eher wie ein Block als wie eine Zahlkarte.
+  Falls es später auffällt: *„quer statt hochkant, breiter als hoch"*.
+
+### Was die Aufbereitung jedes Mal automatisch erledigt
+
+Danach muss nichts nachgefragt werden — diese vier Dinge korrigiere ich beim
+Einbauen selbst:
+
+1. **Zu feine Striche** werden verstärkt, bis sie das Gewicht der bestehenden
+   Familie treffen (bisher kamen 1,7–5,2 % statt der verlangten 6 %).
+2. **Zu kräftige Striche** werden ausgedünnt — beim Torbogen nötig, damit er
+   neben den anderen drei der Zugangs-Karte nicht schwerer wirkt.
+3. **Aufgemaltes Schachbrett** wird herausgerechnet: Weil das Muster grau
+   (R = G = B) und die Linien goldbraun sind, lässt sich die Maske über die
+   Farbigkeit neu bilden.
+4. **Abweichende Farbtöne** werden auf `#8A6A2F` gebracht, den Ton der elf
+   Stimmungsbilder.
 
 ---
 
 ## Der Auftrag zum Kopieren — nur noch das, was fehlt
 
 Diesen Text **einmal** ins ChatGPT-Gespräch einfügen. Danach jedes Mal nur
-noch: *„Jetzt Nummer 16."* Die Nummern sind dieselben wie in der grossen
+noch: *„Jetzt Nummer 25."* Die Nummern sind dieselben wie in der grossen
 Liste weiter unten — so bleibt alles zuordenbar.
 
-Fertige Nummern sind hier weggelassen. **Fang mit der 20 an** — dann fehlt
-für die Zugangs-Karte nichts mehr.
+Fertige Nummern sind hier weggelassen. **Fang mit der 16 an** — dann fehlt
+für die Inselreise nichts mehr.
 
 ````
 Du erstellst für mich einzelne Symbole für eine ruhige Meditations-App.
 
 ABLAUF - wichtig:
 Erstelle NICHT alle auf einmal und KEIN Übersichtsblatt.
-Erstelle jetzt nur Nummer 20. Danach wartest du, bis ich dir die nächste
+Erstelle jetzt nur Nummer 16. Danach wartest du, bis ich dir die nächste
 Nummer nenne. Immer genau ein Bild pro Antwort.
 Halte dich streng an die Liste unten. Erfinde KEINE eigenen Motive und
 weiche NICHT vom Text der jeweiligen Nummer ab. Zeichne nur das, was bei
@@ -131,6 +142,8 @@ STIL - gilt für alle:
 - Die Striche müssen KRÄFTIG sein: Strichstärke rund 6 % der Bildbreite,
   also etwa 60 von 1024 Pixeln. Lieber zu dick als zu dünn.
   Grund: Die Symbole werden in der App nur 46 Pixel gross angezeigt.
+- HALTE DAS MOTIV EINFACH. Wenige grosse Formen statt vieler kleiner
+  Einzelheiten - bei 28 Pixeln verschwimmt jedes feine Detail.
 - Das Motiv FÜLLT das Quadrat: rundherum höchstens 12 % Luft, oben gleich
   viel wie unten. Kein kleines Motiv in der Bildmitte.
 - Nur eine einzige Farbe: Goldbraun #8F6F22. Keine zweite Farbe, kein Rot,
@@ -146,13 +159,8 @@ STIL - gilt für alle:
   es muss mittig sitzen und darf die Ecken nicht berühren.
 
 DIE MOTIVE (die Nummern sind fest, sie gehören zu einer grösseren Liste):
-14. Eine Kompassrose. Keine Buchstaben, keine Zahlen, keine ausgefüllten
-    Zacken - nur Umrisslinien.
 16. Eine kleine Insel mit zwei Palmen, nur als Umrisslinien, das Innere
     bleibt leer.
-20. Ein geschlossenes, ruhiges Vorhängeschloss. Freundlich, nicht warnend.
-21. Eine Zahlkarte von vorn, mit einem schmalen waagrechten Streifen.
-24. Ein Kreis mit einem kleinen i darin - das übliche Info-Zeichen.
 25. Eine zusammengerollte Schriftrolle von der Seite.
 26. Ein Papierkorb mit Deckel.
 27. Eine Sonne mit gleichmässigen Strahlen.
@@ -173,7 +181,7 @@ DIE MOTIVE (die Nummern sind fest, sie gehören zu einer grösseren Liste):
 39. Der Umriss einer sitzenden Person im Schneidersitz von vorn, ohne
     Gesicht. Nur die Kontur als Linie, NICHT ausgefüllt.
 
-Fang jetzt mit Nummer 20 an.
+Fang jetzt mit Nummer 16 an.
 ````
 
 Wenn ein Bild wieder ausgefüllt oder leuchtend kommt, hilft am besten:

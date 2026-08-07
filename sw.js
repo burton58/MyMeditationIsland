@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v45";
+const CACHE_NAME = "myisland-cache-v46";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -52,7 +52,13 @@ const SHELL_FILES = [
   "./icon-geborgen.png",
   "./icon-entspannt.png",
   "./icon-unberuehrt.png",
-  "./icon-sonnenaufgang.png"
+  "./icon-sonnenaufgang.png",
+  // Die vier Bilder der Zugangs-Karte in den Einstellungen - seit
+  // 7. Aug. 2026 gezeichnet statt 🤍 ✅ ⏳ 🔒.
+  "./icon-zugang-offen.png",
+  "./icon-zugang-aktiv.png",
+  "./icon-zugang-test.png",
+  "./icon-zugang-zu.png"
 ];
 
 self.addEventListener("install", function(event){

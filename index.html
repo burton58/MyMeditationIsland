@@ -899,6 +899,9 @@
     width:42px; height:42px; border-radius:12px; background:#fdf3d6; flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.1rem;
   }
+  /* Das gezeichnete Zustandsbild im Feld - 26 von 42px, damit der helle
+     Grund ringsum sichtbar bleibt, genau wie vorher beim Emoji. */
+  .status-bild{ width:26px; height:26px; display:block; }
   .status-body{ flex:1; min-width:0; }
   .status-title{ font-weight:700; font-size:.92rem; }
   .status-detail{ font-size:.79rem; line-height:1.5; color:var(--ink-soft); margin-top:4px; }
@@ -1296,7 +1299,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-07.54";
+    var AKTUELLE_VERSION = "2026-08-07.55";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -5076,12 +5079,20 @@
   }
 
   // ---- Zugangs-Status (Einstellungen) ----
+  // Die vier Zustandsbilder sind seit 7. Aug. 2026 gezeichnete Symbole
+  // (Christines Bilder) statt der Emoji 🤍 ✅ ⏳ 🔒 - dieselbe Familie wie
+  // die Kompass-Stimmungen. Wer zurueck zu den Emoji will, ersetzt hier
+  // die vier zugangIcon(...)-Aufrufe durch das jeweilige Zeichen im
+  // Kommentar daneben.
+  function zugangIcon(datei){
+    return '<img class="status-bild" src="' + datei + '" alt="" aria-hidden="true">';
+  }
   function renderStatusCard(){
     var el = document.getElementById("statusCard");
     if (!ABO_LIVE){
       el.className = "status-card state-active";
       el.innerHTML =
-        '<div class="status-icon">🤍</div>' +
+        '<div class="status-icon">' + zugangIcon("icon-zugang-offen.png") + '</div>' +   // vorher 🤍
         '<div class="status-body">' +
           '<div class="status-title">Alle Meditationen offen</div>' +
           '<div class="status-detail">Die Bezahlung ist noch nicht live – bis dahin ist die ganze Bibliothek frei zugänglich.</div>' +
@@ -5093,17 +5104,17 @@
     var icon, title, detail, zeigeCta = false;
 
     if (state === "active"){
-      icon = "✅";
+      icon = zugangIcon("icon-zugang-aktiv.png");   // vorher ✅
       title = (abo.plan === "jahr" ? "Jahresabo" : "Monatsabo") + " aktiv";
       detail = (abo.plan === "jahr" ? "CHF 25 pro Jahr" : "CHF 3 pro Monat") +
         " · ganze Bibliothek offen · neue Meditationen immer dabei";
     } else if (state === "test"){
-      icon = "⏳";
+      icon = zugangIcon("icon-zugang-test.png");    // vorher ⏳
       title = "Test läuft · noch " + tageWort(testTageUebrig());
       detail = GRATIS_IDS.length + " Meditationen offen · danach Monatsabo CHF 3 oder Jahresabo CHF 25";
       zeigeCta = true;
     } else {
-      icon = "🔒";
+      icon = zugangIcon("icon-zugang-zu.png");      // vorher 🔒
       title = "Test beendet";
       detail = "Mit einem Abo öffnest du die ganze Bibliothek · Monatsabo CHF 3 oder Jahresabo CHF 25";
       zeigeCta = true;
