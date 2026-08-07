@@ -18,20 +18,60 @@ durch eigene Symbole zu ersetzen.
 
 ---
 
-## Der Grundstil — immer voranstellen
+## So gehst du vor
 
-Diesen Absatz **jedem** Prompt voranstellen, damit alle Symbole zusammenpassen:
+**Ein Bild pro Anfrage.** ChatGPT erzeugt pro Nachricht nur ein Bild. Ein
+Auftrag wie „mach mir alle Symbole" endet in einem einzigen Übersichtsblatt —
+so geschehen beim ersten Versuch: alles winzig, auf hellen Kästchen, ohne
+durchsichtigen Hintergrund. Damit lässt sich nichts einbauen.
 
-> Erstelle ein einzelnes Icon für eine ruhige Meditations-App. Stil: feine,
-> gleichmässig dicke Linienzeichnung (Strichstärke ca. 6 % der Bildbreite),
-> weich gerundete Enden, keine harten Ecken. Nur **eine** Farbe:
-> Goldbraun `#8F6F22`. Hintergrund komplett transparent. Keine Schatten, keine
-> Verläufe, keine Flächenfüllung, kein Rahmen, kein Text, keine Zahlen.
-> Quadratisch, 1024 × 1024 Pixel, Motiv mittig mit rund 12 % Luft am Rand.
-> Ruhig, hochwertig, zeitlos — bewusst nicht verspielt und nicht comichaft.
+1. Den **Grundtext** unten kopieren.
+2. Ganz unten die Zeile **„Motiv:"** durch **ein** Motiv aus den Listen ersetzen.
+3. Abschicken. Bild ansehen, dann das nächste Motiv.
+4. **Fang mit einem einzigen an** und schick es mir. Wenn es passt, machst du
+   den Rest im selben Stil — dann muss nichts zweimal gemacht werden.
 
-**Nach dem Erstellen:** Bild als PNG mit transparentem Hintergrund speichern,
-auf 240 × 240 Pixel verkleinern und mir schicken. Ich baue es ein.
+**Insgesamt 39 Bilder** für 38 Zeichen (die Welle brauchst du zweimal: einmal
+ruhig, einmal bewegt).
+
+---
+
+## Der Grundtext — bei jeder Anfrage mitschicken
+
+> Erstelle **genau ein einzelnes Symbol** für eine ruhige Meditations-App.
+> **Kein Übersichtsblatt, keine Sammlung, kein Raster, keine Varianten** —
+> nur dieses eine Motiv.
+>
+> **Stil:** feine Linienzeichnung, gleichmässig dicke Striche (Strichstärke
+> etwa 6 % der Bildbreite), weich gerundete Enden, keine harten Ecken.
+> Ruhig, hochwertig, zeitlos — bewusst nicht verspielt, nicht comichaft,
+> kein 3D, kein Glanz, keine Schatten.
+>
+> **Farbe:** ausschliesslich Goldbraun `#8F6F22`. **Keine weitere Farbe** —
+> auch kein Rot, kein Grün, kein Grau.
+>
+> **Hintergrund:** vollständig transparent (Alpha-Kanal). **Kein weisser
+> Hintergrund, kein Kästchen, keine Kachel, kein Rahmen, kein Kreis
+> darum.**
+>
+> **Format:** quadratisch, 1024 × 1024 Pixel, als PNG mit Transparenz.
+> Motiv mittig, rundherum etwa 12 % Luft.
+>
+> **Kein Text, keine Buchstaben, keine Zahlen im Bild.**
+>
+> Motiv: _______________________
+
+**Wenn der Hintergrund weiss ist:** „Der Hintergrund muss vollständig
+transparent sein (Alpha-Kanal), nicht weiss. Bitte nochmals so ausgeben."
+
+**Wenn es zu verspielt wird:** „Reduziere weiter. Nur die notwendigsten
+Linien, keine Details, keine Verzierung."
+
+**Wenn es nicht zu den anderen passt:** Ein schon gelungenes Bild mitschicken
+und sagen: „Im exakt gleichen Stil wie dieses Bild."
+
+**Nach dem Erstellen:** Als PNG mit transparentem Hintergrund speichern und
+mir schicken. Ich verkleinere und baue ein.
 
 ---
 
@@ -55,12 +95,26 @@ am meisten.**
 | 💛 | Zeiger noch nicht gesetzt | Ein offener Kreis, angedeutet gestrichelt — „noch nicht gesetzt" |
 | 🌅 | Abschluss-Seite, Ausgangszustand | Sonnenaufgang über einer Wasserlinie |
 
-**Prompt (Beispiel für „geborgen"):**
+**Wichtig bei dieser Gruppe:** Beim ersten Versuch kamen **gezeichnete
+Smileys** heraus — also genau das, wovon wir weg wollen. Darum in jede Anfrage
+dieser Gruppe zusätzlich hineinschreiben:
 
-> *[Grundstil einfügen]* Motiv: zwei weiche Bögen, die einander umschliessen wie
-> zwei schützende Hände um einen kleinen Kreis in der Mitte. Sehr reduziert, nur
-> Linien, keine Finger, kein Gesicht. Es soll Geborgenheit ausdrücken, ohne ein
-> Herz zu zeigen.
+> **Kein Gesicht, kein Smiley, keine Mimik.** Ein abstraktes Zeichen, keine
+> Figur.
+
+**Die elf Motiv-Zeilen** (je eine pro Anfrage, unten an den Grundtext):
+
+1. `Motiv: eine ruhige Waage aus zwei gleich hohen Kreisen auf einer feinen waagrechten Linie.`
+2. `Motiv: drei ineinander verschlungene Schlaufen, wie ein Gedanke, der im Kreis geht.`
+3. `Motiv: ein straff gespannter Bogen, an beiden Enden je eine kurze gerade Linie.`
+4. `Motiv: eine weiche Wolke aus drei überlappenden Bögen, offen gezeichnet, nicht geschlossen.`
+5. `Motiv: eine einzelne gerade waagrechte Linie mit einem ruhigen Kreis darüber.`
+6. `Motiv: drei Wellenlinien übereinander, die unten unruhig sind und nach oben hin ruhiger werden.`
+7. `Motiv: eine Zickzacklinie, die nach rechts hin in eine gerade Linie ausläuft.`
+8. `Motiv: zwei Bögen, die einander umschliessen wie zwei schützende Hände um einen kleinen Kreis in der Mitte. Keine Finger, kein Herz.`
+9. `Motiv: eine lange, ruhig ausschwingende Welle mit einem kleinen Punkt darüber.`
+10. `Motiv: ein offener, angedeutet gestrichelter Kreis — er soll „noch nicht gesetzt" ausdrücken.`
+11. `Motiv: eine aufgehende Sonne über einer ruhigen Wasserlinie.`
 
 ---
 
@@ -74,15 +128,15 @@ am meisten.**
 | 🌴 | Vertraute Insel (ab 30 Tagen) |
 | 🏝️ | Zuhause auf der Insel (ab 60 Tagen) |
 
-**Prompt:**
+**Die fünf Motiv-Zeilen** (je eine pro Anfrage). Diese fünf stehen in der App
+nebeneinander als Weg — schick darum ab dem zweiten das vorige Bild mit und
+sag „im exakt gleichen Stil und Massstab wie dieses Bild":
 
-> *[Grundstil einfügen]* Erstelle fünf zusammengehörige Icons als **einzelne
-> Bilder**, die als Reihe nebeneinander funktionieren und dieselbe Strichstärke
-> haben: (1) ein kleines Segelboot von der Seite, (2) ein Anker, (3) eine
-> Kompassrose ohne Zahlen, (4) eine einzelne Palme, (5) eine kleine Insel mit
-> zwei Palmen. Alle im selben Massstab und derselben Linienführung, sodass sie
-> als Weg von links nach rechts erzählen: ankommen, halten, entdecken, vertraut
-> werden, zuhause sein.
+1. `Motiv: ein kleines Segelboot von der Seite.`
+2. `Motiv: ein Anker.`
+3. `Motiv: eine Kompassrose ohne Zahlen und ohne Buchstaben.`
+4. `Motiv: eine einzelne Palme.`
+5. `Motiv: eine kleine Insel mit zwei Palmen.`
 
 ---
 
@@ -95,14 +149,13 @@ am meisten.**
 | ⏳ | Testphase läuft |
 | 🔒 | Test beendet |
 
-**Prompt:**
+**Die vier Motiv-Zeilen.** Zusatz für alle vier: „Freundlich und ruhig, nicht
+warnend, nicht alarmierend."
 
-> *[Grundstil einfügen]* Erstelle vier zusammengehörige Zustands-Icons als
-> einzelne Bilder: (1) ein offenes Tor oder ein geöffneter Bogen für „alles
-> offen", (2) ein schlichter Haken in einem Kreis für „aktiv", (3) eine
-> minimalistische Sanduhr für „läuft noch", (4) ein geschlossenes, ruhiges
-> Vorhängeschloss für „beendet". Freundlich und ruhig, nicht warnend, nicht rot,
-> nicht alarmierend.
+1. `Motiv: ein offener Bogen oder ein offenes Tor — es soll „alles offen" ausdrücken.`
+2. `Motiv: ein schlichter Haken in einem Kreis.`
+3. `Motiv: eine minimalistische Sanduhr.`
+4. `Motiv: ein geschlossenes, ruhiges Vorhängeschloss.`
 
 ---
 
@@ -121,13 +174,16 @@ Klein am linken Rand jeder Menüzeile.
 | 🔒 | Datenschutz |
 | 🗑️ | Verlauf löschen |
 
-**Prompt:**
+**Sechs neue Motive** (Insel und Vorhängeschloss hast du schon aus Gruppe 2
+und 3). Zusatz für alle: „Sehr schlicht — steht klein am Rand einer Liste und
+darf nicht um Aufmerksamkeit kämpfen."
 
-> *[Grundstil einfügen]* Erstelle acht kleine, zusammengehörige Menü-Icons als
-> einzelne Bilder, alle in derselben Strichstärke und optischen Grösse:
-> Karte/Zahlung, Insel mit Palme, Schlüssel, Person, Info-Kreis, Schriftrolle,
-> Vorhängeschloss, Papierkorb. Sehr schlicht — sie stehen klein am linken Rand
-> einer Liste und dürfen nicht um Aufmerksamkeit kämpfen.
+1. `Motiv: eine Zahlkarte von vorn, mit einem schmalen waagrechten Streifen.`
+2. `Motiv: ein Schlüssel.`
+3. `Motiv: die Silhouette einer Person von vorn, Kopf und Schultern, ohne Gesicht.`
+4. `Motiv: ein Kreis mit einem kleinen „i" darin — das übliche Info-Zeichen.`
+5. `Motiv: eine zusammengerollte Schriftrolle von der Seite.`
+6. `Motiv: ein Papierkorb mit Deckel.`
 
 ---
 
@@ -144,14 +200,14 @@ Klein am linken Rand jeder Menüzeile.
 | ⛵ | Mit dem Boot |
 | 🏖️ | Schon auf der Insel |
 
-**Prompt:**
+**Sechs neue Motive** (Segelboot hast du aus Gruppe 2, Frau aus Gruppe 4):
 
-> *[Grundstil einfügen]* Erstelle acht kleine Auswahl-Icons als einzelne
-> Bilder: Sonne, Wolke, eine ruhige flache Welle, eine höhere bewegte Welle,
-> eine weibliche Silhouette, eine männliche Silhouette, ein Segelboot, eine
-> Strandliege. Die Silhouetten ohne Gesicht, nur Umriss. Die beiden Wellen
-> müssen sich deutlich unterscheiden — die eine ruhig und flach, die andere
-> höher und bewegter.
+1. `Motiv: eine Sonne mit gleichmässigen Strahlen.`
+2. `Motiv: eine einzelne weiche Wolke.`
+3. `Motiv: eine ruhige, flache Welle.`
+4. `Motiv: eine höhere, bewegte Welle mit einem Wellenkamm. Deutlich lebhafter als eine flache Welle.`
+5. `Motiv: die Silhouette einer männlichen Person von vorn, Kopf und Schultern, ohne Gesicht.`
+6. `Motiv: eine Strandliege von der Seite.`
 
 ---
 
@@ -159,17 +215,15 @@ Klein am linken Rand jeder Menüzeile.
 
 🌴 🌺 🐚 🌊 ⛵ 🌅 🕊️ 🪷
 
-**Prompt:**
+**Vier neue Motive** — Palme, Welle, Segelboot und Sonnenaufgang hast du
+schon aus den Gruppen 1, 2 und 5. Zusatz für alle vier: „Das Motiv wird später
+**rund beschnitten** — es muss mittig sitzen und darf die Ecken nicht
+berühren."
 
-> *[Grundstil einfügen]* Erstelle acht Symbole zur Auswahl als Profilbild, alle
-> im selben Stil und Massstab: Palme, Hibiskusblüte, Muschel, Welle, Segelboot,
-> Sonnenaufgang über Wasser, Taube im Flug, Lotusblüte. Diese acht werden **rund
-> beschnitten** — das Motiv muss deshalb mittig sitzen und darf die Ecken nicht
-> berühren.
->
-> Zusatz: Erstelle von diesen acht zusätzlich eine Fassung mit **gefüllter
-> Kreisfläche in warmem Creme `#F3DDAC`** hinter dem goldbraunen Motiv, damit
-> sie als Profilbild auch ohne Rahmen fertig aussehen.
+1. `Motiv: eine Hibiskusblüte von vorn.`
+2. `Motiv: eine Muschel.`
+3. `Motiv: eine Taube im Flug, von der Seite.`
+4. `Motiv: eine Lotusblüte von vorn.`
 
 ---
 
@@ -177,11 +231,17 @@ Klein am linken Rand jeder Menüzeile.
 
 | Emoji | Wo | Ersatz-Motiv |
 |---|---|---|
-| ☀️ 🌴 🌙 | Begrüssung je nach Tageszeit (Mond nachts bis 5, Sonne bis 11, Palme bis 22, dann wieder Mond) | Sonne, Palme, Mond — passen zu Gruppe 5 und 2 |
-| 🌴 | Wochenziel erreicht | Eine Palme mit einem kleinen Haken daneben |
-| 🔒 | gesperrte Übung in der Liste | Kleines Vorhängeschloss, passend zu Gruppe 3 |
-| 🇨🇭 | Abzeichen „Schweizerdeutsch" auf Mein Weg | Ein schlichtes Schweizerkreuz im Kreis, goldbraun statt rot |
-| 🧘 | Notbehelf, falls zu einer Übung gar kein Foto passt (kommt praktisch nie vor) | Sitzende Silhouette im Schneidersitz, ohne Gesicht |
+| ☀️ 🌴 🌙 | Begrüssung je nach Tageszeit | Sonne und Palme hast du schon — **neu nur der Mond** |
+| 🌴 | Wochenziel erreicht | dieselbe Palme wie oben |
+| 🔒 | gesperrte Übung in der Liste | dasselbe Vorhängeschloss wie in Gruppe 3 |
+| 🇨🇭 | Abzeichen „Schweizerdeutsch" auf Mein Weg | **neu** |
+| 🧘 | Notbehelf, falls zu einer Übung gar kein Foto passt | **neu** |
+
+**Drei neue Motiv-Zeilen:**
+
+1. `Motiv: eine schmale Mondsichel.`
+2. `Motiv: ein Schweizerkreuz in einem Kreis. Wichtig: goldbraun wie alles andere, NICHT rot.`
+3. `Motiv: die Silhouette einer sitzenden Person im Schneidersitz von vorn, ohne Gesicht.`
 
 ### Der Stern — am 5. Aug. 2026 angeglichen
 
