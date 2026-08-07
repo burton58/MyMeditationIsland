@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v46";
+const CACHE_NAME = "myisland-cache-v47";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -58,7 +58,15 @@ const SHELL_FILES = [
   "./icon-zugang-offen.png",
   "./icon-zugang-aktiv.png",
   "./icon-zugang-test.png",
-  "./icon-zugang-zu.png"
+  "./icon-zugang-zu.png",
+  // Die verstreuten Symbole - seit 7. Aug. 2026 gezeichnet statt
+  // ☀️ 🌴 🌙 🇨🇭 🧘. Sonne, Palme und Mond stehen in der Begruessung
+  // ganz oben auf der Startseite.
+  "./icon-sonne.png",
+  "./icon-palme.png",
+  "./icon-mond.png",
+  "./icon-schweizerkreuz.png",
+  "./icon-sitzende.png"
 ];
 
 self.addEventListener("install", function(event){

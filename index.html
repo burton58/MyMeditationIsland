@@ -220,6 +220,10 @@
   .page-head .ttl{ flex:1; min-width:0; }
   .page-head .ttl.center{ text-align:center; }
   .page-head h1{ font-family:var(--serif); font-size:1.65rem; margin:0 0 3px; }
+  /* Sonne / Palme / Mond neben der Begruessung. In em, damit das Bild mit
+     der Ueberschrift mitwaechst; -3px setzt es auf die Schriftlinie, sonst
+     haengt es zu hoch. Seit 7. Aug. 2026 statt ☀️ 🌴 🌙. */
+  .gruss-bild{ width:1.18em; height:1.18em; vertical-align:-4px; margin-left:2px; }
   .page-head p{ margin:0; font-size:.88rem; color:var(--ink-soft); }
   .icon-btn{
     border:none; background:var(--card); width:38px; height:38px; border-radius:50%; cursor:pointer;
@@ -612,8 +616,17 @@
      man den Unterschied auf dem Handy kaum. */
   .bar.voll{ box-shadow:0 0 0 1.5px var(--gold); }
   .goal-haken{ font-size:1.3rem; line-height:1; }
+  /* Palme, wenn das Wochenziel erreicht ist - vorher 🌴. */
+  .goal-haken img{ width:26px; height:26px; display:block; }
 
   .fd-greeting{ margin:0; font-size:.88rem; color:var(--ink-soft); }
+  /* Schweizerkreuz im Abzeichen "Schweizerdeutsch" - vorher 🇨🇭. Das
+     gelieferte Bild hat keinen Kreis drum, was hier von Vorteil ist:
+     weniger Linien, klarer neben dem kleinen Text. */
+  .badge-bild{ width:1.05em; height:1.05em; vertical-align:-2px; }
+  /* Kleines Schloss hinter dem Namen einer gesperrten Uebung - vorher 🔒.
+     Dasselbe Bild wie "Test beendet" auf der Zugangs-Karte. */
+  .zeile-schloss{ width:.95em; height:.95em; vertical-align:-2px; opacity:.75; }
   .fd-badge{
     background:var(--cream-2); color:var(--gold-deep); font-size:.68rem; font-weight:800;
     padding:6px 10px; border-radius:10px; flex:0 0 auto;
@@ -1299,7 +1312,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-07.55";
+    var AKTUELLE_VERSION = "2026-08-07.56";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1425,7 +1438,7 @@
   <div class="page home-page" id="homePage">
     <div class="page-head">
       <div class="ttl">
-        <h1 id="greeting">Guten Morgen ☀️</h1>
+        <h1 id="greeting">Guten Morgen <img class="gruss-bild" src="icon-sonne.png" alt="" aria-hidden="true"></h1>
         <p>Deine Insel wartet auf dich.</p>
       </div>
       <button class="icon-btn" id="homeProfilBtn" title="Mein Weg">
@@ -1662,7 +1675,7 @@
         <h1>Mein Weg</h1>
         <p class="fd-greeting" id="fdGreeting">Was du schon geschafft hast</p>
       </div>
-      <span class="fd-badge">🇨🇭 Schweizerdeutsch</span>
+      <span class="fd-badge"><img class="badge-bild" src="icon-schweizerkreuz.png" alt="" aria-hidden="true"> Schweizerdeutsch</span>
       <button class="icon-btn" id="meinWegEinstellungenBtn" title="Einstellungen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
@@ -3580,7 +3593,8 @@
   // katIcon(...) und nimmt overflow:hidden bei .row-thumb heraus.
   function katIcon(dir){
     var k = KATEGORIEN.filter(function(x){ return x.dir === dir; })[0];
-    return k ? '<img class="kat-icon" src="' + k.icon + '" alt="">' : "🧘";
+    return k ? '<img class="kat-icon" src="' + k.icon + '" alt="">'
+             : '<img class="kat-icon" src="icon-sitzende.png" alt="">';   // vorher 🧘
   }
 
   // Welches Foto zu welcher Kategorie gehoert - eine Stelle fuer beides:
@@ -3612,7 +3626,7 @@
     // bei 47 Zeilen macht das den Unterschied.
     return datei
       ? '<img class="row-foto" src="' + datei.replace("bg-", "thumb-") + '" alt="">'
-      : "🧘";
+      : '<img class="kat-icon" src="icon-sitzende.png" alt="">';   // vorher 🧘
   }
 
   // Die Uebung hinter einem gespeicherten Namen (Verlauf, heutiger Fokus).
@@ -3788,13 +3802,21 @@
   // fiel die Stunde (0) mit in "kleiner als 11" und zeigte "Guten Morgen"
   // statt einer eigenen Nacht-Begruessung. Jetzt eine eigene erste Stufe fuer
   // die Stunden nach Mitternacht vor dem Morgen.
+  //
+  // Seit 7. Aug. 2026 stehen hier gezeichnete Bilder statt der Emoji
+  // 🌙 ☀️ 🌴 - dieselbe Familie wie am Kompass. Wer zurueck zu den Emoji
+  // will, ersetzt in gruss()/bildZeichen() den <img> durch das Zeichen im
+  // Kommentar daneben.
+  function bildZeichen(datei, klasse){
+    return '<img class="' + (klasse || "zeichen") + '" src="' + datei + '" alt="" aria-hidden="true">';
+  }
   function begruessung(){
     var h = new Date().getHours();
-    if (h < 5) return { text:"Gute Nacht", icon:"🌙" };
-    if (h < 11) return { text:"Guten Morgen", icon:"☀️" };
-    if (h < 17) return { text:"Schön, dass du da bist", icon:"🌴" };
-    if (h < 22) return { text:"Guten Abend", icon:"🌴" };
-    return { text:"Schön, dass du noch da bist", icon:"🌙" };
+    if (h < 5) return { text:"Gute Nacht", bild:"icon-mond.png" };            // 🌙
+    if (h < 11) return { text:"Guten Morgen", bild:"icon-sonne.png" };        // ☀️
+    if (h < 17) return { text:"Schön, dass du da bist", bild:"icon-palme.png" };  // 🌴
+    if (h < 22) return { text:"Guten Abend", bild:"icon-palme.png" };         // 🌴
+    return { text:"Schön, dass du noch da bist", bild:"icon-mond.png" };      // 🌙
   }
 
   function gruende(m){
@@ -3932,7 +3954,7 @@
     host.innerHTML =
       '<div class="goal-top"><div class="body"><div class="name">' + zeile + '</div>' +
         '<div class="sub">' + (geschafft ? "Ziel erreicht – schön, dass du drangeblieben bist." : "diese Woche") + '</div></div>' +
-        (geschafft ? '<span class="goal-haken">🌴</span>' : '') + '</div>' +
+        (geschafft ? '<span class="goal-haken"><img src="icon-palme.png" alt="" aria-hidden="true"></span>' : '') + '</div>' +
       '<div class="bar' + (geschafft ? ' voll' : '') + '"><span style="width:' + pct + '%"></span></div>' +
       '<button class="btn-ghost" id="wochenzielAendernBtn" style="margin-top:12px;">Ziel anpassen</button>';
     document.getElementById("wochenzielAendernBtn").addEventListener("click", zeigeWochenzielEditor);
@@ -4128,7 +4150,8 @@
       return '<div class="lib-row' + (frei ? '' : ' locked') + '" data-play="' + m.id + '">' +
         '<span class="row-thumb">' + rowFoto(m) + '</span>' +
         '<span class="lib-row-body">' +
-          '<span class="lib-row-name">' + m.name + (frei ? '' : ' 🔒') +
+          '<span class="lib-row-name">' + m.name +
+          (frei ? '' : ' <img class="zeile-schloss" src="icon-zugang-zu.png" alt="gesperrt">') +
             (gemacht[m.name] ? '<span class="lib-done">schon gemacht</span>' : '') + '</span>' +
           // Bereichsname nur, solange keine Kategorie gewaehlt ist (4. Aug.
           // 2026): steht oben schon die Kachel "Stress lösen" in Gold, sagt
@@ -6001,7 +6024,8 @@
   // empfehlen wir dir jetzt" mit Startknopf, nie beides gleichzeitig.
   function renderHome(){
     var gruss = begruessung();
-    document.getElementById("greeting").textContent = gruss.text + " " + gruss.icon;
+    document.getElementById("greeting").innerHTML =
+      gruss.text + " " + bildZeichen(gruss.bild, "gruss-bild");
     document.getElementById("homeStateText").textContent = kompassBenutzt
       ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
       // Der Satz nennt jetzt den NUTZEN, nicht nur die Bedienung

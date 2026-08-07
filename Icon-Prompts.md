@@ -18,173 +18,115 @@ durch eigene Symbole zu ersetzen.
 
 ---
 
-## Wo wir stehen (Stand 7. Aug. 2026, nachts)
+## Wo wir stehen (Stand 8. Aug. 2026)
 
-**28 von 39 sind fertig, 15 davon schon in der App. 11 fehlen noch** —
-davon 1 zum Nachbessern und 10, die es noch gar nicht gibt.
+**37 von 39 sind fertig, 21 davon schon in der App. Es fehlen noch zwei.**
 
-### ✅ Fertig und in der App (15)
+### ✅ Fertig und in der App (21)
 
 - **1 bis 11** — die Stimmungen am Kompass
 - **17, 18, 19, 20** — die Zugangs-Karte in den Einstellungen
+- **15, 20, 27, 37, 38, 39** — die verstreuten Symbole: Sonne, Palme und Mond
+  in der **Begrüssung ganz oben auf der Startseite**, das Schweizerkreuz im
+  Abzeichen, das Schloss an gesperrten Übungen, die Palme beim erreichten
+  Wochenziel und die sitzende Person als Notbehelf
 
-### ✅ Gut, aufbereitet, warten nur noch auf ihre Nachbarn (13)
+### ✅ Gut, aufbereitet, warten nur noch auf ihre Nachbarn (16)
 
 Liegen fertig unter `icons-original/bereit/`. Eingebaut wird immer eine ganze
 Gruppe auf einmal — sonst stünden gezeichnete Bilder und Emoji nebeneinander.
 
 | Nr. | Motiv | wartet auf |
 |---|---|---|
-| 12 | Segelboot | **16** — dann ist die Inselreise komplett |
-| 13 | Anker | 16 |
-| 14 | Kompassrose | 16 |
-| 15 | einzelne Palme | 16 · und auf **27** für die Begrüssung |
-| 21 | Zahlkarte | 25, 26 — die Einstellungs-Liste hat acht Zeilen |
-| 22 | Schlüssel | 25, 26 |
-| 23 | Umriss einer Person | 25, 26 |
-| 24 | Info-Kreis mit i | 25, 26 |
-| 35 | Taube | 29, 33, 34 — die acht Profilbilder |
-| 36 | Lotusblüte | 29, 33, 34 |
-| 37 | Mondsichel | **27** — dann sind die verstreuten Symbole komplett |
-| 38 | Schweizerkreuz | 27 |
-| 39 | sitzende Person | 27 |
+| 12, 13, 14 | Segelboot, Anker, Kompassrose | **16** |
+| 21, 22, 23, 24, 25, 26 | Zahlkarte, Schlüssel, Person, Info, Schriftrolle, Papierkorb | **16** (die Zeile „Meine Insel gestalten" braucht die Insel) |
+| 28, 30, 31, 32 | Wolke, bewegte Welle, Mann, Strandliege | **29** |
+| 33, 34, 35, 36 | Hibiskus, Muschel, Taube, Lotusblüte | **29** |
 
-### 🔁 Nochmal machen (1)
+### ⬜ Es fehlen genau zwei
 
-| Nr. | Motiv | was schiefging |
+| Nr. | Motiv | schaltet frei |
 |---|---|---|
-| 16 | Insel mit zwei Palmen | ausgefüllte Fläche statt Umriss, bei 28 px ein dunkler Fleck |
+| **16** | eine kleine Insel mit zwei Palmen, **nur als Umriss** | die Inselreise **und** die Einstellungs-Liste |
+| **29** | eine ruhige, flache Welle | „Insel gestalten" **und** die acht Profilbilder |
 
-### ⬜ Noch gar nicht da (10)
+Beim ersten Versuch kam die Insel als ausgefüllte Fläche — darum unbedingt
+dazuschreiben: *nur Umrisslinien, das Innere bleibt leer.*
 
-**25** Schriftrolle · **26** Papierkorb · **27** Sonne · **28** Wolke · **29**
-flache Welle · **30** bewegte Welle · **31** Umriss eines Mannes · **32**
-Strandliege · **33** Hibiskusblüte · **34** Muschel
-
-### In welcher Reihenfolge — zwei einzelne Bilder schliessen je eine Gruppe
-
-1. **Nur die 27** (Sonne) — dann sind die verstreuten Symbole komplett:
-   Sonne, Palme und Mond für die **Begrüssung ganz oben auf der Startseite**,
-   dazu Schweizerkreuz, Schloss und die sitzende Person. Das ist die Stelle,
-   die man bei jedem Öffnen der App als Erstes sieht.
-2. **Nur die 16** (Insel mit zwei Palmen) — dann ist die Inselreise komplett.
-3. **25 und 26** (Schriftrolle, Papierkorb) — dann die Einstellungs-Liste.
-4. **29, 33, 34** (flache Welle, Hibiskus, Muschel) — dann die Profilbilder.
-5. Der Rest: 28, 30, 31, 32 (Insel gestalten).
-
-### Worauf bei diesen Nummern besonders zu achten ist
-
-- **16, 33, 34** (Insel, Blume, Muschel) — hier kam bisher zuverlässig eine
-  ausgefüllte Fläche. Immer dazuschreiben: *nur Umrisslinien, das Innere
-  bleibt leer.*
-- **31** (Umriss eines Mannes) — im Text stand früher „Silhouette", das ist
-  genau die ausgefüllte Form. Steht jetzt als **Umriss** da.
-
-### Drei Bilder mit einer Einschränkung
-
-Alle drei sind brauchbar und abgelegt, sie brauchen **keine** neue Runde —
-hier steht nur, warum sie später auffallen könnten:
-
-- **Nr. 38 Schweizerkreuz** — es fehlt der Kreis darum, es ist nur das Kreuz.
-  Für die Stelle, an der es steht (kleines Abzeichen neben dem Wort
-  „Schweizerdeutsch"), ist das eher von Vorteil: weniger Linien, klarer bei
-  kleiner Anzeige. Falls doch ein Kreis gewünscht ist: *„dasselbe Kreuz,
-  zusätzlich ein einfacher Kreis darum."*
-- **Nr. 14 Kompassrose** — sehr fein gearbeitet, acht Zacken, Doppelring,
-  Mittelkreis. Gross schön, bei 28 px dicht. Falls es stört: eine Fassung mit
-  **nur vier Zacken und einem einzigen Ring** anfragen.
-- **Nr. 21 Zahlkarte** — hochkant statt quer, liest sich eher wie ein Block.
-  Falls es stört: *„quer statt hochkant, breiter als hoch"*.
+Die Welle Nummer 29 ist die **ruhige, flache**. Die höhere mit Wellenkamm
+(Nummer 30) ist schon da; die beiden sollen sich deutlich unterscheiden.
 
 ### Was die Aufbereitung jedes Mal automatisch erledigt
 
 Danach muss nichts nachgefragt werden — diese vier Dinge korrigiere ich beim
 Einbauen selbst:
 
-1. **Zu feine Striche** werden verstärkt, bis sie das Gewicht der bestehenden
-   Familie treffen. (Bei der Lieferung vom 7. Aug. nachts erstmals **nicht
-   nötig** — 5,8 bis 7,3 %, genau die verlangten 6 %.)
-2. **Zu kräftige Striche** werden ausgedünnt, wie beim Torbogen.
-3. **Aufgemaltes Schachbrett** wird herausgerechnet: Weil das Muster grau
-   (R = G = B) und die Linien goldbraun sind, lässt sich die Maske über die
-   Farbigkeit neu bilden.
-4. **Abweichende Farbtöne** werden auf `#8A6A2F` gebracht, den Ton der elf
-   Stimmungsbilder.
+1. **Zu feine Striche** werden verstärkt, **zu kräftige** ausgedünnt, bis alle
+   das Gewicht der bestehenden Familie treffen.
+2. **Aufgemalter Hintergrund** wird herausgerechnet — sowohl das graue
+   Schachbrett als auch ein weisses Blatt. Weil beides unbunt ist und die
+   Linien goldbraun sind, lässt sich die Maske über die Farbigkeit neu bilden.
+3. **Abweichende Farbtöne** werden auf `#8A6A2F` gebracht.
+4. **Flache, breite Motive** (Wellen, Schriftrolle, Strandliege) bekommen
+   etwas mehr Breite, damit sie neben den runden nicht schwächer wirken.
 
-Und einmal Entwarnung: Kommt ein Bild in der Vorschau auf **rosa-orangem
-Grund** statt auf dem Karomuster, ist das **kein Fehler**. Der Hintergrund ist
-durchsichtig, unter der Transparenz liegt nur eine bunte Farbe, die manche
-Vorschauen mitzeigen. In der App ist davon nichts zu sehen.
+Und zwei Mal Entwarnung:
+
+- Kommt ein Bild in der Vorschau auf **rosa-orangem Grund** statt auf dem
+  Karomuster, ist das **kein Fehler**. Der Hintergrund ist durchsichtig,
+  darunter liegt nur eine bunte Farbe, die manche Vorschauen mitzeigen.
+- Ein **weisses Blatt** statt Transparenz ist ebenfalls kein Grund für eine
+  neue Runde — siehe Punkt 2.
+
+### Drei Bilder mit einer Einschränkung — alle brauchbar
+
+- **Nr. 38 Schweizerkreuz** — ohne Kreis darum. An seiner Stelle (kleines
+  Abzeichen) ist das eher von Vorteil. Es ist so eingebaut.
+- **Nr. 14 Kompassrose** — sehr fein, acht Zacken, Doppelring. Falls es bei
+  kleiner Anzeige stört: **nur vier Zacken und ein einziger Ring**.
+- **Nr. 21 Zahlkarte** — hochkant statt quer. Falls es stört: *„quer statt
+  hochkant, breiter als hoch"*.
 
 ---
 
-## Der Auftrag zum Kopieren — nur noch das, was fehlt
-
-Diesen Text **einmal** ins ChatGPT-Gespräch einfügen. Danach jedes Mal nur
-noch: *„Jetzt Nummer 16."* Die Nummern sind dieselben wie in der grossen
-Liste weiter unten — so bleibt alles zuordenbar.
-
-Fertige Nummern sind hier weggelassen. **Fang mit der 27 an** — dieses eine
-Bild schliesst die Begrüssung auf der Startseite ab.
+## Der Auftrag zum Kopieren — es fehlen nur noch zwei Bilder
 
 ````
-Du erstellst für mich einzelne Symbole für eine ruhige Meditations-App.
+Ich brauche noch zwei Symbole für eine ruhige Meditations-App.
+Erstelle jetzt nur das erste. Danach warte, bis ich "weiter" schreibe.
+Immer genau ein Bild pro Antwort, kein Übersichtsblatt.
 
-ABLAUF - wichtig:
-Erstelle NICHT alle auf einmal und KEIN Übersichtsblatt.
-Erstelle jetzt nur Nummer 27. Danach wartest du, bis ich dir die nächste
-Nummer nenne. Immer genau ein Bild pro Antwort.
-Halte dich streng an die Liste unten. Erfinde KEINE eigenen Motive und
-weiche NICHT vom Text der jeweiligen Nummer ab. Zeichne nur das, was bei
-der genannten Nummer steht. Wenn du unsicher bist, frag lieber nach.
-
-STIL - gilt für alle:
-- NUR UMRISSLINIEN, NIEMALS ausgefüllte Flächen. Jedes Motiv ist eine
-  Kontur - das Innere bleibt leer. Keine Silhouette, keine flächige
-  Füllung, auch nicht bei Inseln, Blumen, Muscheln, Tieren oder Personen.
-  Als Faustregel: höchstens ein Viertel des Motivfeldes darf Farbe sein.
+STIL - für beide:
+- NUR UMRISSLINIEN, NIEMALS ausgefüllte Flächen. Das Motiv ist eine
+  Kontur, das Innere bleibt leer. Keine Silhouette, keine flächige
+  Füllung. Höchstens ein Viertel des Motivfeldes darf Farbe sein.
 - Es soll aussehen, als wäre es MIT EINEM BRAUNEN FILZSTIFT AUF WEISSES
   PAPIER gezeichnet. Die Linie selbst ist dunkelgoldbraun und deckend.
-  Also KEIN Leuchtreklame-Schild, keine hell leuchtende Neonröhre, kein
-  Leuchten, kein Schein, kein Schimmer, kein Schatten, kein 3D, kein Glanz.
-- Feine, gleichmässig dicke Linienzeichnung, weich gerundete Enden,
-  keine harten Ecken.
-- Die Striche müssen KRÄFTIG sein: Strichstärke rund 6 % der Bildbreite,
-  also etwa 60 von 1024 Pixeln. Lieber zu dick als zu dünn.
-  Grund: Die Symbole werden in der App nur 46 Pixel gross angezeigt.
+  Also KEIN Leuchtreklame-Schild, keine leuchtende Neonröhre, kein
+  Leuchten, kein Schein, kein Schatten, kein 3D, kein Glanz.
+- Feine, gleichmässig dicke Linien, weich gerundete Enden.
+- Die Striche müssen KRÄFTIG sein: rund 6 % der Bildbreite, also etwa
+  60 von 1024 Pixeln. Lieber zu dick als zu dünn - die Symbole werden
+  in der App nur 46 Pixel gross angezeigt.
 - HALTE DAS MOTIV EINFACH. Wenige grosse Formen statt vieler kleiner
-  Einzelheiten - bei 28 Pixeln verschwimmt jedes feine Detail.
-- Das Motiv FÜLLT das Quadrat: rundherum höchstens 12 % Luft, oben gleich
-  viel wie unten. Kein kleines Motiv in der Bildmitte.
-- Nur eine einzige Farbe: Goldbraun #8F6F22. Keine zweite Farbe, kein Rot,
-  kein Gelb, keine Schattierung.
-- Hintergrund vollständig transparent (echter Alpha-Kanal). Kein Kästchen,
-  keine Kachel, kein Rahmen, kein Kreis darum. Male AUCH NICHT das graue
-  Schachbrettmuster auf, mit dem Programme Transparenz anzeigen - der
-  Hintergrund muss wirklich leer sein, nicht nur leer aussehen.
-- Quadratisch, 1024 x 1024 Pixel, als PNG mit Transparenz.
+  Einzelheiten.
+- Das Motiv FÜLLT das Quadrat: rundherum höchstens 12 % Luft.
+- Nur eine einzige Farbe: Goldbraun #8F6F22. Keine zweite Farbe.
+- Hintergrund vollständig transparent (echter Alpha-Kanal). Kein
+  Kästchen, kein Rahmen, kein Kreis darum. Male auch NICHT das graue
+  Schachbrettmuster auf, mit dem Programme Transparenz anzeigen.
+- Quadratisch, 1024 x 1024 Pixel, PNG mit Transparenz.
 - Kein Text, keine Buchstaben, keine Zahlen im Bild.
-- Ruhig, hochwertig, zeitlos - bewusst nicht verspielt, nicht comichaft.
-- Bei Nummer 33 und 34 zusätzlich: Das Motiv wird später rund beschnitten,
-  es muss mittig sitzen und darf die Ecken nicht berühren.
+- Ruhig, hochwertig, zeitlos - nicht verspielt, nicht comichaft.
 
-DIE MOTIVE (die Nummern sind fest, sie gehören zu einer grösseren Liste):
-16. Eine kleine Insel mit zwei Palmen, nur als Umrisslinien, das Innere
-    bleibt leer.
-25. Eine zusammengerollte Schriftrolle von der Seite.
-26. Ein Papierkorb mit Deckel.
-27. Eine Sonne mit gleichmässigen Strahlen.
-28. Eine einzelne weiche Wolke.
-29. Eine ruhige, flache Welle.
-30. Eine höhere, bewegte Welle mit einem Wellenkamm, deutlich lebhafter
-    als Nummer 29.
-31. Der Umriss einer männlichen Person von vorn, Kopf und Schultern, ohne
-    Gesicht. Nur die Kontur als Linie, NICHT ausgefüllt.
-32. Eine Strandliege von der Seite.
-33. Eine Hibiskusblüte von vorn, nur als Umrisslinien.
-34. Eine Muschel, nur als Umrisslinien.
+DIE ZWEI MOTIVE:
+16. Eine kleine Insel mit zwei Palmen. Nur Umrisslinien - Sand, Stämme
+    und Wedel sind Konturen, das Innere bleibt komplett leer. KEINE
+    ausgefüllte Silhouette.
+29. Eine ruhige, flache Welle. Sie soll deutlich ruhiger und flacher
+    wirken als eine hohe Welle mit Wellenkamm.
 
-Fang jetzt mit Nummer 27 an.
+Fang jetzt mit Nummer 16 an.
 ````
 
 Wenn ein Bild wieder ausgefüllt oder leuchtend kommt, hilft am besten:
