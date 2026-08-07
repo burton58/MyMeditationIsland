@@ -1,136 +1,101 @@
-# Alle Emoji der App — und wie du daraus eigene Bilder machst
+# Die Symbole der App — Übersicht und Nachschlagewerk
 
-Stand: 5. August 2026 — **direkt aus der App ausgelesen**, nicht aus dem
-Gedächtnis. Die App benutzt aktuell **38 verschiedene farbige Emoji** an 64
-Stellen (Kommentare im Programmtext und abgeschaltete Teile nicht mitgezählt).
+**Begonnen am 5. August 2026, abgeschlossen am 8. August 2026.**
 
-Emoji sehen auf jedem Gerät anders aus (iPhone, Android und Windows zeichnen
-dieselbe Palme verschieden) und wirken neben deinen eigenen, ruhigen Bildern
-schnell billig. Diese Datei listet alle auf und liefert die Prompts, um sie
-durch eigene Symbole zu ersetzen.
+Ausgangslage war, dass die App **38 verschiedene farbige Emoji** an 64 Stellen
+benutzte. Emoji sehen auf jedem Gerät anders aus — iPhone, Android und Windows
+zeichnen dieselbe Palme verschieden — und wirkten neben den ruhigen,
+goldbraunen Bildern der Kategorien wie ein Fremdkörper.
 
-**Schon erledigt:**
+Inzwischen sind **alle ersetzt**. Diese Datei hält fest, welches Bild wo steht,
+was beim Erstellen gelernt wurde und wie man vorgehen müsste, falls je ein
+weiteres dazukommt.
+
+**Nicht gezeichnet werden mussten:**
 - Die vier Kategorien (Gedanken beruhigen, Gefühle verstehen, Stress lösen,
-  Entspannen) haben bereits deine eigenen Bilder.
+  Entspannen) hatten schon vorher eigene Bilder.
 - Das kleine Bild links neben jeder Meditation ist seit dem 5. Aug. 2026 ein
-  **Foto** — es zeigt das Bild, das während dieser Meditation läuft. Da ist
-  nichts mehr zu zeichnen.
+  **Foto** — es zeigt das Bild, das während dieser Meditation läuft.
 
 ---
 
-## Wo wir stehen (Stand 8. Aug. 2026)
+## ✅ Fertig — alle 39 Symbole sind gemacht und eingebaut
 
-**37 von 39 sind fertig, 21 davon schon in der App. Es fehlen noch zwei.**
+**Stand 8. August 2026.** Die App enthält kein einziges farbiges Emoji mehr.
+Von der Begrüssung ganz oben auf der Startseite bis zum Papierkorb unten in
+den Einstellungen steht überall dein eigenes Bild.
 
-### ✅ Fertig und in der App (21)
+### Wo sie stehen
 
-- **1 bis 11** — die Stimmungen am Kompass
-- **17, 18, 19, 20** — die Zugangs-Karte in den Einstellungen
-- **15, 20, 27, 37, 38, 39** — die verstreuten Symbole: Sonne, Palme und Mond
-  in der **Begrüssung ganz oben auf der Startseite**, das Schweizerkreuz im
-  Abzeichen, das Schloss an gesperrten Übungen, die Palme beim erreichten
-  Wochenziel und die sitzende Person als Notbehelf
+| Nummern | Wo in der App |
+|---|---|
+| 1–11 | die Stimmungen am Kompass und auf der Abschluss-Seite |
+| 12–16 | die fünf Stationen der Inselreise |
+| 17–20 | die Zugangs-Karte in den Einstellungen |
+| 20–26 | die acht Zeilen der Einstellungs-Liste |
+| 27–32 | „Meine Insel gestalten" (Wetter, Meer, Charakter, Ankunft) |
+| 11, 12, 15, 29, 33–36 | die acht Bilder zur Auswahl fürs Profilbild |
+| 15, 20, 27, 37–39 | die Begrüssung, das Abzeichen, gesperrte Übungen, das erreichte Wochenziel und der Notbehelf |
 
-### ✅ Gut, aufbereitet, warten nur noch auf ihre Nachbarn (16)
+Mehrere Nummern kommen doppelt vor — die Palme steht in der Begrüssung, auf
+der Inselreise **und** zur Auswahl fürs Profilbild. Darum reichten 39 Bilder
+für weit mehr Stellen.
 
-Liegen fertig unter `icons-original/bereit/`. Eingebaut wird immer eine ganze
-Gruppe auf einmal — sonst stünden gezeichnete Bilder und Emoji nebeneinander.
+### Was übrig bleibt — und bewusst so bleibt
 
-| Nr. | Motiv | wartet auf |
-|---|---|---|
-| 12, 13, 14 | Segelboot, Anker, Kompassrose | **16** |
-| 21, 22, 23, 24, 25, 26 | Zahlkarte, Schlüssel, Person, Info, Schriftrolle, Papierkorb | **16** (die Zeile „Meine Insel gestalten" braucht die Insel) |
-| 28, 30, 31, 32 | Wolke, bewegte Welle, Mann, Strandliege | **29** |
-| 33, 34, 35, 36 | Hibiskus, Muschel, Taube, Lotusblüte | **29** |
+Vier **Schriftzeichen** stehen weiterhin im Text: ★ und ☆ für Favoriten, ✎ am
+Profilbild und ✓ in der Wochenübersicht. Das sind keine bunten Emoji, sondern
+einfarbige Zeichen, die die Schrift selbst mitbringt — sie sehen auf jedem
+Gerät gleich aus und fügen sich ins Goldbraun ein. Beim Stern war das schon am
+5. Aug. 2026 die bewusste Entscheidung.
 
-### ⬜ Es fehlen genau zwei
+### Drei Bilder mit einer kleinen Einschränkung
 
-| Nr. | Motiv | schaltet frei |
-|---|---|---|
-| **16** | eine kleine Insel mit zwei Palmen, **nur als Umriss** | die Inselreise **und** die Einstellungs-Liste |
-| **29** | eine ruhige, flache Welle | „Insel gestalten" **und** die acht Profilbilder |
+Alle drei sind eingebaut und funktionieren. Falls sie dir später auffallen,
+steht hier, was man anfragen müsste:
 
-Beim ersten Versuch kam die Insel als ausgefüllte Fläche — darum unbedingt
-dazuschreiben: *nur Umrisslinien, das Innere bleibt leer.*
-
-Die Welle Nummer 29 ist die **ruhige, flache**. Die höhere mit Wellenkamm
-(Nummer 30) ist schon da; die beiden sollen sich deutlich unterscheiden.
-
-### Was die Aufbereitung jedes Mal automatisch erledigt
-
-Danach muss nichts nachgefragt werden — diese vier Dinge korrigiere ich beim
-Einbauen selbst:
-
-1. **Zu feine Striche** werden verstärkt, **zu kräftige** ausgedünnt, bis alle
-   das Gewicht der bestehenden Familie treffen.
-2. **Aufgemalter Hintergrund** wird herausgerechnet — sowohl das graue
-   Schachbrett als auch ein weisses Blatt. Weil beides unbunt ist und die
-   Linien goldbraun sind, lässt sich die Maske über die Farbigkeit neu bilden.
-3. **Abweichende Farbtöne** werden auf `#8A6A2F` gebracht.
-4. **Flache, breite Motive** (Wellen, Schriftrolle, Strandliege) bekommen
-   etwas mehr Breite, damit sie neben den runden nicht schwächer wirken.
-
-Und zwei Mal Entwarnung:
-
-- Kommt ein Bild in der Vorschau auf **rosa-orangem Grund** statt auf dem
-  Karomuster, ist das **kein Fehler**. Der Hintergrund ist durchsichtig,
-  darunter liegt nur eine bunte Farbe, die manche Vorschauen mitzeigen.
-- Ein **weisses Blatt** statt Transparenz ist ebenfalls kein Grund für eine
-  neue Runde — siehe Punkt 2.
-
-### Drei Bilder mit einer Einschränkung — alle brauchbar
-
+- **Nr. 21 Zahlkarte** („Abo verwalten") — hochkant statt quer gezeichnet,
+  liest sich eher wie ein Block. *„Quer statt hochkant, breiter als hoch."*
+- **Nr. 14 Kompassrose** (Inselreise, Stufe 3) — acht Zacken, Doppelring,
+  Mittelkreis. In der Reihe liest sie sich gut, ist aber die dichteste der
+  fünf. *„Nur vier Zacken und ein einziger Ring."*
 - **Nr. 38 Schweizerkreuz** — ohne Kreis darum. An seiner Stelle (kleines
-  Abzeichen) ist das eher von Vorteil. Es ist so eingebaut.
-- **Nr. 14 Kompassrose** — sehr fein, acht Zacken, Doppelring. Falls es bei
-  kleiner Anzeige stört: **nur vier Zacken und ein einziger Ring**.
-- **Nr. 21 Zahlkarte** — hochkant statt quer. Falls es stört: *„quer statt
-  hochkant, breiter als hoch"*.
+  Abzeichen) eher von Vorteil. *„Dasselbe Kreuz, zusätzlich ein Kreis darum."*
+
+### Was beim Aufbereiten jedes Mal automatisch passiert ist
+
+Falls je neue Bilder dazukommen — diese vier Dinge werden beim Einbauen
+korrigiert, dafür muss nichts neu gemacht werden:
+
+1. **Zu feine Striche** verstärken, **zu kräftige** ausdünnen, bis alle
+   dasselbe Gewicht haben.
+2. **Aufgemalter Hintergrund** herausrechnen — graues Schachbrett wie weisses
+   Blatt. Weil beides unbunt ist und die Linien goldbraun sind, lässt sich die
+   Maske über die Farbigkeit neu bilden.
+3. **Abweichende Farbtöne** auf `#8A6A2F` bringen.
+4. **Flache, breite Motive** (Wellen, Schriftrolle, Strandliege) etwas breiter
+   setzen, damit sie neben den runden nicht schwächer wirken.
+
+Und zwei Mal Entwarnung, falls es wieder vorkommt: Ein Bild auf **rosa-orangem
+Grund** oder auf einem **weissen Blatt** statt auf dem Karomuster ist **kein
+Fehler** — siehe Punkt 2.
+
+### Wo die Dateien liegen
+
+- **In der App**: `icon-*.png` im obersten Ordner, je 240 × 240
+- **Originale**: `icons-original/eingang/` — alles, was je geschickt wurde,
+  inklusive der Bilder, die nicht gepasst haben
+- **Aufbereitet**: `icons-original/bereit/` — die 28 fertigen Fassungen
+- **Selbst gezeichnete Muster**: `icons-original/eigene/` — drei SVG-Symbole
+  aus einer Zwischenrunde, nicht eingebaut
 
 ---
 
-## Der Auftrag zum Kopieren — es fehlen nur noch zwei Bilder
+## Der ursprüngliche Auftrag — nur noch zum Nachschlagen
 
-````
-Ich brauche noch zwei Symbole für eine ruhige Meditations-App.
-Erstelle jetzt nur das erste. Danach warte, bis ich "weiter" schreibe.
-Immer genau ein Bild pro Antwort, kein Übersichtsblatt.
-
-STIL - für beide:
-- NUR UMRISSLINIEN, NIEMALS ausgefüllte Flächen. Das Motiv ist eine
-  Kontur, das Innere bleibt leer. Keine Silhouette, keine flächige
-  Füllung. Höchstens ein Viertel des Motivfeldes darf Farbe sein.
-- Es soll aussehen, als wäre es MIT EINEM BRAUNEN FILZSTIFT AUF WEISSES
-  PAPIER gezeichnet. Die Linie selbst ist dunkelgoldbraun und deckend.
-  Also KEIN Leuchtreklame-Schild, keine leuchtende Neonröhre, kein
-  Leuchten, kein Schein, kein Schatten, kein 3D, kein Glanz.
-- Feine, gleichmässig dicke Linien, weich gerundete Enden.
-- Die Striche müssen KRÄFTIG sein: rund 6 % der Bildbreite, also etwa
-  60 von 1024 Pixeln. Lieber zu dick als zu dünn - die Symbole werden
-  in der App nur 46 Pixel gross angezeigt.
-- HALTE DAS MOTIV EINFACH. Wenige grosse Formen statt vieler kleiner
-  Einzelheiten.
-- Das Motiv FÜLLT das Quadrat: rundherum höchstens 12 % Luft.
-- Nur eine einzige Farbe: Goldbraun #8F6F22. Keine zweite Farbe.
-- Hintergrund vollständig transparent (echter Alpha-Kanal). Kein
-  Kästchen, kein Rahmen, kein Kreis darum. Male auch NICHT das graue
-  Schachbrettmuster auf, mit dem Programme Transparenz anzeigen.
-- Quadratisch, 1024 x 1024 Pixel, PNG mit Transparenz.
-- Kein Text, keine Buchstaben, keine Zahlen im Bild.
-- Ruhig, hochwertig, zeitlos - nicht verspielt, nicht comichaft.
-
-DIE ZWEI MOTIVE:
-16. Eine kleine Insel mit zwei Palmen. Nur Umrisslinien - Sand, Stämme
-    und Wedel sind Konturen, das Innere bleibt komplett leer. KEINE
-    ausgefüllte Silhouette.
-29. Eine ruhige, flache Welle. Sie soll deutlich ruhiger und flacher
-    wirken als eine hohe Welle mit Wellenkamm.
-
-Fang jetzt mit Nummer 16 an.
-````
-
-Wenn ein Bild wieder ausgefüllt oder leuchtend kommt, hilft am besten:
-*„Nochmal, aber nur Umrisslinien und ohne Leuchten."*
+Der Text unten war die Vorlage für ChatGPT. **Er wird nicht mehr gebraucht**,
+steht aber hier, falls je ein weiteres Symbol dazukommen soll — dann einfach
+den Stil-Teil kopieren und das gewünschte Motiv anhängen.
 
 ---
 

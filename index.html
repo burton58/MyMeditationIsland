@@ -881,6 +881,9 @@
   }
   .profil-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
   .profil-avatar img[hidden]{ display:none; }
+  /* Ein hochgeladenes Foto fuellt den Kreis ganz (Regel darueber), ein
+     gezeichnetes Symbol sitzt kleiner mittendrin - seit 8. Aug. 2026. */
+  #profilAvatarZeichen img{ width:30px; height:30px; object-fit:contain; }
   /* Kleiner Stift unten rechts: ohne ihn saehe der Avatar nicht antippbar
      aus - genau das hatte Christine bemaengelt. */
   .avatar-stift{
@@ -901,7 +904,10 @@
     font-family:inherit; overflow:hidden;
   }
   .avatar-wahl.aktiv{ border-color:var(--gold); }
-  .avatar-wahl img{ width:100%; height:100%; object-fit:cover; display:block; }
+  /* In den Auswahlkacheln stehen seit 8. Aug. 2026 gezeichnete Symbole
+     statt Emoji - sie sollen die Kachel nicht ganz ausfuellen, sonst
+     kleben sie am Rand. */
+  .avatar-wahl img{ width:64%; height:64%; object-fit:contain; display:block; }
   .avatar-upload{ display:block; text-align:center; cursor:pointer; }
   .avatar-hinweis{ margin:10px 0 0; font-size:.74rem; color:var(--ink-soft); text-align:center; }
   .chev{ color:#c2b391; font-size:1.1rem; }
@@ -930,6 +936,9 @@
   }
   .menu-row:last-child{ border-bottom:none; }
   .menu-row .row-icon{ width:22px; text-align:center; opacity:.75; }
+  /* Seit 8. Aug. 2026 gezeichnete Bilder statt 💳 🏝️ 🔑 🙋‍♀️ ℹ️ 📜 🔒 🗑️.
+     22px, damit die Zeile genauso hoch bleibt wie vorher. */
+  .menu-row .row-icon img{ width:22px; height:22px; display:block; }
   .menu-row .row-text{ flex:1; font-size:.9rem; font-weight:500; }
   .menu-row.danger .row-text{ color:#a33b2c; }
 
@@ -989,6 +998,10 @@
   }
   .journey-stop.erreicht{ opacity:1; border-color:var(--gold); }
   .journey-stop.jetzt{ opacity:1; border-color:var(--gold); box-shadow:0 4px 14px rgba(120,90,10,.28); transform:scale(1.14); background:#fdf8ea; }
+  /* Die fuenf Stationen - seit 8. Aug. 2026 gezeichnet statt ⛵ ⚓ 🧭 🌴 🏝️.
+     28 von 46px, damit der Kreis ringsum sichtbar bleibt. */
+  .journey-bild{ width:28px; height:28px; display:block; }
+  .stufe-bild{ width:1.15em; height:1.15em; vertical-align:-3px; margin-right:2px; }
   .journey-halt{ display:flex; flex-direction:column; align-items:center; gap:4px; }
   .journey-ab{ font-size:.62rem; font-weight:600; color:var(--ink-soft); opacity:.75; }
   .journey-ab.jetzt{ color:var(--gold-deep); opacity:1; }
@@ -1192,6 +1205,12 @@
     cursor:pointer; font-size:.85rem; font-weight:600; display:flex; align-items:center; gap:6px;
     transition:.15s ease; user-select:none;
   }
+  /* Bilder in den Auswahlzeilen und in der Ueberschrift der Insel-Seite -
+     seit 8. Aug. 2026 statt ☀️ ☁️ 🌊 🙋 ⛵ 🏖️ 🏝️. In em, damit sie
+     mit der jeweiligen Schriftgroesse mitwachsen. */
+  .opt-bild{ width:1.3em; height:1.3em; flex:0 0 auto; vertical-align:-4px; }
+  /* Bild in einem Textknopf ("Zur Titelseite") - seit 8. Aug. 2026. */
+  .knopf-bild{ width:1.15em; height:1.15em; vertical-align:-3px; }
   .opts .opt.active{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
   .swatches{ display:flex; gap:10px; }
   .swatch{ width:32px; height:32px; border-radius:50%; border:3px solid transparent; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.15); }
@@ -1312,7 +1331,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-07.56";
+    var AKTUELLE_VERSION = "2026-08-08.57";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1690,7 +1709,7 @@
            verschachtelte <button> sind ungueltiges HTML, und die beiden
            tun ja auch Verschiedenes (Bild waehlen vs. Auf-/Zuklappen). -->
       <button class="profil-avatar" id="profilAvatarBtn" type="button" title="Bild ändern">
-        <span id="profilAvatarZeichen">🌴</span>
+        <span id="profilAvatarZeichen"><img src="icon-palme.png" alt="" aria-hidden="true"></span>
         <img id="profilAvatarBild" alt="" hidden>
         <span class="avatar-stift">✎</span>
       </button>
@@ -1961,34 +1980,34 @@
 
     <div class="card list-card">
       <button class="menu-row" id="profilAboBtn">
-        <span class="row-icon">💳</span><span class="row-text">Abo verwalten</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-zahlkarte.png" alt=""></span><span class="row-text">Abo verwalten</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilIslandBtn">
-        <span class="row-icon">🏝️</span><span class="row-text">Meine Insel gestalten</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-insel-zwei-palmen.png" alt=""></span><span class="row-text">Meine Insel gestalten</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilKontoBtn">
-        <span class="row-icon">🔑</span><span class="row-text">Konto &amp; Anmelden</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-schluessel.png" alt=""></span><span class="row-text">Konto &amp; Anmelden</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilUeberMichBtn">
-        <span class="row-icon">🙋‍♀️</span><span class="row-text">Über mich</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-person.png" alt=""></span><span class="row-text">Über mich</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilAboutBtn">
-        <span class="row-icon">ℹ️</span><span class="row-text">Über die App</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-info.png" alt=""></span><span class="row-text">Über die App</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilImpressumBtn">
-        <span class="row-icon">📜</span><span class="row-text">Impressum</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-schriftrolle.png" alt=""></span><span class="row-text">Impressum</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="profilDatenschutzBtn">
-        <span class="row-icon">🔒</span><span class="row-text">Datenschutz</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-zugang-zu.png" alt=""></span><span class="row-text">Datenschutz</span><span class="chev">›</span>
       </button>
       <button class="menu-row danger" id="profilResetBtn">
-        <span class="row-icon">🗑️</span><span class="row-text">Verlauf löschen</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-papierkorb.png" alt=""></span><span class="row-text">Verlauf löschen</span><span class="chev">›</span>
       </button>
     </div>
 
     <p class="muted-note" id="storageNote">Dein Verlauf bleibt nur auf diesem Gerät – kein Konto, kein Server.</p>
 
-    <button class="btn-ghost full" id="toSplashBtn" style="margin-top:16px;">🏝️ Zur Titelseite</button>
+    <button class="btn-ghost full" id="toSplashBtn" style="margin-top:16px;"><img class="knopf-bild" src="icon-insel-zwei-palmen.png" alt=""> Zur Titelseite</button>
   </div>
 
   <!-- ============ BESTAETIGUNGS-KARTE (statt System-Dialog) ============
@@ -2184,13 +2203,13 @@
     <div class="section-label">Weiter</div>
     <div class="card list-card">
       <button class="menu-row" id="appinfoUeberMichBtn">
-        <span class="row-icon">🙋‍♀️</span><span class="row-text">Über mich</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-person.png" alt=""></span><span class="row-text">Über mich</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="appinfoDatenschutzBtn">
-        <span class="row-icon">🔒</span><span class="row-text">Datenschutz</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-zugang-zu.png" alt=""></span><span class="row-text">Datenschutz</span><span class="chev">›</span>
       </button>
       <button class="menu-row" id="appinfoImpressumBtn">
-        <span class="row-icon">📜</span><span class="row-text">Impressum</span><span class="chev">›</span>
+        <span class="row-icon"><img src="icon-schriftrolle.png" alt=""></span><span class="row-text">Impressum</span><span class="chev">›</span>
       </button>
     </div>
 
@@ -2288,7 +2307,7 @@
     <button class="icon-btn topbar-zurueck" id="inselBackBtn" title="Zurück">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
-    <h1>🏝️ Gestalte deine Inselreise</h1>
+    <h1><img class="opt-bild" src="icon-insel-zwei-palmen.png" alt=""> Gestalte deine Inselreise</h1>
     <p class="subtitle" id="subtitle">Wähle, wie deine Insel aussieht – und betritt sie danach.</p>
   </div>
   <p class="stepper" id="stepper">Insel gestalten</p>
@@ -2300,24 +2319,24 @@
       <div class="group">
         <h3>Wetter</h3>
         <div class="opts" data-field="weather">
-          <div class="opt" data-value="sunny">☀️ Sonnig</div>
-          <div class="opt" data-value="cloudy">☁️ Wolkig</div>
+          <div class="opt" data-value="sunny"><img class="opt-bild" src="icon-sonne.png" alt=""> Sonnig</div>
+          <div class="opt" data-value="cloudy"><img class="opt-bild" src="icon-wolke.png" alt=""> Wolkig</div>
         </div>
       </div>
 
       <div class="group">
         <h3>Das Meer</h3>
         <div class="opts" data-field="sea">
-          <div class="opt" data-value="calm">🌊 Ruhig &amp; türkis</div>
-          <div class="opt" data-value="wavy">🌊 Wellig &amp; tiefblau</div>
+          <div class="opt" data-value="calm"><img class="opt-bild" src="icon-welle-flach.png" alt=""> Ruhig &amp; türkis</div>
+          <div class="opt" data-value="wavy"><img class="opt-bild" src="icon-welle-bewegt.png" alt=""> Wellig &amp; tiefblau</div>
         </div>
       </div>
 
       <div class="group">
         <h3>Mein Charakter</h3>
         <div class="opts" data-field="gender">
-          <div class="opt" data-value="female">🙋‍♀️ Frau</div>
-          <div class="opt" data-value="male">🙋‍♂️ Mann</div>
+          <div class="opt" data-value="female"><img class="opt-bild" src="icon-person.png" alt=""> Frau</div>
+          <div class="opt" data-value="male"><img class="opt-bild" src="icon-mann.png" alt=""> Mann</div>
         </div>
       </div>
 
@@ -2357,8 +2376,8 @@
       <div class="group">
         <h3>Meine Ankunft</h3>
         <div class="opts" data-field="arrival">
-          <div class="opt" data-value="boat">⛵ Mit dem Boot</div>
-          <div class="opt" data-value="here">🏖️ Schon auf der Insel</div>
+          <div class="opt" data-value="boat"><img class="opt-bild" src="icon-boot.png" alt=""> Mit dem Boot</div>
+          <div class="opt" data-value="here"><img class="opt-bild" src="icon-strandliege.png" alt=""> Schon auf der Insel</div>
         </div>
       </div>
 
@@ -4960,13 +4979,19 @@
   // Stufe gilt (seit 4. Aug. 2026; vorher waren es Meditationen).
   // 1 / 5 / 15 / 30 / 60 Tage - die letzte Stufe entspricht bei
   // regelmaessiger Praxis rund drei bis vier Monaten.
+  // "icon" ist seit 8. Aug. 2026 ein Dateiname statt eines Emoji
+  // (Christines Bilder). Die alten Zeichen stehen im Kommentar daneben -
+  // wer zurueck will, ersetzt in stufenBild() den <img> durch st.icon.
   var STUFEN = [
-    { ab:1,  name:"Angekommen",         icon:"⛵" },
-    { ab:5,  name:"Ruhiger Anker",      icon:"⚓" },
-    { ab:15, name:"Achtsame Entdeckerin", icon:"🧭" },
-    { ab:30, name:"Vertraute Insel",    icon:"🌴" },
-    { ab:60, name:"Zuhause auf der Insel", icon:"🏝️" }
+    { ab:1,  name:"Angekommen",            icon:"icon-boot.png" },        // ⛵
+    { ab:5,  name:"Ruhiger Anker",         icon:"icon-anker.png" },       // ⚓
+    { ab:15, name:"Achtsame Entdeckerin",  icon:"icon-kompassrose.png" }, // 🧭
+    { ab:30, name:"Vertraute Insel",       icon:"icon-palme.png" },       // 🌴
+    { ab:60, name:"Zuhause auf der Insel", icon:"icon-insel-zwei-palmen.png" } // 🏝️
   ];
+  function stufenBild(st, klasse){
+    return '<img class="' + klasse + '" src="' + st.icon + '" alt="" aria-hidden="true">';
+  }
 
   function renderJourney(zielId){
     var box = document.getElementById(zielId || "journeyBox");
@@ -5007,7 +5032,7 @@
     var weg = STUFEN.map(function(st, i){
       var cls = i < stufe ? "erreicht" : (i === stufe ? "jetzt" : "");
       return '<div class="journey-halt">' +
-        '<div class="journey-stop ' + cls + '" title="' + st.name + '">' + st.icon + '</div>' +
+        '<div class="journey-stop ' + cls + '" title="' + st.name + '">' + stufenBild(st, "journey-bild") + '</div>' +
         '<div class="journey-ab' + (i === stufe ? ' jetzt' : '') + '">ab ' + st.ab + '</div>' +
       '</div>';
     }).join("");
@@ -5026,7 +5051,7 @@
     details += '<p class="journey-lead" style="margin:12px 0 6px;">So ist der Weg aufgebaut – gezählt werden die Tage, an denen du meditiert hast. Mehrere Meditationen an einem Tag zählen als ein Tag:</p>';
     details += STUFEN.map(function(st, i){
       return '<div class="recap-row' + (i === stufe ? ' jetzt' : '') + '">' +
-        '<span class="k">' + st.icon + ' ' + st.name + '</span>' +
+        '<span class="k">' + stufenBild(st, "stufe-bild") + ' ' + st.name + '</span>' +
         '<span class="v">ab ' + st.ab + (st.ab === 1 ? ' Tag' : ' Tagen') + (i === stufe ? ' · du bist hier' : '') + '</span></div>';
     }).join("");
 
@@ -6890,10 +6915,32 @@
   // (Data-URL) gespeichert und nirgendwohin geschickt. Bewusst kleine
   // Vorschau (160px), damit der Speicher nicht volllaeuft.
   var AVATAR_KEY = "myisland.avatar.v1";
-  var AVATAR_ZEICHEN = ["🌴", "🌺", "🐚", "🌊", "⛵", "🌅", "🕊️", "🪷"];
-
+  // Seit 8. Aug. 2026 gezeichnete Bilder statt der Emoji. Gespeichert wird
+  // weiterhin nur EIN Wert - jetzt ein Dateiname statt eines Zeichens.
+  var AVATAR_ZEICHEN = [
+    "icon-palme.png",         // 🌴
+    "icon-hibiskus.png",      // 🌺
+    "icon-muschel.png",       // 🐚
+    "icon-welle-flach.png",   // 🌊
+    "icon-boot.png",          // ⛵
+    "icon-sonnenaufgang.png", // 🌅
+    "icon-taube.png",         // 🕊️
+    "icon-lotus.png"          // 🪷
+  ];
+  // Wer schon vor der Umstellung ein Bild gewaehlt hatte, hat ein EMOJI
+  // gespeichert. Ohne diese Uebersetzung stuende bei ihr plotzlich das
+  // Ersatzbild statt ihrer Wahl - darum wird der alte Wert beim Lesen
+  // still auf die neue Datei gemappt (und beim naechsten Setzen ersetzt).
+  var AVATAR_ALT = {
+    "🌴":"icon-palme.png", "🌺":"icon-hibiskus.png", "🐚":"icon-muschel.png",
+    "🌊":"icon-welle-flach.png", "⛵":"icon-boot.png", "🌅":"icon-sonnenaufgang.png",
+    "🕊️":"icon-taube.png", "🪷":"icon-lotus.png"
+  };
   function ladeAvatar(){
-    try { return localStorage.getItem(AVATAR_KEY) || "🌴"; } catch (e){ return "🌴"; }
+    var wert;
+    try { wert = localStorage.getItem(AVATAR_KEY); } catch (e){ wert = null; }
+    if (!wert) return AVATAR_ZEICHEN[0];
+    return AVATAR_ALT[wert] || wert;
   }
   function setzeAvatar(wert){
     try { localStorage.setItem(AVATAR_KEY, wert); } catch (e){}
@@ -6903,16 +6950,20 @@
     var wert = ladeAvatar();
     var zeichen = document.getElementById("profilAvatarZeichen");
     var bild = document.getElementById("profilAvatarBild");
+    // Ein eigenes Foto fuellt den ganzen Kreis, ein gezeichnetes Bild sitzt
+    // kleiner mittendrin - beides laeuft jetzt ueber dasselbe <img>-Element
+    // nicht, sondern ueber zwei: bild = Foto, zeichen = gezeichnetes Symbol.
     var istFoto = wert.indexOf("data:") === 0;
     bild.hidden = !istFoto;
     zeichen.hidden = istFoto;
-    if (istFoto) bild.src = wert; else zeichen.textContent = wert;
+    if (istFoto) bild.src = wert;
+    else zeichen.innerHTML = '<img src="' + wert + '" alt="" aria-hidden="true">';
   }
   function renderAvatarAuswahl(){
     var aktuell = ladeAvatar();
     document.getElementById("avatarAuswahl").innerHTML = AVATAR_ZEICHEN.map(function(z){
       return '<button class="avatar-wahl' + (z === aktuell ? ' aktiv' : '') +
-        '" type="button" data-avatar="' + z + '">' + z + '</button>';
+        '" type="button" data-avatar="' + z + '"><img src="' + z + '" alt=""></button>';
     }).join("");
   }
   document.getElementById("profilAvatarBtn").addEventListener("click", function(){

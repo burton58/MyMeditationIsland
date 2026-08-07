@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v47";
+const CACHE_NAME = "myisland-cache-v48";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -66,7 +66,29 @@ const SHELL_FILES = [
   "./icon-palme.png",
   "./icon-mond.png",
   "./icon-schweizerkreuz.png",
-  "./icon-sitzende.png"
+  "./icon-sitzende.png",
+  // Inselreise, Einstellungs-Liste, Insel gestalten und die acht
+  // Profilbilder - seit 8. Aug. 2026 gezeichnet. Damit ist die App
+  // vollstaendig emoji-frei.
+  "./icon-boot.png",
+  "./icon-anker.png",
+  "./icon-kompassrose.png",
+  "./icon-insel-zwei-palmen.png",
+  "./icon-zahlkarte.png",
+  "./icon-schluessel.png",
+  "./icon-person.png",
+  "./icon-info.png",
+  "./icon-schriftrolle.png",
+  "./icon-papierkorb.png",
+  "./icon-wolke.png",
+  "./icon-welle-flach.png",
+  "./icon-welle-bewegt.png",
+  "./icon-mann.png",
+  "./icon-strandliege.png",
+  "./icon-hibiskus.png",
+  "./icon-muschel.png",
+  "./icon-taube.png",
+  "./icon-lotus.png"
 ];
 
 self.addEventListener("install", function(event){
