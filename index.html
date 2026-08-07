@@ -329,10 +329,12 @@
   }
 
   .state-card{ padding:13px; }
-  .state-top{ display:flex; gap:12px; align-items:flex-start; margin-bottom:10px; }
+  .state-top{ display:flex; gap:12px; align-items:center; margin-bottom:8px; }
+  /* Der Erklaersatz laeuft ueber die ganze Karte statt neben dem
+     kleinen Kompass zu zerfasern (6. Aug. 2026). */
   .state-top .body{ flex:1; min-width:0; }
   .state-card h3{ margin:0 0 3px; font-size:.86rem; font-weight:600; color:var(--ink-soft); }
-  .state-card p{ margin:0; font-size:.83rem; line-height:1.4; color:var(--ink-soft); }
+  .state-card p{ margin:0 0 12px; font-size:.83rem; line-height:1.4; color:var(--ink-soft); }
 
   /* ---------- Kompass ----------
      Die Bedienung ist unverändert: der Punkt lässt sich frei in der Scheibe
@@ -396,7 +398,7 @@
   }
 
   /* Kleine Ausgabe des Kompasses in der Zustands-Karte auf der Startseite */
-  .compass-wrap.mini{ width:86px; flex:0 0 86px; filter:none; animation:none; }
+  .compass-wrap.mini{ width:68px; flex:0 0 68px; filter:none; animation:none; }
   /* Der kleine Kompass traegt keine Beschriftung und behaelt darum die
      grosse Scheibe von frueher (Radius 150 statt 95). */
   .compass-wrap.mini .compass-photo{ inset:12.5%; }
@@ -1286,7 +1288,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-06.50";
+    var AKTUELLE_VERSION = "2026-08-06.51";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1451,7 +1453,6 @@
       <div class="state-top">
         <div class="body">
           <h3>Wie geht es dir gerade?</h3>
-          <p id="homeStateText">Stell den Zeiger im Kompass dorthin, wo du gerade stehst.</p>
         </div>
       <div class="compass-wrap mini" id="compassWrapHome">
         <div class="compass-photo"></div>
@@ -1477,6 +1478,7 @@
         </svg>
       </div>
       </div>
+      <p id="homeStateText">Stell den Zeiger im Kompass dorthin, wo du gerade stehst.</p>
       <!-- Knopf ueber die ganze Kartenbreite (6. Aug. 2026): In der
            schmalen Textspalte neben dem kleinen Kompass brach er auf
            Geraeten mit Anzeige-Zoom (320px) auf zwei Zeilen um.
@@ -5957,7 +5959,12 @@
     document.getElementById("greeting").textContent = gruss.text + " " + gruss.icon;
     document.getElementById("homeStateText").textContent = kompassBenutzt
       ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
-      : "Zeig am Kompass, wie es dir geht.";
+      // Der Satz nennt jetzt den NUTZEN, nicht nur die Bedienung
+      // (6. Aug. 2026, Christine: "Muss stehen: und eine passende
+      // Meditation auf dein Gemüt wird dir vorgeschlagen").
+      // Die Ueberschrift darueber fragt schon "Wie geht es dir gerade?" -
+      // darum hier nur noch "Zeig es am Kompass" statt einer Wiederholung.
+      : "Zeig es am Kompass – wir schlagen dir eine Meditation vor, die zu deinem Gemüt passt.";
 
     var heute = heutigeMeditationen();
     var liste = empfehlung;
