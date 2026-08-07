@@ -47,6 +47,12 @@ gelieferten Bild), stehen darum jetzt ganz oben und mit Zahlen:
 Strichstärke **0,8 % statt 6 %** und Motivhöhe **15 % statt gut 76 %**.
 Bei 46 Pixeln Anzeigegrösse war davon fast nichts mehr zu sehen.
 
+**Seit dem 7. Aug. 2026 steht eine dritte Vorgabe ganz oben — „nur Umrisse,
+keine ausgefüllten Flächen".** Bei Palme und Insel kam eine ausgefüllte
+Silhouette; gross sieht das gut aus, bei 28 Pixeln in der App wird daraus ein
+dunkler Fleck neben den feinen Linien der übrigen Symbole. Betrifft vor allem
+Motive aus der Natur (Palme, Insel, Blume, Muschel, Taube).
+
 ```
 Du erstellst für mich 39 einzelne Symbole für eine ruhige Meditations-App.
 
@@ -56,6 +62,11 @@ Erstelle jetzt nur Nummer 1. Danach wartest du, bis ich "weiter" schreibe,
 und erstellst dann die nächste Nummer. Immer genau ein Bild pro Antwort.
 
 STIL - gilt für alle 39:
+- NUR UMRISSLINIEN, NIEMALS ausgefüllte Flächen. Jedes Motiv ist eine
+  Kontur - das Innere bleibt leer und durchsichtig. Keine Silhouette,
+  keine flächige Füllung, auch nicht bei Palmen, Inseln, Blumen, Muscheln
+  oder Tieren. Als Faustregel: höchstens ein Viertel des Motivfeldes
+  darf Farbe sein.
 - Feine, gleichmässig dicke Linienzeichnung, weich gerundete Enden,
   keine harten Ecken.
 - Die Striche müssen KRÄFTIG sein: Strichstärke rund 6 % der Bildbreite,
@@ -234,6 +245,42 @@ sag „im exakt gleichen Stil und Massstab wie dieses Bild":
 3. `Motiv: eine Kompassrose ohne Zahlen und ohne Buchstaben.`
 4. `Motiv: eine einzelne Palme.`
 5. `Motiv: eine kleine Insel mit zwei Palmen.`
+
+### Stand 7. Aug. 2026 — drei von fünf passen, zwei müssen nochmal
+
+Boot und Anker sind genau richtig. Bei drei Bildern gibt es etwas zu tun,
+bevor die Reihe eingebaut werden kann — sie stehen **nebeneinander als Weg**,
+darum müssen alle fünf im selben Stil sein, sonst fällt der Unterschied genau
+dort auf, wo man sie vergleicht.
+
+| Bild | Befund | Was tun |
+|---|---|---|
+| Segelboot | Umriss, Strich 5,5 % | ✓ passt |
+| Anker | Umriss, Strich 5,7 % | ✓ passt |
+| Kompassrose | Buchstaben N/W/E/S drauf (waren nicht gewünscht), Linien mit 0,8 % sehr fein | nochmal, ohne Buchstaben |
+| Palme | **ausgefüllte Fläche** statt Umriss (44 % Farbe) | nochmal als Umriss |
+| Insel mit zwei Palmen | **ausgefüllte Fläche**, 62 % Farbe — bei 28 px ein dunkler Fleck | nochmal als Umriss |
+
+**Die wichtigste Erkenntnis daraus — gilt ab jetzt für alle Gruppen:** ChatGPT
+liefert bei Motiven aus der Natur (Palme, Insel, Blume, Muschel) gern eine
+**ausgefüllte Silhouette** statt einer Umrisszeichnung. Am grossen Bild sieht
+das gut aus, in der App erscheint es aber bei 28–46 px und wird dort zum
+dunklen Fleck, während die anderen Symbole als feine Linien lesbar bleiben.
+Das lässt sich nachträglich **nicht zuverlässig reparieren**: Ich habe es bei
+der Palme versucht (Umriss nachgezeichnet, ging knapp), bei der Insel wurde
+daraus eine unkenntliche Blase. Darum steht die Anforderung jetzt im
+Grundtext des Gesamt-Auftrags.
+
+**Zum Kopieren für die drei Nachbesserungen** — je eine Anfrage, den Grundtext
+davor:
+
+> **Wichtig: nur Umrisslinien, keine ausgefüllten Flächen.** Das Motiv soll
+> mit dünnen Linien gezeichnet sein, wie eine Kontur — das Innere bleibt leer.
+> Keine schwarze oder braune Füllung, keine Silhouette.
+
+1. `Motiv: eine Kompassrose als reine Umrisszeichnung. Keine Buchstaben, keine Zahlen, keine ausgefüllten Zacken.`
+2. `Motiv: eine einzelne Palme als reine Umrisszeichnung — Stamm und Wedel nur als Linien, nicht ausgefüllt.`
+3. `Motiv: eine kleine Insel mit zwei Palmen als reine Umrisszeichnung — nur Linien, das Innere bleibt leer.`
 
 ---
 
