@@ -237,7 +237,14 @@
   .section-label.first{ margin-top:6px; }
   /* Auf der Startseite muss alles zusammen ohne Scrollen passen - dort
      etwas knapper als auf den anderen Seiten, wo mehr Platz da ist. */
-  .home-page .section-label{ margin:11px 0 6px; }
+  /* Auf der Startseite sind die Abschnitts-Abstaende knapper als sonst in
+     der App (dort 24px), damit alles ohne Scrollen aufs Bild passt.
+     11px oben waren aber zu wenig: Der Vorschlag-Block und die
+     Stimmungs-Karte klebten aneinander und wirkten wie ein Abschnitt
+     (Christine, 8. Aug. 2026). Jetzt 28px - gemessen bleiben auf einem
+     iPhone 14 danach immer noch rund 60px Luft unter der Karte.
+     Die erste Ueberschrift behaelt margin-top:0 (Regel darunter). */
+  .home-page .section-label{ margin:28px 0 6px; }
   .home-page .section-label.first{ margin-top:0; }
 
   .card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(28,59,51,.07); }
@@ -1341,7 +1348,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.59";
+    var AKTUELLE_VERSION = "2026-08-08.60";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
