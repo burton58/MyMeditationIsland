@@ -332,13 +332,23 @@
     box-shadow:0 4px 12px rgba(120,90,10,.3);
   }
 
-  .state-card{ padding:13px; }
-  .state-top{ display:flex; gap:12px; align-items:center; margin-bottom:8px; }
-  /* Der Erklaersatz laeuft ueber die ganze Karte statt neben dem
-     kleinen Kompass zu zerfasern (6. Aug. 2026). */
-  .state-top .body{ flex:1; min-width:0; }
-  .state-card h3{ margin:0 0 3px; font-size:.86rem; font-weight:600; color:var(--ink-soft); }
-  .state-card p{ margin:0 0 12px; font-size:.83rem; line-height:1.4; color:var(--ink-soft); }
+  /* Aufbau der Karte, 8. Aug. 2026 (Christine: "zweite Box sieht nicht gut
+     aus mit so viel Weiss und wenig Text").
+     Vorher stand der kleine Kompass in einer eigenen Kopfzeile neben der
+     Ueberschrift. Diese Zeile war so hoch wie der Kompass (68px), enthielt
+     aber nur eine kurze Zeile Text - links daneben blieb ein leeres Band,
+     und zwischen Frage und Satz klaffte eine Luecke.
+     Jetzt steht der Kompass als "float" rechts, Ueberschrift und Satz
+     fliessen um ihn herum: die ersten Zeilen laufen neben ihm, die
+     restlichen wieder ueber die ganze Breite. Damit ist kein Weiss mehr
+     uebrig, und der Satz zerfasert trotzdem nicht in lauter kurze Zeilen -
+     genau das war am 6. Aug. der Grund, ihn aus der Spalte zu nehmen. */
+  .state-card{ padding:15px; }
+  .state-card .compass-wrap.mini{ float:right; margin:2px 0 6px 14px; }
+  .state-card h3{ margin:0 0 5px; font-size:.92rem; font-weight:700; color:var(--ink); }
+  .state-card p{ margin:0 0 13px; font-size:.85rem; line-height:1.5; color:var(--ink-soft); }
+  /* Der Knopf muss unter den Kompass, nicht neben ihn. */
+  .state-card .btn-dark.full{ clear:both; }
 
   /* ---------- Kompass ----------
      Die Bedienung ist unverändert: der Punkt lässt sich frei in der Scheibe
@@ -1331,7 +1341,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.58";
+    var AKTUELLE_VERSION = "2026-08-08.59";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1493,10 +1503,6 @@
 
     <div class="section-label">Meine Stimmung</div>
     <div class="card state-card">
-      <div class="state-top">
-        <div class="body">
-          <h3>Wie geht es dir gerade?</h3>
-        </div>
       <div class="compass-wrap mini" id="compassWrapHome">
         <div class="compass-photo"></div>
         <svg id="compassSvgHome" viewBox="0 0 400 400" class="compass-flat">
@@ -1520,7 +1526,7 @@
           <circle cx="200" cy="200" r="10" class="rose-hub-dot"/>
         </svg>
       </div>
-      </div>
+      <h3>Wie geht es dir gerade?</h3>
       <p id="homeStateText">Stell den Zeiger im Kompass dorthin, wo du gerade stehst.</p>
       <!-- Knopf ueber die ganze Kartenbreite (6. Aug. 2026): In der
            schmalen Textspalte neben dem kleinen Kompass brach er auf
@@ -6057,18 +6063,38 @@
   // Eine Karte, kein Nebeneinander von Rueckblick und Vorschlag - so wie
   // bei Calm, Headspace & Co.: entweder "heute schon erledigt" oder "das
   // empfehlen wir dir jetzt" mit Startknopf, nie beides gleichzeitig.
+  // Der Satz unter "Wie geht es dir gerade?".
+  //
+  // Eigene Funktion seit 8. Aug. 2026, weil ihn zwei Stellen brauchen:
+  // renderHome() beim Aufbau der Seite UND das Ziehen am kleinen Kompass
+  // direkt auf der Startseite. Vorher stand er nur in renderHome() - die
+  // Nadel liess sich zwar auf der Startseite bewegen, der Satz daneben
+  // blieb aber bis zum naechsten Seitenwechsel auf dem alten Stand. Der
+  // kleine Kompass sah damit aus, als wuerde er nichts tun.
+  //
+  // Bewusst NUR dieser eine Satz und nicht das ganze renderHome(): Beim
+  // Ziehen laeuft das hier bei jeder Fingerbewegung durch - die ganze
+  // Startseite dabei neu aufzubauen waere unnoetig und wuerde ruckeln.
+  function zeigeHomeStateText(){
+    var el = document.getElementById("homeStateText");
+    if (!el) return;
+    el.textContent = kompassBenutzt
+      ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
+      // Der Satz nennt den NUTZEN, nicht nur die Bedienung (6. Aug. 2026,
+      // Christine: "Muss stehen: und eine passende Meditation auf dein
+      // Gemüt wird dir vorgeschlagen"). Die Ueberschrift darueber fragt
+      // schon "Wie geht es dir gerade?" - darum hier keine Wiederholung.
+      : "Zeig es am Kompass – wir schlagen dir eine Meditation vor, die zu deiner Stimmung passt.";
+  }
+
   function renderHome(){
     var gruss = begruessung();
     document.getElementById("greeting").innerHTML =
-      gruss.text + " " + bildZeichen(gruss.bild, "gruss-bild");
-    document.getElementById("homeStateText").textContent = kompassBenutzt
-      ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
-      // Der Satz nennt jetzt den NUTZEN, nicht nur die Bedienung
-      // (6. Aug. 2026, Christine: "Muss stehen: und eine passende
-      // Meditation auf dein Gemüt wird dir vorgeschlagen").
-      // Die Ueberschrift darueber fragt schon "Wie geht es dir gerade?" -
-      // darum hier nur noch "Zeig es am Kompass" statt einer Wiederholung.
-      : "Zeig es am Kompass – wir schlagen dir eine Meditation vor, die zu deiner Stimmung passt.";
+      // Geschuetztes Leerzeichen: sonst rutscht das Bild allein auf die
+      // naechste Zeile, wenn die Begruessung umbricht ("Schoen, dass du
+      // noch da bist" + Mond). So bleibt es immer beim letzten Wort.
+      gruss.text + " " + bildZeichen(gruss.bild, "gruss-bild");
+    zeigeHomeStateText();
 
     var heute = heutigeMeditationen();
     var liste = empfehlung;
@@ -6727,7 +6753,8 @@
 
   initCompass("compassSvg", "needleLine", "needleTip", "compassReadout", compassBefore, null,
     [{ line: document.getElementById("needleLineHome"), tip: document.getElementById("needleTipHome") }]);
-  initCompass("compassSvgHome", "needleLineHome", "needleTipHome", "compassReadout", compassBefore, null,
+  initCompass("compassSvgHome", "needleLineHome", "needleTipHome", "compassReadout", compassBefore,
+    zeigeHomeStateText,
     [{ line: document.getElementById("needleLine"), tip: document.getElementById("needleTip") }]);
   // Der Abschluss-Kompass zeichnet beim Ziehen nur die Spur mit. Rueckblick
   // und Vergleichssatz entstehen erst beim Bestaetigen - vorher waeren sie
