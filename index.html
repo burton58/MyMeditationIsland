@@ -244,6 +244,7 @@
     display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 16px rgba(120,90,10,.28);
   }
   .btn-dark.full{ width:100%; padding:16px; font-size:.98rem; border-radius:15px; }
+  .state-card .btn-dark.full{ padding:13px; font-size:.92rem; }
   .btn-dark:active{ transform:translateY(1px); }
   .btn-ghost{
     border:1px solid var(--line); cursor:pointer; background:var(--card); color:var(--ink); font-family:inherit;
@@ -327,10 +328,11 @@
     box-shadow:0 4px 12px rgba(120,90,10,.3);
   }
 
-  .state-card{ padding:13px; display:flex; gap:12px; align-items:flex-start; }
-  .state-card .body{ flex:1; min-width:0; }
+  .state-card{ padding:13px; }
+  .state-top{ display:flex; gap:12px; align-items:flex-start; margin-bottom:10px; }
+  .state-top .body{ flex:1; min-width:0; }
   .state-card h3{ margin:0 0 3px; font-size:.86rem; font-weight:600; color:var(--ink-soft); }
-  .state-card p{ margin:0 0 9px; font-size:.83rem; line-height:1.4; color:var(--ink-soft); }
+  .state-card p{ margin:0; font-size:.83rem; line-height:1.4; color:var(--ink-soft); }
 
   /* ---------- Kompass ----------
      Die Bedienung ist unverändert: der Punkt lässt sich frei in der Scheibe
@@ -1284,7 +1286,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-06.49";
+    var AKTUELLE_VERSION = "2026-08-06.50";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1446,15 +1448,11 @@
 
     <div class="section-label">Mein Zustand</div>
     <div class="card state-card">
-      <div class="body">
-        <h3>Wie geht es dir gerade?</h3>
-        <p id="homeStateText">Stell den Zeiger im Kompass dorthin, wo du gerade stehst.</p>
-        <!-- Knopf nennt seit 5. Aug. 2026 das Ergebnis statt des Ortes
-             ("Zum Kompass →" sagte nur, wohin es geht). Christine: auf der
-             Startseite sei nicht verstaendlich, dass man ueber den Kompass
-             passende Meditationen bekommt. -->
-        <button class="btn-dark" id="homeToCompassBtn">Meditation für jetzt finden →</button>
-      </div>
+      <div class="state-top">
+        <div class="body">
+          <h3>Wie geht es dir gerade?</h3>
+          <p id="homeStateText">Stell den Zeiger im Kompass dorthin, wo du gerade stehst.</p>
+        </div>
       <div class="compass-wrap mini" id="compassWrapHome">
         <div class="compass-photo"></div>
         <svg id="compassSvgHome" viewBox="0 0 400 400" class="compass-flat">
@@ -1478,6 +1476,14 @@
           <circle cx="200" cy="200" r="10" class="rose-hub-dot"/>
         </svg>
       </div>
+      </div>
+      <!-- Knopf ueber die ganze Kartenbreite (6. Aug. 2026): In der
+           schmalen Textspalte neben dem kleinen Kompass brach er auf
+           Geraeten mit Anzeige-Zoom (320px) auf zwei Zeilen um.
+           Er nennt das Ergebnis, nicht den Ort - "Zum Kompass" sagte
+           nur, wohin es geht. -->
+      <button class="btn-dark full" id="homeToCompassBtn">Finde deine Meditation →</button>
+
     </div>
   </div>
 
@@ -5951,7 +5957,7 @@
     document.getElementById("greeting").textContent = gruss.text + " " + gruss.icon;
     document.getElementById("homeStateText").textContent = kompassBenutzt
       ? moodSatz(compassBefore) + ". Stell den Zeiger neu, wenn sich das geändert hat."
-      : "Angespannt oder entspannt, im Kopf oder im Gefühl – zeig es am Kompass.";
+      : "Zeig am Kompass, wie es dir geht.";
 
     var heute = heutigeMeditationen();
     var liste = empfehlung;
