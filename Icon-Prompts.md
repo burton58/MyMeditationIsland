@@ -125,6 +125,28 @@ DIE 39 MOTIVE:
 Fang jetzt mit Nummer 1 an.
 ```
 
+**Am 6. Aug. 2026 geprüft — worauf es wirklich ankommt.** Das erste
+abgenommene Bild (Motiv 1, die Waage) wurde nachgemessen:
+
+| | Soll | Ist |
+|---|---|---|
+| Strichstärke | ~6 % | **8,3 %** ✓ |
+| Durchsichtig | ja | **97 %** ✓ |
+| Farbe | `#8F6F22` | **`#90713F`** ✓ |
+
+**Nur zwei Vorgaben sind wirklich kritisch: kräftige Striche und
+durchsichtiger Hintergrund.** Der erste Versuch scheiterte an 0,8 %
+Strichstärke — bei 46 Pixeln Anzeigegrösse blieb davon nichts übrig.
+
+**Nicht kritisch, weil beim Einbauen automatisch behoben:**
+- **Der Rahmen.** Sitzt das Motiv nicht mittig oder füllt es das Quadrat
+  nicht aus, wird beim Aufbereiten der Rand weggeschnitten (Zuschnitt über
+  eine Alpha-Maske mit Schwelle 90 — `getbbox()` allein fasst den schwachen
+  Schein mit und lässt den Rand stehen) und das Motiv mit 20 % Luft mittig
+  in ein Quadrat gesetzt.
+- **Ein schwacher Leuchtschein.** Machte beim geprüften Bild 4 % der
+  sichtbaren Fläche aus, Alpha unter 200 — wird beim Aufbereiten entfernt.
+
 **Wenn etwas nicht stimmt:**
 
 - Striche zu dünn → „Die Striche sind zu dünn. Mach sie rund 6 % der
