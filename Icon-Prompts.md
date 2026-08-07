@@ -53,13 +53,30 @@ Silhouette; gross sieht das gut aus, bei 28 Pixeln in der App wird daraus ein
 dunkler Fleck neben den feinen Linien der übrigen Symbole. Betrifft vor allem
 Motive aus der Natur (Palme, Insel, Blume, Muschel, Taube).
 
+**Und eine vierte — „gezeichnet, nicht geleuchtet".** Aus derselben Lieferung:
+Mehrere Bilder kamen wie ein **Leuchtreklame-Schild** — die Linie selbst
+leuchtet hell, dunkel ist nur ein Haarstrich am Rand. Das Verbot „kein
+Leuchten" allein hat nicht gereicht; ein Bild davon bestand nach Abzug des
+Scheins noch aus 0,4 % Farbe und war praktisch leer. Ein **Vergleich** wirkt
+besser als ein Verbot, darum steht jetzt im Grundtext: *wie mit einem braunen
+Filzstift auf weisses Papier gezeichnet.*
+
+**Fünftens: die Nummer immer mitschreiben.** In zwei Lieferungen kamen sieben
+Bilder, die in der App nirgends vorkommen (Zahnrad, Glühbirne, Aktentasche,
+Uhr, Glühbirne mit Haken). Auf „weiter" allein verliert ChatGPT die Liste aus
+den Augen. Besser jedes Mal: **„Jetzt Nummer 18 aus der Liste."** — und den
+Motivtext gleich mit dazuschreiben.
+
 ```
 Du erstellst für mich 39 einzelne Symbole für eine ruhige Meditations-App.
 
 ABLAUF - wichtig:
 Erstelle NICHT alle auf einmal und KEIN Übersichtsblatt.
-Erstelle jetzt nur Nummer 1. Danach wartest du, bis ich "weiter" schreibe,
-und erstellst dann die nächste Nummer. Immer genau ein Bild pro Antwort.
+Erstelle jetzt nur Nummer 1. Danach wartest du, bis ich dir die nächste
+Nummer nenne. Immer genau ein Bild pro Antwort.
+Halte dich streng an die Liste unten. Erfinde KEINE eigenen Motive und
+weiche NICHT vom Text der jeweiligen Nummer ab. Wenn du unsicher bist,
+frag lieber nach, statt etwas anderes zu zeichnen.
 
 STIL - gilt für alle 39:
 - NUR UMRISSLINIEN, NIEMALS ausgefüllte Flächen. Jedes Motiv ist eine
@@ -77,7 +94,10 @@ STIL - gilt für alle 39:
 - Nur eine Farbe: Goldbraun #8F6F22. Keine weitere Farbe, auch kein Rot.
 - Hintergrund vollständig transparent (Alpha-Kanal). Kein Kästchen, keine
   Kachel, kein Rahmen, kein Kreis darum.
-- Kein Leuchten, kein Schein, kein Schimmer, keine Schatten, kein 3D,
+- Es soll aussehen, als waere es MIT EINEM BRAUNEN FILZSTIFT AUF WEISSES
+  PAPIER gezeichnet. Die Linie selbst ist dunkelgoldbraun und deckend.
+  Also KEIN Leuchtreklame-Schild, keine hell leuchtende Neonroehre,
+  kein Leuchten, kein Schein, kein Schimmer, keine Schatten, kein 3D,
   kein Glanz.
 - Quadratisch, 1024 x 1024 Pixel, als PNG mit Transparenz.
 - Kein Text, keine Buchstaben, keine Zahlen im Bild.
@@ -300,6 +320,15 @@ warnend, nicht alarmierend."
 2. `Motiv: ein schlichter Haken in einem Kreis.`
 3. `Motiv: eine minimalistische Sanduhr.`
 4. `Motiv: ein geschlossenes, ruhiges Vorhängeschloss.`
+
+### Stand 7. Aug. 2026 — eins von vier passt
+
+| Bild | Befund | Was tun |
+|---|---|---|
+| Torbogen (alles offen) | Umriss, 38 % Farbe | ✓ passt |
+| Haken im Kreis | Als **leuchtende Neonröhre** gezeichnet: die Linie selbst ist hell, nur ein Haarstrich dunkel (0,4 % des Bildes). Nimmt man das Leuchten weg — und das muss man, sonst ist es in der App ein gelber Fleck — bleibt fast nichts übrig. | nochmal |
+| Sanduhr | **Zweifarbig** (brauner Rahmen, gelber Sand) und zu 73 % ausgefüllt | nochmal |
+| Vorhängeschloss | noch nicht geliefert | fehlt |
 
 ---
 
