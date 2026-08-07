@@ -1018,7 +1018,24 @@
   /* Die fuenf Stationen - seit 8. Aug. 2026 gezeichnet statt ⛵ ⚓ 🧭 🌴 🏝️.
      28 von 46px, damit der Kreis ringsum sichtbar bleibt. */
   .journey-bild{ width:28px; height:28px; display:block; }
-  .stufe-bild{ width:1.15em; height:1.15em; vertical-align:-3px; margin-right:2px; }
+  /* Die fuenf Stufen in der aufgeklappten Inselreise - je EINE Zeile:
+     Bild, Name, und rechts klein die Schwelle. Vorher standen sie im
+     recap-Format (Stichwort oben, Wert darunter), das fuer kurze Woerter
+     wie "BISHER" gemacht ist; mit Namen wie "Achtsame Entdeckerin" in
+     Grossbuchstaben wurden daraus fuenf wuchtige Bloecke (8. Aug. 2026). */
+  .stufen-zeile{
+    display:flex; align-items:center; gap:9px; padding:8px 0;
+    border-bottom:1px solid var(--line); font-size:.86rem;
+  }
+  /* Keine Trennlinie unter der letzten Stufe - dafuer etwas Luft, damit
+     die Liste sich vom naechsten Block abhebt, ohne dort einen Strich
+     stehen zu lassen, wenn sie zufaellig der letzte Block ist. */
+  .stufen-zeile:last-child{ border-bottom:none; }
+  .stufen-liste{ margin-bottom:8px; }
+  .stufen-zeile .name{ flex:1; min-width:0; font-weight:600; }
+  .stufen-zeile .ab{ font-size:.75rem; color:var(--ink-soft); flex:0 0 auto; }
+  .stufen-zeile.jetzt .name, .stufen-zeile.jetzt .ab{ color:var(--gold-deep); font-weight:700; }
+  .stufe-bild{ width:19px; height:19px; flex:0 0 auto; }
   .journey-halt{ display:flex; flex-direction:column; align-items:center; gap:4px; }
   .journey-ab{ font-size:.62rem; font-weight:600; color:var(--ink-soft); opacity:.75; }
   .journey-ab.jetzt{ color:var(--gold-deep); opacity:1; }
@@ -1348,7 +1365,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.60";
+    var AKTUELLE_VERSION = "2026-08-08.61";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -5072,11 +5089,22 @@
     // Alle fuenf Stufen mit Namen und Schwelle ausgeschrieben - unter den
     // Kreisen ist nur Platz fuer die Zahl, die Namen passen dort nicht.
     details += '<p class="journey-lead" style="margin:12px 0 6px;">So ist der Weg aufgebaut – gezählt werden die Tage, an denen du meditiert hast. Mehrere Meditationen an einem Tag zählen als ein Tag:</p>';
-    details += STUFEN.map(function(st, i){
-      return '<div class="recap-row' + (i === stufe ? ' jetzt' : '') + '">' +
-        '<span class="k">' + stufenBild(st, "stufe-bild") + ' ' + st.name + '</span>' +
-        '<span class="v">ab ' + st.ab + (st.ab === 1 ? ' Tag' : ' Tagen') + (i === stufe ? ' · du bist hier' : '') + '</span></div>';
-    }).join("");
+    // Eigenes, schmales Zeilenformat statt der recap-Zeilen (8. Aug. 2026).
+    // Christine: "So ist der Weg aufgebaut ... kleinere Schrift und dann
+    // Abstand oder so, es sieht nicht gut aus."
+    // Grund: recap-Zeilen sind Stichwort OBEN, Wert DARUNTER - gemacht fuer
+    // kurze Schlagwoerter wie "BISHER". Bei "ACHTSAME ENTDECKERIN" in
+    // Grossbuchstaben wurde daraus ein wuchtiger Block, und fuenf davon
+    // brauchten 279px. Hier gehoert der Name aber in die Zeile und die
+    // Schwelle nur klein daneben - eine Zeile pro Stufe reicht.
+    details += '<div class="stufen-liste">' + STUFEN.map(function(st, i){
+      return '<div class="stufen-zeile' + (i === stufe ? ' jetzt' : '') + '">' +
+        stufenBild(st, "stufe-bild") +
+        '<span class="name">' + st.name + '</span>' +
+        '<span class="ab">ab ' + st.ab + (st.ab === 1 ? ' Tag' : ' Tagen') +
+          (i === stufe ? ' · du bist hier' : '') + '</span>' +
+      '</div>';
+    }).join("") + '</div>';
 
     if (list.length >= 5){
       var ankunft = haeufigste(list.map(function(e){ return moodOf(e.before).word; }));
