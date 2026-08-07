@@ -18,32 +18,36 @@ durch eigene Symbole zu ersetzen.
 
 ---
 
-## Wo wir stehen (Stand 7. Aug. 2026, spätabends)
+## Wo wir stehen (Stand 7. Aug. 2026, nachts)
 
-**23 von 39 sind fertig, 15 davon schon in der App. 16 fehlen noch** —
-davon 1 zum Nachbessern und 15, die es noch gar nicht gibt.
+**28 von 39 sind fertig, 15 davon schon in der App. 11 fehlen noch** —
+davon 1 zum Nachbessern und 10, die es noch gar nicht gibt.
 
 ### ✅ Fertig und in der App (15)
 
 - **1 bis 11** — die Stimmungen am Kompass
 - **17, 18, 19, 20** — die Zugangs-Karte in den Einstellungen
-  (offenes Tor, Haken im Kreis, Sanduhr, Vorhängeschloss)
 
-### ✅ Gut, aufbereitet, warten nur noch auf ihre Nachbarn (8)
+### ✅ Gut, aufbereitet, warten nur noch auf ihre Nachbarn (13)
 
 Liegen fertig unter `icons-original/bereit/`. Eingebaut wird immer eine ganze
 Gruppe auf einmal — sonst stünden gezeichnete Bilder und Emoji nebeneinander.
 
 | Nr. | Motiv | wartet auf |
 |---|---|---|
-| 12 | Segelboot | **16** — dann sind die fünf Stationen der Inselreise komplett |
+| 12 | Segelboot | **16** — dann ist die Inselreise komplett |
 | 13 | Anker | 16 |
 | 14 | Kompassrose | 16 |
-| 15 | einzelne Palme | 16 |
+| 15 | einzelne Palme | 16 · und auf **27** für die Begrüssung |
 | 21 | Zahlkarte | 25, 26 — die Einstellungs-Liste hat acht Zeilen |
 | 22 | Schlüssel | 25, 26 |
 | 23 | Umriss einer Person | 25, 26 |
 | 24 | Info-Kreis mit i | 25, 26 |
+| 35 | Taube | 29, 33, 34 — die acht Profilbilder |
+| 36 | Lotusblüte | 29, 33, 34 |
+| 37 | Mondsichel | **27** — dann sind die verstreuten Symbole komplett |
+| 38 | Schweizerkreuz | 27 |
+| 39 | sitzende Person | 27 |
 
 ### 🔁 Nochmal machen (1)
 
@@ -51,45 +55,46 @@ Gruppe auf einmal — sonst stünden gezeichnete Bilder und Emoji nebeneinander.
 |---|---|---|
 | 16 | Insel mit zwei Palmen | ausgefüllte Fläche statt Umriss, bei 28 px ein dunkler Fleck |
 
-### ⬜ Noch gar nicht da (15)
+### ⬜ Noch gar nicht da (10)
 
 **25** Schriftrolle · **26** Papierkorb · **27** Sonne · **28** Wolke · **29**
 flache Welle · **30** bewegte Welle · **31** Umriss eines Mannes · **32**
-Strandliege · **33** Hibiskusblüte · **34** Muschel · **35** Taube · **36**
-Lotusblüte · **37** Mondsichel · **38** Schweizerkreuz im Kreis · **39**
-Umriss einer sitzenden Person im Schneidersitz
+Strandliege · **33** Hibiskusblüte · **34** Muschel
 
-### In welcher Reihenfolge
+### In welcher Reihenfolge — zwei einzelne Bilder schliessen je eine Gruppe
 
-1. **Nur die 16** (Insel mit zwei Palmen) — dann ist die Inselreise komplett
-   und wird eingebaut. Ein einziges Bild noch.
-2. **25 und 26** (Schriftrolle, Papierkorb) — dann die Einstellungs-Liste.
-3. **27, 37** (Sonne, Mond) — die Begrüssung oben auf der Startseite.
-4. Der Rest: 28–32 (Insel gestalten), 33–36 (Profilbilder), 38, 39.
+1. **Nur die 27** (Sonne) — dann sind die verstreuten Symbole komplett:
+   Sonne, Palme und Mond für die **Begrüssung ganz oben auf der Startseite**,
+   dazu Schweizerkreuz, Schloss und die sitzende Person. Das ist die Stelle,
+   die man bei jedem Öffnen der App als Erstes sieht.
+2. **Nur die 16** (Insel mit zwei Palmen) — dann ist die Inselreise komplett.
+3. **25 und 26** (Schriftrolle, Papierkorb) — dann die Einstellungs-Liste.
+4. **29, 33, 34** (flache Welle, Hibiskus, Muschel) — dann die Profilbilder.
+5. Der Rest: 28, 30, 31, 32 (Insel gestalten).
 
 ### Worauf bei diesen Nummern besonders zu achten ist
 
-- **16, 33, 34, 35, 36** (Insel, Blume, Muschel, Taube, Lotus) — hier kam
-  bisher zuverlässig eine ausgefüllte Fläche. Immer dazuschreiben:
-  *nur Umrisslinien, das Innere bleibt leer.*
-- **31, 39** (die beiden übrigen Personen) — im Text stand früher
-  „Silhouette", das ist genau die ausgefüllte Form. Steht jetzt als
-  **Umriss** da.
-- **38** — goldbraun, **nicht** rot, auch wenn es ein Schweizerkreuz ist.
+- **16, 33, 34** (Insel, Blume, Muschel) — hier kam bisher zuverlässig eine
+  ausgefüllte Fläche. Immer dazuschreiben: *nur Umrisslinien, das Innere
+  bleibt leer.*
+- **31** (Umriss eines Mannes) — im Text stand früher „Silhouette", das ist
+  genau die ausgefüllte Form. Steht jetzt als **Umriss** da.
 
-### Zwei Bilder mit einer Einschränkung
+### Drei Bilder mit einer Einschränkung
 
-Beide sind eingebaut bzw. abgelegt und brauchen **keine** neue Runde — aber
-falls sie später stören, steht hier warum:
+Alle drei sind brauchbar und abgelegt, sie brauchen **keine** neue Runde —
+hier steht nur, warum sie später auffallen könnten:
 
-- **Nr. 14 Kompassrose** — sehr fein gearbeitet, mit acht Zacken, Doppelring
-  und Mittelkreis. Gross ist sie schön; bei 28 px verdichtet sich das zu einem
-  Stern-Muster, das weniger klar liest als die einfacheren Motive daneben.
-  Falls es später auffällt: eine Fassung mit **nur vier Zacken und einem
-  einzigen Ring** anfragen.
-- **Nr. 21 Zahlkarte** — hochkant statt quer gezeichnet, mit einem Strich
-  oben. Sie liest sich dadurch eher wie ein Block als wie eine Zahlkarte.
-  Falls es später auffällt: *„quer statt hochkant, breiter als hoch"*.
+- **Nr. 38 Schweizerkreuz** — es fehlt der Kreis darum, es ist nur das Kreuz.
+  Für die Stelle, an der es steht (kleines Abzeichen neben dem Wort
+  „Schweizerdeutsch"), ist das eher von Vorteil: weniger Linien, klarer bei
+  kleiner Anzeige. Falls doch ein Kreis gewünscht ist: *„dasselbe Kreuz,
+  zusätzlich ein einfacher Kreis darum."*
+- **Nr. 14 Kompassrose** — sehr fein gearbeitet, acht Zacken, Doppelring,
+  Mittelkreis. Gross schön, bei 28 px dicht. Falls es stört: eine Fassung mit
+  **nur vier Zacken und einem einzigen Ring** anfragen.
+- **Nr. 21 Zahlkarte** — hochkant statt quer, liest sich eher wie ein Block.
+  Falls es stört: *„quer statt hochkant, breiter als hoch"*.
 
 ### Was die Aufbereitung jedes Mal automatisch erledigt
 
@@ -97,32 +102,37 @@ Danach muss nichts nachgefragt werden — diese vier Dinge korrigiere ich beim
 Einbauen selbst:
 
 1. **Zu feine Striche** werden verstärkt, bis sie das Gewicht der bestehenden
-   Familie treffen (bisher kamen 1,7–5,2 % statt der verlangten 6 %).
-2. **Zu kräftige Striche** werden ausgedünnt — beim Torbogen nötig, damit er
-   neben den anderen drei der Zugangs-Karte nicht schwerer wirkt.
+   Familie treffen. (Bei der Lieferung vom 7. Aug. nachts erstmals **nicht
+   nötig** — 5,8 bis 7,3 %, genau die verlangten 6 %.)
+2. **Zu kräftige Striche** werden ausgedünnt, wie beim Torbogen.
 3. **Aufgemaltes Schachbrett** wird herausgerechnet: Weil das Muster grau
    (R = G = B) und die Linien goldbraun sind, lässt sich die Maske über die
    Farbigkeit neu bilden.
 4. **Abweichende Farbtöne** werden auf `#8A6A2F` gebracht, den Ton der elf
    Stimmungsbilder.
 
+Und einmal Entwarnung: Kommt ein Bild in der Vorschau auf **rosa-orangem
+Grund** statt auf dem Karomuster, ist das **kein Fehler**. Der Hintergrund ist
+durchsichtig, unter der Transparenz liegt nur eine bunte Farbe, die manche
+Vorschauen mitzeigen. In der App ist davon nichts zu sehen.
+
 ---
 
 ## Der Auftrag zum Kopieren — nur noch das, was fehlt
 
 Diesen Text **einmal** ins ChatGPT-Gespräch einfügen. Danach jedes Mal nur
-noch: *„Jetzt Nummer 25."* Die Nummern sind dieselben wie in der grossen
+noch: *„Jetzt Nummer 16."* Die Nummern sind dieselben wie in der grossen
 Liste weiter unten — so bleibt alles zuordenbar.
 
-Fertige Nummern sind hier weggelassen. **Fang mit der 16 an** — dann fehlt
-für die Inselreise nichts mehr.
+Fertige Nummern sind hier weggelassen. **Fang mit der 27 an** — dieses eine
+Bild schliesst die Begrüssung auf der Startseite ab.
 
 ````
 Du erstellst für mich einzelne Symbole für eine ruhige Meditations-App.
 
 ABLAUF - wichtig:
 Erstelle NICHT alle auf einmal und KEIN Übersichtsblatt.
-Erstelle jetzt nur Nummer 16. Danach wartest du, bis ich dir die nächste
+Erstelle jetzt nur Nummer 27. Danach wartest du, bis ich dir die nächste
 Nummer nenne. Immer genau ein Bild pro Antwort.
 Halte dich streng an die Liste unten. Erfinde KEINE eigenen Motive und
 weiche NICHT vom Text der jeweiligen Nummer ab. Zeichne nur das, was bei
@@ -155,7 +165,7 @@ STIL - gilt für alle:
 - Quadratisch, 1024 x 1024 Pixel, als PNG mit Transparenz.
 - Kein Text, keine Buchstaben, keine Zahlen im Bild.
 - Ruhig, hochwertig, zeitlos - bewusst nicht verspielt, nicht comichaft.
-- Bei Nummer 33 bis 36 zusätzlich: Das Motiv wird später rund beschnitten,
+- Bei Nummer 33 und 34 zusätzlich: Das Motiv wird später rund beschnitten,
   es muss mittig sitzen und darf die Ecken nicht berühren.
 
 DIE MOTIVE (die Nummern sind fest, sie gehören zu einer grösseren Liste):
@@ -173,15 +183,8 @@ DIE MOTIVE (die Nummern sind fest, sie gehören zu einer grösseren Liste):
 32. Eine Strandliege von der Seite.
 33. Eine Hibiskusblüte von vorn, nur als Umrisslinien.
 34. Eine Muschel, nur als Umrisslinien.
-35. Eine Taube im Flug von der Seite, nur als Umrisslinien.
-36. Eine Lotusblüte von vorn, nur als Umrisslinien.
-37. Eine schmale Mondsichel.
-38. Ein Schweizerkreuz in einem Kreis. Goldbraun wie alles andere,
-    ausdrücklich NICHT rot.
-39. Der Umriss einer sitzenden Person im Schneidersitz von vorn, ohne
-    Gesicht. Nur die Kontur als Linie, NICHT ausgefüllt.
 
-Fang jetzt mit Nummer 16 an.
+Fang jetzt mit Nummer 27 an.
 ````
 
 Wenn ein Bild wieder ausgefüllt oder leuchtend kommt, hilft am besten:
