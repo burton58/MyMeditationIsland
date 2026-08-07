@@ -36,42 +36,105 @@ ruhig, einmal bewegt).
 
 ---
 
-## Der Grundtext — bei jeder Anfrage mitschicken
+## Der Gesamt-Auftrag — einmal einfügen, dann nur noch „weiter"
 
-> Erstelle **genau ein einzelnes Symbol** für eine ruhige Meditations-App.
-> **Kein Übersichtsblatt, keine Sammlung, kein Raster, keine Varianten** —
-> nur dieses eine Motiv.
->
-> **Stil:** feine Linienzeichnung, gleichmässig dicke Striche (Strichstärke
-> etwa 6 % der Bildbreite), weich gerundete Enden, keine harten Ecken.
-> Ruhig, hochwertig, zeitlos — bewusst nicht verspielt, nicht comichaft,
-> kein 3D, kein Glanz, keine Schatten.
->
-> **Farbe:** ausschliesslich Goldbraun `#8F6F22`. **Keine weitere Farbe** —
-> auch kein Rot, kein Grün, kein Grau.
->
-> **Hintergrund:** vollständig transparent (Alpha-Kanal). **Kein weisser
-> Hintergrund, kein Kästchen, keine Kachel, kein Rahmen, kein Kreis
-> darum.**
->
-> **Format:** quadratisch, 1024 × 1024 Pixel, als PNG mit Transparenz.
-> Motiv mittig, rundherum etwa 12 % Luft.
->
-> **Kein Text, keine Buchstaben, keine Zahlen im Bild.**
->
-> Motiv: _______________________
+Diesen Text **einmal** ins ChatGPT-Gespräch einfügen. Danach reicht jedes Mal
+das Wort **weiter**, und das nächste Symbol kommt. So muss der lange Text nur
+ein einziges Mal kopiert werden.
 
-**Wenn der Hintergrund weiss ist:** „Der Hintergrund muss vollständig
-transparent sein (Alpha-Kanal), nicht weiss. Bitte nochmals so ausgeben."
+**Die zwei Vorgaben, an denen der erste Versuch scheiterte** (gemessen am
+gelieferten Bild), stehen darum jetzt ganz oben und mit Zahlen:
+Strichstärke **0,8 % statt 6 %** und Motivhöhe **15 % statt gut 76 %**.
+Bei 46 Pixeln Anzeigegrösse war davon fast nichts mehr zu sehen.
 
-**Wenn es zu verspielt wird:** „Reduziere weiter. Nur die notwendigsten
-Linien, keine Details, keine Verzierung."
+```
+Du erstellst für mich 39 einzelne Symbole für eine ruhige Meditations-App.
 
-**Wenn es nicht zu den anderen passt:** Ein schon gelungenes Bild mitschicken
-und sagen: „Im exakt gleichen Stil wie dieses Bild."
+ABLAUF - wichtig:
+Erstelle NICHT alle auf einmal und KEIN Übersichtsblatt.
+Erstelle jetzt nur Nummer 1. Danach wartest du, bis ich "weiter" schreibe,
+und erstellst dann die nächste Nummer. Immer genau ein Bild pro Antwort.
 
-**Nach dem Erstellen:** Als PNG mit transparentem Hintergrund speichern und
-mir schicken. Ich verkleinere und baue ein.
+STIL - gilt für alle 39:
+- Feine, gleichmässig dicke Linienzeichnung, weich gerundete Enden,
+  keine harten Ecken.
+- Die Striche müssen KRÄFTIG sein: Strichstärke rund 6 % der Bildbreite,
+  also etwa 60 von 1024 Pixeln. Lieber zu dick als zu dünn.
+  Grund: Die Symbole werden in der App nur 46 Pixel gross angezeigt.
+- Das Motiv FÜLLT das Quadrat: rundherum höchstens 12 % Luft, oben gleich
+  viel wie unten. Kein schmaler Streifen in der Bildmitte.
+- Nur eine Farbe: Goldbraun #8F6F22. Keine weitere Farbe, auch kein Rot.
+- Hintergrund vollständig transparent (Alpha-Kanal). Kein Kästchen, keine
+  Kachel, kein Rahmen, kein Kreis darum.
+- Kein Leuchten, kein Schein, kein Schimmer, keine Schatten, kein 3D,
+  kein Glanz.
+- Quadratisch, 1024 x 1024 Pixel, als PNG mit Transparenz.
+- Kein Text, keine Buchstaben, keine Zahlen im Bild.
+- Ruhig, hochwertig, zeitlos - bewusst nicht verspielt, nicht comichaft.
+- Bei Nummer 1 bis 11 zusätzlich: kein Gesicht, kein Smiley, keine Mimik.
+  Das sind abstrakte Zeichen, keine Figuren.
+- Bei Nummer 33 bis 36 zusätzlich: Das Motiv wird später rund beschnitten,
+  es muss mittig sitzen und darf die Ecken nicht berühren.
+
+DIE 39 MOTIVE:
+ 1. Eine ruhige Waage aus zwei gleich hohen Kreisen auf einer feinen
+    waagrechten Linie.
+ 2. Drei ineinander verschlungene Schlaufen, wie ein Gedanke, der im Kreis geht.
+ 3. Ein straff gespannter Bogen, an beiden Enden je eine kurze gerade Linie.
+ 4. Eine weiche Wolke aus drei überlappenden Bögen, offen gezeichnet.
+ 5. Eine einzelne gerade waagrechte Linie mit einem ruhigen Kreis darüber.
+ 6. Drei Wellenlinien übereinander, unten unruhig, nach oben hin ruhiger.
+ 7. Eine Zickzacklinie, die nach rechts hin in eine gerade Linie ausläuft.
+ 8. Zwei Bögen, die einander umschliessen wie zwei schützende Hände um einen
+    kleinen Kreis in der Mitte. Keine Finger, kein Herz.
+ 9. Eine lange, ruhig ausschwingende Welle mit einem kleinen Punkt darüber.
+10. Ein offener, angedeutet gestrichelter Kreis.
+11. Eine aufgehende Sonne über einer ruhigen Wasserlinie.
+12. Ein kleines Segelboot von der Seite.
+13. Ein Anker.
+14. Eine Kompassrose ohne Zahlen und ohne Buchstaben.
+15. Eine einzelne Palme.
+16. Eine kleine Insel mit zwei Palmen.
+17. Ein offener Bogen oder ein offenes Tor.
+18. Ein schlichter Haken in einem Kreis.
+19. Eine minimalistische Sanduhr.
+20. Ein geschlossenes, ruhiges Vorhängeschloss.
+21. Eine Zahlkarte von vorn, mit einem schmalen waagrechten Streifen.
+22. Ein Schlüssel.
+23. Die Silhouette einer Person von vorn, Kopf und Schultern, ohne Gesicht.
+24. Ein Kreis mit einem kleinen i darin - das übliche Info-Zeichen.
+25. Eine zusammengerollte Schriftrolle von der Seite.
+26. Ein Papierkorb mit Deckel.
+27. Eine Sonne mit gleichmässigen Strahlen.
+28. Eine einzelne weiche Wolke.
+29. Eine ruhige, flache Welle.
+30. Eine höhere, bewegte Welle mit einem Wellenkamm, deutlich lebhafter
+    als Nummer 29.
+31. Die Silhouette einer männlichen Person von vorn, Kopf und Schultern,
+    ohne Gesicht.
+32. Eine Strandliege von der Seite.
+33. Eine Hibiskusblüte von vorn.
+34. Eine Muschel.
+35. Eine Taube im Flug, von der Seite.
+36. Eine Lotusblüte von vorn.
+37. Eine schmale Mondsichel.
+38. Ein Schweizerkreuz in einem Kreis. Goldbraun wie alles andere, NICHT rot.
+39. Die Silhouette einer sitzenden Person im Schneidersitz von vorn,
+    ohne Gesicht.
+
+Fang jetzt mit Nummer 1 an.
+```
+
+**Wenn etwas nicht stimmt:**
+
+- Striche zu dünn → „Die Striche sind zu dünn. Mach sie rund 6 % der
+  Bildbreite dick, also etwa 60 von 1024 Pixeln."
+- Motiv zu klein → „Das Motiv soll das Quadrat füllen, rundherum höchstens
+  12 % Luft."
+- Weisser oder grauer Hintergrund → „Der Hintergrund muss vollständig
+  transparent sein (Alpha-Kanal)."
+- Leuchtschein → „Kein Leuchten und kein Schein um die Linien, nur die
+  reine Linie."
 
 ---
 
