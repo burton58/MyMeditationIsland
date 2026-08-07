@@ -18,61 +18,166 @@ durch eigene Symbole zu ersetzen.
 
 ---
 
-## Wo wir stehen (Stand 7. Aug. 2026)
+## Wo wir stehen (Stand 7. Aug. 2026, abends)
 
-**14 von 39 sind fertig. 25 fehlen noch** — davon 5 zum Nachbessern und
-20, die es noch gar nicht gibt.
+**19 von 39 sind fertig. 20 fehlen noch** — davon 2 zum Nachbessern und
+18, die es noch gar nicht gibt.
 
 ### ✅ Fertig und in der App (11)
 
 Nummer **1 bis 11** — die Stimmungen am Kompass. Da ist nichts mehr zu tun.
 
-### ✅ Da und gut, warten nur noch auf die Nachbarn (3)
+### ✅ Gut, aufbereitet, warten nur noch auf ihre Nachbarn (8)
+
+Liegen fertig unter `icons-original/bereit/`. Eingebaut wird immer eine ganze
+Gruppe auf einmal — sonst stünden gezeichnete Bilder und Emoji nebeneinander.
 
 | Nr. | Motiv | wartet auf |
 |---|---|---|
-| 12 | Segelboot | 14, 15, 16 — die fünf Stationen werden zusammen eingebaut |
+| 12 | Segelboot | **14 und 16** — die fünf Stationen der Inselreise stehen nebeneinander |
 | 13 | Anker | dieselben |
-| 17 | offenes Tor | 18, 19, 20 — die vier der Zugangs-Karte gehören zusammen |
+| 15 | einzelne Palme | dieselben |
+| 17 | offenes Tor | **20** — dann ist die Zugangs-Karte komplett |
+| 18 | Haken im Kreis | 20 |
+| 19 | Sanduhr | 20 |
+| 22 | Schlüssel | 21, 24, 25, 26 — die Einstellungs-Liste hat acht Zeilen |
+| 23 | Umriss einer Person | dieselben |
 
-### 🔁 Nochmal machen (5)
+### 🔁 Nochmal machen (2)
 
 | Nr. | Motiv | was schiefging |
 |---|---|---|
 | 14 | Kompassrose | Buchstaben N/W/E/S drauf, waren nicht gewünscht |
-| 15 | einzelne Palme | ausgefüllte Fläche statt Umriss |
-| 16 | Insel mit zwei Palmen | ausgefüllte Fläche, bei 28 px ein dunkler Fleck |
-| 18 | Haken im Kreis | als Leuchtreklame gezeichnet, nach Abzug des Scheins fast leer |
-| 19 | Sanduhr | zweifarbig (brauner Rahmen, gelber Sand) und ausgefüllt |
+| 16 | Insel mit zwei Palmen | ausgefüllte Fläche statt Umriss, bei 28 px ein dunkler Fleck |
 
-### ⬜ Noch gar nicht da (20)
+### ⬜ Noch gar nicht da (18)
 
-**20** Vorhängeschloss · **21** Zahlkarte · **22** Schlüssel · **23** Umriss
-einer Person · **24** Info-Kreis mit i · **25** Schriftrolle · **26**
-Papierkorb · **27** Sonne · **28** Wolke · **29** flache Welle · **30**
-bewegte Welle · **31** Umriss eines Mannes · **32** Strandliege · **33**
-Hibiskusblüte · **34** Muschel · **35** Taube · **36** Lotusblüte · **37**
-Mondsichel · **38** Schweizerkreuz im Kreis · **39** Umriss einer sitzenden
-Person im Schneidersitz
+**20** Vorhängeschloss · **21** Zahlkarte · **24** Info-Kreis mit i · **25**
+Schriftrolle · **26** Papierkorb · **27** Sonne · **28** Wolke · **29** flache
+Welle · **30** bewegte Welle · **31** Umriss eines Mannes · **32** Strandliege
+· **33** Hibiskusblüte · **34** Muschel · **35** Taube · **36** Lotusblüte ·
+**37** Mondsichel · **38** Schweizerkreuz im Kreis · **39** Umriss einer
+sitzenden Person im Schneidersitz
 
 ### In welcher Reihenfolge
 
-1. **14, 15, 16** — dann sind die fünf Stationen der Inselreise komplett und
-   können eingebaut werden. Grösster sichtbarer Gewinn.
-2. **18, 19, 20** — dann ist die Zugangs-Karte komplett.
-3. **27, 37** (Sonne, Mond) — die Begrüssung oben auf der Startseite.
-4. Der Rest: 21–26 (Menü), 28–32 (Insel gestalten), 33–36 (Profilbilder),
-   38, 39.
+1. **Nur die 20** (Vorhängeschloss) — dann ist die Zugangs-Karte komplett und
+   wird eingebaut. Ein einziges Bild noch.
+2. **14 und 16** — dann sind die fünf Stationen der Inselreise komplett.
+3. **21, 24, 25, 26** — dann die Einstellungs-Liste.
+4. **27, 37** (Sonne, Mond) — die Begrüssung oben auf der Startseite.
+5. Der Rest: 28–32 (Insel gestalten), 33–36 (Profilbilder), 38, 39.
 
 ### Worauf bei diesen Nummern besonders zu achten ist
 
-- **15, 16, 33, 34, 35, 36** (Palme, Insel, Blume, Muschel, Taube, Lotus) —
-  hier kam bisher zuverlässig eine ausgefüllte Fläche. Immer dazuschreiben:
+- **16, 33, 34, 35, 36** (Insel, Blume, Muschel, Taube, Lotus) — hier kam
+  bisher zuverlässig eine ausgefüllte Fläche. Immer dazuschreiben:
   *nur Umrisslinien, das Innere bleibt leer.*
-- **23, 31, 39** (die drei Personen) — im Text stand früher „Silhouette", das
-  ist genau die ausgefüllte Form. Steht jetzt als **Umriss** da.
+- **31, 39** (die beiden übrigen Personen) — im Text stand früher
+  „Silhouette", das ist genau die ausgefüllte Form. Steht jetzt als
+  **Umriss** da.
 - **14** — ausdrücklich *keine Buchstaben, keine Zahlen*.
 - **38** — goldbraun, **nicht** rot, auch wenn es ein Schweizerkreuz ist.
+
+### Was am 7. Aug. abends geliefert wurde
+
+Fünf Bilder, **alle fünf brauchbar** — die erste Lieferung ohne Ausschuss.
+Die Nummern 15, 18, 19, 22 und 23. Zwei Kleinigkeiten mussten nachbearbeitet
+werden, beide ohne Rückfrage lösbar:
+
+- **Die Striche waren zu fein** (1,7–5,2 % statt der verlangten 6 %). Sie
+  wurden beim Aufbereiten maschinell verstärkt und treffen jetzt genau das
+  Gewicht der bestehenden Bilder.
+- **Das Karomuster war aufgemalt.** Die Bilder sahen aus, als hätten sie einen
+  durchsichtigen Hintergrund, tatsächlich waren sie voll deckend — das übliche
+  graue Schachbrett steckte als echte Bildpunkte drin. Weil das Muster grau
+  und die Linien goldbraun sind, liess es sich über die Farbigkeit sauber
+  wegrechnen. **Kein Grund, ein Bild neu machen zu lassen** — aber im
+  Grundtext steht jetzt zusätzlich, dass kein Schachbrett gemalt werden soll.
+
+---
+
+## Der Auftrag zum Kopieren — nur noch das, was fehlt
+
+Diesen Text **einmal** ins ChatGPT-Gespräch einfügen. Danach jedes Mal nur
+noch: *„Jetzt Nummer 16."* Die Nummern sind dieselben wie in der grossen
+Liste weiter unten — so bleibt alles zuordenbar.
+
+Fertige Nummern sind hier weggelassen. **Fang mit der 20 an** — dann fehlt
+für die Zugangs-Karte nichts mehr.
+
+````
+Du erstellst für mich einzelne Symbole für eine ruhige Meditations-App.
+
+ABLAUF - wichtig:
+Erstelle NICHT alle auf einmal und KEIN Übersichtsblatt.
+Erstelle jetzt nur Nummer 20. Danach wartest du, bis ich dir die nächste
+Nummer nenne. Immer genau ein Bild pro Antwort.
+Halte dich streng an die Liste unten. Erfinde KEINE eigenen Motive und
+weiche NICHT vom Text der jeweiligen Nummer ab. Zeichne nur das, was bei
+der genannten Nummer steht. Wenn du unsicher bist, frag lieber nach.
+
+STIL - gilt für alle:
+- NUR UMRISSLINIEN, NIEMALS ausgefüllte Flächen. Jedes Motiv ist eine
+  Kontur - das Innere bleibt leer. Keine Silhouette, keine flächige
+  Füllung, auch nicht bei Inseln, Blumen, Muscheln, Tieren oder Personen.
+  Als Faustregel: höchstens ein Viertel des Motivfeldes darf Farbe sein.
+- Es soll aussehen, als wäre es MIT EINEM BRAUNEN FILZSTIFT AUF WEISSES
+  PAPIER gezeichnet. Die Linie selbst ist dunkelgoldbraun und deckend.
+  Also KEIN Leuchtreklame-Schild, keine hell leuchtende Neonröhre, kein
+  Leuchten, kein Schein, kein Schimmer, kein Schatten, kein 3D, kein Glanz.
+- Feine, gleichmässig dicke Linienzeichnung, weich gerundete Enden,
+  keine harten Ecken.
+- Die Striche müssen KRÄFTIG sein: Strichstärke rund 6 % der Bildbreite,
+  also etwa 60 von 1024 Pixeln. Lieber zu dick als zu dünn.
+  Grund: Die Symbole werden in der App nur 46 Pixel gross angezeigt.
+- Das Motiv FÜLLT das Quadrat: rundherum höchstens 12 % Luft, oben gleich
+  viel wie unten. Kein kleines Motiv in der Bildmitte.
+- Nur eine einzige Farbe: Goldbraun #8F6F22. Keine zweite Farbe, kein Rot,
+  kein Gelb, keine Schattierung.
+- Hintergrund vollständig transparent (echter Alpha-Kanal). Kein Kästchen,
+  keine Kachel, kein Rahmen, kein Kreis darum. Male AUCH NICHT das graue
+  Schachbrettmuster auf, mit dem Programme Transparenz anzeigen - der
+  Hintergrund muss wirklich leer sein, nicht nur leer aussehen.
+- Quadratisch, 1024 x 1024 Pixel, als PNG mit Transparenz.
+- Kein Text, keine Buchstaben, keine Zahlen im Bild.
+- Ruhig, hochwertig, zeitlos - bewusst nicht verspielt, nicht comichaft.
+- Bei Nummer 33 bis 36 zusätzlich: Das Motiv wird später rund beschnitten,
+  es muss mittig sitzen und darf die Ecken nicht berühren.
+
+DIE MOTIVE (die Nummern sind fest, sie gehören zu einer grösseren Liste):
+14. Eine Kompassrose. Keine Buchstaben, keine Zahlen, keine ausgefüllten
+    Zacken - nur Umrisslinien.
+16. Eine kleine Insel mit zwei Palmen, nur als Umrisslinien, das Innere
+    bleibt leer.
+20. Ein geschlossenes, ruhiges Vorhängeschloss. Freundlich, nicht warnend.
+21. Eine Zahlkarte von vorn, mit einem schmalen waagrechten Streifen.
+24. Ein Kreis mit einem kleinen i darin - das übliche Info-Zeichen.
+25. Eine zusammengerollte Schriftrolle von der Seite.
+26. Ein Papierkorb mit Deckel.
+27. Eine Sonne mit gleichmässigen Strahlen.
+28. Eine einzelne weiche Wolke.
+29. Eine ruhige, flache Welle.
+30. Eine höhere, bewegte Welle mit einem Wellenkamm, deutlich lebhafter
+    als Nummer 29.
+31. Der Umriss einer männlichen Person von vorn, Kopf und Schultern, ohne
+    Gesicht. Nur die Kontur als Linie, NICHT ausgefüllt.
+32. Eine Strandliege von der Seite.
+33. Eine Hibiskusblüte von vorn, nur als Umrisslinien.
+34. Eine Muschel, nur als Umrisslinien.
+35. Eine Taube im Flug von der Seite, nur als Umrisslinien.
+36. Eine Lotusblüte von vorn, nur als Umrisslinien.
+37. Eine schmale Mondsichel.
+38. Ein Schweizerkreuz in einem Kreis. Goldbraun wie alles andere,
+    ausdrücklich NICHT rot.
+39. Der Umriss einer sitzenden Person im Schneidersitz von vorn, ohne
+    Gesicht. Nur die Kontur als Linie, NICHT ausgefüllt.
+
+Fang jetzt mit Nummer 20 an.
+````
+
+Wenn ein Bild wieder ausgefüllt oder leuchtend kommt, hilft am besten:
+*„Nochmal, aber nur Umrisslinien und ohne Leuchten."*
 
 ---
 
@@ -150,8 +255,10 @@ STIL - gilt für alle 39:
 - Das Motiv FÜLLT das Quadrat: rundherum höchstens 12 % Luft, oben gleich
   viel wie unten. Kein schmaler Streifen in der Bildmitte.
 - Nur eine Farbe: Goldbraun #8F6F22. Keine weitere Farbe, auch kein Rot.
-- Hintergrund vollständig transparent (Alpha-Kanal). Kein Kästchen, keine
-  Kachel, kein Rahmen, kein Kreis darum.
+- Hintergrund vollständig transparent (echter Alpha-Kanal). Kein Kästchen,
+  keine Kachel, kein Rahmen, kein Kreis darum. Male AUCH NICHT das graue
+  Schachbrettmuster auf, mit dem Programme Transparenz anzeigen - der
+  Hintergrund muss wirklich leer sein, nicht nur leer aussehen.
 - Es soll aussehen, als waere es MIT EINEM BRAUNEN FILZSTIFT AUF WEISSES
   PAPIER gezeichnet. Die Linie selbst ist dunkelgoldbraun und deckend.
   Also KEIN Leuchtreklame-Schild, keine hell leuchtende Neonroehre,
