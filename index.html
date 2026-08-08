@@ -1365,7 +1365,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.62";
+    var AKTUELLE_VERSION = "2026-08-08.63";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -6200,15 +6200,16 @@
       '</div>';
     }
 
+    // Reihenfolge: Der VORSCHLAG steht zuoberst, die angefangene Uebung
+    // darunter (Christine, 8. Aug. 2026: "Vorschlag Meditation muss immer
+    // da sein als erstes"). Ein erster Entwurf hatte die Frage zuoberst -
+    // sie ist zwar dringlicher, aber der Vorschlag ist der feste Punkt der
+    // Seite: Er steht immer, und wenn er mal oben und mal in der Mitte
+    // stuende, muesste man ihn jedes Mal suchen.
     html = "";
     var erste = " first";
-    if (offen){
-      html += '<div class="section-label first">Willst du weiterhören?</div>' +
-              '<div class="card">' + weiterZeile() + '</div>';
-      erste = "";
-    }
     if (vorschlag){
-      html += '<div class="section-label' + erste + '">' +
+      html += '<div class="section-label first">' +
           (ausKompass ? "Passt zu deiner Stimmung" : tageszeitTitel()) + '</div>' +
         '<div class="card">' +
           '<div class="hist-row startbar" data-play="' + vorschlag.id + '">' +
@@ -6219,6 +6220,11 @@
             '<button class="play-btn" data-play="' + vorschlag.id + '">▶</button>' +
           '</div>' +
         '</div>';
+      erste = "";
+    }
+    if (offen){
+      html += '<div class="section-label' + erste + '">Willst du weiterhören?</div>' +
+              '<div class="card">' + weiterZeile() + '</div>';
     }
     // Nur wenn wirklich gar nichts da ist (z. B. alles gesperrt) bleibt der
     // Block weg - sonst stuende eine leere Ueberschrift auf der Seite.
