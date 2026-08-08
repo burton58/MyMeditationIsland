@@ -553,6 +553,16 @@
     transition:opacity .4s cubic-bezier(.22,.61,.36,1), transform .4s cubic-bezier(.22,.61,.36,1);
   }
   .rec-result.show{ display:block; }
+  /* Der Hinweis "Lieber mehrere kurze nacheinander?" unter dem Startknopf.
+     Bewusst leise: keine Flaeche, keine Umrandung - er soll da sein, aber
+     nicht mit "Jetzt starten" um Aufmerksamkeit ringen. Trotzdem gut
+     tippbar (volle Breite, 12px Innenabstand). */
+  .rec-modus{
+    display:block; width:100%; margin-top:11px; padding:12px 4px;
+    border:none; background:none; cursor:pointer; font-family:inherit;
+    font-size:.82rem; font-weight:600; color:var(--gold-deep); text-align:center;
+  }
+  .rec-modus[hidden]{ display:none; }
   .rec-result.show.in{ opacity:1; transform:translateY(0); }
   .rec-result .card{ background:linear-gradient(180deg, #fffdf7, var(--cream-2) 180%); box-shadow:0 14px 34px rgba(28,59,51,.1); }
   .rec-head{ font-size:.72rem; text-transform:uppercase; letter-spacing:.09em; color:var(--gold-deep); font-weight:800; margin-bottom:9px; }
@@ -1375,7 +1385,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.66";
+    var AKTUELLE_VERSION = "2026-08-08.67";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1697,6 +1707,18 @@
           <div class="seg-thumb"></div>
         </div>
       </div>
+      <!-- Der Block "Trainingsmodus" (Einzelmeditation / Trainingsprogramm)
+           stand bis 8. Aug. 2026 hier. Christine: "Ich würde einfach
+           Meditation schreiben, nicht mehr Einzel oder Trainingsmeditation
+           ... und dann einfach die Zeit auswählen, wie lange maximal."
+           Nach einer Analyse (Calm fragt nur die Dauer, Headspace trennt
+           Kurse und Einzelsitzungen als zwei Bereiche zum Stoebern - keine
+           von beiden fragt vor jeder Sitzung "eine oder mehrere?") hat sie
+           die Variante gewaehlt: vorne nur die Dauer, das Programm als
+           leiser Hinweis IM ERGEBNIS (#modusWechselBtn).
+           BEWUSST NICHT GELOESCHT: Zum Zurueckholen diesen Kommentar
+           aufloesen; der Zuhoerer auf #modeRow prueft weiter unten auf
+           Existenz und schaltet dann wieder mit.
       <div class="pref-block">
         <h3>Trainingsmodus</h3>
         <div class="radio-row" id="modeRow">
@@ -1712,6 +1734,7 @@
           </div>
         </div>
       </div>
+      -->
     </div>
 
     <button class="btn-dark full" id="recommendBtn" style="margin-top:16px;">Zeig mir, was jetzt passt →</button>
@@ -1732,6 +1755,12 @@
         <div class="rec-actions">
           <button class="btn-dark full" id="startRecBtn">Jetzt starten</button>
         </div>
+        <!-- Leiser Hinweis statt einer Einstellung vorne (8. Aug. 2026).
+             Erscheint nur, wenn ein Programm bei der gewaehlten Dauer
+             wirklich mehr als eine Uebung ergaebe - sonst waere es ein
+             Angebot, das nichts aendert (bei 5 Minuten war genau das der
+             Fall: das Programm bestand aus einer einzigen Uebung). -->
+        <button class="rec-modus" id="modusWechselBtn" type="button" hidden></button>
       </div>
     </div>
   </div>
@@ -3752,29 +3781,48 @@
   var empfehlung = [];
   var empfehlungGrund = "";
 
+  // Die beiden Auswahlarten als eigene Funktionen (8. Aug. 2026). Vorher
+  // standen sie als zwei Zweige direkt in baueEmpfehlung(). Sie mussten
+  // heraus, weil die Ergebnis-Karte jetzt VORHER wissen muss, ob ein
+  // Programm ueberhaupt mehr als eine Uebung ergaebe - nur dann darf sie
+  // "Lieber mehrere kurze nacheinander?" anbieten. Beide Funktionen haben
+  // keine Nebenwirkungen und koennen darum gefahrlos zweimal laufen.
+  function waehleEinzeln(pool){
+    var passend = pool.filter(function(m){ return m.min <= durationV2; });
+    return [ passend[0] || pool[0] ].filter(Boolean);
+  }
+  function waehleProgramm(pool){
+    // Die Reihenfolge im Pool ist auf die EINZELNE Uebung hin gebaut: ganz
+    // vorn steht, was der gewaehlten Dauer am naechsten kommt (siehe
+    // empfehlungsPool). Fuer ein Programm ist das genau falsch - bei
+    // "max 20 Min" stand dann eine 19-Minuten-Uebung vorn, und danach
+    // passte nichts mehr dazu; heraus kam ein "Programm" aus einer
+    // einzigen Uebung (8. Aug. 2026 nachgemessen).
+    // Darum hier nach Laenge aufsteigend sortieren. Die Sortierung ist
+    // stabil, die Reihenfolge nach Passung bleibt unter gleich langen
+    // Uebungen also erhalten.
+    pool = pool.slice().sort(function(a, b){ return a.min - b.min; });
+    var picks = [], total = 0, richtungen = [];
+    // Erst je Richtung eine - so wird ein Programm abwechslungsreich.
+    pool.forEach(function(m){
+      if (picks.length >= PROGRAMM_MAX || richtungen.indexOf(m.dir) !== -1) return;
+      if (total + m.min <= durationV2){ picks.push(m); richtungen.push(m.dir); total += m.min; }
+    });
+    // Dann auffuellen, solange noch Zeit uebrig ist.
+    pool.forEach(function(m){
+      if (picks.length >= PROGRAMM_MAX || picks.indexOf(m) !== -1) return;
+      if (total + m.min <= durationV2){ picks.push(m); total += m.min; }
+    });
+    if (!picks.length){
+      var kuerzeste = pool.slice().sort(function(a,b){ return a.min - b.min; })[0];
+      if (kuerzeste) picks = [kuerzeste];
+    }
+    return picks;
+  }
+
   function baueEmpfehlung(){
     var pool = empfehlungsPool();
-    var picks = [];
-    if (modus === "single"){
-      var passend = pool.filter(function(m){ return m.min <= durationV2; });
-      picks = [ passend[0] || pool[0] ].filter(Boolean);
-    } else {
-      var total = 0, richtungen = [];
-      // Erst je Richtung eine - so wird ein Programm abwechslungsreich.
-      pool.forEach(function(m){
-        if (picks.length >= 4 || richtungen.indexOf(m.dir) !== -1) return;
-        if (total + m.min <= durationV2){ picks.push(m); richtungen.push(m.dir); total += m.min; }
-      });
-      // Dann auffuellen, solange noch Zeit uebrig ist.
-      pool.forEach(function(m){
-        if (picks.length >= 4 || picks.indexOf(m) !== -1) return;
-        if (total + m.min <= durationV2){ picks.push(m); total += m.min; }
-      });
-      if (!picks.length){
-        var kuerzeste = pool.slice().sort(function(a,b){ return a.min - b.min; })[0];
-        if (kuerzeste) picks = [kuerzeste];
-      }
-    }
+    var picks = modus === "single" ? waehleEinzeln(pool) : waehleProgramm(pool);
 
     var bereiche = [];
     picks.forEach(function(m){
@@ -3911,6 +3959,26 @@
   // Ohne gesetzten Zeiger gibt es NICHTS zu empfehlen: die Begruendung
   // haette sonst "Dein Kompass zeigt: ausgeglichen" behauptet, obwohl das
   // nur der Ruhewert der Nadel in der Mitte ist und niemand das gesagt hat.
+  // Der leise Hinweis unter dem Startknopf (8. Aug. 2026, Variante "C").
+  //
+  // Er wird NUR gezeigt, wenn der andere Weg wirklich etwas anderes ergibt:
+  // Bei "max 5 Min" bestand ein Programm aus einer einzigen Uebung - der
+  // Hinweis haette dann etwas versprochen, was nicht eintritt. Darum wird
+  // vorher durchgerechnet (waehleProgramm() hat keine Nebenwirkungen).
+  function zeigeModusWechsel(){
+    var el = document.getElementById("modusWechselBtn");
+    if (!el) return;
+    if (modus === "program"){
+      el.textContent = "Lieber eine einzelne Meditation? →";
+      el.hidden = false;
+      return;
+    }
+    // Ergaebe ein Programm bei dieser Dauer ueberhaupt mehr als eine Uebung?
+    var moeglich = waehleProgramm(empfehlungsPool()).length > 1;
+    el.textContent = "Lieber mehrere kurze nacheinander? →";
+    el.hidden = !moeglich;
+  }
+
   function zeigeEmpfehlung(){
     var fehlt = document.getElementById("recFehlt");
     if (!kompassBenutzt && !empfohlenVomChat){
@@ -3930,6 +3998,7 @@
       return medZeile(m, { cls:"rec-item", num: picks.length > 1 ? (i + 1) : null });
     }).join("");
     document.getElementById("recWhy").textContent = empfehlungGrund;
+    zeigeModusWechsel();
     var box = document.getElementById("recResult");
     box.classList.add("show");
     // Ein Frame warten, bis display:block wirklich gerendert ist, dann erst
@@ -4188,7 +4257,13 @@
   var currentCatV2 = null;      // null = alle, "fav" = Favoriten, sonst Richtung
   var libSuche = "";            // aktuelles Suchwort in der Bibliothek
   var durationV2 = 10;          // maximale Meditationsdauer (Kompass-Seite)
-  var modus = "single";         // "single" = Einzelmeditation, "program" = Programm
+  var modus = "single";         // "single" = eine Uebung, "program" = mehrere nacheinander
+  // Wie viele Uebungen ein Programm hoechstens aneinanderreiht. Bis zum
+  // 8. Aug. 2026 waren es 4 - damit endete ein Programm bei jeder Dauer ab
+  // 20 Minuten nach rund 16 Minuten, obwohl mehr Zeit gewaehlt war
+  // (nachgerechnet). 6 nutzt die laengeren Zeiten sinnvoll aus und bleibt
+  // trotzdem ueberschaubar.
+  var PROGRAMM_MAX = 6;
 
   // ---- Favoriten: liegen wie der Verlauf nur auf diesem Gerät ----------
   var FAV_KEY = "myisland.favoriten.v1";
@@ -4391,7 +4466,12 @@
   document.querySelector('#durationOptsV2 [data-value="' + durationV2 + '"]').classList.add("active");
 
   // Trainingsmodus: eine Übung oder mehrere nacheinander.
-  document.getElementById("modeRow").addEventListener("click", function(e){
+  // Seit 8. Aug. 2026 steht dieser Block nicht mehr auf der Kompass-Seite
+  // (umgeschaltet wird jetzt im Ergebnis, siehe #modusWechselBtn). Der
+  // Zuhoerer bleibt stehen ("man weiss ja nie") und prueft darum auf
+  // Existenz - ohne das wuerde die ganze App beim Laden abstuerzen.
+  var modeRowEl = document.getElementById("modeRow");
+  if (modeRowEl) modeRowEl.addEventListener("click", function(e){
     var opt = e.target.closest(".radio-opt");
     if (!opt) return;
     Array.prototype.forEach.call(this.children, function(el){ el.classList.toggle("on", el === opt); });
@@ -6750,6 +6830,19 @@
   document.getElementById("toCompassBtn").addEventListener("click", function(){ goToStep("compass"); });
   document.getElementById("backToIslandBtn").addEventListener("click", function(){ goToStep("home"); });
   document.getElementById("recommendBtn").addEventListener("click", zeigeEmpfehlung);
+  // Umschalten zwischen einer Uebung und mehreren - direkt im Ergebnis,
+  // statt als Einstellung vorne auf der Seite (8. Aug. 2026).
+  document.getElementById("modusWechselBtn").addEventListener("click", function(){
+    modus = (modus === "program") ? "single" : "program";
+    aktualisierePrefsSummary();
+    // Die Empfehlung neu bauen und zeigen. Das Ergebnis ist schon
+    // aufgeklappt, darum kein erneutes Scrollen - der Blick soll auf der
+    // Karte bleiben, die sich gerade aendert.
+    var box = document.getElementById("recResult");
+    var offen = box.classList.contains("show");
+    zeigeEmpfehlung();
+    if (offen) box.scrollIntoView({ behavior:"smooth", block:"center" });
+  });
   document.getElementById("startRecBtn").addEventListener("click", function(){
     if (!empfehlung.length) return;
     fortsetzenSek = 0;
