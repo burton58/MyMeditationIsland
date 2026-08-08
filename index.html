@@ -1365,7 +1365,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.64";
+    var AKTUELLE_VERSION = "2026-08-08.65";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1643,7 +1643,17 @@
     <div class="card readout-card">
       <div class="glyph" id="stateGlyph"><img src="icon-unberuehrt.png" alt="" aria-hidden="true"></div>
       <div class="body">
-        <div class="k">Gerade bei dir</div>
+        <!-- Hier stand bis 8. Aug. 2026 "Gerade bei dir". Christine:
+             "Gerade bei dir sinnlos, löschen." Sie hat recht - die Karte
+             steht direkt unter dem Kompass, den man eben selbst gestellt
+             hat; dass sie von einem selbst und von jetzt handelt, sagt
+             der Zusammenhang schon. Das Wort kostete nur eine Zeile.
+             BEWUSST NICHT GELOESCHT ("man weiss ja nie"): Zum Zurueckholen
+             die naechste Zeile einkommentieren.
+             <div class="k">Gerade bei dir</div>
+             Auf der Abschluss-Seite bleibt das Gegenstueck "Jetzt" stehen -
+             dort traegt es Bedeutung, weil es dem Zustand VOR der
+             Meditation gegenuebersteht. -->
         <div class="compass-readout" id="compassReadout"></div>
       </div>
     </div>
