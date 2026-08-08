@@ -1385,7 +1385,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.67";
+    var AKTUELLE_VERSION = "2026-08-08.68";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1755,12 +1755,20 @@
         <div class="rec-actions">
           <button class="btn-dark full" id="startRecBtn">Jetzt starten</button>
         </div>
-        <!-- Leiser Hinweis statt einer Einstellung vorne (8. Aug. 2026).
-             Erscheint nur, wenn ein Programm bei der gewaehlten Dauer
-             wirklich mehr als eine Uebung ergaebe - sonst waere es ein
-             Angebot, das nichts aendert (bei 5 Minuten war genau das der
-             Fall: das Programm bestand aus einer einzigen Uebung). -->
+        <!-- Hier stand fuer kurze Zeit am 8. Aug. 2026 ein leiser Hinweis
+             "Lieber mehrere kurze nacheinander?", der auf ein Programm aus
+             mehreren Uebungen umschaltete. Christine nach dem Ansehen:
+             "Aber nur eine Meditation, nicht mehrere auf einmal."
+             Damit gibt es auf der Kompass-Seite nur noch EINEN Weg: eine
+             Uebung, passend zur Stimmung und zur gewaehlten Hoechstdauer.
+             BEWUSST NICHT GELOESCHT ("man weiss ja nie") - die ganze
+             Programm-Logik (waehleProgramm, PROGRAMM_MAX, der Zweig in
+             baueEmpfehlung und der Begruendungstext dafuer) steht
+             unveraendert im Code. Zum Zurueckholen diesen Kommentar
+             aufloesen; der Zuhoerer weiter unten prueft auf Existenz und
+             schaltet dann wieder mit.
         <button class="rec-modus" id="modusWechselBtn" type="button" hidden></button>
+        -->
       </div>
     </div>
   </div>
@@ -6832,7 +6840,11 @@
   document.getElementById("recommendBtn").addEventListener("click", zeigeEmpfehlung);
   // Umschalten zwischen einer Uebung und mehreren - direkt im Ergebnis,
   // statt als Einstellung vorne auf der Seite (8. Aug. 2026).
-  document.getElementById("modusWechselBtn").addEventListener("click", function(){
+  // Seit demselben Tag stillgelegt (Christine: "nur eine Meditation, nicht
+  // mehrere auf einmal") - darum die Existenz-Pruefung, sonst stuerzte die
+  // App beim Laden ab.
+  var modusWechselBtnEl = document.getElementById("modusWechselBtn");
+  if (modusWechselBtnEl) modusWechselBtnEl.addEventListener("click", function(){
     modus = (modus === "program") ? "single" : "program";
     aktualisierePrefsSummary();
     // Die Empfehlung neu bauen und zeigen. Das Ergebnis ist schon
