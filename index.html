@@ -1365,7 +1365,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.61";
+    var AKTUELLE_VERSION = "2026-08-08.62";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3780,10 +3780,21 @@
     if (h < 22) return "Für den Abend";
     return "Für die Nacht";
   }
-  function tagesVorschlag(){
+  // "meide" (seit 8. Aug. 2026): Namen, die gerade nicht vorgeschlagen
+  // werden sollen - alles, was heute schon lief, und eine angefangene
+  // Uebung. Vorher brauchte es das nicht, weil der Vorschlag nur erschien,
+  // solange heute noch gar nichts gelaufen war. Seit er IMMER steht
+  // (Christines Wunsch), waere sonst genau das vorgeschlagen worden, was
+  // man eben gehoert hat. Bleibt danach nichts uebrig, greifen der Reihe
+  // nach die alten, breiteren Auswahlen - lieber ein zweitbester Vorschlag
+  // als eine leere Stelle.
+  function tagesVorschlag(meide){
     var bereich = tageszeitBereich();
     var oft = gehoertWieOft(), letzte = letzteVorschlaege();
-    var pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && istFrei(m.id); });
+    var passt = function(m){ return istFrei(m.id) && !(meide && meide[m.name]); };
+    var pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && passt(m); });
+    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return passt(m); });
+    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && istFrei(m.id); });
     if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
     if (!pool.length) return null;
     // Noch nie Gehoertes zuerst, danach das laenger Zurueckliegende -
@@ -6137,57 +6148,93 @@
     var focusWrap = document.getElementById("focusSection");
     var html;
 
-    // 5. Aug. 2026, Christine: "Dein heutiger Fokus erscheint nur, wenn man
-    // auch eine Meditation heute gehört hat." Der ganze Block (Ueberschrift
-    // + Karte) ist darum jetzt weg, solange heute noch nichts gelaufen ist -
-    // vorher stand hier sonst ein Hinweistext oder eine Empfehlung, obwohl
-    // beides schon anderswo (Karte "Dein Zustand" mit "Zum Kompass")
-    // erreichbar ist. Die beiden fruehereren Zustaende ("noch keine
-    // Empfehlung" / "Empfehlung da, aber heute noch nichts gehoert") bleiben
-    // unten auskommentiert BEWUSST im Code stehen ("Alten Code im
-    // Hintergrund behalten, man weiss ja nie") statt geloescht zu werden.
-    // Eine unterbrochene Meditation zeigt sich hier ebenfalls - auch wenn
-    // heute sonst nichts gelaufen ist (5. Aug. 2026, Christines Auftrag:
-    // "dass man dann weitermachen kann und nicht wieder am Anfang startet").
+    // Aufbau seit 8. Aug. 2026 (Christine): "Ich möchte, dass dies immer
+    // angezeigt wird, und wenn man eine Meditation noch nicht fertig hat,
+    // fragen: Willst du weiterhören? Und sonst keine Auflistung der
+    // Meditationen von heute, die sind im Profil."
+    //
+    // Daraus drei feste Regeln fuer diesen Block:
+    //   1. Der Vorschlag steht IMMER - auch wenn heute schon etwas lief.
+    //      Vorher verschwand er, sobald eine Meditation gehoert war; die
+    //      Startseite hatte dann keinen einzigen Startknopf mehr.
+    //   2. Eine angefangene Uebung fragt "Willst du weiterhören?" und
+    //      steht ZUERST - wer etwas offen hat, will meist dort weiter.
+    //   3. Was heute schon gelaufen ist, wird hier NICHT mehr aufgezaehlt.
+    //      Das steht auf "Mein Weg" (Verlauf, Insel-Woche) - hier waere es
+    //      eine Wiederholung und macht die Startseite zur Liste.
+    // Der ganze frueherere "Heute gehört"-Block steht weiter unten
+    // auskommentiert im Code ("Alten Code im Hintergrund behalten").
     var offen = ladeOffen();
 
-    // Die angefangene Uebung steht als Teilstueck schon im Verlauf (die
-    // gehoerten Minuten zaehlen ja). Sie gehoert unter "Angefangen" und
-    // darf darum unter "Heute gehört" nicht ein zweites Mal auftauchen.
-    var heuteOhneOffen = heute.filter(function(e){
-      return !(offen && e.ts === offen.histTs && e.name === offen.name);
-    });
+    // Nicht vorschlagen, was heute schon lief oder gerade offen ist - sonst
+    // stuende der Vorschlag direkt neben derselben Uebung.
+    var meide = {};
+    heute.forEach(function(e){ meide[e.name] = true; });
+    if (offen) meide[offen.name] = true;
 
-    if (!heuteOhneOffen.length && !offen){
-      // Heute noch nichts gelaufen und nichts offen: EIN Vorschlag, direkt
-      // startbar (6. Aug. 2026). Vorher stand hier gar nichts - die
-      // Startseite war damit ein Wegweiser statt einer Startrampe, und rund
-      // 30 % der Flaeche blieben leer. Calm, Headspace und Insight Timer
-      // zeigen an dieser Stelle alle etwas Startbares.
-      //
-      // Wurde der Kompass benutzt, ist dessen Empfehlung die bessere
-      // Grundlage - dann sagt die Ueberschrift das auch. Sonst traegt sie
-      // die Tageszeit, auf der der Vorschlag wirklich beruht.
-      var vorschlag = liste.length ? liste[0] : tagesVorschlag();
-      if (!vorschlag){
-        focusWrap.hidden = true;
-      } else {
-        focusWrap.hidden = false;
-        focus.innerHTML =
-          '<div class="section-label first">' +
-            (liste.length ? "Passt zu deiner Stimmung" : tageszeitTitel()) + '</div>' +
-          '<div class="card">' +
-            '<div class="hist-row startbar" data-play="' + vorschlag.id + '">' +
-              '<span class="row-thumb">' + rowFoto(vorschlag) + '</span>' +
-              '<span class="body"><span class="name">' + vorschlag.name + '</span>' +
-              '<span class="meta">' + vorschlag.min + ' Min · ' + katName(vorschlag.dir) +
-                '</span></span>' +
-              '<button class="play-btn" data-play="' + vorschlag.id + '">▶</button>' +
-            '</div>' +
-          '</div>';
-      }
-    } else {
-      focusWrap.hidden = false;
+    // Wurde der Kompass benutzt, ist dessen Empfehlung die bessere
+    // Grundlage - dann sagt die Ueberschrift das auch. Sonst traegt sie die
+    // Tageszeit, auf der der Vorschlag wirklich beruht.
+    var ausKompass = null;
+    for (var vi = 0; vi < liste.length; vi++){
+      if (!meide[liste[vi].name]){ ausKompass = liste[vi]; break; }
+    }
+    var vorschlag = ausKompass || (liste.length ? null : tagesVorschlag(meide));
+    if (!vorschlag && !liste.length) vorschlag = tagesVorschlag(meide);
+
+    function weiterZeile(){
+      var m = medVonName(offen.name);
+      // "noch X Min übrig" statt "noch X von Y Min": Letzteres liest sich
+      // auch als "X von Y geschafft" und meint das Gegenteil.
+      var restMin = Math.max(1, Math.round((offen.min * 60 - offen.seconds) / 60));
+      // ✕ zum Verwerfen (5. Aug. 2026, Christines Frage "kann man bei
+      // deinem heutigen Fokus auch Meditationen weglöschen?"): Ohne das
+      // blieb eine angefangene Uebung fuer immer stehen - man kam nur
+      // wieder heraus, indem man sie zu Ende hoerte oder neu startete.
+      return '<div class="hist-row startbar offen-row" data-weiter="1">' +
+        '<span class="row-thumb">' + rowFoto(m) + '</span>' +
+        '<span class="body"><span class="name">' + offen.name + '</span>' +
+        '<span class="meta">noch ' + restMin + ' Min übrig</span></span>' +
+        '<button class="verwerf-btn" data-verwerf="1" title="Nicht weitermachen">✕</button>' +
+        '<button class="play-btn" data-weiter="1" title="Weitermachen">▶</button>' +
+      '</div>';
+    }
+
+    html = "";
+    var erste = " first";
+    if (offen){
+      html += '<div class="section-label first">Willst du weiterhören?</div>' +
+              '<div class="card">' + weiterZeile() + '</div>';
+      erste = "";
+    }
+    if (vorschlag){
+      html += '<div class="section-label' + erste + '">' +
+          (ausKompass ? "Passt zu deiner Stimmung" : tageszeitTitel()) + '</div>' +
+        '<div class="card">' +
+          '<div class="hist-row startbar" data-play="' + vorschlag.id + '">' +
+            '<span class="row-thumb">' + rowFoto(vorschlag) + '</span>' +
+            '<span class="body"><span class="name">' + vorschlag.name + '</span>' +
+            '<span class="meta">' + vorschlag.min + ' Min · ' + katName(vorschlag.dir) +
+              '</span></span>' +
+            '<button class="play-btn" data-play="' + vorschlag.id + '">▶</button>' +
+          '</div>' +
+        '</div>';
+    }
+    // Nur wenn wirklich gar nichts da ist (z. B. alles gesperrt) bleibt der
+    // Block weg - sonst stuende eine leere Ueberschrift auf der Seite.
+    focusWrap.hidden = !html;
+    focus.innerHTML = html;
+
+    /* DORMANT seit 8. Aug. 2026 - "Heute gehört" auf der Startseite.
+       Christine: "sonst keine Auflistung der Meditationen von heute, die
+       sind im Profil." Der Block zeigte die letzten drei heute gehoerten
+       Uebungen plus eine Zusammenfassung. Zum Zurueckholen: diesen
+       Kommentar aufloesen und das Ergebnis oben an "html" anhaengen,
+       bevor focus.innerHTML gesetzt wird.
+
+      var heuteOhneOffen = heute.filter(function(e){
+        return !(offen && e.ts === offen.histTs && e.name === offen.name);
+      });
       // Hoechstens drei Zeilen (Aug. 2026): im Test mit zehn Sitzungen an
       // einem Tag wuchs diese Karte auf zehn Zeilen und schob Foto und
       // Zustands-Karte weit nach unten - die Startseite war nur noch eine
@@ -6196,62 +6243,26 @@
       var zeigen = heuteOhneOffen.slice(-3).reverse();   // die drei jüngsten zuoberst
       var restZahl = heuteOhneOffen.length - zeigen.length;
       var sekundenHeute = heuteOhneOffen.reduce(function(s, e){ return s + (e.seconds || 0); }, 0);
-
-      function weiterZeile(){
-        var m = medVonName(offen.name);
-        // "noch X Min übrig" statt "noch X von Y Min": Letzteres liest sich
-        // auch als "X von Y geschafft" und meint das Gegenteil.
-        var restMin = Math.max(1, Math.round((offen.min * 60 - offen.seconds) / 60));
-        // ✕ zum Verwerfen (5. Aug. 2026, Christines Frage "kann man bei
-        // deinem heutigen Fokus auch Meditationen weglöschen?"): Ohne das
-        // blieb eine angefangene Uebung fuer immer stehen - man kam nur
-        // wieder heraus, indem man sie zu Ende hoerte oder neu startete.
-        return '<div class="hist-row startbar offen-row" data-weiter="1">' +
-          '<span class="row-thumb">' + rowFoto(m) + '</span>' +
-          '<span class="body"><span class="name">' + offen.name + '</span>' +
-          // "Angefangen" steht schon in der Ueberschrift darueber - hier
-          // nur noch, wie viel fehlt.
-          '<span class="meta">noch ' + restMin + ' Min übrig</span></span>' +
-          '<button class="verwerf-btn" data-verwerf="1" title="Nicht weitermachen">✕</button>' +
-          '<button class="play-btn" data-weiter="1" title="Weitermachen">▶</button>' +
-        '</div>';
-      }
-
-      // Zwei eigene Abschnitte statt einer vagen Sammelueberschrift
-      // (6. Aug. 2026, Christine: "Mein heutiger Fokus ist verwirrend").
-      // Grund war, dass unter dem einen Wort zwei verschiedene Dinge lagen:
-      // heute Gehoertes und eine unterbrochene Uebung, die auch von einem
-      // frueheren Tag stammen kann. Jeder Block sagt jetzt selbst, was er
-      // ist - ein Dach darueber braucht es nicht, es muesste wieder vage
-      // sein. Beide Woerter kommen ausserdem ohne "mein/dein" aus.
-      html = '';
-      if (offen){
-        html += '<div class="section-label first">Angefangen</div>' +
-                '<div class="card">' + weiterZeile() + '</div>';
-      }
       if (zeigen.length){
-        html += '<div class="section-label' + (offen ? '' : ' first') + '">Heute gehört</div>' +
+        html += '<div class="section-label">Heute gehört</div>' +
           '<div class="card">' +
           zeigen.map(function(e){
-          var m = medVonName(e.name), dir = m ? m.dir : null, id = m ? m.id : null;
-          // ▶-Knopf: die Zeile ist antippbar (startet die Uebung neu) -
-          // Christines Regel "Ich möchte immer Knöpfe" (5. Aug. 2026).
-          return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
-            '<span class="row-thumb">' + rowFoto(m) + '</span>' +
-            '<span class="body"><span class="name">' + e.name + '</span>' +
-            '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + minutenAus(e.seconds) +
-              ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
-            (id ? '<button class="play-btn" data-play="' + id + '">▶</button>' : '') +
+            var m = medVonName(e.name), dir = m ? m.dir : null, id = m ? m.id : null;
+            return '<div class="hist-row' + (id ? ' startbar" data-play="' + id : '') + '">' +
+              '<span class="row-thumb">' + rowFoto(m) + '</span>' +
+              '<span class="body"><span class="name">' + e.name + '</span>' +
+              '<span class="meta">' + uhrzeitWort(e.ts) + ' · ' + minutenAus(e.seconds) +
+                ' Min' + (dir ? ' · ' + katName(dir) : '') + '</span></span>' +
+              (id ? '<button class="play-btn" data-play="' + id + '">▶</button>' : '') +
+            '</div>';
+          }).join("") +
+          (restZahl > 0
+            ? '<div class="fokus-summe">und ' + restZahl + ' weitere heute · zusammen ' +
+              minutenAus(sekundenHeute) + ' Min</div>'
+            : '') +
           '</div>';
-        }).join("") +
-        (restZahl > 0
-          ? '<div class="fokus-summe">und ' + restZahl + ' weitere heute · zusammen ' +
-            minutenAus(sekundenHeute) + ' Min</div>'
-          : '') +
-        '</div>';
       }
-      focus.innerHTML = html;
-    }
+    */
     /* Dormant seit 5. Aug. 2026 (Christine: "erscheint nur, wenn man auch
        eine Meditation heute gehört hat") - vorher liefen diese beiden Faelle
        im else-Zweig oben mit, wenn "heute" leer war. Zum Zurueckholen: die
