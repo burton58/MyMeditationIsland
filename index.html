@@ -485,15 +485,25 @@
     color:var(--ink); text-align:left;
   }
   .prefs-summary svg{ width:15px; height:15px; opacity:.5; flex:0 0 auto; }
+  /* Seit 8. Aug. 2026 steht die Auswahl fest offen (die aufklappende
+     Zusammenfassungs-Zeile darueber ist entfallen, siehe Kommentar im
+     Markup). Weil sie damit IMMER Platz braucht, ist sie zugleich enger
+     gesetzt als vorher - Blockabstand 20 -> 14px, Ueberschrift 10 -> 7px,
+     Abstand zwischen den beiden Modus-Zeilen 9 -> 7px und deren
+     Innenabstand 14 -> 11px. Das spart rund 30px, ohne dass etwas
+     gedraengt wirkt. Die Klapp-Mechanik (max-height/opacity) ist
+     absichtlich stehengeblieben, aber wirkungslos, solange die Klasse
+     "open" fest im Markup steht - so ist das Zurueckdrehen eine
+     Kleinigkeit. */
   .compass-prefs{
     max-height:0; overflow:hidden; opacity:0;
     transition:max-height .32s cubic-bezier(.22,.61,.36,1), opacity .28s ease;
   }
-  .compass-prefs.open{ max-height:420px; opacity:1; margin-top:14px; }
-  .pref-block{ margin-top:20px; }
+  .compass-prefs.open{ max-height:420px; opacity:1; margin-top:22px; }
+  .pref-block{ margin-top:14px; }
   .pref-block:first-child{ margin-top:0; }
   .pref-block h3{
-    font-size:.7rem; margin:0 0 10px; font-weight:800; color:var(--gold-deep);
+    font-size:.7rem; margin:0 0 7px; font-weight:800; color:var(--gold-deep);
     text-transform:uppercase; letter-spacing:.08em;
   }
   .seg{ display:flex; gap:6px; position:relative; }
@@ -520,9 +530,9 @@
   .seg:has(.opt:nth-child(5).active) .seg-thumb{ left:calc(4 * (((100% - 24px)/5) + 6px)); }
 
   /* Trainingsmodus: zwei Zeilen zum Auswählen, wie in der Vorlage */
-  .radio-row{ display:flex; flex-direction:column; gap:9px; }
+  .radio-row{ display:flex; flex-direction:column; gap:7px; }
   .radio-opt{
-    display:flex; align-items:center; gap:11px; padding:14px; border:1px solid var(--line); border-radius:14px;
+    display:flex; align-items:center; gap:11px; padding:11px 14px; border:1px solid var(--line); border-radius:14px;
     background:var(--card); cursor:pointer; font-size:.9rem; user-select:none; transition:.15s ease;
   }
   .radio-opt .mode-ico{ flex:0 0 auto; width:18px; height:18px; color:var(--ink-soft); opacity:.65; }
@@ -1365,7 +1375,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.65";
+    var AKTUELLE_VERSION = "2026-08-08.66";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1659,11 +1669,23 @@
     </div>
     <p class="streak-note" id="streakNote" hidden></p>
 
+    <!-- Hier stand bis 8. Aug. 2026 eine Zusammenfassungs-Zeile
+         "10 Min · Einzelmeditation" mit Stift, die die Auswahl darunter
+         auf- und zuklappte. Christine: "Einzelmeditation, wieso steht
+         10 Min fix? Löschen, man kann unten auswählen." Aufgeklappt stand
+         derselbe Wert zweimal da - einmal als Zeile, einmal als markierte
+         Auswahl. Die Auswahl ist jetzt immer offen und die Zeile weg.
+         BEWUSST NICHT GELOESCHT ("man weiss ja nie"): Zum Zurueckholen
+         diesen Kommentar aufloesen, bei .compass-prefs die Klasse "open"
+         wieder entfernen und in der CSS-Regel .compass-prefs die
+         Klapp-Mechanik (max-height/opacity) wieder einschalten - der
+         Zuhoerer auf prefsSummaryBtn steht weiter unten noch bereit.
     <button class="prefs-summary" id="prefsSummaryBtn" type="button" aria-expanded="false">
       <span id="prefsSummaryText">10 Min · Einzelmeditation</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
     </button>
-    <div class="compass-prefs" id="compassPrefs">
+    -->
+    <div class="compass-prefs open" id="compassPrefs">
       <div class="pref-block">
         <h3>Maximale Meditationsdauer</h3>
         <div class="seg" data-field="durationV2" id="durationOptsV2">
@@ -7004,11 +7026,19 @@
   // Dauer & Trainingsmodus: ruhige Zusammenfassungs-Zeile, die bei Bedarf
   // aufklappt - Werte und Logik der bestehenden Steuerelemente bleiben
   // unveraendert, nur die Buehne wird kleiner.
+  // Beide Funktionen gehoeren zur entfallenen Zusammenfassungs-Zeile
+  // (8. Aug. 2026). Sie bleiben stehen ("man weiss ja nie"), pruefen aber
+  // jetzt, ob es das Element ueberhaupt gibt - sonst wuerde die ganze App
+  // beim Laden abstuerzen. Wird die Zeile im Markup wieder eingeschaltet,
+  // laeuft alles unveraendert weiter.
   function aktualisierePrefsSummary(){
+    var el = document.getElementById("prefsSummaryText");
+    if (!el) return;
     var modeName = modus === "program" ? "Trainingsprogramm" : "Einzelmeditation";
-    document.getElementById("prefsSummaryText").textContent = durationV2 + " Min · " + modeName;
+    el.textContent = durationV2 + " Min · " + modeName;
   }
-  document.getElementById("prefsSummaryBtn").addEventListener("click", function(){
+  var prefsSummaryBtnEl = document.getElementById("prefsSummaryBtn");
+  if (prefsSummaryBtnEl) prefsSummaryBtnEl.addEventListener("click", function(){
     var panel = document.getElementById("compassPrefs");
     var open = panel.classList.toggle("open");
     this.setAttribute("aria-expanded", open ? "true" : "false");
