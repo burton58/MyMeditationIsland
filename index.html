@@ -1406,7 +1406,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.69";
+    var AKTUELLE_VERSION = "2026-08-08.70";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2972,7 +2972,7 @@
              "Sag innerlich, wenn's stimmt: Ich bi bereit, das irgendwenn goh z'lah.",
              "Falls no nüt goht: Au das isch okay. Es isch en erste Schritt.",
              "Chumm langsam zrugg zu dim Atem."] },
-    { id:"alltag_mutter", dir:"nord", cat:"mittel", bg:"bg-warmeszuhause.jpg", name:"Alltag einer berufstätigen Mutter", min:13, desc:"Churzi Uszit mitte im volle Tagesablauf.",
+    { id:"alltag_mutter", dir:"nord", cat:"mittel", bg:"bg-warmeszuhause.jpg", name:"Alltag einer berufstätigen Mutter", min:13, stoebern:true, desc:"Churzi Uszit mitte im volle Tagesablauf.",
       steps:["Setz di churz ane, au wenn's nur es paar Minute sind.",
              "Schnuuf tief us, wie wänn du grad d'Lischte im Chopf abstelle chönntisch.",
              "Dänk a alles, wo hüt no chunnt – Job, Chind, Huushalt – ohni's jetzt z'löse.",
@@ -3060,7 +3060,7 @@
              "Falls no nüt goht: das isch okay, es bruucht Zit.",
              "Schnuuf es paarmal ruhig, mit jedem Usschnuuf öppis weniger Gwicht.",
              "Chumm langsam zrugg."] },
-    { id:"schwangerschaft", dir:"sued", cat:"tief", name:"Schwangerschafts-Reise: Verbindung zum Kind", min:23, desc:"Tüüfi Verbindig zum ungebornige Chind spüre.",
+    { id:"schwangerschaft", dir:"sued", cat:"tief", name:"Schwangerschafts-Reise: Verbindung zum Kind", min:23, stoebern:true, desc:"Tüüfi Verbindig zum ungebornige Chind spüre.",
       steps:["Lig oder sitz di so bequem ane, wien's grad guet tuet.",
              "Leg beidi Händ uf de Buuch und schnuuf ruhig dert häre.",
              "Spür, was grad da isch – Fröid, Sorg, Müedigkeit. Alles darf da si.",
@@ -3117,7 +3117,7 @@
              "Loh alli die Bilder churz zäme da si.",
              "Spür, was das für en Gfühl im Körper git.",
              "Nimm das Gfühl mit i dä Rest vom Tag."] },
-    { id:"geduld_kinder", dir:"west", cat:"tief", bg:"bg-warmeszuhause.jpg", name:"Geduld im Umgang mit Kindern (vertieft)", min:15, desc:"Meh Gduld finde, wenn's mit de Chind aamal schwierig wird.",
+    { id:"geduld_kinder", dir:"west", cat:"tief", bg:"bg-warmeszuhause.jpg", name:"Geduld im Umgang mit Kindern (vertieft)", min:15, stoebern:true, desc:"Meh Gduld finde, wenn's mit de Chind aamal schwierig wird.",
       steps:["Setz di churz ane und schnuuf tief us, bevor öppis anders chunnt.",
              "Dänk a e Situation, wo d'Gduld hüt churz gfehlt hät.",
              "Frag di: Was han ich i dem Momänt würklich bruucht?",
@@ -3695,7 +3695,7 @@
     // Uebungen nicht vorkommen, aber sicher ist sicher), gilt wieder die
     // ungefilterte Auswahl - lieber ein Vorschlag zur falschen Zeit als
     // gar keiner.
-    var pool = MEDITATIONS.filter(function(m){ return istFrei(m.id) && passtZurZeit(m); });
+    var pool = MEDITATIONS.filter(function(m){ return istFrei(m.id) && darfVorgeschlagenWerden(m); });
     if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
 
     // Wie frisch ein Vorschlag noch ist: 0 = noch nie vorgeschlagen (darf
@@ -3907,6 +3907,32 @@
   // Bibliothek bleibt jede Uebung jederzeit auffindbar und startbar. Wer
   // abends um zehn eine Feierabend-Uebung hoeren will, soll das koennen;
   // sie soll ihr nur nicht ungefragt angeboten werden.
+  // Uebungen, die an eine LEBENSSITUATION gebunden sind statt an eine
+  // Stimmung (8. Aug. 2026). Christine: "Die speziellen Meditationen, wo es
+  // zum Beispiel um Schwangerschaft geht oder Umgang mit Kindern, das kann
+  // man nicht anhand vom Kompass empfehlen, weil man ja gar nicht danach
+  // fragt. Also sind so spezielle Meditationen, die man selber durchstöbern
+  // muss und auch suchen soll."
+  //
+  // Genau richtig: Der Kompass fragt nach nachdenklich/emotional und
+  // entspannt/angespannt - nie danach, ob jemand schwanger ist oder Kinder
+  // hat. Eine Schwangerschafts-Reise als Antwort auf "eher unruhig" waere
+  // geraten, nicht empfohlen. Betroffen sind heute drei Uebungen; ein
+  // Merkmal "stoebern:true" reicht, damit weitere jederzeit dazukommen
+  // koennen.
+  //
+  // Sie verschwinden NICHT aus der App: In der Bibliothek stehen sie ganz
+  // normal, sind such- und filterbar und lassen sich jederzeit starten.
+  // Nur von selbst angeboten werden sie nicht.
+  function nurZumStoebern(m){ return !!(m && m.stoebern); }
+
+  // Eine Stelle fuer alles, was gegen einen Vorschlag VON SELBST spricht.
+  // Gilt fuer die Startseite (tagesVorschlag) und die Kompass-Empfehlung -
+  // nicht fuer die Bibliothek.
+  function darfVorgeschlagenWerden(m){
+    return passtZurZeit(m) && !nurZumStoebern(m);
+  }
+
   function passtZurZeit(m){
     var z = m && m.zeit;
     if (!z) return true;
@@ -3944,11 +3970,11 @@
   function tagesVorschlag(meide){
     var bereich = tageszeitBereich();
     var oft = gehoertWieOft(), letzte = letzteVorschlaege();
-    var passt = function(m){ return istFrei(m.id) && passtZurZeit(m) && !(meide && meide[m.name]); };
+    var passt = function(m){ return istFrei(m.id) && darfVorgeschlagenWerden(m) && !(meide && meide[m.name]); };
     var pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && passt(m); });
     if (!pool.length) pool = MEDITATIONS.filter(function(m){ return passt(m); });
-    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && istFrei(m.id) && passtZurZeit(m); });
-    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id) && passtZurZeit(m); });
+    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && istFrei(m.id) && darfVorgeschlagenWerden(m); });
+    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id) && darfVorgeschlagenWerden(m); });
     if (!pool.length) return null;
     // Noch nie Gehoertes zuerst, danach das laenger Zurueckliegende -
     // dieselbe Regel wie bei der Kompass-Empfehlung, damit ueber die Zeit
