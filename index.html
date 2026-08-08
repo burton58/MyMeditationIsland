@@ -1365,7 +1365,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.63";
+    var AKTUELLE_VERSION = "2026-08-08.64";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2743,7 +2743,15 @@
              "Du sitzisch am Ufer, d'Füess im chüele Gras.",
              "Loh die Rueh vom See es paar Momänt uf dich wirke.",
              "Chumm langsam vo dert zrugg."] },
-    { id:"feierabend", dir:"nord", cat:"mini", bg:"bg-warmeszuhause.jpg", name:"Feierabend-Übergang", min:4, desc:"De Chopf vom Tag löse, bevor de Abig aafoht.",
+    // 8. Aug. 2026: Christine sah die Uebung um 10:35 Uhr unter "Für den
+    // Morgen" - "Feierabend-Meditation passt nicht zum Morgen sondern nur
+    // Mo bis Fr am Abend um 18-19 Uhr." Der Text sagt dasselbe: "bevor de
+    // Abig aafoht", "Das chunnt morn wieder dra".
+    // Zwei Aenderungen: Bereich "ost", damit sie ueberhaupt am Abend
+    // vorgeschlagen werden KANN (der Bereich bestimmt die Tageszeit,
+    // siehe tageszeitBereich()), und ein eigenes Zeitfenster "zeit".
+    { id:"feierabend", dir:"ost", cat:"mini", bg:"bg-warmeszuhause.jpg", name:"Feierabend-Übergang", min:4,
+      zeit:{ tage:[1,2,3,4,5], von:17, bis:20 }, desc:"De Chopf vom Tag löse, bevor de Abig aafoht.",
       steps:["Schnuuf einisch tief us, wie wänn de Tag jetzt fertig wär.",
              "Dänk churz a alles, won hüt no offe isch – und leg's innerlich ab.",
              "Sag dir: Das chunnt morn wieder dra, jetzt nöd.",
@@ -2902,7 +2910,13 @@
              "Schnuuf no es paar Mal ruhig, mit jedem Usschnuuf öppis meh los.",
              "Spür, wie sich de Körper öppis leichter aafühlt.",
              "Beweg langsam Finger und Zeche und chumm zrugg."] },
-    { id:"chakrenreise", dir:"nord", cat:"tief", bg:"bg-lichtraum.jpg", name:"Chakren-Reise: alle sieben Zentren", min:27, desc:"Tüüfi Reis dur alli siebe Chakra-Zentren.",
+    // 8. Aug. 2026 von "nord" (Gedanken beruhigen) nach "ost" (Entspannen)
+    // umgezogen - Christine: "Meditation Chakra-Reise wäre Entspannen."
+    // Der Text gibt ihr recht: 27 Minuten, "Lig di bequem hin", eine Reise
+    // durch alle sieben Zentren, am Ende "lah alles wieder ruhig i sich
+    // zämme falle". Das beruhigt keine kreisenden Gedanken, das ist eine
+    // Tiefenentspannung.
+    { id:"chakrenreise", dir:"ost", cat:"tief", bg:"bg-lichtraum.jpg", name:"Chakren-Reise: alle sieben Zentren", min:27, desc:"Tüüfi Reis dur alli siebe Chakra-Zentren.",
       steps:["Lig di bequem hin und schliess d'Auge.",
              "Wurzelchakra, a de Basis: stell dir es rots Liecht vor, wo di erdet.",
              "Sakralchakra, im Unterbuuch: es orangs Liecht für Läbigkeit.",
@@ -3586,7 +3600,13 @@
     // Unpassendes nach oben zu holen.
     var oft = gehoertWieOft();
     var letzte = letzteVorschlaege();
-    var pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
+    // passtZurZeit(): auch der Kompass soll keine Feierabend-Uebung um
+    // 10 Uhr morgens empfehlen. Faellt dadurch alles weg (kann bei 47
+    // Uebungen nicht vorkommen, aber sicher ist sicher), gilt wieder die
+    // ungefilterte Auswahl - lieber ein Vorschlag zur falschen Zeit als
+    // gar keiner.
+    var pool = MEDITATIONS.filter(function(m){ return istFrei(m.id) && passtZurZeit(m); });
+    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
 
     // Wie frisch ein Vorschlag noch ist: 0 = noch nie vorgeschlagen (darf
     // zuerst), grosse Zahl = gerade eben vorgeschlagen (kommt zuletzt).
@@ -3765,6 +3785,30 @@
   // Calm veroeffentlicht taeglich eine feste Sitzung fuer alle. Beide
   // nennen es nach dem TAG, nie nach der Person ("Daily Calm", "Today") -
   // ein "fuer dich" ohne Datengrundlage waere eine leere Behauptung.
+  // Manche Uebungen passen nur zu einer bestimmten Zeit (8. Aug. 2026).
+  // Bisher entschied allein der Bereich (Morgen/Tag/Abend/Nacht) - zu grob
+  // fuer eine Uebung wie "Feierabend-Übergang", die nur an Arbeitstagen am
+  // fruehen Abend Sinn ergibt.
+  //
+  //   zeit: { tage:[1,2,3,4,5], von:17, bis:20 }
+  //   tage = Wochentage (0 = Sonntag ... 6 = Samstag), von/bis in Stunden,
+  //   "bis" ist NICHT mehr enthalten (20 heisst: bis 19:59).
+  //
+  // Gilt nur dort, wo die App VON SELBST etwas vorschlaegt - in der
+  // Bibliothek bleibt jede Uebung jederzeit auffindbar und startbar. Wer
+  // abends um zehn eine Feierabend-Uebung hoeren will, soll das koennen;
+  // sie soll ihr nur nicht ungefragt angeboten werden.
+  function passtZurZeit(m){
+    var z = m && m.zeit;
+    if (!z) return true;
+    var d = new Date();
+    if (z.tage && z.tage.indexOf(d.getDay()) === -1) return false;
+    var h = d.getHours();
+    if (typeof z.von === "number" && h < z.von) return false;
+    if (typeof z.bis === "number" && h >= z.bis) return false;
+    return true;
+  }
+
   function tageszeitBereich(){
     var h = new Date().getHours();
     if (h < 5)  return "ost";    // Nacht - zur Ruhe kommen
@@ -3791,11 +3835,11 @@
   function tagesVorschlag(meide){
     var bereich = tageszeitBereich();
     var oft = gehoertWieOft(), letzte = letzteVorschlaege();
-    var passt = function(m){ return istFrei(m.id) && !(meide && meide[m.name]); };
+    var passt = function(m){ return istFrei(m.id) && passtZurZeit(m) && !(meide && meide[m.name]); };
     var pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && passt(m); });
     if (!pool.length) pool = MEDITATIONS.filter(function(m){ return passt(m); });
-    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && istFrei(m.id); });
-    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
+    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return m.dir === bereich && istFrei(m.id) && passtZurZeit(m); });
+    if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id) && passtZurZeit(m); });
     if (!pool.length) return null;
     // Noch nie Gehoertes zuerst, danach das laenger Zurueckliegende -
     // dieselbe Regel wie bei der Kompass-Empfehlung, damit ueber die Zeit
