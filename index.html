@@ -1406,7 +1406,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.70";
+    var AKTUELLE_VERSION = "2026-08-08.71";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -6354,7 +6354,11 @@
     zeigeHomeStateText();
 
     var heute = heutigeMeditationen();
-    var liste = empfehlung;
+    // "empfehlung" (die Kompass-Liste) wird auf der Startseite seit dem
+    // 8. Aug. 2026 nicht mehr gelesen - der Vorschlag hier beruht nur noch
+    // auf der Tageszeit. Die Zeile bleibt als Hinweis stehen, wo sie
+    // waere, falls sie je wieder gebraucht wird:
+    // var liste = empfehlung;
     var focus = document.getElementById("focusSlot");
     var focusWrap = document.getElementById("focusSection");
     var html;
@@ -6383,15 +6387,30 @@
     heute.forEach(function(e){ meide[e.name] = true; });
     if (offen) meide[offen.name] = true;
 
-    // Wurde der Kompass benutzt, ist dessen Empfehlung die bessere
-    // Grundlage - dann sagt die Ueberschrift das auch. Sonst traegt sie die
-    // Tageszeit, auf der der Vorschlag wirklich beruht.
-    var ausKompass = null;
-    for (var vi = 0; vi < liste.length; vi++){
-      if (!meide[liste[vi].name]){ ausKompass = liste[vi]; break; }
-    }
-    var vorschlag = ausKompass || (liste.length ? null : tagesVorschlag(meide));
-    if (!vorschlag && !liste.length) vorschlag = tagesVorschlag(meide);
+    // Der Vorschlag auf der Startseite beruht IMMER auf der Tageszeit -
+    // nie auf dem Kompass (8. Aug. 2026).
+    //
+    // Christine: "Passt zu deiner Stimmung, die Meditation macht keinen
+    // Sinn, da hier nur einfach so was empfohlen wird, z. B. anhand der
+    // Tageszeit, aber nicht anhand des Kompasses. Titel anpassen. Hier
+    // einfach eine freie Empfehlung."
+    //
+    // Sie hat einen echten Fehler gefunden, nicht nur eine schiefe
+    // Ueberschrift: Frueher stand hier empfehlung[0] - die Liste, die beim
+    // Druecken von "Zeig mir, was jetzt passt" auf der Kompass-Seite
+    // entsteht. Die wird aber NICHT neu gebaut, wenn man danach die Nadel
+    // bewegt. Nachgestellt: Kompass auf "angespannt" -> Empfehlung "Innere
+    // Stärke". Danach auf der Startseite die Nadel auf "gelassen" gezogen -
+    // der Satz daneben wechselte korrekt, der Vorschlag blieb "Innere
+    // Stärke · Stress lösen" stehen, unter der Ueberschrift "Passt zu
+    // deiner Stimmung". Die Ueberschrift behauptete also etwas, das nicht
+    // stimmte.
+    //
+    // Jetzt gilt eine klare Arbeitsteilung: Die Startseite gibt eine freie
+    // Empfehlung nach Tageszeit und sagt das auch ("Für den Abend"). Die
+    // Empfehlung zur Stimmung gibt es auf der Kompass-Seite - dort, wo sie
+    // im selben Moment berechnet wird.
+    var vorschlag = tagesVorschlag(meide);
 
     function weiterZeile(){
       var m = medVonName(offen.name);
@@ -6420,8 +6439,7 @@
     html = "";
     var erste = " first";
     if (vorschlag){
-      html += '<div class="section-label first">' +
-          (ausKompass ? "Passt zu deiner Stimmung" : tageszeitTitel()) + '</div>' +
+      html += '<div class="section-label first">' + tageszeitTitel() + '</div>' +
         '<div class="card">' +
           '<div class="hist-row startbar" data-play="' + vorschlag.id + '">' +
             '<span class="row-thumb">' + rowFoto(vorschlag) + '</span>' +
