@@ -1406,7 +1406,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-08.71";
+    var AKTUELLE_VERSION = "2026-08-10.72";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1835,7 +1835,7 @@
       </button>
       <button class="profile-card-haupt" id="profilInselbewohnerBtn" type="button">
         <span class="body">
-          <span class="name">Mein Inselbewohner</span>
+          <span class="name">Meine Insel</span>
           <span class="sub" id="inselbewohnerHinweis">Meine Insel-Woche und Inselreise ansehen</span>
         </span>
         <span class="chev">›</span>
@@ -7233,7 +7233,8 @@
   });
   document.getElementById("toSplashBtn").addEventListener("click", function(){ goToStep("splash"); });
   document.getElementById("profilIslandBtn").addEventListener("click", function(){ goToStep("island"); });
-  // "Mein Inselbewohner" klappt Insel-Woche und Inselreise auf und wieder zu
+  // "Meine Insel" (frueher "Mein Inselbewohner") klappt Insel-Woche und
+  // Inselreise auf und wieder zu
   // (Christines Wunsch): standardmaessig sind beide zu, damit die Seite
   // ruhig bleibt; ein Tipp zeigt sie, der naechste versteckt sie wieder. Der
   // Pfeil dreht sich mit, damit man den Zustand sieht.
