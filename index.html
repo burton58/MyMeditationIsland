@@ -1406,7 +1406,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.74";
+    var AKTUELLE_VERSION = "2026-08-10.75";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2899,7 +2899,19 @@
     // Bereich, aus dem die Startseite zwischen 11 und 17 Uhr vorschlägt,
     // und dort stehen die drei anderen Kraft-Übungen schon (Kraft-Impuls,
     // Innere Stärke, Innere Stärke vertiefen).
-    { id:"solarplexus", dir:"west", cat:"mittel", bg:"bg-bergspitze.jpg", name:"Solarplexuschakra – Willensstärke", min:7, desc:"Innerlichi Chraft und Wille wieder spüre.",
+    //
+    // 10. Aug. 2026, Nachtrag: "west" ist zugleich die Kompass-Achse fuer
+    // Anspannung ("Loest Anspannung im Koerper") - seit dem Umzug wurde die
+    // Uebung darum auch empfohlen, wenn die Nadel auf "unruhig"/"angespannt"
+    // steht. Christine (zum wiederholten Mal): "Solarplexus ist aktivierend
+    // und stärkt Willen und gut gegen Rückenprobleme, aber ich glaube nicht
+    // wenn man unruhig ist." Sie hat recht - Willensstaerke aktiviert,
+    // Anspannung braucht aber Beruhigung. Neues Merkmal `aktivierend:true`,
+    // geprueft in `empfehlungsPool()`: auf der angespannten Kompass-Seite
+    // fliegt die Uebung aus der Auswahl. Fuer die Startseite bleibt sie
+    // unveraendert (tagesVorschlag() prueft `aktivierend` nicht) - dort
+    // zaehlt weiterhin nur die Tageszeit, wie am 8. Aug. gewollt.
+    { id:"solarplexus", dir:"west", cat:"mittel", bg:"bg-bergspitze.jpg", name:"Solarplexuschakra – Willensstärke", min:7, aktivierend:true, desc:"Innerlichi Chraft und Wille wieder spüre.",
       steps:["Sitz oder stand ufrecht ane.",
              "Stell dir im Mage es warms, gelbs Liecht vor.",
              "Mit jedem Ischnuufe wird das Liecht öppis stärcher.",
@@ -3697,6 +3709,17 @@
     // gar keiner.
     var pool = MEDITATIONS.filter(function(m){ return istFrei(m.id) && darfVorgeschlagenWerden(m); });
     if (!pool.length) pool = MEDITATIONS.filter(function(m){ return istFrei(m.id); });
+
+    // 10. Aug. 2026: Auf der angespannten Seite keine "aktivierenden"
+    // Uebungen (Kraft, Willensstaerke) empfehlen - wer angespannt/unruhig
+    // ist, braucht Beruhigung, nicht mehr Aktivierung (Christine, siehe
+    // Kommentar bei "solarplexus"). Nur ein Fallback-Netz falls das je
+    // alles waere, was uebrig bleibt - lieber ein zweitbester Vorschlag als
+    // gar keiner.
+    if (angespannt){
+      var beruhigend = pool.filter(function(m){ return !m.aktivierend; });
+      if (beruhigend.length) pool = beruhigend;
+    }
 
     // Wie frisch ein Vorschlag noch ist: 0 = noch nie vorgeschlagen (darf
     // zuerst), grosse Zahl = gerade eben vorgeschlagen (kommt zuletzt).
