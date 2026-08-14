@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v68";
+const CACHE_NAME = "myisland-cache-v69";
 const SHELL_FILES = [
   "./",
   "./index.html",

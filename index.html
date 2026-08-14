@@ -1426,7 +1426,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.77";
+    var AKTUELLE_VERSION = "2026-08-10.78";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3912,8 +3912,8 @@
     empfehlung = picks;
     empfehlungGrund = "Dein Kompass zeigt: " + moodWort(compassBefore).toLowerCase() + ". " +
       (picks.length === 1
-        ? "Darum empfehlen wir dir eine Übung aus dem Bereich " + bereichText + ", die zu deiner Stimmung passt."
-        : "Darum haben wir dir ein Programm aus " + picks.length + " Meditationen zusammengestellt (" +
+        ? "Darum wird dir eine Übung aus dem Bereich " + bereichText + " vorgeschlagen, die zu deiner Stimmung passt."
+        : "Darum wurde dir ein Programm aus " + picks.length + " Meditationen zusammengestellt (" +
           bereichText + "), das dich Schritt für Schritt begleitet.");
     return picks;
   }
@@ -6384,7 +6384,7 @@
       // Christine: "Muss stehen: und eine passende Meditation auf dein
       // Gemüt wird dir vorgeschlagen"). Die Ueberschrift darueber fragt
       // schon "Wie geht es dir gerade?" - darum hier keine Wiederholung.
-      : "Zeig es am Kompass – wir schlagen dir eine Meditation vor, die zu deiner Stimmung passt.";
+      : "Zeig es am Kompass – eine Meditation wird dir vorgeschlagen, die zu deiner Stimmung passt.";
   }
 
   function renderHome(){
