@@ -8,15 +8,16 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v72";
+const CACHE_NAME = "myisland-cache-v73";
 const SHELL_FILES = [
   "./",
   "./index.html",
   "./manifest.json",
   "./insel.jpg",
   "./insel-start.jpg",
-  // Titelseite seit 10. Aug. 2026: Christines eigenes Foto.
+  // Titelseite und Startseite seit 10. Aug. 2026: Christines eigene Fotos.
   "./titel.jpg",
+  "./start.jpg",
   "./logo.png",
   "./icon-180.png",
   "./bg-waldlichtung.jpg",
