@@ -1433,7 +1433,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.79";
+    var AKTUELLE_VERSION = "2026-08-10.80";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1514,7 +1514,19 @@
   <!-- ============ TITELSEITE ============ -->
   <div class="page splash-page" id="splashPage">
     <div class="splash">
-      <img class="bg" src="insel.jpg" alt="Deine Insel">
+      <!-- 10. Aug. 2026: ECHTES FOTO VON CHRISTINE statt des gemalten
+           insel.jpg - sie am Strand bei Sonnenuntergang. Von drei
+           Zuschnitten hat sie den mittleren gewaehlt ("leicht, zweites
+           Meditationsfoto"): etwas naeher herangezogen, damit die Person
+           erkennbar ist, und unten bleibt ruhiger Sand fuer den Knopf.
+           "Leicht" heisst: nur die dunklen Stellen angehoben (Gamma 0,88),
+           der Himmel praktisch unberuehrt - sonst verliert der Abend seine
+           Farbe.
+           WICHTIG: insel.jpg bleibt absichtlich liegen und unveraendert -
+           es ist weiterhin der Hintergrund waehrend Meditationen ohne
+           eigenes Bild (med.bg || "insel.jpg"). Wer hier zurueck will,
+           schreibt einfach wieder insel.jpg hin. -->
+      <img class="bg" src="titel.jpg" alt="Deine Insel">
       <div class="splash-inner">
 
         <button class="splash-anmelden" id="splashKontoBtn">Anmelden</button>
