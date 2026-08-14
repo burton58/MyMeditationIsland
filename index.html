@@ -376,7 +376,19 @@
      Browser ohne :focus-visible nichts Blaues zeigen. */
   .compass-wrap, .compass-wrap:focus, .compass-wrap svg, .compass-wrap svg:focus{ outline:none; }
   .compass-wrap:focus-visible{ outline:3px solid var(--gold); outline-offset:4px; border-radius:50%; }
-  .compass-wrap svg{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:auto; }
+  /* 10. Aug. 2026: pointer-events war "auto" - fuer ein <svg> heisst das,
+     nur WIRKLICH GEZEICHNETE Flaechen (Ring, Nadel, Beschriftung) reagieren
+     auf Beruehrung, der leere Rand zwischen Scheibe und Kastenrand nicht.
+     Christine: "Man beruehrt aussen ausserhalb des Kompasses, um die Nadel
+     zu setzen, dann geht das nicht ueberall, weil's an der Seite zu eng
+     ist." Genau das war die Ursache - an den Seiten stehen nur duenne
+     Woerter/Punkte, oben/unten breitere Beschriftung, darum fiel es dort
+     mehr auf. "all" macht das GANZE Quadrat treffbar, auch die leeren
+     Stellen - die Nadel laesst sich seither ueberall ausserhalb der
+     sichtbaren Scheibe bis zum Kastenrand ansetzen und rutscht beim Ziehen
+     an den Rand der Scheibe (setFromPoint() begrenzt ohnehin auf
+     COMPASS_MAXR). Rein technische Aenderung, nichts Sichtbares. */
+  .compass-wrap svg{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:all; }
   @keyframes dialSettle{ from{ opacity:0; transform:scale(.94); } to{ opacity:1; transform:scale(1); } }
   /* Das Foto liegt als eigene Ebene hinter der Zeichnung, damit es nicht in
      jeder Kompass-Zeichnung noch einmal gespeichert werden muss. */
@@ -1406,7 +1418,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.75";
+    var AKTUELLE_VERSION = "2026-08-10.76";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
