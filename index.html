@@ -422,11 +422,19 @@
   /* Dunkel wie in Christines Entwurf, aber mit hellem Schein hinterlegt -
      so bleibt sie auf jedem Foto lesbar und braucht trotzdem KEINE Breite
      neben der Scheibe. Genau das laesst die Scheibe gross sein. Frueher:
-     weisse Schrift mit dunklem Schatten (wirkte schwer auf hellen Bildern). */
+     weisse Schrift mit dunklem Schatten (wirkte schwer auf hellen Bildern).
+     10. Aug. 2026: Christine fand die Woerter "schwer leserlich" - der
+     Schein war zu duenn (2,4px) und zu durchsichtig (.72), gegen dunklere,
+     unruhige Stellen des Fotos (z. B. Palmblaetter hinter "Angespannt",
+     aehnlicher Gruenton wie die dunkle Schrift selbst) reichte er nicht.
+     Jetzt dicker und praktisch deckend (5px, .94) - wirkt wie ein weiches
+     Schildchen hinter jedem Wort, unabhaengig davon, was auf dem Foto
+     gerade darunterliegt. Die einzelnen Buchstaben bleiben scharf, weil die
+     dunkle Fuellung ueber dem Schein liegt (paint-order:stroke). */
   .dial-label{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     font-size:12px; font-weight:700; letter-spacing:.06em; fill:var(--ink);
-    paint-order:stroke; stroke:rgba(255,253,247,.72); stroke-width:2.4px; stroke-linejoin:round;
+    paint-order:stroke; stroke:rgba(255,253,247,.94); stroke-width:5px; stroke-linejoin:round;
     pointer-events:none; text-transform:uppercase;
   }
 
@@ -1418,7 +1426,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.76";
+    var AKTUELLE_VERSION = "2026-08-10.77";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
