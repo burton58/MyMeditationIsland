@@ -937,6 +937,28 @@ Erreichbar unter <https://burton58.github.io/MyMeditationIsland/alte-version.htm
 
 **Wenn zurückgewechselt werden soll:** Inhalt von `alte-version.html` nach `index.html` kopieren, dabei die beiden obigen Abweichungen wieder rückgängig machen (Titel und Service-Worker-Zeile), und `AKTUELLE_VERSION` sowie `CACHE_NAME` in `sw.js` hochzählen, damit die Handys die zurückgesetzte Fassung auch wirklich laden. Die Kopie **nicht** löschen, wenn der Umbau gelungen ist — sie kostet nichts und Christines Regel lautet: aufheben, nicht wegwerfen.
 
+
+### Abendbild ausgetauscht (Aug. 2026)
+
+Christine hat gemeldet, die Tageszeit-Bilder auf der Startseite wirkten unscharf. Nachgemessen (99,5.-Perzentil des Laplace-Betrags, also der schärfste Bildinhalt statt des Mittelwerts — bei glatten Motiven wie Meer und Himmel gibt der Mittelwert falschen Alarm) traf das nur auf zwei von vier zu: `start-morgen.jpg` 226 und `start-tag.jpg` 139 sind scharf, `start-abend.jpg` lag bei **52**.
+
+**Ursache:** Die Quelldatei war nur **564x674** gross und wurde auf 1008x707 hochgerechnet — fast das Doppelte. Vergrössern erzeugt keine Details, es macht weich. Auf dem iPhone ist der Bildplatz rund 1200 Geräte-Pixel breit, das Bild hatte real 564.
+
+**Behoben:** Christine hat drei Alternativen geschickt, gemessen wurde:
+
+| Bild | Grösse | Schärfe |
+|---|---|---|
+| gleicher Strand, nochmals | 564x674 | 66 |
+| See durch eine Fensterscheibe | 1141x696 | 47 |
+| Bucht am Abend | **1170x813** | **101** |
+
+Genommen wurde die Bucht — grösste Auflösung und doppelte Schärfe. Zugeschnitten auf das Seitenverhältnis des Platzes (720:505), leicht nachgeschärft (Unsharp Mask 1.1/70/3) und mit Qualität 90 gespeichert: **1159x813**, Schärfe **165**. Damit muss der Browser das Bild praktisch nicht mehr hochrechnen.
+
+Die vorherige Fassung liegt als **`start-abend-alt.jpg`** daneben — nicht gelöscht, falls zurückgewechselt werden soll.
+
+**Offen:** Auf dem Hang ist ein weisses Gebäude zu sehen. Christines frühere Regel lautete "nur Natur, keine Personen". Herausschneiden geht hier nicht ohne die Auflösung wieder zu verlieren (das Bild füllt den Platz bereits fast genau aus) — sie wurde darauf hingewiesen und entscheidet.
+
+**Grundsatz für neue Fotos:** Bilder kommen bisher in Bildschirmfoto-Grösse an (rund 1170 Pixel breit). Das reicht für die Startseite genau, für die ganzflächige Titelseite nicht mehr komfortabel. Wer ein Bild ersetzt, misst vorher die Quellgrösse — alles unter 1100 Pixel Breite wird auf dem iPhone sichtbar weich.
 ### Kompass bleibt ein Foto
 
 Zur Klarstellung, weil in der Farb-Vorschau zwischenzeitlich eine gezeichnete Verlaufsscheibe und danach eine gezeichnete Insel vorgeschlagen wurde: **Beides ist abgelehnt.** Christines Entscheid (Aug. 2026): *"Falsch, nichts zeichnen"* — der Kompass behält das vorhandene Inselbild in `.compass-photo` (das von ihr über ChatGPT erzeugte Foto, als base64 in `index.html`). Auch im neuen Farbschema wird an der Scheibe selbst nichts geändert; grau wird nur der Rand ringsum.
