@@ -1445,7 +1445,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.94";
+    var AKTUELLE_VERSION = "2026-08-10.95";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1536,6 +1536,17 @@
            "Leicht" heisst: nur die dunklen Stellen angehoben (Gamma 0,88),
            der Himmel praktisch unberuehrt - sonst verliert der Abend seine
            Farbe.
+           15. Aug. 2026: Christine hat dasselbe Foto in viel hoeherer
+           Aufloesung nachgeschickt (2048x1365 statt 1170x752, IMG_1670).
+           Ausloeser war ein Rundum-Schaerfe-Check ueber alle Fotos der
+           App - die Titelseite lag mit Abstand am schwaechsten (Wert 37,
+           alle anderen 53+), weil ein Querformat-Foto auf einem
+           Hochformat-Bildschirm nur einen schmalen Streifen zeigen kann
+           und der bisher 3,1-fach vergroessert werden musste. Mit dem
+           neuen Original sind es nur noch 1,7-fach; Zuschnitt und
+           Gamma-Kurve unveraendert uebernommen, dazu ein kleiner
+           Nachschaerfer (Radius 1,3, 90%) fuer den letzten Rest - Wert
+           jetzt 56.
            WICHTIG: insel.jpg bleibt absichtlich liegen und unveraendert -
            es ist weiterhin der Hintergrund waehrend Meditationen ohne
            eigenes Bild (med.bg || "insel.jpg"). Wer hier zurueck will,
