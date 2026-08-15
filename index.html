@@ -1441,7 +1441,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.89";
+    var AKTUELLE_VERSION = "2026-08-10.90";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4716,9 +4716,19 @@
     document.getElementById("sessionName").textContent = med.name;
     document.getElementById("sessionCat").textContent = med.min + " Min · " + katName(med.dir);
     // Bildsprache pro Meditation (Aug. 2026): passendes Hintergrundfoto je
-    // Themenfamilie, wenn `med.bg` gesetzt ist - sonst bleibt die Insel
-    // (der Grundton der App) wie bisher der Hintergrund.
-    document.querySelector("#sessionBg img").src = med.bg || "insel.jpg";
+    // Themenfamilie, wenn `med.bg` gesetzt ist.
+    //
+    // 10. Aug. 2026: Wenn keines gesetzt ist, stand hier bisher insel.jpg -
+    // das gemalte Inselbild. Christine: "Beachte, dass das AI Bild nicht
+    // gezeigt werden muss, wenn die Meditation laeuft. Dort kannst du auch
+    // ein anderes nehmen, wenn's mir vom Thema passt wie Winter, Wald."
+    // Jetzt springt das Bild DER KATEGORIE ein (LIB_KAT_FOTO): heller Raum
+    // beim Gedankenberuhigen, Herzraum bei den Gefuehlen, Waldlichtung beim
+    // Stress, Bergsee beim Entspannen. Damit passt der Hintergrund auch bei
+    // den 17 Uebungen ohne eigenes Bild zum Thema, statt immer dieselbe
+    // Insel zu zeigen. insel.jpg bleibt nur noch der letzte Notnagel.
+    document.querySelector("#sessionBg img").src =
+      med.bg || LIB_KAT_FOTO[med.dir] || "insel.jpg";
     renderPlaylistDots();
     tickSession();
   }
