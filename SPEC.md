@@ -959,6 +959,26 @@ Die vorherige Fassung liegt als **`start-abend-alt.jpg`** daneben — nicht gel�
 **Offen:** Auf dem Hang ist ein weisses Gebäude zu sehen. Christines frühere Regel lautete "nur Natur, keine Personen". Herausschneiden geht hier nicht ohne die Auflösung wieder zu verlieren (das Bild füllt den Platz bereits fast genau aus) — sie wurde darauf hingewiesen und entscheidet.
 
 **Grundsatz für neue Fotos:** Bilder kommen bisher in Bildschirmfoto-Grösse an (rund 1170 Pixel breit). Das reicht für die Startseite genau, für die ganzflächige Titelseite nicht mehr komfortabel. Wer ein Bild ersetzt, misst vorher die Quellgrösse — alles unter 1100 Pixel Breite wird auf dem iPhone sichtbar weich.
+
+### Nachtbild ausgetauscht (Aug. 2026)
+
+Das bisherige Nachtbild war ein **erzeugtes Bild** (Nordlicht über einer Fjordlandschaft, 1024x1024, aus einem Bildgenerator) — es widersprach Christines Grundsatz "keine unechten Fotos" und zeigte ausserdem Norwegen statt einer Insel. Ersetzt durch **ihr eigenes Foto** eines Strandes zur blauen Stunde mit Palmen am rechten Rand.
+
+Nüchtern zum Abwägen, weil der Tausch technisch ein Rückschritt ist:
+
+| | erzeugtes Nordlicht | ihr Strandfoto |
+|---|---|---|
+| Grösse | 1024x1024 | 1065x639 |
+| nutzbare Breite nach Zuschnitt | 1008 | 911 |
+| Schärfe | 54 | 21 |
+| echt | nein | ja |
+| passt zum Inselthema | nein | ja |
+
+Der Schärfewert von 21 ist bei einer Nachtaufnahme weniger schlimm, als er klingt: Es gibt dort kaum feine Strukturen, die verloren gehen könnten, und Handy-Nachtaufnahmen rauschen ohnehin. Deshalb wurde **bewusst nur sanft nachgeschärft** (Unsharp Mask 0.8/45/4 statt 1.1/70/3 wie beim Abendbild) — stärkeres Schärfen würde vor allem das Rauschen hervorholen. Zusätzlich Gamma 0.86, um die Schatten leicht zu öffnen, und **rechts angeschlagen zugeschnitten** statt mittig, damit die Palmen im Bild bleiben.
+
+Die vorherige Fassung liegt als **`start-nacht-alt.jpg`** daneben.
+
+Ebenfalls geprüft und **nicht genommen** (beide hochkant, dadurch nach Zuschnitt auf das breite Format zu wenig nutzbare Breite): Sonnenuntergang über dem See, 783 Pixel nutzbar; Meer mit Steinen, 720 Pixel nutzbar. Für den breiten Platz auf der Startseite braucht es rund 1200.
 ### Kompass bleibt ein Foto
 
 Zur Klarstellung, weil in der Farb-Vorschau zwischenzeitlich eine gezeichnete Verlaufsscheibe und danach eine gezeichnete Insel vorgeschlagen wurde: **Beides ist abgelehnt.** Christines Entscheid (Aug. 2026): *"Falsch, nichts zeichnen"* — der Kompass behält das vorhandene Inselbild in `.compass-photo` (das von ihr über ChatGPT erzeugte Foto, als base64 in `index.html`). Auch im neuen Farbschema wird an der Scheibe selbst nichts geändert; grau wird nur der Rand ringsum.
