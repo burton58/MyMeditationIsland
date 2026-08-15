@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="My Meditation Island">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#fbecd2">
+<meta name="theme-color" content="#5f5966">
 <!-- Vom Home-Bildschirm geöffnete Seiten merkt sich das iPhone gerne
      besonders hartnäckig, auch über ein einfaches Schliessen hinaus. Diese
      drei Zeilen sagen dem Handy ausdrücklich, sich nicht auf eine gemerkte
@@ -30,17 +30,25 @@
      (Kompass, Empfehlungen, Sitzung, Verlauf) ist unverändert geblieben.
      ========================================================================== */
   :root{
-    --cream:#fbecd2;
-    --cream-2:#f3ddac;
-    --card:#ffffff;
-    --ink:#1c3b33;
-    --ink-soft:#4a6158;
-    --gold:#c9a227;
-    --gold-soft:#e3c86a;
-    --gold-deep:#8f6f22;
+    /* Daemmerungsgrau, Aug. 2026 - siehe SPEC.md. Die Namen der Variablen
+       bleiben aus der Creme-Zeit stehen (--cream, --gold), damit nicht
+       ueber tausend Stellen umbenannt werden muessen; --cream ist jetzt
+       schlicht "der Untergrund", --gold "die Akzentfarbe". */
+    --cream:#5f5966;
+    --cream-2:#756e7c;
+    --card:rgba(0,0,0,.16);
+    --ink:#f7f4f8;
+    --ink-soft:#ded7e4;
+    --gold:#f0d3a8;
+    --gold-soft:#f6e0c4;
+    --gold-deep:#efd2ab;
     --gold-grad:linear-gradient(135deg,var(--gold-soft),var(--gold));
-    --deep:#14332c;
-    --line:#e8ddc6;
+    --deep:#2b2731;
+    --line:rgba(255,255,255,.16);
+    /* Die vier Woerter im Kompass bleiben DUNKEL - sie liegen auf dem
+       hellen Inselfoto, nicht auf dem Untergrund. Mit heller Schrift
+       waeren sie unsichtbar (Lesbarkeitswert 1,02 statt 11,35). */
+    --dial:#332e38;
     --serif:Georgia,'Iowan Old Style','Palatino Linotype','Book Antiqua',serif;
     --tabbar-h:74px;
     /* Der Bereich unter der Tabbar, den iPhones fuer den Home-Indikator
@@ -52,7 +60,7 @@
   html,body{ margin:0; padding:0; }
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(180deg, var(--cream) 0%, #f8e2ba 100%);
+    background:linear-gradient(180deg, var(--cream) 0%, #756e7c 100%);
     background-attachment:fixed;
     color:var(--ink);
     min-height:100vh;
@@ -105,8 +113,8 @@
   .splash::after{
     content:""; position:absolute; inset:0;
     background:linear-gradient(180deg,
-      rgba(18,38,31,.58) 0%, rgba(18,38,31,.30) 18%, rgba(18,38,31,0) 34%,
-      rgba(18,38,31,0) 52%, rgba(18,38,31,.42) 72%, rgba(18,38,31,.82) 88%, rgba(18,38,31,.92) 100%);
+      rgba(30,26,35,.58) 0%, rgba(30,26,35,.30) 18%, rgba(30,26,35,0) 34%,
+      rgba(30,26,35,0) 52%, rgba(30,26,35,.42) 72%, rgba(30,26,35,.82) 88%, rgba(30,26,35,.92) 100%);
   }
   .splash-inner{
     position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center;
@@ -227,7 +235,7 @@
   .page-head p{ margin:0; font-size:.88rem; color:var(--ink-soft); }
   .icon-btn{
     border:none; background:var(--card); width:38px; height:38px; border-radius:50%; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(28,59,51,.08);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.08);
     color:var(--ink); flex:0 0 auto; font-family:inherit;
   }
   .icon-btn svg{ width:19px; height:19px; }
@@ -247,7 +255,7 @@
   .home-page .section-label{ margin:28px 0 6px; }
   .home-page .section-label.first{ margin-top:0; }
 
-  .card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(28,59,51,.07); }
+  .card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
 
   .btn-dark{
     border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08; font-family:inherit;
@@ -364,7 +372,7 @@
   .compass-row{ display:flex; align-items:center; justify-content:center; margin:2px 0 4px; }
   .compass-wrap{
     width:100%; max-width:360px; position:relative; aspect-ratio:1/1; touch-action:none; margin:0 auto;
-    filter:drop-shadow(0 10px 24px rgba(28,59,51,.18));
+    filter:drop-shadow(0 10px 24px rgba(0,0,0,.18));
     animation:dialSettle .5s cubic-bezier(.22,.61,.36,1) both;
   }
   /* Fokus fuer die Tastatur-Bedienung sitzt bewusst auf dem umgebenden DIV,
@@ -427,7 +435,7 @@
   .rose-needle-tip{ fill:var(--gold); stroke:#6b5218; stroke-width:2.5; transition:r .25s ease; }
   .rose-needle-halo{ fill:rgba(201,162,39,.22); transition:r .25s ease; }
   .rose-hub{ fill:#fffdf7; stroke:#a8842a; stroke-width:2.2; }
-  .rose-hub-dot{ fill:var(--gold-deep); }
+  .rose-hub-dot{ fill:#8a6f4e; }   /* sitzt auf der hellen Scheibe, bleibt dunkel */
   .rose-journey{ stroke:#6b5218; stroke-width:2.5; stroke-dasharray:5 5; opacity:.6; }
   .rose-journey-start{ fill:rgba(255,255,255,.9); stroke:#6b5218; stroke-width:2.5; opacity:.8; }
 
@@ -448,7 +456,7 @@
      dunkle Fuellung ueber dem Schein liegt (paint-order:stroke). */
   .dial-label{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    font-size:12px; font-weight:700; letter-spacing:.06em; fill:var(--ink);
+    font-size:12px; font-weight:700; letter-spacing:.06em; fill:var(--dial);
     paint-order:stroke; stroke:rgba(255,253,247,.94); stroke-width:5px; stroke-linejoin:round;
     pointer-events:none; text-transform:uppercase;
   }
@@ -468,8 +476,8 @@
   .readout-card{ padding:16px; display:flex; gap:13px; align-items:flex-start; margin-top:22px; }
   .readout-card .glyph{
     width:46px; height:46px; border-radius:50%; flex:0 0 auto;
-    background:linear-gradient(155deg, #fffdf7, var(--cream-2));
-    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4), 0 2px 8px rgba(28,59,51,.1);
+    background:linear-gradient(155deg, rgba(0,0,0,.12), rgba(0,0,0,.22));
+    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4), 0 2px 8px rgba(0,0,0,.1);
     display:flex; align-items:center; justify-content:center; font-size:1.2rem;
   }
   /* Das gezeichnete Zustandsbild im runden Feld. 30px statt der vollen 46,
@@ -502,7 +510,7 @@
     max-height:0; overflow:hidden; padding:0 15px; margin-bottom:0; opacity:0; box-shadow:none;
     transition:max-height .3s cubic-bezier(.22,.61,.36,1), opacity .25s ease, padding .3s ease, margin .3s ease;
   }
-  .compass-info.open{ max-height:280px; padding:15px; margin-bottom:14px; opacity:1; box-shadow:0 3px 14px rgba(28,59,51,.07); }
+  .compass-info.open{ max-height:280px; padding:15px; margin-bottom:14px; opacity:1; box-shadow:0 3px 14px rgba(0,0,0,.07); }
   .compass-info p{ margin:0 0 8px; font-size:.85rem; line-height:1.55; color:var(--ink-soft); }
   .compass-info p:last-child{ margin-bottom:0; }
 
@@ -564,7 +572,7 @@
      verschiebt. */
   .seg .opt.active{
     color:var(--ink); font-weight:700;
-    background:#fdf8ea; border-color:var(--gold);
+    background:rgba(255,255,255,.17); border-color:var(--gold);
     box-shadow:inset 0 0 0 1px var(--gold), 0 2px 8px rgba(120,90,10,.13);
   }
   /* Der gleitende Umriss bleibt im Code ("man weiss ja nie"), ist aber
@@ -594,7 +602,7 @@
   .radio-opt .mode-ico{ flex:0 0 auto; width:18px; height:18px; color:var(--ink-soft); opacity:.65; }
   .radio-opt .mode-ico svg{ width:100%; height:100%; }
   .radio-opt .dot{ width:19px; height:19px; border-radius:50%; border:2px solid #c3d1c9; flex:0 0 auto; position:relative; transition:.15s ease; }
-  .radio-opt.on{ border-color:var(--gold); background:#fdf8ea; }
+  .radio-opt.on{ border-color:var(--gold); background:rgba(255,255,255,.17); }
   .radio-opt.on .mode-ico{ color:var(--gold-deep); opacity:1; }
   .radio-opt.on .dot{ border-color:var(--gold); }
   .radio-opt.on .dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--gold-grad); }
@@ -620,7 +628,7 @@
   }
   .rec-modus[hidden]{ display:none; }
   .rec-result.show.in{ opacity:1; transform:translateY(0); }
-  .rec-result .card{ background:linear-gradient(180deg, #fffdf7, var(--cream-2) 180%); box-shadow:0 14px 34px rgba(28,59,51,.1); }
+  .rec-result .card{ background:linear-gradient(180deg, rgba(0,0,0,.13), rgba(0,0,0,.23) 180%); box-shadow:0 14px 34px rgba(0,0,0,.28); }
   .rec-head{ font-size:.72rem; text-transform:uppercase; letter-spacing:.09em; color:var(--gold-deep); font-weight:800; margin-bottom:9px; }
   .rec-item{ display:flex; align-items:center; gap:13px; padding:13px 14px; border-bottom:1px solid var(--line); width:100%;
     background:none; border-left:none; border-right:none; border-top:none; font-family:inherit; color:var(--ink); text-align:left; cursor:pointer; }
@@ -736,7 +744,7 @@
   .fd-section-label{ display:flex; align-items:baseline; gap:8px; margin:24px 0 10px; }
   .fd-section-label h3{ font-size:1.18rem; font-weight:700; font-family:var(--serif); margin:0; }
   .fd-section-note{ font-size:.75rem; color:var(--ink-soft); }
-  .fd-hero-card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(28,59,51,.07); padding:18px; border:1px solid var(--gold-soft); }
+  .fd-hero-card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); padding:18px; border:1px solid var(--gold-soft); }
   .fd-hero-tag{ display:inline-block; background:var(--cream-2); color:var(--gold-deep); font-size:.68rem; font-weight:800; padding:5px 10px; border-radius:9px; }
   .fd-hero-name{ font-family:var(--serif); font-size:1.2rem; margin:10px 0 4px; }
   .fd-hero-meta{ font-size:.78rem; color:var(--ink-soft); }
@@ -749,7 +757,7 @@
   .fd-card{
     width:100%; display:flex; align-items:center; gap:13px; text-align:left; cursor:pointer; font-family:inherit;
     background:var(--card); border:none; border-radius:16px; padding:13px 14px; margin-bottom:9px; color:var(--ink);
-    box-shadow:0 3px 14px rgba(28,59,51,.07);
+    box-shadow:0 3px 14px rgba(0,0,0,.07);
   }
   .fd-card-body{ flex:1; min-width:0; }
   .fd-card-name{ display:block; font-weight:600; font-size:.93rem; }
@@ -882,7 +890,7 @@
   #libListLabel{ margin-top:30px; }
   .lib-cat-tile{
     position:relative; border:none; padding:0; margin:0; border-radius:16px; overflow:hidden; cursor:pointer;
-    aspect-ratio:4/3; box-shadow:0 3px 14px rgba(28,59,51,.14); font-family:inherit;
+    aspect-ratio:4/3; box-shadow:0 3px 14px rgba(0,0,0,.14); font-family:inherit;
   }
   .lib-cat-tile.active{ outline:3px solid var(--gold); outline-offset:-3px; }
   /* Der Goldrahmen allein geht bei warmtonigen Fotos (z.B. Wald in
@@ -897,7 +905,7 @@
   .lib-cat-foto{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
   .lib-cat-tile::after{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(20,51,44,0) 45%, rgba(16,28,24,.78) 100%);
+    background:linear-gradient(180deg, rgba(32,28,38,0) 45%, rgba(26,22,31,.78) 100%);
   }
   .lib-cat-label{
     position:absolute; left:10px; right:10px; bottom:9px; z-index:1; text-align:left;
@@ -913,7 +921,7 @@
   .lib-row{
     display:flex; align-items:center; gap:10px; width:100%; text-align:left; cursor:pointer; font-family:inherit;
     background:var(--card); border:1px solid transparent; border-radius:16px; padding:11px 13px; color:var(--ink);
-    box-shadow:0 3px 14px rgba(28,59,51,.07);
+    box-shadow:0 3px 14px rgba(0,0,0,.07);
   }
   /* Nur in der Bibliotheks-Liste ein kleineres Bild-Feld (4. Aug. 2026):
      64px sind fuer eine 47 Zeilen lange Liste zu gross - der Titel bekommt
@@ -1007,12 +1015,12 @@
   .avatar-wahl img{ width:64%; height:64%; object-fit:contain; display:block; }
   .avatar-upload{ display:block; text-align:center; cursor:pointer; }
   .avatar-hinweis{ margin:10px 0 0; font-size:.74rem; color:var(--ink-soft); text-align:center; }
-  .chev{ color:#c2b391; font-size:1.1rem; }
+  .chev{ color:#bdb4c4; font-size:1.1rem; }
 
   .status-card{ display:flex; align-items:flex-start; gap:13px; padding:15px; margin-bottom:12px;
-    background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(28,59,51,.07); flex-wrap:wrap; }
+    background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); flex-wrap:wrap; }
   .status-icon{
-    width:42px; height:42px; border-radius:12px; background:#fdf3d6; flex:0 0 auto;
+    width:42px; height:42px; border-radius:12px; background:rgba(255,255,255,.14); flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.1rem;
   }
   /* Das gezeichnete Zustandsbild im Feld - 26 von 42px, damit der helle
@@ -1037,19 +1045,19 @@
      22px, damit die Zeile genauso hoch bleibt wie vorher. */
   .menu-row .row-icon img{ width:22px; height:22px; display:block; }
   .menu-row .row-text{ flex:1; font-size:.9rem; font-weight:500; }
-  .menu-row.danger .row-text{ color:#a33b2c; }
+  .menu-row.danger .row-text{ color:#f0968a; }
 
   /* Eigene Bestaetigungs-Karte statt des grauen System-Dialogs */
   .confirm-overlay{
     position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center;
-    padding:24px; background:rgba(20,40,34,.5); backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
+    padding:24px; background:rgba(30,26,35,.5); backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
     opacity:0; transition:opacity .18s ease;
   }
   .confirm-overlay[hidden]{ display:none; }
   .confirm-overlay.show{ opacity:1; }
   .confirm-card{ padding:22px; max-width:340px; width:100%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,.25); }
   .confirm-card p{ margin:0 0 18px; font-size:.92rem; line-height:1.5; color:var(--ink); }
-  .btn-dark.danger{ background:#a33b2c; color:#fff; box-shadow:0 6px 16px rgba(163,59,44,.3); }
+  .btn-dark.danger{ background:#c2503f; color:#fff; box-shadow:0 6px 16px rgba(163,59,44,.3); }
   @media (prefers-reduced-motion: reduce){ .confirm-overlay{ transition:none; } }
 
   .wochenziel-card{ max-width:360px; text-align:left; }
@@ -1079,7 +1087,7 @@
   .week-cell .tag{ font-size:.68rem; font-weight:700; color:var(--ink-soft); margin-bottom:5px; }
   .week-cell .kreis{
     width:100%; aspect-ratio:1/1; max-width:36px; margin:0 auto; border-radius:50%;
-    border:1.5px solid var(--line); background:#fffdf7; display:flex; align-items:center;
+    border:1.5px solid var(--line); background:rgba(255,255,255,.10); display:flex; align-items:center;
     justify-content:center; font-size:.85rem; color:transparent;
   }
   .week-cell.on .kreis{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
@@ -1090,11 +1098,11 @@
     content:""; position:absolute; left:8%; right:8%; top:50%; border-top:2px dashed var(--cream-2);
   }
   .journey-stop{
-    position:relative; width:46px; height:46px; border-radius:50%; background:#fffdf7; border:2px solid var(--line);
+    position:relative; width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,.10); border:2px solid var(--line);
     display:flex; align-items:center; justify-content:center; font-size:1.1rem; opacity:.55;
   }
   .journey-stop.erreicht{ opacity:1; border-color:var(--gold); }
-  .journey-stop.jetzt{ opacity:1; border-color:var(--gold); box-shadow:0 4px 14px rgba(120,90,10,.28); transform:scale(1.14); background:#fdf8ea; }
+  .journey-stop.jetzt{ opacity:1; border-color:var(--gold); box-shadow:0 4px 14px rgba(0,0,0,.35); transform:scale(1.14); background:rgba(255,255,255,.18); }
   /* Die fuenf Stationen - seit 8. Aug. 2026 gezeichnet statt ⛵ ⚓ 🧭 🌴 🏝️.
      28 von 46px, damit der Kreis ringsum sichtbar bleibt. */
   .journey-bild{ width:28px; height:28px; display:block; }
@@ -1125,11 +1133,11 @@
   .journey-stufe .zahl{ font-size:.76rem; color:var(--ink-soft); }
 
   .ki-card{
-    background:linear-gradient(140deg,#fdf3d6,#f3ddac); border:1px solid var(--gold-soft);
+    background:linear-gradient(140deg,rgba(0,0,0,.13),rgba(0,0,0,.21)); border:1px solid rgba(246,224,196,.45);
     border-radius:18px; padding:16px; margin:16px 0; display:flex; gap:13px; align-items:flex-start;
   }
   .ki-card .ki-ico{
-    width:44px; height:44px; border-radius:13px; background:#fffdf7; flex:0 0 auto;
+    width:44px; height:44px; border-radius:13px; background:rgba(255,255,255,.14); flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.35rem;
   }
   .ki-card h4{ margin:0 0 4px; font-family:var(--serif); font-size:1.02rem; }
@@ -1138,7 +1146,7 @@
      Antwort-Blasen haben sonst genau die Farbe des Kartenhintergrunds
      (beides --cream-2) und waeren unsichtbar. Darum hier hell auf Gold. */
   .ki-card .chat{ max-height:200px; margin-bottom:10px; }
-  .ki-card .bubble.ai{ background:#fffdf7; }
+  .ki-card .bubble.ai{ background:rgba(0,0,0,.16); }
   .ki-card .chat-row input{ border-color:rgba(143,111,34,.35); }
   .ki-card .body{ min-width:0; }
 
@@ -1161,13 +1169,13 @@
   .konto-hinweis{ padding:15px; margin-bottom:12px; font-size:.86rem; line-height:1.55; }
   .konto-form{ padding:18px; position:relative; }
   .konto-badge{
-    display:inline-block; background:var(--cream-2); color:var(--gold-deep); font-size:.65rem; font-weight:800;
+    display:inline-block; background:rgba(255,255,255,.14); color:var(--gold); font-size:.65rem; font-weight:800;
     padding:4px 9px; border-radius:9px; margin-bottom:14px;
   }
   .konto-form label{ display:block; font-size:.78rem; font-weight:600; color:var(--ink-soft); margin-bottom:12px; }
   .konto-form input{
     display:block; width:100%; margin-top:5px; padding:12px; border:1px solid var(--line); border-radius:12px;
-    font-family:inherit; font-size:.9rem; background:#fbf9f3; color:var(--ink);
+    font-family:inherit; font-size:.9rem; background:rgba(0,0,0,.22); color:var(--ink);
   }
   .konto-form input:disabled{ opacity:.7; }
   .konto-form .btn-dark[disabled], .konto-form .btn-ghost[disabled]{ opacity:.45; cursor:default; box-shadow:none; }
@@ -1186,7 +1194,7 @@
      Grund, sonst verschwindet es. */
   .ueber-bild{
     width:82px; height:82px; margin:0 auto 14px; border-radius:50%; background:var(--deep);
-    display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(20,51,44,.25);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(32,28,38,.25);
   }
   .ueber-bild img{ width:66%; height:66%; object-fit:contain; }
   .ueber-gruss{ margin:0 0 12px; font-family:var(--serif); font-size:1.15rem; }
@@ -1218,7 +1226,7 @@
   .abo-vorteile span{ position:absolute; left:0; top:0; color:var(--gold-deep); font-weight:800; }
   .abo-vorteile strong{ color:var(--ink); }
   .trial-box{ padding:15px; margin-bottom:14px; font-size:.86rem; line-height:1.55;
-    background:var(--card); border-radius:16px; box-shadow:0 3px 14px rgba(28,59,51,.07); }
+    background:var(--card); border-radius:16px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
   .plan{
     display:block; width:100%; text-align:left; cursor:pointer; font-family:inherit; color:var(--ink);
     background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:10px;
@@ -1290,7 +1298,7 @@
   .chat-row{ display:flex; gap:8px; }
   .chat-row input{
     flex:1; min-width:0; border:1px solid var(--line); border-radius:12px; padding:12px;
-    font-family:inherit; font-size:.88rem; background:#fffdf7; color:var(--ink);
+    font-family:inherit; font-size:.88rem; background:rgba(0,0,0,.20); color:var(--ink);
   }
   .chat-row button{
     border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08; font-family:inherit;
@@ -1310,7 +1318,7 @@
   .stepper{ text-align:center; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
     color:var(--gold-deep); margin:0 0 8px; }
   .layout{ display:flex; flex-direction:column; gap:16px; padding:0 16px 40px; max-width:520px; margin:0 auto; }
-  .controls{ background:var(--card); border-radius:20px; padding:18px; box-shadow:0 3px 14px rgba(28,59,51,.07); order:2; }
+  .controls{ background:var(--card); border-radius:20px; padding:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); order:2; }
   .group{ margin-bottom:18px; }
   .group h3{ margin:0 0 9px; font-size:.72rem; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft); font-weight:700; }
   .opts{ display:flex; gap:8px; flex-wrap:wrap; }
@@ -1326,6 +1334,18 @@
   /* Bild in einem Textknopf ("Zur Titelseite") - seit 8. Aug. 2026. */
   .knopf-bild{ width:1.15em; height:1.15em; vertical-align:-3px; }
   .opts .opt.active{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
+  /* Die gezeichneten Symbole sind seit der Farbumstellung HELL (sie liegen
+     sonst auf dunklem Grund). Wo ein Symbol auf der hellen Akzentflaeche
+     sitzt - aktive Auswahl, aktive Chips, erledigte Wochentage - waere es
+     unsichtbar. Dort wird es per Filter wieder dunkel gerechnet. Das geht,
+     weil alle Symbole einfarbige Strichzeichnungen sind. */
+  .opts .opt.active img,
+  .wert-chip.active img,
+  .lib-chip.active img,
+  .week-cell.on .kreis img,
+  .btn-dark img,
+  .cta img,
+  .tab-item.active img{ filter:brightness(.24) saturate(.4); }
   .swatches{ display:flex; gap:10px; }
   .swatch{ width:32px; height:32px; border-radius:50%; border:3px solid transparent; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.15); }
   .swatch.active{ border-color:var(--gold-deep); transform:scale(1.12); }
@@ -1338,7 +1358,7 @@
   .stage-wrap{ position:relative; order:1; }
   .stage{
     position:relative; width:100%; aspect-ratio:4/3; border-radius:22px; overflow:hidden;
-    box-shadow:0 10px 28px rgba(28,59,51,.18); background:#bfeef2;
+    box-shadow:0 10px 28px rgba(0,0,0,.18); background:#bfeef2;
   }
   .hint{ text-align:center; font-size:.7rem; color:var(--ink-soft); opacity:.7; margin-top:6px; }
   body.entered .layout{ display:block; padding:0; max-width:none; }
@@ -1376,7 +1396,7 @@
   body.in-session #scene{ opacity:0; }
   body.in-session .stage::after{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(20,51,44,.5), rgba(20,51,44,.92));
+    background:linear-gradient(180deg, rgba(32,28,38,.5), rgba(32,28,38,.92));
   }
   .back-btn{
     position:absolute; top:calc(16px + env(safe-area-inset-top, 0px)); left:16px; z-index:9; display:none;
@@ -1417,7 +1437,7 @@
   /* ---------- Tabbar ---------- */
   .tabbar{
     position:fixed; left:0; right:0; bottom:0; height:calc(var(--tabbar-h) + var(--safe-bottom)); z-index:50;
-    display:flex; background:rgba(255,253,247,.97); border-top:1px solid var(--line);
+    display:flex; background:rgba(56,51,62,.97); border-top:1px solid var(--line);
     backdrop-filter:blur(10px); padding-bottom:var(--safe-bottom);
   }
   body[data-step="splash"] .tabbar, body.entered .tabbar{ display:none; }
@@ -1445,7 +1465,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.98";
+    var AKTUELLE_VERSION = "2026-08-10.99";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

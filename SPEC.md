@@ -924,6 +924,48 @@ Auch der System-Prompt für den (nicht angeschlossenen) echten Dienst weist das 
 
 ---
 
+
+## 9. Farbumstellung auf Dämmerungsgrau (Aug. 2026)
+
+Christines Urteil über die alte Creme-Gold-Optik: *"sieht billig aus"*. Nach vier Vorschlägen und einer Helligkeitsreihe hat sie **Dämmerungsgrau** gewählt und den Umbau ausdrücklich beauftragt (*"Stelle die Farbe um"*). Die vorherige Fassung bleibt vollständig als `alte-version.html` erhalten (siehe §8).
+
+**Die Palette** steht weiterhin in `:root`, die **Variablennamen sind absichtlich unverändert geblieben** (`--cream`, `--gold`), weil sie an über tausend Stellen benutzt werden; `--cream` heisst jetzt schlicht "der Untergrund", `--gold` "die Akzentfarbe".
+
+| Variable | vorher | jetzt |
+|---|---|---|
+| `--cream` | `#fbecd2` | `#5f5966` |
+| `--cream-2` | `#f3ddac` | `#756e7c` |
+| `--card` | `#ffffff` | `rgba(0,0,0,.16)` |
+| `--ink` | `#1c3b33` | `#f7f4f8` |
+| `--ink-soft` | `#4a6158` | `#ded7e4` |
+| `--gold` | `#c9a227` | `#f0d3a8` |
+| `--gold-soft` | `#e3c86a` | `#f6e0c4` |
+| `--gold-deep` | `#8f6f22` | `#efd2ab` |
+| `--deep` | `#14332c` | `#2b2731` |
+| `--line` | `#e8ddc6` | `rgba(255,255,255,.16)` |
+| `--dial` | — | `#332e38` (neu) |
+
+**Karten sind dunkler als der Untergrund, nicht heller.** Das ist der wichtigste Punkt und war eine Messentscheidung, keine Geschmacksfrage: Mit hellen Karten (`rgba(255,255,255,.10)`) erreicht der Haupttext nur 4,59 und der Zweittext nur 3,57 — unter der Schwelle von 4,5. Mit dunklen Karten (`rgba(0,0,0,.16)`) sind es **7,64 und 5,93**. Wer die Karten je wieder aufhellen will, muss vorher die Textfarben neu rechnen.
+
+**`--dial` ist neu und muss dunkel bleiben.** Die vier Kompasswörter liegen auf dem hellen Inselfoto, nicht auf dem Untergrund. Im ersten Anlauf waren sie an `--ink` gehängt und mit der Umstellung praktisch unsichtbar (Lesbarkeitswert **1,02** statt 11,35). Deshalb hängen sie jetzt an einer eigenen Variablen, die von der Umstellung hell/dunkel unberührt bleibt.
+
+**Die 43 gezeichneten Symbole sind eingefärbt, nicht neu gezeichnet.** Sie sind einfarbige Strichzeichnungen auf durchsichtigem Grund (Farbstreuung 0 bis 3) — es liess sich also einfach der Farbwert tauschen, während der Alphakanal unverändert blieb. Goldbraun `rgb(139,107,47)` hatte auf dem neuen Untergrund den Wert **1,14** (unsichtbar), das neue Cremeweiss `rgb(240,226,205)` hat **4,41**. Die goldbraunen Originale liegen vollständig in **`icons-gold/`**. `icon-180.png` ist bewusst ausgenommen — das ist das App-Symbol auf dem Homebildschirm.
+
+**Symbole auf der Akzentfläche werden per Filter zurückgedunkelt.** Ein helles Symbol auf einem aktiven, apricotfarbenen Chip wäre wieder unsichtbar. Statt zweiter Bilddateien greift dort `filter:brightness(.24) saturate(.4)` (aktive Auswahl, aktive Chips, erledigte Wochentage, Symbole in Akzentknöpfen). Möglich nur, weil die Symbole einfarbig sind — bei mehrfarbigen Bildern würde dieser Trick nicht funktionieren.
+
+**Weitere Stellen, die einzeln nachgezogen werden mussten** (die reine Variablenumstellung reicht nicht):
+- Die Tab-Leiste hatte ihre Hintergrundfarbe fest verdrahtet (`rgba(255,253,247,.97)`) und blieb cremefarben, während der Rest schon grau war — jetzt `rgba(56,51,62,.97)`.
+- Alle dunkelgrünen Verläufe und Schleier der Titelseite und der laufenden Meditation (`rgba(18,38,31,…)`, `rgba(20,51,44,…)`, `rgba(16,28,24,…)`, `rgba(20,40,34,…)`) legten einen Grünstich über die Fotos — auf Violettgrau umgestellt.
+- Grünliche Schatten `rgba(28,59,51,…)` (13 Stellen) auf neutrales Schwarz.
+- Helle Flächen einzeln: Anmeldefelder `#fbf9f3`, Chat-Eingabe und KI-Blasen `#fffdf7`, ausgewählte Optionen `#fdf8ea`, Symbolkacheln `#fdf3d6`, Wochen- und Reisekreise.
+- Warnrot `#a33b2c` war auf dunklem Grund zu dunkel — aufgehellt auf `#f0968a`, der Knopf selbst auf `#c2503f`.
+- `.rose-hub-dot` hing an `--gold-deep`; da dieser für Text aufgehellt wurde, hätte der Punkt auf der hellen Scheibe verschwunden — jetzt fest `#8a6f4e`.
+- `theme-color` in `index.html` und `background_color`/`theme_color` in `manifest.json` auf `#5f5966`, sonst zeigt iOS beim Start noch den alten Cremeton.
+
+**Absichtlich unverändert:** Text auf der Akzentfläche bleibt `#3a2e08` (dunkelbraun auf Apricot, guter Kontrast); die Kompassscheibe selbst mit Ring, Nadel und Nabe; der Insel-Konfigurator mit seiner eigenen, bunten Bildwelt; alle Fotos.
+
+---
+
 ## 8. Sicherungskopie der Gold-Fassung (`alte-version.html`)
 
 Vor dem geplanten Farb-Umbau (weg von Creme/Gold hin zu **Dämmerungsgrau**, siehe Entscheidungsprotokoll) wurde die vollständige bisherige Fassung als **`alte-version.html`** im obersten Ordner abgelegt — auf ausdrücklichen Wunsch von Christine ("behalte die alte App-Version, damit ich diese wieder nehmen kann, wenn nötig").
