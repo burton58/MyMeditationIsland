@@ -912,6 +912,10 @@
      die Breite besser als das Symbol. Bewusst NICHT .row-thumb allgemein
      aendern: dieselbe Klasse traegt auch die Verlaufs- und Chat-Zeilen. */
   .lib-row .row-thumb{ width:52px; height:52px; border-radius:14px; }
+  /* Seit 10. Aug. 2026 steht in der Bibliotheks-Liste kein Bild mehr (siehe
+     Begruendung bei renderMedListV2). Ohne das Bild wirkte der Name direkt
+     an der Kante zu gedraengt - etwas mehr Luft links, sonst unveraendert. */
+  .lib-row.ohne-bild{ padding-left:17px; }
   .lib-row.locked{ opacity:.55; }
   .lib-row-body{ flex:1; min-width:0; }
   .lib-row-name{ display:block; font-weight:600; font-size:.92rem; }
@@ -1433,7 +1437,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.85";
+    var AKTUELLE_VERSION = "2026-08-10.86";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4520,8 +4524,22 @@
     var host = document.getElementById("libList");
     host.innerHTML = pool.length ? pool.map(function(m){
       var frei = istFrei(m.id), fav = istFavorit(m.id);
-      return '<div class="lib-row' + (frei ? '' : ' locked') + '" data-play="' + m.id + '">' +
-        '<span class="row-thumb">' + rowFoto(m) + '</span>' +
+      // 10. Aug. 2026: HIER STEHT BEWUSST KEIN BILD MEHR.
+      // Christine: "Bei den Meditationen, die vier Kacheln, die muessten
+      // unten auch gleich sein wie oben oder gar keine unten."
+      // Sie hat den Stilbruch gesehen: Seit die vier Kacheln darueber echte
+      // Fotos sind, standen in der Liste darunter weiter die gemalten
+      // Bilder - auf einem Bildschirm untereinander. Beides gleich zu
+      // machen ginge nur, indem man auch die acht gemalten
+      // Meditations-Hintergruende ersetzt; die laufen aber waehrend der
+      // Uebungen und sind ein eigener, bewusster Bestand. Also die zweite
+      // Moeglichkeit, die sie selbst genannt hat: gar kein Bild in der
+      // Liste. Die Kacheln oben tragen die Bildsprache, die Liste ist eine
+      // ruhige Aufzaehlung.
+      // NUR HIER (Bibliothek) - rowFoto() bleibt und wird von Startseite,
+      // Verlauf und Empfehlung weiter benutzt; dort steht keine Fotokachel
+      // daneben, also gibt es dort auch nichts, was sich beissen koennte.
+      return '<div class="lib-row ohne-bild' + (frei ? '' : ' locked') + '" data-play="' + m.id + '">' +
         '<span class="lib-row-body">' +
           '<span class="lib-row-name">' + m.name +
           (frei ? '' : ' <img class="zeile-schloss" src="icon-zugang-zu.png" alt="gesperrt">') +
