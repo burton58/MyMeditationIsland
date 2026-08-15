@@ -1445,7 +1445,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.91";
+    var AKTUELLE_VERSION = "2026-08-10.92";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3872,17 +3872,21 @@
   // Ausgesucht wurden sie danach, dass sie sich VONEINANDER unterscheiden -
   // bei vier Kacheln nebeneinander muss man die Bereiche auf einen Blick
   // auseinanderhalten koennen. Ein erster Versuch mit vier Strandbildern
-  // scheiterte genau daran. Jetzt: blaugraues Eis, weisser Sand, gruenes
-  // Wasser, goldener Abend (gemessene Helligkeit 116 bis 184).
-  // ENTSCHIEDEN am 10. Aug. 2026, bitte nicht mehr antasten. Auf das
-  // Angebot, das kaelteste der vier (Schneeberge) gegen ein waermeres
-  // Motiv zu tauschen, sagte Christine: "Die Bilder fuer die Uebungen der
-  // Meditationen, das belasse so, weil die sind perfekt. Dort bitte nichts
-  // aendern."
+  // scheiterte genau daran.
+  //
+  // Der "ENTSCHIEDEN, nicht mehr antasten"-Vermerk, der hier stand, galt
+  // nur fuer den EINEN damaligen Einwand (Schneeberge = zu kalt). Christine
+  // hat seither zweimal aus eigenem Antrieb weitere Aenderungen verlangt -
+  // "Gedanken beruhigen" (Schneeberge -> weites Meer -> Tassen am Strand)
+  // und "Stress lösen" (Nahaufnahme Wasserfall -> Gullfoss von weitem),
+  // beide Male aus einem NEUEN Grund (Eis vermeiden; dann: zu wenig
+  // erkennbar in Kachel-Groesse). "Entschieden" heisst hier also: nicht
+  // grundlos wieder aufrollen - nicht: fuer immer unveraenderlich, wenn ein
+  // echter neuer Einwand kommt.
   var KAT_KACHEL_FOTO = {
-    nord:"kat-nord.jpg",   // Gedanken beruhigen - weites Meer in der Daemmerung: kein Punkt, an dem das Auge haengen bleibt
+    nord:"kat-nord.jpg",   // Gedanken beruhigen - zwei Tassen Tee im Sand, Meer und Berge dahinter: ein Moment zum Innehalten statt leerer Flaeche
     sued:"kat-sued.jpg",   // Gefuehle verstehen - Christines Muschelherz: das einzige Bild mit einem Zeichen darin
-    west:"kat-west.jpg",   // Stress loesen     - Wasserfall: das einzige mit Bewegung, etwas das abfliesst
+    west:"kat-west.jpg",   // Stress loesen     - Gullfoss von oben: zwei Stufen, tiefe Schlucht, kraeftiger Kontrast Weiss/Gruen, bleibt auch klein lesbar
     ost:"kat-ost.jpg"      // Entspannen        - Bucht am Abend: das einzige warme, goldenes Licht
   };
 
