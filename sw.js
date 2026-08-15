@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v74";
+const CACHE_NAME = "myisland-cache-v75";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -16,8 +16,18 @@ const SHELL_FILES = [
   "./insel.jpg",
   "./insel-start.jpg",
   // Titelseite und Startseite seit 10. Aug. 2026: Christines eigene Fotos.
+  // Die Startseite hat vier davon - eines je Tageszeit (tageszeitBild()).
   "./titel.jpg",
   "./start.jpg",
+  "./start-morgen.jpg",
+  "./start-tag.jpg",
+  "./start-abend.jpg",
+  "./start-nacht.jpg",
+  // Die vier grossen Fotokacheln in der Bibliothek.
+  "./kat-nord.jpg",
+  "./kat-sued.jpg",
+  "./kat-west.jpg",
+  "./kat-ost.jpg",
   "./logo.png",
   "./icon-180.png",
   "./bg-waldlichtung.jpg",
