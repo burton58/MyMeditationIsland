@@ -1445,7 +1445,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.95";
+    var AKTUELLE_VERSION = "2026-08-10.96";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3871,35 +3871,20 @@
     ost:"bg-bergsee.jpg"           // Entspannen - stiller See
   };
 
-  // Die vier grossen Fotokacheln oben in der Bibliothek - seit 10. Aug.
-  // 2026 echte Fotos von Christine.
-  //
-  // BEWUSST EINE EIGENE LISTE, nicht LIB_KAT_FOTO mitbenutzt: Jene wird
-  // zusaetzlich von rowFoto() gebraucht, als Ersatzbild fuer die
-  // 17 Uebungen ohne eigenes Bild. Wuerde man dort dieselben Fotos
-  // einsetzen, waere die lange Liste halb Foto und halb gemalt. So bleibt
-  // die Liste einheitlich gemalt, und nur die vier Kacheln sind Fotos.
-  //
-  // Ausgesucht wurden sie danach, dass sie sich VONEINANDER unterscheiden -
-  // bei vier Kacheln nebeneinander muss man die Bereiche auf einen Blick
-  // auseinanderhalten koennen. Ein erster Versuch mit vier Strandbildern
-  // scheiterte genau daran.
-  //
-  // Der "ENTSCHIEDEN, nicht mehr antasten"-Vermerk, der hier stand, galt
-  // nur fuer den EINEN damaligen Einwand (Schneeberge = zu kalt). Christine
-  // hat seither zweimal aus eigenem Antrieb weitere Aenderungen verlangt -
-  // "Gedanken beruhigen" (Schneeberge -> weites Meer -> Tassen am Strand)
-  // und "Stress lösen" (Nahaufnahme Wasserfall -> Gullfoss von weitem),
-  // beide Male aus einem NEUEN Grund (Eis vermeiden; dann: zu wenig
-  // erkennbar in Kachel-Groesse). "Entschieden" heisst hier also: nicht
-  // grundlos wieder aufrollen - nicht: fuer immer unveraenderlich, wenn ein
-  // echter neuer Einwand kommt.
-  var KAT_KACHEL_FOTO = {
-    nord:"kat-nord.jpg",   // Gedanken beruhigen - stiller Bergsee mit spiegelglattem Wasser, ein kleines Boot. Klares, ruhiges Wasser als Sinnbild fuer einen klaren, ruhigen Kopf - naeher am Thema als die zuvor erwogenen Tassen (siehe SPEC.md fuer die verworfenen Zwischenschritte: Schneeberge -> weites Meer -> Tassen -> dieser Bergsee).
-    sued:"kat-sued.jpg",   // Gefuehle verstehen - Christines Muschelherz: das einzige Bild mit einem Zeichen darin
-    west:"kat-west.jpg",   // Stress loesen     - Gullfoss von oben: zwei Stufen, tiefe Schlucht, kraeftiger Kontrast Weiss/Gruen, bleibt auch klein lesbar
-    ost:"kat-ost.jpg"      // Entspannen        - Bucht am Abend: das einzige warme, goldenes Licht
-  };
+  // Die vier grossen Fotokacheln oben in der Bibliothek zeigten vom
+  // 10.-15. Aug. 2026 echte Fotos von Christine (KAT_KACHEL_FOTO, eigene
+  // Liste getrennt von LIB_KAT_FOTO - siehe SPEC.md fuer die ganze
+  // Geschichte: mehrfache Aenderungen bei "Gedanken beruhigen" und "Stress
+  // loesen", zuletzt Bergsee bzw. Gullfoss). Christine, 15. Aug. 2026:
+  // "Die Kachelbilder gefallen mir nicht. Bitte zurueck gehen wie es
+  // vorher war, unechte Bilder." DORMANT, nicht geloescht - man weiss ja
+  // nie:
+  // var KAT_KACHEL_FOTO = {
+  //   nord:"kat-nord.jpg", sued:"kat-sued.jpg",
+  //   west:"kat-west.jpg", ost:"kat-ost.jpg"
+  // };
+  // Die Kacheln benutzen jetzt wieder LIB_KAT_FOTO (gemalt), genau wie vor
+  // dem 10. Aug. und genau wie die Liste darunter.
 
   // Das kleine Bild links in jeder Listenzeile.
   //
@@ -4498,7 +4483,7 @@
     var gridHtml = KATEGORIEN.map(function(k){
       var aktiv = k.dir === currentCatV2;
       return '<button class="lib-cat-tile' + (aktiv ? ' active' : '') + '" data-dir="' + k.dir + '">' +
-        '<img class="lib-cat-foto" src="' + KAT_KACHEL_FOTO[k.dir] + '" alt="">' +
+        '<img class="lib-cat-foto" src="' + LIB_KAT_FOTO[k.dir] + '" alt="">' +
         '<span class="lib-cat-check">✓</span>' +
         '<span class="lib-cat-label"><img src="' + k.icon + '" alt="">' + k.name + '</span>' +
       '</button>';
