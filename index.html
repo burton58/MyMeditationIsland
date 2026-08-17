@@ -301,27 +301,41 @@
      Insel etwas verlieren. "Fixiert" heisst: die Seitenverhaeltnis-Regel
      unten (aspect-ratio) ist exakt auf diesen neuen Zuschnitt eingestellt -
      das Bild behaelt diese Form immer, unabhaengig vom Geraet. */
+  /* "Vorlage A" (17. Aug. 2026): das Foto ist jetzt ein schmalerer
+     Streifen mit der Begruessung darauf, statt der grossen Flaeche mit der
+     Begruessung darueber. .home-band ist der randlose Rahmen (die
+     bisherige negative Rand-Verschiebung wohnt jetzt hier statt am Knopf
+     selbst), .home-hero-photo darin nur noch das reine Fotofeld. */
+  .home-band{ position:relative; margin:0 -16px 14px; overflow:hidden; }
   .home-hero-photo{
-    /* Frueher "flex:1 1 0" mit min-/max-height: das Foto war damit der
-       Puffer der Seite und wurde zusammengedrueckt, sobald die Liste im
-       heutigen Fokus laenger wurde (bei vielen Meditationen bis auf die
-       152px Mindesthoehe hinunter). Jetzt "flex:0 0 auto" plus das exakte
-       Seitenverhaeltnis der Datei (720x505): das Bild ist damit auf jedem
-       Geraet immer gleich gross, immer vollstaendig zu sehen (contain hat
-       bei genau diesem Verhaeltnis nichts abzuschneiden und keine Raender
-       zu lassen) - und wenn die Liste waechst, waechst einfach die Seite. */
-    flex:0 0 auto; aspect-ratio:720 / 505; overflow:hidden;
-    margin:0 -16px 14px;
-    /* Jetzt ein Knopf (fuehrt zur Titelseite) statt eines reinen Bildes -
-       alle Button-Grundformatierung wieder auf null, damit es weiter genau
-       wie ein Foto aussieht. WICHTIG: kein "width:100%" hier - das wuerde
-       die Breite fest auf 100% der Innenbreite der Seite (ohne die
-       negativen Raender mitzuzaehlen) setzen und rechts eine Luecke lassen.
-       Ohne explizite Breite streckt sich der Knopf wie zuvor der <div>
-       automatisch per Flex-Stretch auf die volle, randlose Breite. */
-    border:none; padding:0; background:none; font:inherit; cursor:pointer; display:block;
+    /* Deutlich flacheres Verhaeltnis als vorher (720:505 = 1,43:1) - ein
+       Streifen, kein Vollbild. object-fit:cover statt "contain": als
+       schmaler Streifen soll das Foto den Platz randlos fuellen; dass
+       dabei oben/unten etwas wegfaellt, ist bei einem Streifen so gewollt
+       (anders als beim vorherigen Vollbild, das ganz zu sehen sein sollte).
+       object-position schiebt den sichtbaren Ausschnitt leicht unter die
+       Bildmitte, damit der Horizont der vier Tageszeit-Fotos im Streifen
+       bleibt statt nur Himmel zu zeigen. */
+    aspect-ratio:21 / 8; display:block; width:100%;
+    border:none; padding:0; background:none; font:inherit; cursor:pointer;
   }
-  .home-hero-photo img{ width:100%; height:100%; object-fit:contain; display:block; pointer-events:none; }
+  .home-hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:50% 56%; display:block; pointer-events:none; }
+  /* Schleier nur am unteren Rand, damit die helle Mitte der Fotos (Himmel,
+     Wasser) nicht insgesamt abgedunkelt wird - nur dort, wo die Schrift
+     liegt, muss der Kontrast stimmen. */
+  .home-band-schleier{
+    position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(28,24,33,0) 34%, rgba(28,24,33,.34) 68%, rgba(28,24,33,.66) 100%);
+  }
+  .home-band-ttl{ position:absolute; left:16px; right:56px; bottom:12px; pointer-events:none; }
+  .home-band-ttl h1{
+    font-family:var(--serif); font-size:1.42rem; margin:0 0 2px; color:#fff;
+    text-shadow:0 2px 10px rgba(20,17,26,.55);
+  }
+  .home-band-ttl p{ margin:0; font-size:.85rem; color:rgba(255,255,255,.94); text-shadow:0 2px 8px rgba(20,17,26,.5); }
+  .home-band-profil{
+    position:absolute; top:12px; right:12px; background:rgba(30,26,35,.42); color:#fff; box-shadow:none;
+  }
 
   /* Wenn heute schon etwas gehört wurde, ist die Liste im "heutigen
      Fokus" etwas voller - dort darum knapper als anderswo, damit auch
@@ -1465,7 +1479,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.99";
+    var AKTUELLE_VERSION = "2026-08-10.100";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1614,24 +1628,31 @@
 
   <!-- ============ STARTSEITE ============ -->
   <div class="page home-page" id="homePage">
-    <div class="page-head">
-      <div class="ttl">
+    <!-- Umbau auf "Vorlage A" (17. Aug. 2026, Christine hat aus drei
+         Vorlagen gewaehlt): Begruessung liegt jetzt AUF dem Foto statt
+         darueber - das Foto ist dadurch ein schmalerer Streifen statt der
+         grossen Flaeche von vorher, mehr Platz fuer Vorschlag, Weiterhoeren
+         und die neuen Favoriten darunter, ohne dass die Seite laenger
+         wirkt. #homeHeroBtn/#homeHeroBild/#greeting/#homeProfilBtn heissen
+         bewusst gleich wie vorher - der ganze bestehende JS-Code
+         (renderHome(), tageszeitBild()) greift unveraendert. -->
+    <div class="home-band">
+      <!-- Das Foto WECHSELT MIT DER TAGESZEIT (10. Aug. 2026) - vier eigene
+           Fotos von Christine, gesetzt von tageszeitBild() in renderHome().
+           Das src hier ist nur der Startwert fuers erste Zeichnen; der
+           richtige Wert kommt sofort danach aus dem Code. object-fit:cover
+           statt vorher "contain" - als schmaler Streifen soll das Foto den
+           Platz randlos fuellen, nicht mit Luft oben/unten stehen. -->
+      <button class="home-hero-photo" id="homeHeroBtn" title="Zur Titelseite" type="button"><img id="homeHeroBild" src="start-morgen.jpg" alt="Deine Insel"></button>
+      <div class="home-band-schleier" aria-hidden="true"></div>
+      <div class="home-band-ttl">
         <h1 id="greeting">Guten Morgen <img class="gruss-bild" src="icon-sonne.png" alt="" aria-hidden="true"></h1>
         <p>Deine Insel wartet auf dich.</p>
       </div>
-      <button class="icon-btn" id="homeProfilBtn" title="Mein Weg">
+      <button class="icon-btn home-band-profil" id="homeProfilBtn" title="Mein Weg">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
       </button>
     </div>
-
-    <!-- Das Foto WECHSELT MIT DER TAGESZEIT (10. Aug. 2026) - vier eigene
-         Fotos von Christine, gesetzt von tageszeitBild() in renderHome().
-         Das src hier ist nur der Startwert fuers erste Zeichnen; der
-         richtige Wert kommt sofort danach aus dem Code.
-         Alle vier sind exakt auf 720:505 zugeschnitten, damit die
-         aspect-ratio-Regel oben unveraendert stimmt und weder Rand noch
-         Beschnitt entsteht. insel-start.jpg und start.jpg bleiben liegen. -->
-    <button class="home-hero-photo" id="homeHeroBtn" title="Zur Titelseite" type="button"><img id="homeHeroBild" src="start-morgen.jpg" alt="Deine Insel"></button>
 
     <!-- Ganzer Block per JS ein-/ausgeblendet (renderHome()): sichtbar nur,
          wenn heute schon eine Meditation gelaufen ist (Christine, 5. Aug.
@@ -1639,6 +1660,17 @@
          hat"). -->
     <div id="focusSection">
       <div id="focusSlot"></div>
+    </div>
+
+    <!-- "Meine Favoriten" auf der Startseite (17. Aug. 2026, Christines
+         Wunsch beim Farb-/Layout-Umbau). Bisher standen die Favoriten
+         (Stern-Symbol) nur in der Bibliothek - jetzt zusaetzlich hier, als
+         schneller Zugriff. Gefuellt in renderHome(), ganz ausgeblendet
+         (hidden am Wrapper), solange noch gar kein Stern gesetzt ist - ein
+         leerer Abschnitt mit Ueberschrift waere nur Leerraum. -->
+    <div id="favSection" hidden>
+      <div class="section-label" id="favLabel">Meine Favoriten</div>
+      <div id="favSlot"></div>
     </div>
 
     <!-- "Dein Fortschritt" auf der Startseite - 5. Aug. 2026 auf Christines
@@ -6643,6 +6675,8 @@
     focusWrap.hidden = !html;
     focus.innerHTML = html;
 
+    renderHomeFavoriten();
+
     /* DORMANT seit 8. Aug. 2026 - "Heute gehört" auf der Startseite.
        Christine: "sonst keine Auflistung der Meditationen von heute, die
        sind im Profil." Der Block zeigte die letzten drei heute gehoerten
@@ -6724,6 +6758,34 @@
     // Kommentar beim auskommentierten #homeStatsRowBtn-Block in #homePage.
     // renderHomeFortschritt() bleibt unbenutzt im Code stehen.
     // renderHomeFortschritt();
+  }
+
+  // "Meine Favoriten" auf der Startseite (17. Aug. 2026). Zeigt die
+  // per Stern markierten Uebungen (siehe FAV_KEY weiter oben), neueste
+  // zuerst, hoechstens vier - mehr wuerde die Startseite wieder zur
+  // Liste machen (dieselbe Grenze wie beim vorherigen "Heute gehört").
+  // Ohne jeden Favoriten bleibt der ganze Abschnitt (Ueberschrift und
+  // Karte) unsichtbar - ein leerer Abschnitt mit Ueberschrift waere nur
+  // Leerraum, und wer noch nie einen Stern gesetzt hat, kennt das
+  // Feature entweder schon aus der Bibliothek oder entdeckt es dort.
+  function renderHomeFavoriten(){
+    var wrap = document.getElementById("favSection");
+    var slot = document.getElementById("favSlot");
+    if (!wrap || !slot) return;
+    var meds = favoriten.slice().reverse()
+      .map(function(id){ return MEDITATIONS.filter(function(m){ return m.id === id; })[0]; })
+      .filter(Boolean)
+      .slice(0, 4);
+    wrap.hidden = !meds.length;
+    if (!meds.length){ slot.innerHTML = ""; return; }
+    slot.innerHTML = '<div class="card">' + meds.map(function(m){
+      return '<div class="hist-row startbar" data-play="' + m.id + '">' +
+        '<span class="row-thumb">' + rowFoto(m) + '</span>' +
+        '<span class="body"><span class="name">' + m.name + '</span>' +
+        '<span class="meta">' + m.min + ' Min · ' + katName(m.dir) + '</span></span>' +
+        '<button class="play-btn" data-play="' + m.id + '">▶</button>' +
+      '</div>';
+    }).join("") + '</div>';
   }
 
   // Endgueltig entfallen (4. Aug. 2026, Christine: "Gefaellt mir. Kann man

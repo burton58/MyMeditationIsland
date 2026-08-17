@@ -1024,3 +1024,37 @@ Ebenfalls geprüft und **nicht genommen** (beide hochkant, dadurch nach Zuschnit
 ### Kompass bleibt ein Foto
 
 Zur Klarstellung, weil in der Farb-Vorschau zwischenzeitlich eine gezeichnete Verlaufsscheibe und danach eine gezeichnete Insel vorgeschlagen wurde: **Beides ist abgelehnt.** Christines Entscheid (Aug. 2026): *"Falsch, nichts zeichnen"* — der Kompass behält das vorhandene Inselbild in `.compass-photo` (das von ihr über ChatGPT erzeugte Foto, als base64 in `index.html`). Auch im neuen Farbschema wird an der Scheibe selbst nichts geändert; grau wird nur der Rand ringsum.
+
+---
+
+## 10. Startseite umgebaut: Vorlage A, Favoriten, neues Tagesfoto (17. Aug. 2026)
+
+Christine hat aus drei Vorlagen gewählt (siehe Farb-Vorschau-Verlauf): **Vorlage A** — das Foto liegt als schmaler Streifen oben, die Begrüssung steht direkt darauf statt darüber. Umgesetzt in `index.html`, nicht mehr nur als Vorschau.
+
+**`.home-band`** ersetzt den alten `.home-hero-photo`-Vollbild-Aufbau. `#homeHeroBtn`/`#homeHeroBild`/`#greeting`/`#homeProfilBtn` behalten bewusst ihre IDs — `renderHome()` und `tageszeitBild()` greifen unverändert, nur die CSS-Hülle und die Position der Begrüssung sind neu. Wichtigste Änderungen:
+- Seitenverhältnis des Fotos von `720:505` (1,43:1, "ganzes Bild sichtbar") auf `21:8` (2,63:1, "schmaler Streifen") — dadurch **`object-fit:cover` statt `contain`**: Bei diesem Verhältnis fällt oben/unten zwangsläufig etwas weg, das ist bei einem Streifen so gewollt.
+- `object-position:50% 56%` hält den Horizont aller vier Tageszeit-Fotos im sichtbaren Ausschnitt (per Screenshot für alle vier geprüft, siehe unten).
+- Ein Schleier (`.home-band-schleier`, Verlauf nur im unteren Drittel) sorgt für Lesbarkeit der weissen Schrift, ohne die Fotos insgesamt abzudunkeln.
+- Das Profil-Symbol (`#homeProfilBtn`) sitzt jetzt als abgedunkelter Kreis oben rechts auf dem Foto statt daneben.
+
+**Geprüft mit echtem Playwright-Browser, nicht nur am Code abgelesen:** alle vier Tageszeiten (`page.clock.install()` mit fester Uhrzeit statt Warten), mit und ohne gesetzte Favoriten, mit einer offenen ("Weiterhören") Meditation gleichzeitig, Klick auf den Streifen (→ Titelseite) und auf das Profil-Symbol (→ "Mein Weg") — alle vier Bilder korrekt, Text in allen vier lesbar, beide Klickziele funktionieren.
+
+### Neu: "Meine Favoriten" auf der Startseite
+
+Bisher standen die per Stern markierten Übungen nur in der Bibliothek. Neuer Abschnitt `#favSection`/`#favSlot`, gefüllt von der neuen Funktion `renderHomeFavoriten()` (aufgerufen am Ende von `renderHome()`). Nutzt das bestehende `favoriten`-Array (`FAV_KEY`) — kein neuer Speicherplatz. Neueste zuerst (`.slice().reverse()`, da `toggleFavorit()` neue ans Ende anhängt), **höchstens vier** — dieselbe Grenze wie beim früheren "Heute gehört", damit die Startseite nicht wieder zur Liste wird. **Ohne jeden Favoriten bleibt der ganze Abschnitt inklusive Überschrift unsichtbar** (`wrap.hidden = !meds.length`) — geprüft, dass dabei keine Lücke entsteht.
+
+Reihenfolge auf der Seite von oben: Foto-Streifen mit Begrüssung → Vorschlag nach Tageszeit → "Willst du weiterhören?" (falls offen) → Meine Favoriten (falls vorhanden) → Meine Stimmung.
+
+### Richtigstellung: "Weiterhören" gab es schon
+
+In einer früheren Antwort wurde behauptet, die App merke sich nur, was fertig gehört wurde, nicht die Stelle — das war **falsch** und wurde Christine so auch gesagt, ohne es vorher am echten Code zu prüfen. Tatsächlich existiert die Funktion bereits seit einer früheren Sitzung vollständig: `sichereStand()` schreibt Sekunde und Verlaufseintrag fort, ausgelöst über den Zurück-Knopf (mit Rückfrage) und über `visibilitychange` (App wird auf dem iPhone weggelegt). `ladeOffen()`/`speichereOffen()`/`loescheOffen()` verwalten den Stand unter `OFFEN_KEY`, `setzeMeditationFort()` setzt `fortsetzenSek`, das `loadQueueItem()` beim ersten Stück der neuen Sitzung übernimmt. **Mit einem echten Playwright-Test verifiziert** (nicht nur am Code abgelesen): Meditation 25 Sekunden laufen lassen, App-Wechsel simulieren (`visibilitychange` auf "hidden"), Seite neu laden, "Weitermachen" antippen — die Anzeige beginnt exakt bei `0:25 / 6:00`, nicht bei `0:00`. Am Verhalten selbst hat sich durch den heutigen Umbau nichts geändert, nur die Umgebung darum (jetzt unter "Meine Favoriten" statt darüber).
+
+### Neues Tagesfoto, mit einem offenen Punkt
+
+`start-tag.jpg` ersetzt (bisher: brechende Welle) durch Christines neues Foto (heller blauer Himmel, Strand, Palmen rechts, Originalgrösse 1567×1004). **Offen gelassene Qualitätsfrage:** Das rohe Foto hat schon ungeschärft eine auffällig geringere Schärfe (46) als das bisherige Tagesbild (139) — das liegt nicht an der Verkleinerung (die Quelle ist grösser als gebraucht, es wird nicht hochgerechnet), sondern am Foto selbst (leichter Dunst/weicher Fokus). Auch mit kräftigem Nachschärfen (Unsharp Mask 1.2/120/2, stärker als bei jedem anderen Tagesfoto) erreicht es nur 91 — spürbar unter dem alten Wert. Bewusst nicht stärker nachgeschärft, um keine sichtbaren Halos zu erzeugen. Christine wurde das mitgeteilt; falls es ihr beim Ansehen zu weich vorkommt, liegt die Ursache im Ausgangsfoto, nicht in der Bearbeitung.
+
+`start-abend.jpg` **bewusst nicht angerührt** ("Für den Abend – gleich") — bleibt das Buchtfoto vom 15. Aug. Das zweite an diesem Tag geschickte Foto (blasser Dämmerungsstrand, `4C94F76E…`) wurde **nicht verwendet** — unklar, wofür es gedacht war, da "gleich" für den Abend stand; liegt in den Uploads bereit, falls Christine es doch irgendwo will.
+
+### Kompass unverändert
+
+Auf Christines Nachfrage geprüft und bestätigt: Der Kompass zeigt in jeder Situation (kleine Version auf der Startseite, grosse Version auf der Kompass-Seite, Abschluss-Kompass) **dasselbe fest eingebettete Foto** aus `.compass-photo` — keine Zeitabhängigkeit, kein Wechsel, war nie Teil der Tageszeit-Logik. Am Code musste dafür nichts geändert werden.
