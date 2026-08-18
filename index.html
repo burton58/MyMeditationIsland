@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="My Meditation Island">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#5f5966">
+<meta name="theme-color" content="#33404f">
 <!-- Vom Home-Bildschirm geöffnete Seiten merkt sich das iPhone gerne
      besonders hartnäckig, auch über ein einfaches Schliessen hinaus. Diese
      drei Zeilen sagen dem Handy ausdrücklich, sich nicht auf eine gemerkte
@@ -34,21 +34,21 @@
        bleiben aus der Creme-Zeit stehen (--cream, --gold), damit nicht
        ueber tausend Stellen umbenannt werden muessen; --cream ist jetzt
        schlicht "der Untergrund", --gold "die Akzentfarbe". */
-    --cream:#5f5966;
-    --cream-2:#756e7c;
+    --cream:#33404f;
+    --cream-2:#465667;
     --card:rgba(0,0,0,.16);
-    --ink:#f7f4f8;
-    --ink-soft:#ded7e4;
+    --ink:#f3f6fa;
+    --ink-soft:#ccd6e0;
     --gold:#f0d3a8;
     --gold-soft:#f6e0c4;
     --gold-deep:#efd2ab;
     --gold-grad:linear-gradient(135deg,var(--gold-soft),var(--gold));
-    --deep:#2b2731;
+    --deep:#151c24;
     --line:rgba(255,255,255,.16);
     /* Die vier Woerter im Kompass bleiben DUNKEL - sie liegen auf dem
        hellen Inselfoto, nicht auf dem Untergrund. Mit heller Schrift
        waeren sie unsichtbar (Lesbarkeitswert 1,02 statt 11,35). */
-    --dial:#332e38;
+    --dial:#202a34;
     --serif:Georgia,'Iowan Old Style','Palatino Linotype','Book Antiqua',serif;
     --tabbar-h:74px;
     /* Der Bereich unter der Tabbar, den iPhones fuer den Home-Indikator
@@ -60,7 +60,7 @@
   html,body{ margin:0; padding:0; }
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(180deg, var(--cream) 0%, #756e7c 100%);
+    background:linear-gradient(180deg, var(--cream) 0%, #465667 100%);
     background-attachment:fixed;
     color:var(--ink);
     min-height:100vh;
@@ -1479,7 +1479,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.101";
+    var AKTUELLE_VERSION = "2026-08-10.102";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

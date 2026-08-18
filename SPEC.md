@@ -1066,3 +1066,25 @@ Christine: *"Jetzt kannst du alles weitermachen, was seit Sonntag offen ist."* Z
 
 - **Das Gebaeude auf dem Huegel im Abendbild** (`start-abend.jpg`) bleibt. Es ist klein, am Rand, weit entfernt und nicht das Motiv des Fotos (das ist die Bucht) - anders als z. B. ein Foto, das eine Person oder ein Gebaeude zeigt. Herausschneiden ist weiterhin nicht moeglich, ohne die Aufloesung zu verlieren (siehe oben, "Abendbild ausgetauscht").
 - **Das zweite, ungenutzte Foto** vom 17. Aug. (blasser Daemmerungsstrand) bleibt unverwendet liegen - es gibt keine Vorgabe, wofuer es gedacht war. Wird bei Bedarf spaeter zugewiesen.
+---
+
+## 11. Dämmerungsgrau abgelöst durch "Dusk Denim" (18. Aug. 2026)
+
+Christine, zum Grau vom Vortag: *"Alles hässlich, sieht so traurig aus."* Gefragt war eine objektiv andere Richtung als Calm/Balance (beides etablierte, blaue bzw. dunkelblau-orange Konkurrenz-Apps). Sechs Kandidaten gebaut und mit echten Screenshots direkt in der App verglichen (nicht nur als Farbmuster): Charcoal Brown, Dark Amethyst, Tiefsee-Petrol, Dusk Denim, Deep Sapphire, Cobalt. Rangfolge nach Eigenständigkeit ging an Charcoal Brown vor Tiefsee-Petrol — Christines Entscheid fiel trotzdem auf **Blau**, weil ihr Grün nicht gefällt und sie ausdrücklich Blau wollte. Innerhalb der drei Blautöne war **Dusk Denim** die Empfehlung (am wenigsten "Standard-App-Blau", weil eingetrübt statt leuchtend) statt Deep Sapphire (am nächsten an einem gewöhnlichen dunklen App-Blau) oder Cobalt (am gesättigsten, dadurch am ehesten wiedererkennbar als "irgendeine Blau-App"). Christine: *"Bau Dusk Denim um."*
+
+Reine Farbvariable-Umstellung, keine Struktur geändert — dieselben zehn Token wie beim Wechsel zu Dämmerungsgrau (§9), nur andere Werte:
+
+| Variable | Dämmerungsgrau | Dusk Denim |
+|---|---|---|
+| `--cream` | `#5f5966` | `#33404f` |
+| `--cream-2` | `#756e7c` | `#465667` |
+| `--ink` | `#f7f4f8` | `#f3f6fa` |
+| `--ink-soft` | `#ded7e4` | `#ccd6e0` |
+| `--deep` | `#2b2731` | `#151c24` |
+| `--dial` | `#332e38` | `#202a34` |
+
+`--gold`/`--gold-soft`/`--gold-deep`/`--card`/`--line` **unverändert** — Kontrast gegen die neuen Grundtöne vorher nachgerechnet (Gold auf `--cream`: 7,34 : 1, auf `--cream-2`: 5,23 : 1, beide über der 4,5-Schwelle), keine Anpassung nötig. Zusätzlich `<meta name="theme-color">` in `index.html` und `background_color`/`theme_color` in `manifest.json` auf `#33404f` gesetzt, sonst zeigt iOS beim Start kurz noch Grau.
+
+**Vor dem Speichern alle zehn Seiten einzeln als Screenshot geprüft** (Titelseite, Startseite, Kompass, Bibliothek, Mein Weg, Einstellungen, Abo, Anmelden, Über mich, Insel-Konfigurator, Abschluss-Kompass) — nirgends ein Kontrast- oder Farbbruch gefunden, die 43 gezeichneten Symbole (aus §9 bereits hell eingefärbt) und der Insel-Konfigurator (eigene, bunte Bildwelt, absichtlich unverändert) sehen unverändert richtig aus.
+
+Die vorherige Fassung (Gold/Creme, Stand 10. Aug.) bleibt weiterhin unter `alte-version.html` erreichbar (§8) — Dämmerungsgrau selbst wurde nirgends separat gesichert, war nur einen Tag lang live und ist über die normale Versionsgeschichte rekonstruierbar, falls je nötig.
