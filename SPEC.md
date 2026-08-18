@@ -1135,3 +1135,12 @@ Alles auf Christines Rueckmeldung zum ersten Entwurf von Vorlage A:
 - **Mehr Luft zwischen den Bloecken**: Abstand ueber den Zwischentiteln von 28px auf **34px**, zwischen Titel und Karte von 6px auf 12px; Abstand Foto zum ersten Titel jetzt 24px.
 
 Mit echtem Browser nachgemessen statt nach Augenmass, und im Vollzustand geprueft (Vorschlag + "Willst du weiterhoeren?" + Favoriten + Stimmung gleichzeitig sichtbar).
+
+
+### Titelfoto leicht ins Blaue gezogen (18. Aug. 2026)
+
+Christine: *"Kann man das erste Bild Titelseite ein wenig mehr Blau reinnehmen?"* — damit es zum neuen blauen Untergrund passt. **Nicht** ueber einen CSS-Schleier geloest (das haette das ganze Bild flach und diesig gemacht), sondern als echte Farbkorrektur im Bild.
+
+Verfahren: Blau und etwas Gruen anheben, Rot leicht zuruecknehmen — aber **nur ueber eine Helligkeitsmaske** `(1 - L) ** 1.2`, also nur in den dunklen und mittleren Toenen. Die Sonne und der helle Himmel bleiben dadurch warm; ohne die Maske sieht es aus wie ein aufgelegter Farbfilter statt wie Abendlicht. Mittelwerte R/G/B: vorher `134/128/125` (leicht warm), jetzt `129/132/136` (leicht kuehl).
+
+Zwei Staerken gebaut und im Browser verglichen: **leicht** (0.10) ist eingebaut, weil Christine "ein wenig" gesagt hat; **mittel** (0.18, Mittelwerte `125/135/145`) liegt als Alternative bereit und faerbt vor allem den Sand sichtbar kuehl. Das Original liegt unveraendert als **`titel-alt.jpg`** daneben.
