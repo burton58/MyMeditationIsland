@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="My Meditation Island">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#33404f">
+<meta name="theme-color" content="#16304f">
 <!-- Vom Home-Bildschirm geöffnete Seiten merkt sich das iPhone gerne
      besonders hartnäckig, auch über ein einfaches Schliessen hinaus. Diese
      drei Zeilen sagen dem Handy ausdrücklich, sich nicht auf eine gemerkte
@@ -34,21 +34,21 @@
        bleiben aus der Creme-Zeit stehen (--cream, --gold), damit nicht
        ueber tausend Stellen umbenannt werden muessen; --cream ist jetzt
        schlicht "der Untergrund", --gold "die Akzentfarbe". */
-    --cream:#33404f;
-    --cream-2:#465667;
+    --cream:#16304f;
+    --cream-2:#2b5b90;
     --card:rgba(0,0,0,.16);
-    --ink:#f3f6fa;
-    --ink-soft:#ccd6e0;
+    --ink:#eef4fb;
+    --ink-soft:#c3d4e8;
     --gold:#f0d3a8;
     --gold-soft:#f6e0c4;
     --gold-deep:#efd2ab;
     --gold-grad:linear-gradient(135deg,var(--gold-soft),var(--gold));
-    --deep:#151c24;
+    --deep:#0c1c2f;
     --line:rgba(255,255,255,.16);
     /* Die vier Woerter im Kompass bleiben DUNKEL - sie liegen auf dem
        hellen Inselfoto, nicht auf dem Untergrund. Mit heller Schrift
        waeren sie unsichtbar (Lesbarkeitswert 1,02 statt 11,35). */
-    --dial:#202a34;
+    --dial:#122740;
     --serif:Georgia,'Iowan Old Style','Palatino Linotype','Book Antiqua',serif;
     --tabbar-h:74px;
     /* Der Bereich unter der Tabbar, den iPhones fuer den Home-Indikator
@@ -56,11 +56,24 @@
        Leiste. Als eigene Variable, damit Tests den Wert nachstellen koennen. */
     --safe-bottom:env(safe-area-inset-bottom, 0px);
   }
+  /* Jede Seite ein leicht anderer Blauton (18. Aug. 2026, Christines Idee).
+     Bewusst NUR eine Nuance Unterschied - man soll es beim Wechseln spueren,
+     ohne dass es wie vier verschiedene Apps wirkt. Ueberschrieben werden nur
+     die beiden Grundtoene; alles andere (Karten, Gold, Linien) bleibt
+     gleich, dadurch kann nichts auseinanderlaufen.
+     Alle vier Paare sind auf Lesbarkeit nachgerechnet: Zweittext und Gold
+     liegen auf jedem Untergrund ueber 4,5:1. Beim Aufhellen eines Tons
+     zuerst nachrechnen - "Meditationen" war im ersten Anlauf mit einem
+     helleren Unterton bei 4,21 und fiel damit durch. */
+  body[data-step="compass"]{      --cream:#172d55; --cream-2:#2c5796; }
+  body[data-step="meditation2"]{  --cream:#153651; --cream-2:#2b5c90; }
+  body[data-step="meditation"]{   --cream:#172c46; --cream-2:#294f83; }
+
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; padding:0; }
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(180deg, var(--cream) 0%, #465667 100%);
+    background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
     background-attachment:fixed;
     color:var(--ink);
     min-height:100vh;
@@ -258,8 +271,8 @@
      (Christine, 8. Aug. 2026). Jetzt 28px - gemessen bleiben auf einem
      iPhone 14 danach immer noch rund 60px Luft unter der Karte.
      Die erste Ueberschrift behaelt margin-top:0 (Regel darunter). */
-  .home-page .section-label{ margin:28px 0 6px; }
-  .home-page .section-label.first{ margin-top:0; }
+  .home-page .section-label{ margin:34px 0 12px; }
+  .home-page .section-label.first{ margin-top:2px; }
 
   .card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
 
@@ -312,7 +325,7 @@
      Begruessung darueber. .home-band ist der randlose Rahmen (die
      bisherige negative Rand-Verschiebung wohnt jetzt hier statt am Knopf
      selbst), .home-hero-photo darin nur noch das reine Fotofeld. */
-  .home-band{ position:relative; margin:0 -16px 14px; overflow:hidden; }
+  .home-band{ position:relative; margin:0 -16px 22px; overflow:hidden; }
   .home-hero-photo{
     /* Deutlich flacheres Verhaeltnis als vorher (720:505 = 1,43:1) - ein
        Streifen, kein Vollbild. object-fit:cover statt "contain": als
@@ -322,7 +335,7 @@
        object-position schiebt den sichtbaren Ausschnitt leicht unter die
        Bildmitte, damit der Horizont der vier Tageszeit-Fotos im Streifen
        bleibt statt nur Himmel zu zeigen. */
-    aspect-ratio:21 / 8; display:block; width:100%;
+    aspect-ratio:16 / 9; display:block; width:100%;
     border:none; padding:0; background:none; font:inherit; cursor:pointer;
   }
   .home-hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:50% 56%; display:block; pointer-events:none; }
@@ -333,12 +346,12 @@
     position:absolute; inset:0; pointer-events:none;
     background:linear-gradient(180deg, rgba(28,24,33,0) 34%, rgba(28,24,33,.34) 68%, rgba(28,24,33,.66) 100%);
   }
-  .home-band-ttl{ position:absolute; left:16px; right:56px; bottom:12px; pointer-events:none; }
+  .home-band-ttl{ position:absolute; left:16px; right:56px; bottom:18px; pointer-events:none; }
   .home-band-ttl h1{
-    font-family:var(--serif); font-size:1.42rem; margin:0 0 2px; color:#fff;
-    text-shadow:0 2px 10px rgba(20,17,26,.55);
+    font-family:var(--serif); font-size:1.12rem; font-weight:400; margin:0 0 1px; color:#fff;
+    text-shadow:0 2px 10px rgba(12,20,34,.6);
   }
-  .home-band-ttl p{ margin:0; font-size:.85rem; color:rgba(255,255,255,.94); text-shadow:0 2px 8px rgba(20,17,26,.5); }
+  .home-band-ttl p{ margin:0; font-size:.78rem; color:rgba(255,255,255,.9); text-shadow:0 2px 8px rgba(12,20,34,.55); }
   /* Der Abstand nach oben rechnet den Bereich mit, den iPhones fuer Uhrzeit
      und Notch freihalten - sonst laege das Symbol unter der Uhr, seit das
      Foto ganz oben an der Kante beginnt. Auf Geraeten ohne Notch ist der
@@ -1462,7 +1475,7 @@
   /* ---------- Tabbar ---------- */
   .tabbar{
     position:fixed; left:0; right:0; bottom:0; height:calc(var(--tabbar-h) + var(--safe-bottom)); z-index:50;
-    display:flex; background:rgba(56,51,62,.97); border-top:1px solid var(--line);
+    display:flex; background:rgba(10,26,44,.97); border-top:1px solid var(--line);
     backdrop-filter:blur(10px); padding-bottom:var(--safe-bottom);
   }
   body[data-step="splash"] .tabbar, body.entered .tabbar{ display:none; }
@@ -1474,7 +1487,7 @@
   .tab-item{
     flex:1; border:none; background:none; cursor:pointer; font-family:inherit;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-    color:#9aaaa2; padding:0 2px;
+    color:#9fb3c9; padding:0 2px;
   }
   .tab-item svg{ width:20px; height:20px; }
   .tab-item span{ font-size:.58rem; font-weight:600; text-align:center; line-height:1.05; }
@@ -1490,7 +1503,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.103";
+    var AKTUELLE_VERSION = "2026-08-10.104";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

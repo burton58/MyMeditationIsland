@@ -1097,3 +1097,41 @@ Christine: *"Und bei Startseite das Bild ganz oben sein ohne Farbe."* Über dem 
 Weil das Foto damit bis an die oberste Bildschirmkante läuft, rechnet `.home-band-profil` (das Personen-Symbol oben rechts) jetzt `env(safe-area-inset-top)` mit ein — sonst läge es auf einem iPhone im Standalone-Modus unter der Uhrzeit. Auf Geräten ohne Notch ist der Wert 0, dort ändert sich nichts.
 
 Mit echtem Browser nachgemessen statt nach Augenmass: Oberkante des Fotos bei `y = 0`, Kompass-Seite unverändert bei `y = 18`.
+
+
+## 12. "Meerestiefe": Verlauf statt Flaeche, plus Feinschliff der Startseite (18. Aug. 2026)
+
+Nach Dusk Denim (§11) wollte Christine mehr Blau. Sechs weitere Kandidaten gebaut und im Browser verglichen (Tintenblau, Indigo-Nacht, Azur-Nacht, Lapis, Meerestiefe, Ozean, Tech-Blau). Ihr Einwand zu Tintenblau war berechtigt und wurde bestaetigt: dunkles Marineblau **plus warmer Akzent** ist genau die Kombination von Balance — das eigene "aber unser Gold unterscheidet uns"-Argument zieht dort also kaum. Entschieden wurde **E · Meerestiefe**.
+
+**Der Unterschied ist nicht der Farbton, sondern der Aufbau:** Statt einer flaechigen Hintergrundfarbe (die sowohl Calm als auch Balance benutzen) laeuft der Untergrund jetzt als **sichtbarer Verlauf** von einem tiefen Marineblau oben (`#16304f`) zu einem offenen Blau unten (`#2b5b90`) — "von der Tiefe zur Oberflaeche". Das ist eine strukturelle Unterscheidung, keine Geschmacksfrage, und laesst sich nicht mit "sieht aus wie" abtun.
+
+Nicht genommen und warum: **Ozean** (helles Meerblau) faellt beim Kontrast durch — Gold darauf nur **3,9:1**, unter der 4,5-Schwelle; ausserdem von allen Kandidaten am naechsten an Calm. **Tech-Blau** ist zwar eigenstaendig und kontraststark, aber elektrisch leuchtende Blautoene signalisieren Technik und Aufmerksamkeit — das arbeitet gegen den Zweck einer Meditations-App.
+
+### Der Balken ganz unten (Christine gemeldet)
+
+`.tabbar` hatte seine Hintergrundfarbe seit §9 **fest verdrahtet** auf `rgba(56,51,62,.97)` — ein Grauviolett aus der Daemmerungsgrau-Zeit. Es ueberlebte damit unbemerkt den ganzen Wechsel zu Dusk Denim, weil es an keiner Variablen haengt. Die Tab-Beschriftung war sogar noch `#9aaaa2`, ein Graugruen aus der Gold-Zeit davor. Beides jetzt blau (`rgba(10,26,44,.97)` / `#9fb3c9`). **Lehre:** Bei einem Farbwechsel reicht es nicht, die Variablen zu tauschen — nach fest verdrahteten Farbwerten suchen, besonders bei Elementen, die auf jeder Seite mitlaufen und deshalb beim Durchklicken nicht auffallen.
+
+Ebenfalls jetzt ueber die Variable statt fest verdrahtet: der zweite Farbstopp des Body-Verlaufs (`var(--cream-2)` statt eines Literals) — Voraussetzung fuer die Seitentoene unten.
+
+### Jede Seite ein eigener Blauton (Christines Idee)
+
+Vier Nuancen desselben Blaus, gesetzt ueber `body[data-step="…"]` mit Ueberschreibung nur von `--cream`/`--cream-2`:
+
+| Seite | oben | unten | Charakter |
+|---|---|---|---|
+| Startseite | `#16304f` | `#2b5b90` | Grundton |
+| Kompass | `#172d55` | `#2c5796` | eine Spur tiefer |
+| Meditationen | `#153651` | `#2b5c90` | eine Spur offener |
+| Mein Weg | `#172c46` | `#294f83` | ruhiger, dunkler |
+
+**Bewusst nur eine Nuance** — man soll es beim Wechseln spueren, ohne dass es wie vier verschiedene Apps wirkt. Alles andere (Karten, Gold, Linien, Schrift) bleibt identisch, dadurch kann nichts auseinanderlaufen. **Alle vier Paare sind auf Lesbarkeit nachgerechnet**; "Meditationen" lag im ersten Anlauf mit einem helleren Unterton bei **4,21:1** und fiel durch — nachgedunkelt auf 4,58. Wer einen Ton aufhellt, muss vorher rechnen.
+
+### Feinschliff der Startseite
+
+Alles auf Christines Rueckmeldung zum ersten Entwurf von Vorlage A:
+- **Foto groesser**: Seitenverhaeltnis von `21:8` (sehr flacher Streifen) auf `16:9` — auf einem 402px breiten Bildschirm 226px hoch statt 153px.
+- **Begruessung zurueckhaltender** ("Guten Abend nicht so prominent"): `1.42rem` fett auf **`1.12rem` normal**, Untertitel `.85rem` auf `.78rem`.
+- **Titel nicht mehr so eng am Bildrand**: Abstand nach unten von 12px auf 18px.
+- **Mehr Luft zwischen den Bloecken**: Abstand ueber den Zwischentiteln von 28px auf **34px**, zwischen Titel und Karte von 6px auf 12px; Abstand Foto zum ersten Titel jetzt 24px.
+
+Mit echtem Browser nachgemessen statt nach Augenmass, und im Vollzustand geprueft (Vorschlag + "Willst du weiterhoeren?" + Favoriten + Stimmung gleichzeitig sichtbar).
