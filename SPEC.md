@@ -1088,3 +1088,12 @@ Reine Farbvariable-Umstellung, keine Struktur geändert — dieselben zehn Token
 **Vor dem Speichern alle zehn Seiten einzeln als Screenshot geprüft** (Titelseite, Startseite, Kompass, Bibliothek, Mein Weg, Einstellungen, Abo, Anmelden, Über mich, Insel-Konfigurator, Abschluss-Kompass) — nirgends ein Kontrast- oder Farbbruch gefunden, die 43 gezeichneten Symbole (aus §9 bereits hell eingefärbt) und der Insel-Konfigurator (eigene, bunte Bildwelt, absichtlich unverändert) sehen unverändert richtig aus.
 
 Die vorherige Fassung (Gold/Creme, Stand 10. Aug.) bleibt weiterhin unter `alte-version.html` erreichbar (§8) — Dämmerungsgrau selbst wurde nirgends separat gesichert, war nur einen Tag lang live und ist über die normale Versionsgeschichte rekonstruierbar, falls je nötig.
+
+
+### Startseiten-Foto bündig an der Oberkante (18. Aug. 2026)
+
+Christine: *"Und bei Startseite das Bild ganz oben sein ohne Farbe."* Über dem Streifenfoto stand bisher ein schmaler Streifen Hintergrundfarbe — der kam vom `padding:18px` der allgemeinen `.page`-Regel, nicht vom Band selbst. Neue Regel `.home-page{ padding-top:0; }` direkt nach `.page` (gleiche Spezifität, steht später, gewinnt dadurch). **Bewusst nur auf der Startseite** — auf allen anderen Seiten ist der Abstand über der Überschrift richtig und bleibt.
+
+Weil das Foto damit bis an die oberste Bildschirmkante läuft, rechnet `.home-band-profil` (das Personen-Symbol oben rechts) jetzt `env(safe-area-inset-top)` mit ein — sonst läge es auf einem iPhone im Standalone-Modus unter der Uhrzeit. Auf Geräten ohne Notch ist der Wert 0, dort ändert sich nichts.
+
+Mit echtem Browser nachgemessen statt nach Augenmass: Oberkante des Fotos bei `y = 0`, Kompass-Seite unverändert bei `y = 18`.
