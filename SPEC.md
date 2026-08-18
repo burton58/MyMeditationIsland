@@ -1051,10 +1051,18 @@ In einer früheren Antwort wurde behauptet, die App merke sich nur, was fertig g
 
 ### Neues Tagesfoto, mit einem offenen Punkt
 
-`start-tag.jpg` ersetzt (bisher: brechende Welle) durch Christines neues Foto (heller blauer Himmel, Strand, Palmen rechts, Originalgrösse 1567×1004). **Offen gelassene Qualitätsfrage:** Das rohe Foto hat schon ungeschärft eine auffällig geringere Schärfe (46) als das bisherige Tagesbild (139) — das liegt nicht an der Verkleinerung (die Quelle ist grösser als gebraucht, es wird nicht hochgerechnet), sondern am Foto selbst (leichter Dunst/weicher Fokus). Auch mit kräftigem Nachschärfen (Unsharp Mask 1.2/120/2, stärker als bei jedem anderen Tagesfoto) erreicht es nur 91 — spürbar unter dem alten Wert. Bewusst nicht stärker nachgeschärft, um keine sichtbaren Halos zu erzeugen. Christine wurde das mitgeteilt; falls es ihr beim Ansehen zu weich vorkommt, liegt die Ursache im Ausgangsfoto, nicht in der Bearbeitung.
+`start-tag.jpg` ersetzt (bisher: brechende Welle) durch Christines neues Foto (heller blauer Himmel, Strand, Palmen rechts, Originalgrösse 1567×1004). **Offen gelassene Qualitätsfrage:** Das rohe Foto hat schon ungeschärft eine auffällig geringere Schärfe (46) als das bisherige Tagesbild (139) — das liegt nicht an der Verkleinerung (die Quelle ist grösser als gebraucht, es wird nicht hochgerechnet), sondern am Foto selbst (leichter Dunst/weicher Fokus). Auch mit kräftigem Nachschärfen (Unsharp Mask 1.2/120/2, stärker als bei jedem anderen Tagesfoto) erreicht es nur 91 — spürbar unter dem alten Wert. Bewusst nicht stärker nachgeschärft, um keine sichtbaren Halos zu erzeugen. Christine wurde das mitgeteilt; falls es ihr beim Ansehen zu weich vorkommt, liegt die Ursache im Ausgangsfoto, nicht in der Bearbeitung. **Nachgebessert (18. Aug. 2026):** Die Schaerfe-Karte des Rohbilds geprueft (99,5.-Perzentil in 505px-Streifen von oben nach unten) - sie ist ueber die ganze nutzbare Hoehe praktisch flach (~55), es gibt also keine schaerfere Stelle im Foto, die ein anderer Ausschnitt haette treffen koennen. Die Nachschaerfung darum leicht erhoeht (Unsharp Mask 1.1/140/2 statt 1.2/120/2) - 96 statt 91, ohne sichtbare Ecken/Halos (per Ausschnittsvergroesserung an der Wasserlinie geprueft, der kritischsten Stelle). Bleibt unter dem alten Bild (139), das ist die Grenze dessen, was am Foto selbst noch zu holen ist.
 
 `start-abend.jpg` **bewusst nicht angerührt** ("Für den Abend – gleich") — bleibt das Buchtfoto vom 15. Aug. Das zweite an diesem Tag geschickte Foto (blasser Dämmerungsstrand, `4C94F76E…`) wurde **nicht verwendet** — unklar, wofür es gedacht war, da "gleich" für den Abend stand; liegt in den Uploads bereit, falls Christine es doch irgendwo will.
 
 ### Kompass unverändert
 
 Auf Christines Nachfrage geprüft und bestätigt: Der Kompass zeigt in jeder Situation (kleine Version auf der Startseite, grosse Version auf der Kompass-Seite, Abschluss-Kompass) **dasselbe fest eingebettete Foto** aus `.compass-photo` — keine Zeitabhängigkeit, kein Wechsel, war nie Teil der Tageszeit-Logik. Am Code musste dafür nichts geändert werden.
+
+
+### Entscheidung ohne Rueckfrage nachgeholt (18. Aug. 2026)
+
+Christine: *"Jetzt kannst du alles weitermachen, was seit Sonntag offen ist."* Zwei Punkte standen aus einer frueheren Antwort noch offen, ohne dass sie sich dazu geaeussert hatte - hier selbst entschieden statt weiter zu warten:
+
+- **Das Gebaeude auf dem Huegel im Abendbild** (`start-abend.jpg`) bleibt. Es ist klein, am Rand, weit entfernt und nicht das Motiv des Fotos (das ist die Bucht) - anders als z. B. ein Foto, das eine Person oder ein Gebaeude zeigt. Herausschneiden ist weiterhin nicht moeglich, ohne die Aufloesung zu verlieren (siehe oben, "Abendbild ausgetauscht").
+- **Das zweite, ungenutzte Foto** vom 17. Aug. (blasser Daemmerungsstrand) bleibt unverwendet liegen - es gibt keine Vorgabe, wofuer es gedacht war. Wird bei Bedarf spaeter zugewiesen.
