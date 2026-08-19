@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v99";
+const CACHE_NAME = "myisland-cache-v100";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -23,14 +23,11 @@ const SHELL_FILES = [
   "./start-tag.jpg",
   "./start-abend.jpg",
   "./start-nacht.jpg",
-  // Die vier Kategoriebilder - sie sind auch der Hintergrund waehrend der
-  // meisten Meditationen, muessen also offline da sein.
-  "./kat-blau-nord.jpg",
-  "./kat-blau-sued.jpg",
-  "./kat-blau-ost.jpg",
-  // kat-blau-west.jpg fehlt noch (siehe LIB_KAT_FOTO in index.html).
-  // Die vier Fotos von Christine (kat-*.jpg) sind seit 15. Aug. 2026 nicht
-  // mehr in Gebrauch, bleiben aber liegen.
+  // Die Kategoriebilder sind seit 19. Aug. 2026 wieder die vier bg-*.jpg
+  // (umgefaerbt, siehe LIB_KAT_FOTO) - die stehen weiter unten ohnehin
+  // schon in dieser Liste. Nicht mehr in Gebrauch, aber aufgehoben:
+  // kat-blau-*.jpg (drei blaue Meerbilder) und kat-*.jpg (Fotos von
+  // Christine, seit 15. Aug. 2026 ungenutzt).
   "./kat-nord.jpg",
   "./kat-sued.jpg",
   "./kat-west.jpg",

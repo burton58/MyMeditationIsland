@@ -1503,7 +1503,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.108";
+    var AKTUELLE_VERSION = "2026-08-10.109";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3953,16 +3953,22 @@
   //      betrifft die Mehrheit: nur 18 der Uebungen haben ein eigenes bg,
   //      alle anderen zeigen das Bild ihrer Kategorie. Darum liegen die
   //      Dateien in voller Groesse (1448x1086) hier und nicht verkleinert.
+  // Zurueck auf die vier urspruenglichen Bilder (19. Aug. 2026, Christine:
+  // "Jedes Bild muss ein bisschen anders sein, vorher war's perfekt, einfach
+  // von der Farbe her nicht passend mit Blau"). Die drei blauen Meerbilder
+  // vom selben Tag (kat-blau-*.jpg) waren einander zu aehnlich - vier
+  // Kategorien brauchen vier klar unterscheidbare Motive, sonst sieht die
+  // Bibliothek eintoenig aus. Die Dateien bleiben liegen, siehe SPEC.md.
+  //
+  // Statt neuer Bilder wurden die alten UMGEFAERBT: das Goldgelb ist
+  // herausgenommen und die Schatten Richtung App-Blau gezogen, das Motiv
+  // und der jeweils eigene Farbcharakter bleiben (Tuerkis / Rose / Gruen /
+  // Blaugrau). Die Ausgangsdateien liegen unveraendert in bilder-gold/.
   var LIB_KAT_FOTO = {
-    nord:"kat-blau-nord.jpg",      // Gedanken beruhigen - stilles Wasser im Nebel
-    sued:"kat-blau-sued.jpg",      // Gefuehle verstehen - Wellen laufen an den Strand
-    // WEST FEHLT NOCH: Fuer "Stress loesen" hat Christine das vierte Bild
-    // (Palmwedel gegen den Daemmerungshimmel) noch nicht geliefert. Bis
-    // dahin steht hier bewusst das alte, warme Waldbild - es passt tonal
-    // nicht, ist aber ehrlicher als ein doppelt verwendetes Meerbild.
-    // Sobald "kat-blau-west.jpg" im Ordner liegt, nur diese Zeile tauschen.
-    west:"bg-waldlichtung.jpg",    // Stress loesen - PROVISORISCH, siehe oben
-    ost:"kat-blau-ost.jpg"         // Entspannen - Mondspur auf dem Wasser
+    nord:"bg-lichtraum.jpg",       // Gedanken beruhigen - helle Wellen, tuerkis
+    sued:"bg-herzraum.jpg",        // Gefuehle verstehen - Bluetenhuegel, rose
+    west:"bg-waldlichtung.jpg",    // Stress loesen - Waldlichtung, gruen
+    ost:"bg-bergsee.jpg"           // Entspannen - stiller See, blaugrau
   };
 
   // Die vier grossen Fotokacheln oben in der Bibliothek zeigten vom

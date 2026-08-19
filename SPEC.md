@@ -1192,3 +1192,28 @@ Die alten `bg-*.jpg` bleiben unveraendert liegen — sie sind weiterhin der Hint
 **Ebenfalls aufgefallen:** Die Bilder 2 und 3 (`sued` und `ost`) sind einander recht aehnlich — beide Strand mit Brandung und Lichtspur. Sie stehen in der Kachel-Ansicht diagonal zueinander, das faellt dadurch weniger auf; falls Christine sie spaeter unterscheidbarer will, waere das ein eigener Auftrag.
 
 **Noch nicht angefasst:** Die kleinen runden Bilder in den Listenzeilen der 18 Uebungen mit eigenem `bg` sind weiterhin warm-golden und beissen sich mit den blauen Kacheln darueber. Das waere der naechste konsequente Schritt, ist aber ein eigener Umbau (8 Hintergrundbilder) und wurde nicht bestellt.
+
+
+## 15. Umfaerben statt Ersetzen: die vier Kategoriebilder (19. Aug. 2026)
+
+Christine zu den drei blauen Meerbildern aus §14: *"Ich finde es nicht schoen, dass alle Bilder blau sind, das ist zu wenig ins Auge stechend"* und *"die Bilder sind so aehnlich, jedes Bild muss ein bisschen anders sein, vorher war's perfekt, einfach von der Farbe her nicht passend mit Blau"*. Beides trifft zu, und §14 war ein Fehlschluss meinerseits.
+
+**Was die Recherche zu anderen Apps ergeben hat** (auf Christines ausdruecklichen Wunsch nachgeschlagen, nicht aus dem Gedaechtnis behauptet): Bei Insight Timer ist die Oberflaeche bewusst neutral gehalten, **damit die Bilder der Uebungen der farbige Blickfang sind**. Zum Abspielbildschirm wird ausdruecklich empfohlen, ihn auf die Stimmung der jeweiligen Meditation abzustimmen — in Farbe und Bewegung —, damit Nutzer sich nicht am immer gleichen Bildschirm langweilen. Headspace unterscheidet seine Bereiche ueber kraeftig verschiedene Farben. **Die Regel lautet also: der Rahmen bleibt ruhig und einfarbig, die Bilder bringen die Abwechslung.** In §14 wurde genau das Gegenteil gemacht — die Bilder wurden dem Hintergrund angeglichen.
+
+**Ausserdem geradegeruecht:** Die Warnung "Blau plus Warm ist die Signatur von Balance" (§11/§13) gilt fuer **Bedienelemente** — Knoepfe, Schrift, Symbole. Sie gilt **nicht** fuer die Bildwelt. Warme Bilder auf blauem Grund sind kein Zitat von Balance, sondern genau der Kontrast, der der App gefehlt hat.
+
+### Die Loesung: die alten Bilder umfaerben
+
+Zurueck auf die vier urspruenglichen Motive, die Christine als "perfekt" bezeichnet hat — sie sind klar unterscheidbar (helle Wellen / Bluetenhuegel / Waldlichtung / stiller See), im Gegensatz zu drei Varianten desselben Strandmotivs. Statt sie zu ersetzen, wurden sie **umgefaerbt**:
+
+1. **Das Goldgelb herausnehmen.** Ueberall dort, wo Rot deutlich ueber Blau liegt, ist das Bild warm — genau dieser Ueberschuss beisst sich mit dem blauen Untergrund. Er wird gedaempft (`gold_weg = 0.38`), nicht entfernt.
+2. **Schatten Richtung App-Blau** (`#16304f`, Maske `(1-L)` hoch `1.6`, Staerke 0.30) — dadurch haben alle Bilder denselben Boden wie die App.
+3. **Leicht tiefer** (Gamma 1.10) fuer die Abendstimmung.
+
+Entscheidend: Jedes Bild behaelt seinen **eigenen Farbcharakter** — Tuerkis, Rose, Gruen, Blaugrau. Das Ergebnis ist vier klar verschiedene Bilder, die trotzdem alle zur App passen.
+
+Angewendet auf **alle acht** `bg-*.jpg`, nicht nur die vier Kategoriebilder — die uebrigen vier sind der Hintergrund der 18 Uebungen mit eigenem `bg` und waeren sonst als einzige warm-golden geblieben. Die Ausgangsdateien liegen unveraendert in **`bilder-gold/`** (gleiches Muster wie `icons-gold/`).
+
+**Nicht mehr in Gebrauch, aber aufgehoben:** `kat-blau-nord/sued/ost.jpg` (die drei blauen Meerbilder vom selben Tag) und `kat-*.jpg` (Christines Fotos, seit 15. Aug. ungenutzt). Beide aus `SHELL_FILES` in `sw.js` entfernt, damit der Offline-Speicher nicht unnoetig waechst.
+
+**Lehre fuer das naechste Mal:** Bevor neue Bilder erzeugt werden, pruefen, ob eine Farbkorrektur der vorhandenen reicht. Hier hat sie vollstaendig genuegt — und sie erhaelt die Motivvielfalt, die eine neue Serie erst wieder muehsam herstellen muesste.
