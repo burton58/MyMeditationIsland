@@ -39,9 +39,9 @@
     --card:rgba(0,0,0,.16);
     --ink:#eef4fb;
     --ink-soft:#c3d4e8;
-    --gold:#f0d3a8;
-    --gold-soft:#f6e0c4;
-    --gold-deep:#efd2ab;
+    --gold:#efe6d8;
+    --gold-soft:#f6f1e8;
+    --gold-deep:#efe6d8;
     --gold-grad:linear-gradient(135deg,var(--gold-soft),var(--gold));
     --deep:#0c1c2f;
     --line:rgba(255,255,255,.16);
@@ -211,9 +211,9 @@
   }
 
   .splash-cta{
-    width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08;
+    width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26;
     font-weight:700; font-size:1rem; padding:16px; border-radius:17px; font-family:inherit;
-    box-shadow:0 10px 26px rgba(90,66,8,.38);
+    box-shadow:0 10px 26px rgba(8,18,32,.38);
   }
   .splash-cta:active{ transform:translateY(1px); }
   .splash-mikro{
@@ -277,9 +277,9 @@
   .card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
 
   .btn-dark{
-    border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08; font-family:inherit;
+    border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26; font-family:inherit;
     font-weight:700; font-size:.9rem; padding:12px 18px; border-radius:12px;
-    display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 16px rgba(120,90,10,.28);
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 16px rgba(8,18,32,.30);
   }
   .btn-dark.full{ width:100%; padding:16px; font-size:.98rem; border-radius:15px; }
   .state-card .btn-dark.full{ padding:13px; font-size:.92rem; }
@@ -380,9 +380,9 @@
   .focus-card .name{ display:block; font-weight:600; font-size:.95rem; margin-bottom:3px; }
   .focus-card .meta{ display:block; font-size:.78rem; color:var(--ink-soft); }
   .play-btn{
-    border:none; background:var(--gold-grad); color:#3a2e08; width:38px; height:38px; border-radius:50%;
+    border:none; background:var(--gold-grad); color:#2a2a26; width:38px; height:38px; border-radius:50%;
     display:flex; align-items:center; justify-content:center; flex:0 0 auto; font-size:.8rem;
-    box-shadow:0 4px 12px rgba(120,90,10,.3);
+    box-shadow:0 4px 12px rgba(8,18,32,.32);
   }
 
   /* Aufbau der Karte, 8. Aug. 2026 (Christine: "zweite Box sieht nicht gut
@@ -469,13 +469,13 @@
      einnehmen statt Platz an seitliche Textspalten abzugeben. */
   .compass-hint{ text-align:center; font-size:.83rem; color:var(--ink-soft); margin:10px 0 0; }
 
-  .rose-needle{ stroke:#a8842a; stroke-width:5.5; }
-  .rose-needle-tip{ fill:var(--gold); stroke:#6b5218; stroke-width:2.5; transition:r .25s ease; }
-  .rose-needle-halo{ fill:rgba(201,162,39,.22); transition:r .25s ease; }
-  .rose-hub{ fill:#fffdf7; stroke:#a8842a; stroke-width:2.2; }
-  .rose-hub-dot{ fill:#8a6f4e; }   /* sitzt auf der hellen Scheibe, bleibt dunkel */
-  .rose-journey{ stroke:#6b5218; stroke-width:2.5; stroke-dasharray:5 5; opacity:.6; }
-  .rose-journey-start{ fill:rgba(255,255,255,.9); stroke:#6b5218; stroke-width:2.5; opacity:.8; }
+  .rose-needle{ stroke:#857d72; stroke-width:5.5; }
+  .rose-needle-tip{ fill:var(--gold); stroke:#5f584e; stroke-width:2.5; transition:r .25s ease; }
+  .rose-needle-halo{ fill:rgba(239,230,216,.26); transition:r .25s ease; }
+  .rose-hub{ fill:#fffdf7; stroke:#857d72; stroke-width:2.2; }
+  .rose-hub-dot{ fill:#6b645a; }   /* sitzt auf der hellen Scheibe, bleibt dunkel */
+  .rose-journey{ stroke:#5f584e; stroke-width:2.5; stroke-dasharray:5 5; opacity:.6; }
+  .rose-journey-start{ fill:rgba(255,255,255,.9); stroke:#5f584e; stroke-width:2.5; opacity:.8; }
 
   /* Beschriftung der vier Himmelsrichtungen direkt im Ziffernblatt: klein,
      waagrecht lesbar, mit dunklem Schein statt harter Kontur, damit sie auf
@@ -515,7 +515,7 @@
   .readout-card .glyph{
     width:46px; height:46px; border-radius:50%; flex:0 0 auto;
     background:linear-gradient(155deg, rgba(0,0,0,.12), rgba(0,0,0,.22));
-    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4), 0 2px 8px rgba(0,0,0,.1);
+    box-shadow:inset 0 0 0 1.5px rgba(239,230,216,.45), 0 2px 8px rgba(0,0,0,.1);
     display:flex; align-items:center; justify-content:center; font-size:1.2rem;
   }
   /* Das gezeichnete Zustandsbild im runden Feld. 30px statt der vollen 46,
@@ -611,7 +611,7 @@
   .seg .opt.active{
     color:var(--ink); font-weight:700;
     background:rgba(255,255,255,.17); border-color:var(--gold);
-    box-shadow:inset 0 0 0 1px var(--gold), 0 2px 8px rgba(120,90,10,.13);
+    box-shadow:inset 0 0 0 1px var(--gold), 0 2px 8px rgba(8,18,32,.16);
   }
   /* Der gleitende Umriss bleibt im Code ("man weiss ja nie"), ist aber
      ausgeblendet - sichtbar war er ohnehin nie. Zum Zurueckholen hier
@@ -620,7 +620,7 @@
   .seg-thumb{
     display:none;
     position:absolute; top:0; bottom:0; left:0; width:calc((100% - 24px)/5); border-radius:12px;
-    background:rgba(201,162,39,.12); border:1.5px solid var(--gold); pointer-events:none; z-index:0;
+    background:rgba(239,230,216,.14); border:1.5px solid var(--gold); pointer-events:none; z-index:0;
     transition:left .22s cubic-bezier(.22,.61,.36,1);
   }
   /* "left" statt "transform": Prozentwerte in translateX() beziehen sich
@@ -672,7 +672,7 @@
     background:none; border-left:none; border-right:none; border-top:none; font-family:inherit; color:var(--ink); text-align:left; cursor:pointer; }
   .rec-item:last-of-type{ border-bottom:none; }
   .rec-item .num{
-    width:22px; height:22px; border-radius:50%; background:var(--gold-grad); color:#3a2e08; font-size:.7rem; font-weight:700;
+    width:22px; height:22px; border-radius:50%; background:var(--gold-grad); color:#2a2a26; font-size:.7rem; font-weight:700;
     display:flex; align-items:center; justify-content:center; flex:0 0 auto;
   }
   .rec-result.in .play-btn{ animation:playPop .3s .15s cubic-bezier(.34,1.56,.64,1) both; }
@@ -789,8 +789,8 @@
   .fd-reasons{ margin:12px 0 14px; padding-left:18px; }
   .fd-reasons li{ font-size:.83rem; line-height:1.6; color:var(--ink-soft); }
   .fd-hero-btn{
-    width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08; font-family:inherit;
-    font-weight:700; font-size:.95rem; padding:15px; border-radius:14px; box-shadow:0 6px 16px rgba(120,90,10,.28);
+    width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26; font-family:inherit;
+    font-weight:700; font-size:.95rem; padding:15px; border-radius:14px; box-shadow:0 6px 16px rgba(8,18,32,.30);
   }
   .fd-card{
     width:100%; display:flex; align-items:center; gap:13px; text-align:left; cursor:pointer; font-family:inherit;
@@ -802,7 +802,7 @@
   .fd-card-meta{ display:block; font-size:.77rem; color:var(--ink-soft); margin-top:2px; }
   .fd-card-reason{ display:block; font-size:.77rem; color:var(--gold-deep); margin-top:4px; }
   .fd-card-play{
-    width:34px; height:34px; border-radius:50%; background:var(--gold-grad); color:#3a2e08; flex:0 0 auto;
+    width:34px; height:34px; border-radius:50%; background:var(--gold-grad); color:#2a2a26; flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:.8rem;
   }
   /* Der Pfeil auf der Inselbewohner-Karte dreht sich nach unten, wenn
@@ -912,7 +912,7 @@
     padding:9px 14px; border-radius:20px; font-size:.8rem; font-weight:600; color:var(--ink); flex:0 0 auto;
     display:inline-flex; align-items:center; gap:6px;
   }
-  .lib-chip.active{ background:var(--gold-grad); color:#3a2e08; border-color:var(--gold); }
+  .lib-chip.active{ background:var(--gold-grad); color:#2a2a26; border-color:var(--gold); }
   /* Derselbe Stern wie an jeder Uebung (.fav-btn.on): einfarbig statt buntes
      Emoji, damit beide Stellen gleich aussehen (5. Aug. 2026, Christines
      Wunsch "gerne angleichen"). Ist der Chip ausgewaehlt, liegt er auf
@@ -936,7 +936,7 @@
      von den Bildfarben eindeutig erkennbar. */
   .lib-cat-check{
     position:absolute; top:8px; right:8px; z-index:2; width:22px; height:22px; border-radius:50%;
-    background:var(--gold-grad); color:#3a2e08; display:none; align-items:center; justify-content:center;
+    background:var(--gold-grad); color:#2a2a26; display:none; align-items:center; justify-content:center;
     font-size:.72rem; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.3);
   }
   .lib-cat-tile.active .lib-cat-check{ display:flex; }
@@ -1031,7 +1031,7 @@
      aus - genau das hatte Christine bemaengelt. */
   .avatar-stift{
     position:absolute; right:0; bottom:0; width:17px; height:17px; border-radius:50%;
-    background:var(--gold); color:#3a2e08; font-size:.6rem;
+    background:var(--gold); color:#2a2a26; font-size:.6rem;
     display:flex; align-items:center; justify-content:center;
   }
   .profile-card .body{ flex:1; min-width:0; }
@@ -1053,7 +1053,7 @@
   .avatar-wahl img{ width:64%; height:64%; object-fit:contain; display:block; }
   .avatar-upload{ display:block; text-align:center; cursor:pointer; }
   .avatar-hinweis{ margin:10px 0 0; font-size:.74rem; color:var(--ink-soft); text-align:center; }
-  .chev{ color:#bdb4c4; font-size:1.1rem; }
+  .chev{ color:#a9b8c9; font-size:1.1rem; }
 
   .status-card{ display:flex; align-items:flex-start; gap:13px; padding:15px; margin-bottom:12px;
     background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); flex-wrap:wrap; }
@@ -1068,7 +1068,7 @@
   .status-title{ font-weight:700; font-size:.92rem; }
   .status-detail{ font-size:.79rem; line-height:1.5; color:var(--ink-soft); margin-top:4px; }
   .status-cta-btn{
-    border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08; font-family:inherit;
+    border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26; font-family:inherit;
     font-weight:700; font-size:.83rem; padding:11px 16px; border-radius:12px; width:100%;
   }
 
@@ -1106,7 +1106,7 @@
     border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit;
     padding:9px 14px; border-radius:20px; font-size:.85rem; font-weight:600; color:var(--ink);
   }
-  .wert-chip.active{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
+  .wert-chip.active{ background:var(--gold-grad); border-color:var(--gold); color:#2a2a26; }
   .ziel-leer{ margin:0 0 14px; font-size:.85rem; color:var(--ink-soft); line-height:1.5; }
   /* #wochenzielCard ist nur "card" ohne eigene Innenabstands-Klasse - ohne
      dieses padding sass der volle Knopf ohne Rand direkt an der
@@ -1128,8 +1128,8 @@
     border:1.5px solid var(--line); background:rgba(255,255,255,.10); display:flex; align-items:center;
     justify-content:center; font-size:.85rem; color:transparent;
   }
-  .week-cell.on .kreis{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
-  .week-cell.heute .kreis{ box-shadow:0 0 0 2px rgba(201,162,39,.35); }
+  .week-cell.on .kreis{ background:var(--gold-grad); border-color:var(--gold); color:#2a2a26; }
+  .week-cell.heute .kreis{ box-shadow:0 0 0 2px rgba(239,230,216,.4); }
 
   .journey-path{ display:flex; align-items:center; justify-content:space-between; position:relative; margin:6px 0 14px; }
   .journey-path::before{
@@ -1185,7 +1185,7 @@
      (beides --cream-2) und waeren unsichtbar. Darum hier hell auf Gold. */
   .ki-card .chat{ max-height:200px; margin-bottom:10px; }
   .ki-card .bubble.ai{ background:rgba(0,0,0,.16); }
-  .ki-card .chat-row input{ border-color:rgba(143,111,34,.35); }
+  .ki-card .chat-row input{ border-color:rgba(239,230,216,.35); }
   .ki-card .body{ min-width:0; }
 
   /* Wochenansicht und Inselreise ---------------------------------------- */
@@ -1222,7 +1222,7 @@
   .schritt{ display:flex; gap:12px; padding:13px 0; border-bottom:1px solid var(--line); font-size:.86rem; line-height:1.55; }
   .schritt:last-child{ border-bottom:none; }
   .schritt .nr{
-    width:24px; height:24px; border-radius:50%; background:var(--gold-grad); color:#3a2e08; flex:0 0 auto;
+    width:24px; height:24px; border-radius:50%; background:var(--gold-grad); color:#2a2a26; flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700;
   }
 
@@ -1270,7 +1270,7 @@
     background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:10px;
   }
   .plan.best{ border-color:var(--gold); }
-  .plan-badge{ display:inline-block; background:var(--gold-grad); color:#3a2e08; font-size:.65rem; font-weight:800;
+  .plan-badge{ display:inline-block; background:var(--gold-grad); color:#2a2a26; font-size:.65rem; font-weight:800;
     padding:4px 9px; border-radius:9px; margin-bottom:8px; }
   .plan-name{ display:block; font-family:var(--serif); font-size:1.1rem; font-weight:700; }
   .plan-price{ display:block; font-size:1.35rem; font-weight:700; margin:3px 0 5px; color:var(--gold-deep); }
@@ -1305,7 +1305,7 @@
     border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit;
     padding:11px 14px; border-radius:12px; font-size:.83rem; font-weight:600; color:var(--ink);
   }
-  .mini-btn.primary{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; font-weight:700; }
+  .mini-btn.primary{ background:var(--gold-grad); border-color:var(--gold); color:#2a2a26; font-weight:700; }
 
   /* ---------- Begleiter ----------
      Die .companion-Karte auf "Mein Weg" ist im Aug. 2026 entfallen (sie
@@ -1314,7 +1314,7 @@
   .companion-foto{
     border-radius:50%; overflow:hidden; position:relative;
     background:linear-gradient(155deg, var(--cream), var(--cream-2));
-    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.4);
+    box-shadow:inset 0 0 0 1.5px rgba(239,230,216,.45);
   }
   .companion-foto img{ width:100%; height:100%; object-fit:cover; display:block; }
   /* Das Ersatz-Zeichen liegt hinter dem Foto und wird nur sichtbar, wenn
@@ -1327,7 +1327,7 @@
      drei Vorschlaege als ein einziger Fliesstext-Block da. */
   .bubble{ padding:10px 13px; border-radius:14px; font-size:.85rem; line-height:1.5; max-width:85%; white-space:pre-line; }
   .bubble.ai{ background:var(--cream-2); align-self:flex-start; border-bottom-left-radius:5px; }
-  .bubble.me{ background:var(--gold-grad); color:#3a2e08; align-self:flex-end; border-bottom-right-radius:5px; }
+  .bubble.me{ background:var(--gold-grad); color:#2a2a26; align-self:flex-end; border-bottom-right-radius:5px; }
   .bubble.typing{ opacity:.6; }
   /* Die vom Begleiter vorgeschlagene Uebung, direkt im Gespraech startbar. */
   .chat-vorschlag{ align-self:stretch; }
@@ -1339,7 +1339,7 @@
     font-family:inherit; font-size:.88rem; background:rgba(0,0,0,.20); color:var(--ink);
   }
   .chat-row button{
-    border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08; font-family:inherit;
+    border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26; font-family:inherit;
     font-weight:700; font-size:.85rem; padding:12px 16px; border-radius:12px;
   }
 
@@ -1371,7 +1371,7 @@
   .opt-bild{ width:1.3em; height:1.3em; flex:0 0 auto; vertical-align:-4px; }
   /* Bild in einem Textknopf ("Zur Titelseite") - seit 8. Aug. 2026. */
   .knopf-bild{ width:1.15em; height:1.15em; vertical-align:-3px; }
-  .opts .opt.active{ background:var(--gold-grad); border-color:var(--gold); color:#3a2e08; }
+  .opts .opt.active{ background:var(--gold-grad); border-color:var(--gold); color:#2a2a26; }
   /* Die gezeichneten Symbole sind seit der Farbumstellung HELL (sie liegen
      sonst auf dunklem Grund). Wo ein Symbol auf der hellen Akzentflaeche
      sitzt - aktive Auswahl, aktive Chips, erledigte Wochentage - waere es
@@ -1388,9 +1388,9 @@
   .swatch{ width:32px; height:32px; border-radius:50%; border:3px solid transparent; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.15); }
   .swatch.active{ border-color:var(--gold-deep); transform:scale(1.12); }
   .enter-btn{
-    width:100%; margin-top:4px; border:none; cursor:pointer; background:var(--gold-grad); color:#3a2e08;
+    width:100%; margin-top:4px; border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26;
     font-family:inherit; font-weight:700; font-size:1rem; padding:16px; border-radius:15px;
-    box-shadow:0 6px 16px rgba(120,90,10,.28);
+    box-shadow:0 6px 16px rgba(8,18,32,.30);
   }
   .summary{ margin-top:14px; font-size:.8rem; color:var(--ink-soft); line-height:1.5; }
   .stage-wrap{ position:relative; order:1; }
@@ -1470,7 +1470,7 @@
     flex:1; border:none; background:rgba(255,255,255,.16); color:#fff; padding:14px 10px; border-radius:13px;
     font-size:.85rem; font-weight:600;
   }
-  .session-row .mini-btn.primary{ background:var(--gold-grad); color:#3a2e08; font-weight:700; }
+  .session-row .mini-btn.primary{ background:var(--gold-grad); color:#2a2a26; font-weight:700; }
 
   /* ---------- Tabbar ---------- */
   .tabbar{
@@ -1503,7 +1503,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.106";
+    var AKTUELLE_VERSION = "2026-08-10.107";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1720,11 +1720,11 @@
         <svg id="compassSvgHome" viewBox="0 0 400 400" class="compass-flat">
           <defs>
             <radialGradient id="ringGradHome" cx="35%" cy="28%" r="75%">
-              <stop offset="0%" stop-color="#f8ecc4"/><stop offset="45%" stop-color="#d9b95c"/><stop offset="100%" stop-color="#8f6f22"/>
+              <stop offset="0%" stop-color="#f8f4ec"/><stop offset="45%" stop-color="#ddd4c4"/><stop offset="100%" stop-color="#8c847a"/>
             </radialGradient>
           </defs>
           <circle cx="200" cy="200" r="157" fill="none" stroke="url(#ringGradHome)" stroke-width="18"/>
-          <circle cx="200" cy="200" r="166" fill="none" stroke="#6b5218" stroke-width="2" opacity=".55"/>
+          <circle cx="200" cy="200" r="166" fill="none" stroke="#5f584e" stroke-width="2" opacity=".55"/>
           <!-- Ohne Beschriftung braucht der kleine Kompass keinen Platz am
                Rand - er behaelt darum seine grosse Scheibe. Da die Nadel
                ihre Reichweite (COMPASS_MAXR) mit den grossen Kompassen
@@ -1779,15 +1779,16 @@
         <svg id="compassSvg" viewBox="0 0 400 400" class="compass-flat">
           <defs>
             <radialGradient id="ringGrad" cx="35%" cy="28%" r="75%">
-              <stop offset="0%" stop-color="#f8ecc4"/><stop offset="45%" stop-color="#d9b95c"/><stop offset="100%" stop-color="#8f6f22"/>
+              <stop offset="0%" stop-color="#f8f4ec"/><stop offset="45%" stop-color="#ddd4c4"/><stop offset="100%" stop-color="#8c847a"/>
             </radialGradient>
             <filter id="compassSvgShadow" x="-60%" y="-60%" width="220%" height="220%">
               <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity=".35"/>
             </filter>
           </defs>
 
-          <!-- Kleine Goldpunkte an den vier Polen, aussen am Ring -->
-          <g fill="#c9a227">
+          <!-- Kleine Punkte an den vier Polen, aussen am Ring. Seit dem
+               Wechsel auf Perle (18. Aug. 2026) nicht mehr golden. -->
+          <g fill="#efe6d8">
             <circle cx="200" cy="14" r="4.5"/><circle cx="200" cy="386" r="4.5"/>
             <circle cx="14" cy="200" r="4.5"/><circle cx="386" cy="200" r="4.5"/>
           </g>
@@ -1797,7 +1798,7 @@
                trotzdem Halt. -->
           <circle cx="200" cy="200" r="175.5" fill="none" stroke="#fffdf7" stroke-width="8" opacity=".62"/>
           <circle cx="200" cy="200" r="179.5" fill="none" stroke="url(#ringGrad)" stroke-width="1.2" opacity=".55"/>
-          <circle cx="200" cy="200" r="172" fill="none" stroke="#8f6f22" stroke-width="1" opacity=".35"/>
+          <circle cx="200" cy="200" r="172" fill="none" stroke="#8c847a" stroke-width="1" opacity=".35"/>
 
           <!-- Feines Fadenkreuz: zeigt die vier Felder und macht sichtbar,
                dass man auch dazwischen stehen darf. -->
@@ -2112,15 +2113,16 @@
         <svg id="compassSvg2" viewBox="0 0 400 400" class="compass-flat">
           <defs>
             <radialGradient id="ringGrad2" cx="35%" cy="28%" r="75%">
-              <stop offset="0%" stop-color="#f8ecc4"/><stop offset="45%" stop-color="#d9b95c"/><stop offset="100%" stop-color="#8f6f22"/>
+              <stop offset="0%" stop-color="#f8f4ec"/><stop offset="45%" stop-color="#ddd4c4"/><stop offset="100%" stop-color="#8c847a"/>
             </radialGradient>
             <filter id="compassSvg2Shadow" x="-60%" y="-60%" width="220%" height="220%">
               <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity=".35"/>
             </filter>
           </defs>
 
-          <!-- Kleine Goldpunkte an den vier Polen, aussen am Ring -->
-          <g fill="#c9a227">
+          <!-- Kleine Punkte an den vier Polen, aussen am Ring. Seit dem
+               Wechsel auf Perle (18. Aug. 2026) nicht mehr golden. -->
+          <g fill="#efe6d8">
             <circle cx="200" cy="14" r="4.5"/><circle cx="200" cy="386" r="4.5"/>
             <circle cx="14" cy="200" r="4.5"/><circle cx="386" cy="200" r="4.5"/>
           </g>
@@ -2130,7 +2132,7 @@
                trotzdem Halt. -->
           <circle cx="200" cy="200" r="175.5" fill="none" stroke="#fffdf7" stroke-width="8" opacity=".62"/>
           <circle cx="200" cy="200" r="179.5" fill="none" stroke="url(#ringGrad2)" stroke-width="1.2" opacity=".55"/>
-          <circle cx="200" cy="200" r="172" fill="none" stroke="#8f6f22" stroke-width="1" opacity=".35"/>
+          <circle cx="200" cy="200" r="172" fill="none" stroke="#8c847a" stroke-width="1" opacity=".35"/>
 
           <!-- Feines Fadenkreuz: zeigt die vier Felder und macht sichtbar,
                dass man auch dazwischen stehen darf. -->

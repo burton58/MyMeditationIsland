@@ -1144,3 +1144,30 @@ Christine: *"Kann man das erste Bild Titelseite ein wenig mehr Blau reinnehmen?"
 Verfahren: Blau und etwas Gruen anheben, Rot leicht zuruecknehmen — aber **nur ueber eine Helligkeitsmaske** `(1 - L)` hoch `1.2`, also nur in den dunklen und mittleren Toenen. Die Sonne und der helle Himmel bleiben dadurch warm; ohne die Maske sieht es aus wie ein aufgelegter Farbfilter statt wie Abendlicht. Mittelwerte R/G/B: vorher `134/128/125` (leicht warm), jetzt `129/132/136` (leicht kuehl).
 
 Zwei Staerken gebaut und im Browser verglichen. Zuerst **leicht** (0.10) eingebaut, weil Christine "ein wenig" gesagt hatte — nach dem Vergleich der drei Fassungen hat sie sich fuer **mittel** (0.18) entschieden, das jetzt eingebaut ist: Mittelwerte `125/135/145` statt `134/128/125`, vor allem der Sand wird sichtbar kuehl, Sonne und heller Himmel bleiben auch hier warm. Das Original liegt unveraendert als **`titel-alt.jpg`** daneben.
+
+
+## 13. Akzentfarbe: Gold abgeloest durch "Perle" (18. Aug. 2026)
+
+Christine: *"Der Goldton von Schriften etc. passt auch nicht, und Icon etc. passt Gold gar nicht."* Sie hat recht, und zwar aus einem Grund, der vorher schon einmal selbst genannt worden war: **dunkles Marineblau plus warmes Gold ist genau die Kombination von Balance.** Solange der Untergrund grau war, fiel das nicht auf; auf Blau ist es der Kern der Signatur eines Konkurrenten.
+
+Drei Alternativen gebaut und in der App verglichen:
+
+| | Farbe | Kontrast oben / unten | Beurteilung |
+|---|---|---|---|
+| **Perle** | `#efe6d8` | 10,82 / 5,66 | warmes Cremeweiss, behaelt die Waerme ohne das Metallische |
+| Altrosa | `#efd0c6` | 9,24 / 4,83 | am eigenstaendigsten, geht aber Richtung Spa/Kosmetik |
+| Himmelblau | `#bcd6f0` | 8,93 / 4,67 | sehr ruhig, wirkt aber kuehl und technisch, Knoepfe treten zurueck |
+
+Christines Entscheid: **Perle**. Begruendung, die dafuer sprach: Calm setzt Blau mit reinem Weiss, Balance mit Orange — ein warmes Cremeweiss liegt genau dazwischen und gehoert keinem von beiden. Praktischer Nebeneffekt: Wenn die vier Kachelbilder kuehler werden (siehe unten), bleibt Perle der einzige warme Punkt und haelt die App zusammen.
+
+Altrosa musste vor dem Vergleich aufgehellt werden — `#e3b9ad` lag auf dem unteren Blau bei **3,93:1** und fiel damit durch; genommen wurde `#efd0c6` mit 4,83.
+
+**Was alles mitmusste** (die reine Token-Umstellung reicht wieder nicht):
+- `--gold`/`--gold-soft`/`--gold-deep` auf Perle-Toene.
+- Der dunkle Text auf der Akzentflaeche an **20 Stellen** von `#3a2e08` (Dunkelbraun) auf `#2a2a26` (neutrales Dunkelgrau) — Braun auf Cremeweiss haette wieder warm-metallisch gewirkt.
+- **Kompass-Ring, Nadel und Nabe** in allen drei Kompassen (Startseite, Kompass-Seite, Abschluss): Ringverlauf `#f8ecc4/#d9b95c/#8f6f22` auf `#f8f4ec/#ddd4c4/#8c847a`, Nadel `#a8842a` auf `#857d72`, Nabenpunkt `#8a6f4e` auf `#6b645a`. **Wichtig:** Diese Teile liegen auf dem hellen Inselfoto, nicht auf dem blauen Grund — sie duerfen deshalb nicht einfach hell werden, sonst verschwinden sie. Die neuen Toene haben bewusst dieselbe Helligkeit wie die alten, nur neutral statt golden.
+- Die **vier Punkte an den Polen** ausserhalb des Rings (`#c9a227`, zweimal fest im HTML) — die blieben im ersten Anlauf als einzige leuchtend gelb stehen und fielen erst im Screenshot auf.
+- Goldene Schatten und Raender: `rgba(120,90,10,…)`, `rgba(90,66,8,…)` auf neutrales Dunkelblau; `rgba(201,162,39,…)`, `rgba(143,111,34,…)` auf Perle-Toene.
+- `.chev` stand noch auf `#bdb4c4`, einem Grauviolett aus der Daemmerungsgrau-Zeit — jetzt `#a9b8c9`.
+
+**Offen:** Die vier Kachelbilder der Kategorien sind weiterhin warm-orange und passen tonal nicht. Christine hat dafuer einen ChatGPT-Prompt bekommen (kuehle Blauwelt `#16304f` bis `#2b5b90`, Serie aus vier Bildern im gleichen Stil, Querformat 4:3, keine Menschen/Schrift, Motive auf Meer und Insel umgestellt statt Wald und Berge) und liefert die Bilder nach.
