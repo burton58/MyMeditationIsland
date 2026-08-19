@@ -1171,3 +1171,24 @@ Altrosa musste vor dem Vergleich aufgehellt werden — `#e3b9ad` lag auf dem unt
 - `.chev` stand noch auf `#bdb4c4`, einem Grauviolett aus der Daemmerungsgrau-Zeit — jetzt `#a9b8c9`.
 
 **Offen:** Die vier Kachelbilder der Kategorien sind weiterhin warm-orange und passen tonal nicht. Christine hat dafuer einen ChatGPT-Prompt bekommen (kuehle Blauwelt `#16304f` bis `#2b5b90`, Serie aus vier Bildern im gleichen Stil, Querformat 4:3, keine Menschen/Schrift, Motive auf Meer und Insel umgestellt statt Wald und Berge) und liefert die Bilder nach.
+
+
+## 14. Kategoriebilder in der blauen Farbwelt (19. Aug. 2026)
+
+Christine hat den Prompt aus §13 in ChatGPT gegeben und **drei** der vier Bilder geliefert (1448x1086, gemalt, gedaempftes Blau, keine Menschen/Schrift — der Prompt hat sauber funktioniert). Eingebaut als `kat-blau-nord.jpg` / `kat-blau-sued.jpg` / `kat-blau-ost.jpg`:
+
+| Kategorie | Bild |
+|---|---|
+| Gedanken beruhigen (`nord`) | stilles Wasser im Nebel, Inseln am Horizont |
+| Gefuehle verstehen (`sued`) | Wellen laufen an einen dunklen Strand, Kueste rechts |
+| Entspannen (`ost`) | Mondspur auf dem Wasser, Inseln im Dunst |
+
+**`LIB_KAT_FOTO` steuert drei Dinge gleichzeitig** — das ist beim Aendern die wichtigste Falle: die vier Kacheln oben in der Bibliothek, das kleine Bild in den Listenzeilen (sofern die Uebung kein eigenes `bg` hat) **und den ganzflaechigen Hintergrund waehrend der Meditation**. Letzteres betrifft die Mehrheit: nur 18 Uebungen haben ein eigenes `bg`, alle anderen zeigen das Bild ihrer Kategorie im Vollbild. Deshalb liegen die Dateien in **voller Aufloesung** (1448x1086) im Ordner und wurden nicht auf Kachelgroesse verkleinert — im Browser gegengeprueft, dass eine gestartete Uebung ohne eigenes `bg` tatsaechlich `kat-blau-nord.jpg` zieht.
+
+Die alten `bg-*.jpg` bleiben unveraendert liegen — sie sind weiterhin der Hintergrund der 18 Uebungen mit eigenem Bild.
+
+**Offen: "Stress loesen" (`west`) fehlt.** Das vierte Motiv (Palmwedel gegen den Daemmerungshimmel) hat ChatGPT nicht mitgeliefert. Dort steht bewusst weiterhin das alte, warme Waldbild `bg-waldlichtung.jpg` — es passt tonal sichtbar nicht, ist aber ehrlicher als eines der drei Meerbilder ein zweites Mal zu verwenden. Sobald `kat-blau-west.jpg` im Ordner liegt, ist nur diese eine Zeile in `LIB_KAT_FOTO` zu tauschen (und der Dateiname in `SHELL_FILES` von `sw.js` einzukommentieren).
+
+**Ebenfalls aufgefallen:** Die Bilder 2 und 3 (`sued` und `ost`) sind einander recht aehnlich — beide Strand mit Brandung und Lichtspur. Sie stehen in der Kachel-Ansicht diagonal zueinander, das faellt dadurch weniger auf; falls Christine sie spaeter unterscheidbarer will, waere das ein eigener Auftrag.
+
+**Noch nicht angefasst:** Die kleinen runden Bilder in den Listenzeilen der 18 Uebungen mit eigenem `bg` sind weiterhin warm-golden und beissen sich mit den blauen Kacheln darueber. Das waere der naechste konsequente Schritt, ist aber ein eigener Umbau (8 Hintergrundbilder) und wurde nicht bestellt.

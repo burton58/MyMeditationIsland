@@ -1503,7 +1503,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.107";
+    var AKTUELLE_VERSION = "2026-08-10.108";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3942,11 +3942,27 @@
   // die grossen Fotokacheln oben in der Bibliothek (bg-*.jpg, ganze Breite)
   // und die kleinen quadratischen Miniaturen in den Listenzeilen
   // (thumb-*.jpg, 160x160, aus demselben Bild zugeschnitten).
+  // Seit 19. Aug. 2026 in der blauen Farbwelt (Christine hat die Bilder ueber
+  // ChatGPT erzeugen lassen, nachdem die alten warm-goldenen Bilder nicht
+  // mehr zum blauen Untergrund passten). Diese Liste bestimmt DREI Dinge auf
+  // einmal - wer sie aendert, aendert alle drei:
+  //   1. die vier grossen Kacheln oben in der Bibliothek,
+  //   2. das kleine Bild in jeder Listenzeile (falls die Uebung kein
+  //      eigenes bg hat),
+  //   3. den ganzflaechigen Hintergrund WAEHREND der Meditation - und das
+  //      betrifft die Mehrheit: nur 18 der Uebungen haben ein eigenes bg,
+  //      alle anderen zeigen das Bild ihrer Kategorie. Darum liegen die
+  //      Dateien in voller Groesse (1448x1086) hier und nicht verkleinert.
   var LIB_KAT_FOTO = {
-    nord:"bg-lichtraum.jpg",       // Gedanken beruhigen - klares Licht
-    sued:"bg-herzraum.jpg",        // Gefuehle verstehen
-    west:"bg-waldlichtung.jpg",    // Stress loesen - erden im Wald
-    ost:"bg-bergsee.jpg"           // Entspannen - stiller See
+    nord:"kat-blau-nord.jpg",      // Gedanken beruhigen - stilles Wasser im Nebel
+    sued:"kat-blau-sued.jpg",      // Gefuehle verstehen - Wellen laufen an den Strand
+    // WEST FEHLT NOCH: Fuer "Stress loesen" hat Christine das vierte Bild
+    // (Palmwedel gegen den Daemmerungshimmel) noch nicht geliefert. Bis
+    // dahin steht hier bewusst das alte, warme Waldbild - es passt tonal
+    // nicht, ist aber ehrlicher als ein doppelt verwendetes Meerbild.
+    // Sobald "kat-blau-west.jpg" im Ordner liegt, nur diese Zeile tauschen.
+    west:"bg-waldlichtung.jpg",    // Stress loesen - PROVISORISCH, siehe oben
+    ost:"kat-blau-ost.jpg"         // Entspannen - Mondspur auf dem Wasser
   };
 
   // Die vier grossen Fotokacheln oben in der Bibliothek zeigten vom
