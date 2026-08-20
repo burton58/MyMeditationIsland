@@ -1240,3 +1240,14 @@ Rezept entsprechend nachgezogen (gilt jetzt fuer alle acht `bg-*.jpg`):
 Der Saettigungs-Schritt ist noetig, weil das Herausnehmen des Warmanteils zwangslaeufig Farbe mitnimmt — ohne Ausgleich werden die Bilder grau. Der Oliv-Schritt daempft gezielt den Gruenueberschuss (dort, wo Gruen ueber dem Mittel von Rot und Blau liegt), der in den Originalen vom goldenen Licht ueberdeckt war.
 
 **Lehre:** Beim Entfernen eines Farbstichs immer gegenpruefen, was dabei an Helligkeit und Saettigung verlorengeht — sonst loest man ein Farbproblem und schafft ein Flauheitsproblem. Und: erst messen, dann urteilen; der vermutete Gruenstich stammte nicht aus der Bearbeitung.
+
+
+## 16. Titelbild in Christines Blau, per Farbuebertragung (20. Aug. 2026)
+
+Christine hat eine eigene, kraeftig blau eingefaerbte Fassung des Titelfotos geschickt (Mittelwert `57/98/167`) und gefragt, ob das besser passt. Gemessen: **ja** — dieser Ton liegt praktisch in der Blaufamilie der App (unterer Grundton `#2b5b90` = `43/91/144`), waehrend die bisherige Fassung mit `125/135/145` nur leicht kuehl war.
+
+**Ihre Datei konnte aber nicht direkt verwendet werden:** Sie ist **quer** (1540x1021), die Titelseite ist ganzflaechig **hochkant**. Beim Vollbild-Zuschnitt blieben von 1540 Pixeln Breite nur **470** uebrig, die auf rund 1200 Geraetepixel hochgerechnet werden muessten — Faktor 2,6, sichtbar weich. Zum Vergleich: das hochkant-Original braucht nur Faktor 1,5.
+
+**Loesung: Farbuebertragung statt Bildtausch.** Aus ihrer blauen Fassung wurde gelernt, welche Farbe zu welcher Helligkeit gehoert (48 Helligkeitsstufen, viermal geglaettet, damit keine Stufen entstehen), und diese Zuordnung auf das **hochkant-Original** angewendet. Beide zeigen dieselbe Szene, darum passt die Zuordnung sauber. 10 % Originalzeichnung bleiben beigemischt, sonst wird das Bild flach. Ergebnis: ihr Blau, aber in voller Schaerfe und im richtigen Format. Eine sanftere Variante (34 % Original) wurde ebenfalls gebaut und gezeigt; Christines Wunsch war die volle Fassung.
+
+**Titelseite mitangepasst** (auf ihren Hinweis "wenn blau, passe alle Farben an, dass es stimmt"): Die Schleier ueber Titelseite und laufender Meditation waren noch neutral violettgrau — ein Rest aus der Daemmerungsgrau-Zeit, der auf einem blauen Foto einen Graustich hinterlaesst. Alle 14 Stellen (`rgba(30,26,35,…)`, `rgba(32,28,38,…)`, `rgba(26,22,31,…)`) auf die Blaufamilie umgestellt. Logo, Titelschrift, der Perle-Knopf und die Pillen wurden im Screenshot gegengeprueft und passen unveraendert.

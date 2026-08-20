@@ -132,8 +132,8 @@
   .splash::after{
     content:""; position:absolute; inset:0;
     background:linear-gradient(180deg,
-      rgba(30,26,35,.58) 0%, rgba(30,26,35,.30) 18%, rgba(30,26,35,0) 34%,
-      rgba(30,26,35,0) 52%, rgba(30,26,35,.42) 72%, rgba(30,26,35,.82) 88%, rgba(30,26,35,.92) 100%);
+      rgba(11,26,45,.58) 0%, rgba(11,26,45,.30) 18%, rgba(11,26,45,0) 34%,
+      rgba(11,26,45,0) 52%, rgba(11,26,45,.42) 72%, rgba(11,26,45,.82) 88%, rgba(11,26,45,.92) 100%);
   }
   .splash-inner{
     position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center;
@@ -358,7 +358,7 @@
      Wert 0, dort bleibt es bei den 12px wie bisher. */
   .home-band-profil{
     position:absolute; top:calc(12px + env(safe-area-inset-top, 0px)); right:12px;
-    background:rgba(30,26,35,.42); color:#fff; box-shadow:none;
+    background:rgba(11,26,45,.42); color:#fff; box-shadow:none;
   }
 
   /* Wenn heute schon etwas gehört wurde, ist die Liste im "heutigen
@@ -943,7 +943,7 @@
   .lib-cat-foto{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
   .lib-cat-tile::after{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(32,28,38,0) 45%, rgba(26,22,31,.78) 100%);
+    background:linear-gradient(180deg, rgba(13,28,47,0) 45%, rgba(10,23,40,.78) 100%);
   }
   .lib-cat-label{
     position:absolute; left:10px; right:10px; bottom:9px; z-index:1; text-align:left;
@@ -1088,7 +1088,7 @@
   /* Eigene Bestaetigungs-Karte statt des grauen System-Dialogs */
   .confirm-overlay{
     position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center;
-    padding:24px; background:rgba(30,26,35,.5); backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
+    padding:24px; background:rgba(11,26,45,.5); backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
     opacity:0; transition:opacity .18s ease;
   }
   .confirm-overlay[hidden]{ display:none; }
@@ -1232,7 +1232,7 @@
      Grund, sonst verschwindet es. */
   .ueber-bild{
     width:82px; height:82px; margin:0 auto 14px; border-radius:50%; background:var(--deep);
-    display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(32,28,38,.25);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(13,28,47,.25);
   }
   .ueber-bild img{ width:66%; height:66%; object-fit:contain; }
   .ueber-gruss{ margin:0 0 12px; font-family:var(--serif); font-size:1.15rem; }
@@ -1434,7 +1434,7 @@
   body.in-session #scene{ opacity:0; }
   body.in-session .stage::after{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(32,28,38,.5), rgba(32,28,38,.92));
+    background:linear-gradient(180deg, rgba(13,28,47,.5), rgba(13,28,47,.92));
   }
   .back-btn{
     position:absolute; top:calc(16px + env(safe-area-inset-top, 0px)); left:16px; z-index:9; display:none;
@@ -1503,7 +1503,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.110";
+    var AKTUELLE_VERSION = "2026-08-10.111";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
