@@ -1300,3 +1300,12 @@ Begruendung fuer diese Variante gegenueber "Begruessung gross auf dem Foto":
 `#greeting` behaelt seine ID — `renderHome()` schreibt unveraendert dort hinein, an der Logik musste nichts geaendert werden.
 
 **Beim Umbau gefunden und behoben:** `.home-page .section-label.first` stand auf `margin-top:2px`, weil der erste Zwischentitel bis dahin direkt unter dem Foto sass. Mit der Begruessung dazwischen klebte er an ihr — jetzt 28px. Solche Regeln sind nach einem Umbau der Reihenfolge immer verdaechtig.
+
+
+### Nachgezogen (20. Aug. 2026, zweite Runde)
+
+**Titelseite — der Knopf war immer noch der Blickfang.** Das Verkleinern aus §17 hat nicht gereicht, und die Ursache war eine andere als angenommen: Nicht die **Groesse** machte ihn dominant, sondern dass er die **einzige helle Flaeche** der ganzen Seite war (Perle `#efe6d8` auf tiefblauem Foto). Jetzt in Glasoptik — `rgba(255,255,255,.17)` mit hellem Rand und weisser Schrift, also derselbe Look wie der "Anmelden"-Knopf oben rechts, nur groesser. Er bleibt eindeutig als Knopf erkennbar und ist der einzige umrandete Block unten, aber er leuchtet nicht mehr.
+
+Damit weicht die Titelseite bewusst von der Regel "der Knopf faellt durch Farbe auf" (§17) ab. Begruendung: Christine hat den Punkt zweimal gemeldet, und auf dieser Seite ist der Markenauftritt wichtiger als die Konversionsrate — es gibt ohnehin noch keine echte Bezahlung (`ABO_LIVE = false`). Wenn spaeter verkauft wird, ist das die erste Stelle, die man wieder anschauen sollte.
+
+**Startseite — mehr Luft nach der Begruessung.** `.home-page .section-label.first` von 28px auf **42px**. Im Browser nachgemessen: 42 Punkte zwischen "Deine Insel wartet auf dich." und "Für den Abend".
