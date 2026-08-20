@@ -1309,3 +1309,40 @@ Begruendung fuer diese Variante gegenueber "Begruessung gross auf dem Foto":
 Damit weicht die Titelseite bewusst von der Regel "der Knopf faellt durch Farbe auf" (§17) ab. Begruendung: Christine hat den Punkt zweimal gemeldet, und auf dieser Seite ist der Markenauftritt wichtiger als die Konversionsrate — es gibt ohnehin noch keine echte Bezahlung (`ABO_LIVE = false`). Wenn spaeter verkauft wird, ist das die erste Stelle, die man wieder anschauen sollte.
 
 **Startseite — mehr Luft nach der Begruessung.** `.home-page .section-label.first` von 28px auf **42px**. Im Browser nachgemessen: 42 Punkte zwischen "Deine Insel wartet auf dich." und "Für den Abend".
+
+
+## 19. Eine Regel fuer Helligkeit (20. Aug. 2026)
+
+Christine: *"Die Schriftfarben, die Bilderfarben, die Icons, es macht farblich alles keinen Sinn."* Der Befund war richtig, und die Ursache liess sich benennen: **Es gab keine Regel, was hell sein darf.** Auf der Bibliotheksseite kaempften vier Dinge gleichzeitig um den Blick — der aktive Filter-Chip, die vier Bilder, 47 gefuellte Play-Knoepfe und die gefuellten "schon gemacht"-Schilder.
+
+### Befund 1: Die vier Bilder waren unterschiedlich hell
+
+Gemessen als mittlere Helligkeit im Verhaeltnis zum Untergrund der Seite (85):
+
+| Bild | vorher | jetzt |
+|---|---|---|
+| `bg-lichtraum` (Gedanken beruhigen) | **1,9x** | 1,39x |
+| `bg-herzraum` (Gefuehle verstehen) | 1,7x | 1,39x |
+| `bg-bergsee` (Entspannen) | 1,6x | 1,37x |
+| `bg-waldlichtung` (Stress loesen) | **1,1x** | 1,28x |
+
+Das erste leuchtete, das vierte verschwand fast im Untergrund — deshalb wirkten sie nie wie ein Satz, obwohl die Motive gut zusammenpassen. **Die Farbe darf verschieden sein, die Helligkeit nicht.** Alle acht `bg-*.jpg` sind jetzt auf eine mittlere Helligkeit von 112 normiert, und zwar ueber eine **Gammakurve statt eines Faktors** — ein Faktor haette die hellen Stellen ausbrennen lassen. Dazu Saettigung 1,18, damit sie kraeftig statt blass wirken.
+
+### Befund 2: Gefuellte Perle war ueberall
+
+Neue Regel, die jetzt gilt:
+
+| Was | Behandlung |
+|---|---|
+| Titel und Namen | Weiss (`--ink`) |
+| Nebeninfos (Minuten, Kategorie) | Gedaempftes Hellblau (`--ink-soft`) |
+| **Die EINE Haupthandlung einer Seite** | Perle, **gefuellt** — z. B. "Finde deine Meditation", "Ziel festlegen", der aktive Filter |
+| Alle anderen Knoepfe | Perle **nur als Umriss** |
+| Hinweise wie "schon gemacht" | Leise Schrift mit duennem Rand, keine gefuellte Flaeche |
+| Bilder | Eigene Farbe je Kategorie, aber gleiche Helligkeit |
+
+Konkret geaendert: `.play-btn` von gefuellt auf Umriss (`1.5px rgba(239,230,216,.55)`, Symbol in `--gold`) und `.lib-done` von gefuellter Flaeche auf transparenten Rand. **Auffindbar bleibt der Play-Knopf ueber Form und Ort** — rund, immer am rechten Rand der Zeile; er muss dafuer nicht leuchten.
+
+Bewusst **nicht** geaendert: `.btn-dark` (Hauptknopf einer Seite), `.lib-chip.active`, `.opts .opt.active` und die uebrigen Auswahl-Zustaende — das sind genau die "eine Handlung bzw. eine Auswahl pro Zusammenhang", die die Regel hell laesst. Die Titelseite hat ihre eigene Ausnahme (§17-Nachtrag): dort ist auch der Hauptknopf nur Glas, weil der Markenauftritt vorgeht.
+
+Alle vier Tabs plus die laufende Meditation nach der Aenderung im Browser gegengeprueft.
