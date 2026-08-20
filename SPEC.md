@@ -1276,3 +1276,27 @@ Vorher war die Reihenfolge genau umgekehrt: Der Knopf war die einzige helle Flae
 Nachgemessen: Der Knopf belegt jetzt **25 % der Flaeche des Titels** (vorher deutlich mehr als der Titel selbst). Er bleibt trotzdem sofort auffindbar, weil er die einzige helle Flaeche der Seite ist — genau die Rolle, die ihm die Regel zuweist.
 
 `.splash-top` von 340 auf 366px verbreitert und `text-wrap:balance` auf beide Unterzeilen: Ohne das stand nach der Vergroesserung das Wort "Balance" allein auf einer dritten Zeile. Die Werte fuer kleine Bildschirme (`max-height:720px`) sind mitgezogen; auf 375x667 geprueft, dass nichts abgeschnitten wird.
+
+
+## 18. Startseite: Begruessung wird Seitentitel (20. Aug. 2026)
+
+Christine hat dieselbe Rangfolgen-Frage wie bei der Titelseite (§17) auch fuer die Startseite gestellt und selbst richtig beantwortet: Die Begruessung gehoert zuoberst, die Bereichstitel darunter kleiner, getrennt durch Abstand.
+
+**Nachgemessen war es genau umgekehrt:** Begruessung `1,12rem`, Zwischentitel `1,18rem` — das Wichtigste war das Kleinste. Ursache war eine Kettenreaktion aus frueheren Aenderungen: Am 17. Aug. wurde die Begruessung auf Vorlage A aufs Foto gelegt, am 18. Aug. auf Christines Wunsch verkleinert ("Guten Abend nicht so prominent") — dabei rutschte sie unter die Zwischentitel, ohne dass jemand die beiden Werte verglichen haette.
+
+Zwei Vorschlaege gebaut und gezeigt; Christine hat die empfohlene Fassung genommen: **Die Begruessung steht jetzt als Seitentitel UNTER dem Foto**, nicht mehr darauf.
+
+| | vorher | jetzt |
+|---|---|---|
+| Begruessung | 1,12rem, weiss auf dem Foto | **1,85rem**, in der Textfarbe, unter dem Foto |
+| Zwischentitel | 1,18rem | **1,0rem** |
+| Erster Zwischentitel, Abstand oben | 2px | 28px |
+| Schleier ueber dem Foto | bis 66 % Deckkraft unten | nur noch 26 % |
+
+Begruendung fuer diese Variante gegenueber "Begruessung gross auf dem Foto":
+- **Einheitlichkeit:** Kompass, Meditationen und Mein Weg haben alle oben einen Seitentitel in genau dieser Form. Die Startseite war der einzige Sonderfall.
+- **Das Foto wird besser:** Ohne Schrift darauf braucht es keine Abdunklung mehr. Der Schleier dient jetzt nur noch dem weichen Uebergang zur Seite statt der Lesbarkeit.
+
+`#greeting` behaelt seine ID — `renderHome()` schreibt unveraendert dort hinein, an der Logik musste nichts geaendert werden.
+
+**Beim Umbau gefunden und behoben:** `.home-page .section-label.first` stand auf `margin-top:2px`, weil der erste Zwischentitel bis dahin direkt unter dem Foto sass. Mit der Begruessung dazwischen klebte er an ihr — jetzt 28px. Solche Regeln sind nach einem Umbau der Reihenfolge immer verdaechtig.

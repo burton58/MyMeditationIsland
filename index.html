@@ -273,8 +273,13 @@
      (Christine, 8. Aug. 2026). Jetzt 28px - gemessen bleiben auf einem
      iPhone 14 danach immer noch rund 60px Luft unter der Karte.
      Die erste Ueberschrift behaelt margin-top:0 (Regel darunter). */
-  .home-page .section-label{ margin:34px 0 12px; }
-  .home-page .section-label.first{ margin-top:2px; }
+  /* Kleiner als die Begruessung (1,85rem) - die Bereiche werden durch
+     Abstand getrennt, nicht durch Schriftgroesse. */
+  .home-page .section-label{ font-size:1rem; margin:34px 0 11px; }
+  /* Der erste Zwischentitel stand bis 20. Aug. 2026 direkt unter dem Foto
+     und brauchte darum fast keinen Abstand. Jetzt steht die Begruessung
+     dazwischen - ohne eigenen Abstand klebt er an ihr. */
+  .home-page .section-label.first{ margin-top:28px; }
 
   .card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
 
@@ -327,7 +332,7 @@
      Begruessung darueber. .home-band ist der randlose Rahmen (die
      bisherige negative Rand-Verschiebung wohnt jetzt hier statt am Knopf
      selbst), .home-hero-photo darin nur noch das reine Fotofeld. */
-  .home-band{ position:relative; margin:0 -16px 22px; overflow:hidden; }
+  .home-band{ position:relative; margin:0 -16px 18px; overflow:hidden; }
   .home-hero-photo{
     /* Deutlich flacheres Verhaeltnis als vorher (720:505 = 1,43:1) - ein
        Streifen, kein Vollbild. object-fit:cover statt "contain": als
@@ -341,19 +346,23 @@
     border:none; padding:0; background:none; font:inherit; cursor:pointer;
   }
   .home-hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:50% 56%; display:block; pointer-events:none; }
-  /* Schleier nur am unteren Rand, damit die helle Mitte der Fotos (Himmel,
-     Wasser) nicht insgesamt abgedunkelt wird - nur dort, wo die Schrift
-     liegt, muss der Kontrast stimmen. */
+  /* Nur noch ein Hauch Schleier am unteren Rand: Seit die Begruessung
+     nicht mehr auf dem Foto steht, muss dort kein Text lesbar bleiben -
+     der Verlauf dient jetzt allein dazu, dass das Foto weich in die Seite
+     uebergeht statt mit einer harten Kante. */
   .home-band-schleier{
     position:absolute; inset:0; pointer-events:none;
-    background:linear-gradient(180deg, rgba(28,24,33,0) 34%, rgba(28,24,33,.34) 68%, rgba(28,24,33,.66) 100%);
+    background:linear-gradient(180deg, rgba(12,20,34,0) 62%, rgba(12,20,34,.26) 100%);
   }
-  .home-band-ttl{ position:absolute; left:16px; right:56px; bottom:18px; pointer-events:none; }
-  .home-band-ttl h1{
-    font-family:var(--serif); font-size:1.12rem; font-weight:400; margin:0 0 1px; color:#fff;
-    text-shadow:0 2px 10px rgba(12,20,34,.6);
+  /* Die Begruessung als Seitentitel - dieselbe Rolle und Groessenordnung
+     wie .page-head h1 auf den anderen Seiten. */
+  .home-gruss{ padding:0 0 2px; }
+  .home-gruss h1{
+    font-family:var(--serif); font-size:1.85rem; font-weight:400; margin:0 0 4px;
+    color:var(--ink); line-height:1.12;
   }
-  .home-band-ttl p{ margin:0; font-size:.78rem; color:rgba(255,255,255,.9); text-shadow:0 2px 8px rgba(12,20,34,.55); }
+  .home-gruss p{ margin:0; font-size:.88rem; color:var(--ink-soft); }
+  .home-gruss .gruss-bild{ width:1.05em; height:1.05em; vertical-align:-3px; margin-left:3px; }
   /* Der Abstand nach oben rechnet den Bereich mit, den iPhones fuer Uhrzeit
      und Notch freihalten - sonst laege das Symbol unter der Uhr, seit das
      Foto ganz oben an der Kante beginnt. Auf Geraeten ohne Notch ist der
@@ -1505,7 +1514,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.112";
+    var AKTUELLE_VERSION = "2026-08-10.114";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -1671,13 +1680,23 @@
            Platz randlos fuellen, nicht mit Luft oben/unten stehen. -->
       <button class="home-hero-photo" id="homeHeroBtn" title="Zur Titelseite" type="button"><img id="homeHeroBild" src="start-morgen.jpg" alt="Deine Insel"></button>
       <div class="home-band-schleier" aria-hidden="true"></div>
-      <div class="home-band-ttl">
-        <h1 id="greeting">Guten Morgen <img class="gruss-bild" src="icon-sonne.png" alt="" aria-hidden="true"></h1>
-        <p>Deine Insel wartet auf dich.</p>
-      </div>
       <button class="icon-btn home-band-profil" id="homeProfilBtn" title="Mein Weg">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
       </button>
+    </div>
+
+    <!-- Die Begruessung stand bis 20. Aug. 2026 AUF dem Foto. Christine hat
+         gemerkt, dass die Rangfolge nicht stimmte: Die Zwischentitel waren
+         mit 1,18rem groesser als die Begruessung mit 1,12rem - das Wichtigste
+         war also das Kleinste. Jetzt steht sie als richtiger Seitentitel
+         unter dem Foto, genauso aufgebaut wie "Kompass", "Meditationen" und
+         "Mein Weg". Damit ist die Startseite kein Sonderfall mehr, und das
+         Foto braucht keine Abdunklung, um Schrift lesbar zu halten.
+         Die ID "greeting" bleibt - renderHome() schreibt weiterhin hier
+         hinein. -->
+    <div class="home-gruss">
+      <h1 id="greeting">Guten Morgen <img class="gruss-bild" src="icon-sonne.png" alt="" aria-hidden="true"></h1>
+      <p>Deine Insel wartet auf dich.</p>
     </div>
 
     <!-- Ganzer Block per JS ein-/ausgeblendet (renderHome()): sichtbar nur,
