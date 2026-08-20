@@ -1217,3 +1217,26 @@ Angewendet auf **alle acht** `bg-*.jpg`, nicht nur die vier Kategoriebilder — 
 **Nicht mehr in Gebrauch, aber aufgehoben:** `kat-blau-nord/sued/ost.jpg` (die drei blauen Meerbilder vom selben Tag) und `kat-*.jpg` (Christines Fotos, seit 15. Aug. ungenutzt). Beide aus `SHELL_FILES` in `sw.js` entfernt, damit der Offline-Speicher nicht unnoetig waechst.
 
 **Lehre fuer das naechste Mal:** Bevor neue Bilder erzeugt werden, pruefen, ob eine Farbkorrektur der vorhandenen reicht. Hier hat sie vollstaendig genuegt — und sie erhaelt die Motivvielfalt, die eine neue Serie erst wieder muehsam herstellen muesste.
+
+
+### Nachgebessert: zu stark entsaettigt (19. Aug. 2026)
+
+Christine hat nach dem Umfaerben ein Bildschirmfoto vom Handy geschickt und gefragt, ob die Farben so stimmen. Nachgemessen — und das Ergebnis war ein anderes als erwartet:
+
+- **Kein neuer Gruenstich.** Die Vermutung, das Umfaerben habe einen Olivton erzeugt, war falsch: Der Gruenueberschuss steckte schon in den Originalen (`bg-lichtraum` +14,5 vorher, +11,5 nachher; `bg-waldlichtung` +9,2 vorher, +3,6 nachher). Das Umfaerben hat ihn sogar **verringert**. Er faellt nur staerker auf, seit das Gold nicht mehr darueberliegt.
+- **Aber: zu dunkel und zu blass geworden.** Die hellen Bereiche fielen von `242/220/169` auf `206/204/178` — die Bilder wirkten flau. Damit lief die Aenderung genau Christines urspruenglicher Kritik zuwider ("zu wenig ins Auge stechend").
+
+Rezept entsprechend nachgezogen (gilt jetzt fuer alle acht `bg-*.jpg`):
+
+| Schritt | erster Anlauf | jetzt |
+|---|---|---|
+| Goldgelb daempfen | 0,38 | **0,27** |
+| Blau zumischen | 0,22 | 0,20 |
+| Schatten Richtung App-Blau | 0,30 | 0,26 |
+| Abdunkeln (Gamma) | 1,10 | **1,02** |
+| Saettigung | — | **1,22** |
+| Olivstich daempfen | — | **0,45** |
+
+Der Saettigungs-Schritt ist noetig, weil das Herausnehmen des Warmanteils zwangslaeufig Farbe mitnimmt — ohne Ausgleich werden die Bilder grau. Der Oliv-Schritt daempft gezielt den Gruenueberschuss (dort, wo Gruen ueber dem Mittel von Rot und Blau liegt), der in den Originalen vom goldenen Licht ueberdeckt war.
+
+**Lehre:** Beim Entfernen eines Farbstichs immer gegenpruefen, was dabei an Helligkeit und Saettigung verlorengeht — sonst loest man ein Farbproblem und schafft ein Flauheitsproblem. Und: erst messen, dann urteilen; der vermutete Gruenstich stammte nicht aus der Bearbeitung.
