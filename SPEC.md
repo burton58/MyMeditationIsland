@@ -1251,3 +1251,28 @@ Christine hat eine eigene, kraeftig blau eingefaerbte Fassung des Titelfotos ges
 **Loesung: Farbuebertragung statt Bildtausch.** Aus ihrer blauen Fassung wurde gelernt, welche Farbe zu welcher Helligkeit gehoert (48 Helligkeitsstufen, viermal geglaettet, damit keine Stufen entstehen), und diese Zuordnung auf das **hochkant-Original** angewendet. Beide zeigen dieselbe Szene, darum passt die Zuordnung sauber. 10 % Originalzeichnung bleiben beigemischt, sonst wird das Bild flach. Ergebnis: ihr Blau, aber in voller Schaerfe und im richtigen Format. Eine sanftere Variante (34 % Original) wurde ebenfalls gebaut und gezeigt; Christines Wunsch war die volle Fassung.
 
 **Titelseite mitangepasst** (auf ihren Hinweis "wenn blau, passe alle Farben an, dass es stimmt"): Die Schleier ueber Titelseite und laufender Meditation waren noch neutral violettgrau — ein Rest aus der Daemmerungsgrau-Zeit, der auf einem blauen Foto einen Graustich hinterlaesst. Alle 14 Stellen (`rgba(30,26,35,…)`, `rgba(32,28,38,…)`, `rgba(26,22,31,…)`) auf die Blaufamilie umgestellt. Logo, Titelschrift, der Perle-Knopf und die Pillen wurden im Screenshot gegengeprueft und passen unveraendert.
+
+
+## 17. Titelseite: Rangfolge korrigiert (20. Aug. 2026)
+
+Christine: *"Es ist nicht gut, dass die sieben Tage kostenlos am prominentesten sind, sondern My Meditation Island muesste am meisten ins Auge stechen und dann auch, wofuer es da ist. Und die Informationen unten muessten kleiner sein."* Sie hat den Fehler richtig benannt.
+
+**Nachgeschlagen statt behauptet** (auf ihren Wunsch, mit anderen Apps zu vergleichen). Die Fachliteratur ist eindeutig und deckt sich mit ihrer Beobachtung:
+- Die **Ueberschrift ist das groesste Textelement** und soll deutlich groesser sein als alles um sie herum.
+- Der **Knopf faellt durch FARBE auf, nicht durch Groesse** — "secondary in size hierarchy but primary through color contrast".
+- Die Blickfolge lautet **Ueberschrift, dann Unterzeile, dann Knopf**.
+- Kleingedrucktes soll bewusst zuruecktreten. "When everything is emphasized, nothing is emphasized."
+
+Vorher war die Reihenfolge genau umgekehrt: Der Knopf war die einzige helle Flaeche, ueber die **volle Breite**, 16px Innenabstand — die groesste zusammenhaengende Flaeche der Seite.
+
+| Element | vorher | jetzt |
+|---|---|---|
+| `.splash h1` | 2,5rem | **3,1rem** |
+| `.splash-sub` / `-sub2` | 0,85rem | 0,95rem |
+| `.splash-cta` | volle Breite, 1rem, 16px Polster, Radius 17px | **Pillenform**, 0,92rem, 13/30px Polster, min. 210px |
+| Preis-/Probe-Chips | 0,76rem, fett | 0,72rem, halbfett |
+| Hinweis auf die Ausbildung | 0,66rem, Deckkraft 0,72 | 0,62rem, Deckkraft 0,6 |
+
+Nachgemessen: Der Knopf belegt jetzt **25 % der Flaeche des Titels** (vorher deutlich mehr als der Titel selbst). Er bleibt trotzdem sofort auffindbar, weil er die einzige helle Flaeche der Seite ist — genau die Rolle, die ihm die Regel zuweist.
+
+`.splash-top` von 340 auf 366px verbreitert und `text-wrap:balance` auf beide Unterzeilen: Ohne das stand nach der Vergroesserung das Wort "Balance" allein auf einer dritten Zeile. Die Werte fuer kleine Bildschirme (`max-height:720px`) sind mitgezogen; auf 375x667 geprueft, dass nichts abgeschnitten wird.

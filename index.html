@@ -148,29 +148,31 @@
     font-family:inherit; color:#fff; font-size:.78rem; font-weight:600; padding:7px 14px; border-radius:20px;
     backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); text-shadow:0 1px 6px rgba(0,0,0,.35);
   }
-  .splash-top{ width:100%; max-width:340px; }
+  .splash-top{ width:100%; max-width:366px; }
   .splash-frei{ flex:1; min-height:12vh; }
   .splash-bottom{ width:100%; max-width:360px; }
 
   .splash-badge{ width:52px; height:52px; margin:0 auto 10px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
   .splash-badge img{ width:100%; height:100%; object-fit:contain; }
   .splash h1{
-    font-family:var(--serif); font-size:2.5rem; margin:0 0 14px; line-height:1.1;
+    font-family:var(--serif); font-size:3.1rem; margin:0 0 16px; line-height:1.06;
+    letter-spacing:-.01em;
     text-shadow:0 2px 18px rgba(0,0,0,.45);
   }
   .splash-sub{
-    margin:0; font-size:.85rem; line-height:1.5; opacity:.92; text-shadow:0 2px 12px rgba(0,0,0,.45);
+    margin:0; font-size:.95rem; line-height:1.55; opacity:.95; text-wrap:balance;
+    text-shadow:0 2px 12px rgba(0,0,0,.45);
   }
   .splash-sub2{
-    margin:4px 0 0 !important; font-size:.85rem !important; line-height:1.5 !important;
-    opacity:.92 !important; text-shadow:0 2px 12px rgba(0,0,0,.45);
+    margin:5px 0 0 !important; font-size:.95rem !important; line-height:1.55 !important;
+    opacity:.95 !important; text-wrap:balance; text-shadow:0 2px 12px rgba(0,0,0,.45);
   }
 
   /* Der Hinweis auf die Ausbildung steht ganz unten und klein - er soll da
      sein, aber nichts überstrahlen. Antippen führt zu "Über mich". */
   .splash-vertrauen{
     display:block; margin:7px auto 0; max-width:330px; border:none; background:none; cursor:pointer;
-    font-family:inherit; color:#fff; font-size:.66rem; line-height:1.35; opacity:.72;
+    font-family:inherit; color:#fff; font-size:.62rem; line-height:1.35; opacity:.6;
     font-style:italic; text-shadow:0 2px 10px rgba(0,0,0,.45); padding:2px 4px;
   }
 
@@ -184,7 +186,7 @@
   .splash-preis, .splash-probe{
     border:1px solid rgba(255,255,255,.32); cursor:pointer; font-family:inherit; color:#fff;
     background:rgba(255,255,255,.14); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-    font-size:.76rem; font-weight:700; padding:7px 14px; border-radius:20px;
+    font-size:.72rem; font-weight:600; padding:6px 13px; border-radius:20px;
     text-shadow:0 1px 6px rgba(0,0,0,.3);
   }
   .splash-preis span{ display:inline-block; transition:transform .25s ease; }
@@ -211,9 +213,9 @@
   }
 
   .splash-cta{
-    width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26;
-    font-weight:700; font-size:1rem; padding:16px; border-radius:17px; font-family:inherit;
-    box-shadow:0 10px 26px rgba(8,18,32,.38);
+    width:auto; min-width:210px; border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26;
+    font-weight:700; font-size:.92rem; padding:13px 30px; border-radius:26px; font-family:inherit;
+    box-shadow:0 8px 22px rgba(8,18,32,.34);
   }
   .splash-cta:active{ transform:translateY(1px); }
   .splash-mikro{
@@ -229,10 +231,10 @@
   @media (max-height:720px){
     .splash-badge{ width:44px; height:44px; margin-bottom:8px; }
     .splash-brand{ margin-bottom:10px; }
-    .splash h1{ font-size:2.15rem; margin-bottom:10px; }
-    .splash-sub{ font-size:.8rem; }
-    .splash-sub2{ font-size:.8rem !important; }
-    .splash-cta{ padding:14px; font-size:.98rem; }
+    .splash h1{ font-size:2.6rem; margin-bottom:12px; }
+    .splash-sub{ font-size:.88rem; }
+    .splash-sub2{ font-size:.88rem !important; }
+    .splash-cta{ padding:12px 26px; font-size:.9rem; }
     .splash-vertrauen{ margin-top:8px; font-size:.66rem; }
     .splash-preisbox{ padding:11px 13px; }
     .splash-preisbox p{ font-size:.76rem !important; }
@@ -1503,7 +1505,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.111";
+    var AKTUELLE_VERSION = "2026-08-10.112";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
