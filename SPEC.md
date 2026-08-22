@@ -1481,3 +1481,18 @@ Mit `Range.getClientRects()` jede einzelne Textzeile ausgemessen (auch die umgeb
 **Der eigentliche Fallstrick:** Der eingestellte Rand ist **nicht** der sichtbare Abstand. Die Zeilenhoehe (1,55) legt ober- und unterhalb jeder Zeile je gut drei Punkte dazu. Aus `margin-top:6px` wurden dadurch 13 sichtbare Punkte — mehr als das Doppelte. Wer Abstaende nach den CSS-Werten beurteilt, misst am Ergebnis vorbei.
 
 Loesung: Die zweite Unterzeile hat **gar keinen** eigenen Rand mehr (`margin:0`). Damit ruecken die beiden Zeilen auf denselben Abstand wie ein Umbruch **innerhalb** einer Zeile — der Untertitel ist dadurch **unabhaengig vom Umbruch** immer gleichmaessig gesetzt, egal ob er auf zwei oder drei Zeilen laeuft (auf Christines Geraet sind es drei, weil ihre Schrift groesser eingestellt ist). Der Abstand zum Titel wurde auf 16px erhoeht, sichtbar 18.
+
+
+## 22. "Mein Weg" ueberarbeitet (20. Aug. 2026)
+
+Christine: *"Diese Seite gefaellt mir nicht und sticht nicht ins Auge. Der Balken mit dem Ziel blau geht unter. Schweizerdeutsch unpassend, alles weiss blau."* Drei Treffer, alle bestaetigt:
+
+**1. Der Fortschrittsbalken war unsichtbar.** `.bar` benutzte `var(--cream-2)` als Schiene — auf "Mein Weg" ist das `#294f83`, also fast dieselbe Farbe wie die Karte darunter. Bei 0 % Fortschritt war ueberhaupt nichts zu sehen. Jetzt `rgba(255,255,255,.2)`, dieselbe neutrale Schiene wie beim Balken der laufenden Meditation (`.progress`), der genau deshalb nie auffiel. **Dieselbe Falle steckte im Symbolfeld des Wochenziels** (`.goal-ico`) — ebenfalls umgestellt.
+
+Das ist ein wiederkehrendes Muster seit dem Wechsel auf Blau: `--cream-2` war frueher ein *heller* Ton und diente als Abgrenzung. Jetzt ist es ein **blauer** Ton, kaum unterscheidbar vom Untergrund. Wer `--cream-2` als Flaeche findet, sollte pruefen, ob es dort noch abgrenzt.
+
+**2. Das Abzeichen "Schweizerdeutsch"** war eine gefuellte blaue Flaeche mit Perle-Schrift, direkt neben dem Seitentitel — es stritt mit ihm um Aufmerksamkeit. Nach der Regel aus §19 gehoert eine gefuellte Flaeche nur der Haupthandlung; ein Hinweis bekommt einen Umriss. Jetzt wie `.lib-done`: transparent, duenner Rand, gedaempfte Schrift.
+
+**3. "Sticht nicht ins Auge"** — die Seite hat als einzige kein Foto und bestand nur aus dunklen Karten auf dunklem Grund. Die drei Zahlen (Tage am Stueck, Meditationen, Minuten) **sind** der Inhalt dieser Seite, waren aber in gewoehnlicher weisser Schrift gesetzt. Jetzt in der Akzentfarbe und in der Serifenschrift, 1,85rem statt 1,35rem — derselbe Wert wie ein Seitentitel. Damit hat die Seite einen Blickfang, ohne dass ein Bild noetig waere, und es bleibt bei einem Hoehepunkt pro Seite.
+
+**Nebenbefund:** Die Unterzeile "Was du schon geschafft hast" brach mit dem Wort "hast" allein auf die zweite Zeile. `text-wrap:balance` auf `.page-head p` verteilt die Zeilen jetzt gleichmaessig — gilt fuer die Unterzeile jeder Seite, nicht nur hier.

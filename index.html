@@ -265,7 +265,10 @@
      der Ueberschrift mitwaechst; -3px setzt es auf die Schriftlinie, sonst
      haengt es zu hoch. Seit 7. Aug. 2026 statt ☀️ 🌴 🌙. */
   .gruss-bild{ width:1.18em; height:1.18em; vertical-align:-4px; margin-left:2px; }
-  .page-head p{ margin:0; font-size:.86rem; color:var(--ink-soft); }
+  /* text-wrap:balance verteilt die Zeilen gleichmaessig, statt das letzte
+     Wort allein auf eine zweite Zeile zu schieben ("Was du schon geschafft
+     / hast"). Gilt fuer die Unterzeile jeder Seite. */
+  .page-head p{ margin:0; font-size:.86rem; color:var(--ink-soft); text-wrap:balance; }
   .icon-btn{
     border:none; background:var(--card); width:38px; height:38px; border-radius:50%; cursor:pointer;
     display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.08);
@@ -775,12 +778,12 @@
   .goal{ padding:14px; border-bottom:1px solid var(--line); }
   .goal:last-child{ border-bottom:none; }
   .goal-top{ display:flex; align-items:center; gap:11px; margin-bottom:9px; }
-  .goal-ico{ width:34px; height:34px; border-radius:9px; background:var(--cream-2); display:flex; align-items:center;
+  .goal-ico{ width:34px; height:34px; border-radius:9px; background:rgba(255,255,255,.12); display:flex; align-items:center;
     justify-content:center; flex:0 0 auto; font-size:.92rem; }
   .goal-top .body{ flex:1; min-width:0; }
   .goal-top .name{ font-weight:600; font-size:.92rem; }
   .goal-top .sub{ font-size:.74rem; color:var(--ink-soft); margin-top:2px; }
-  .bar{ height:6px; background:var(--cream-2); border-radius:4px; overflow:hidden; }
+  .bar{ height:6px; background:rgba(255,255,255,.2); border-radius:4px; overflow:hidden; }
   .bar span{ display:block; height:100%; background:var(--gold-grad); border-radius:4px; }
   /* Erreichtes Ziel: der Balken bekommt einen ruhigen goldenen Rand, damit
      "voll" sich von "fast voll" unterscheidet - allein an der Breite sieht
@@ -799,7 +802,8 @@
      Dasselbe Bild wie "Test beendet" auf der Zugangs-Karte. */
   .zeile-schloss{ width:.95em; height:.95em; vertical-align:-2px; opacity:.75; }
   .fd-badge{
-    background:var(--cream-2); color:var(--gold-deep); font-size:.66rem; font-weight:800;
+    background:transparent; color:var(--ink-soft); font-size:.66rem; font-weight:600;
+    border:1px solid rgba(255,255,255,.22); opacity:.85;
     padding:6px 10px; border-radius:9px; flex:0 0 auto;
   }
   .fd-state{ padding:16px; }
@@ -876,7 +880,7 @@
   button.stats-row{ width:100%; border:none; font-family:inherit; color:var(--ink); cursor:pointer; text-align:left; padding:0; }
   .stat{ flex:1; padding:16px 8px; text-align:center; border-right:1px solid var(--line); }
   .stat:last-child{ border-right:none; }
-  .stat .n{ font-size:1.35rem; font-weight:700; }
+  .stat .n{ font-size:1.85rem; font-weight:400; font-family:var(--serif); color:var(--gold); }
   .stat .l{ font-size:.66rem; color:var(--ink-soft); margin-top:3px; line-height:1.3; }
 
   .hist-row{ display:flex; align-items:center; gap:13px; padding:12px 14px; border-bottom:1px solid var(--line); }
@@ -1556,7 +1560,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.121";
+    var AKTUELLE_VERSION = "2026-08-10.122";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
