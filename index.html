@@ -929,6 +929,13 @@
     box-shadow:0 3px 14px rgba(0,0,0,.07);
   }
   .such-zeile input:focus{ outline:none; border-color:rgba(239,230,216,.45); }
+
+  /* Der Platzhaltertext war NIE gesetzt - er kam vom Browser und ist dort
+     ein neutrales Grau. Im Screenshot gemessen: 162/163/164, waehrend jede
+     andere Schrift der App blaustichig ist (Rot minus Blau etwa -37). Genau
+     dieser eine graue Fleck fiel als "goldig"/fremd auf. Gilt fuer ALLE
+     Eingabefelder der App: Suche, Chat und Anmeldung. */
+  input::placeholder, textarea::placeholder{ color:var(--ink-soft); opacity:.75; }
   .such-zeile input::-webkit-search-cancel-button{ display:none; }  /* eigener Knopf statt des grauen System-Kreuzes */
   .such-zeile input:focus{ outline:2px solid var(--gold-soft); outline-offset:1px; border-color:var(--gold-soft); }
   .such-leeren{
@@ -1542,7 +1549,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.118";
+    var AKTUELLE_VERSION = "2026-08-10.119";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

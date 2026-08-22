@@ -1389,3 +1389,23 @@ Beide Bruecke bei der Startseite waren **hausgemacht** und stammten aus den Aend
 Nach der Aenderung erneut gemessen: **eine** Variante bei Seitentiteln, **eine** bei Zwischentiteln. Bei "Kartentitel/Label" bleiben zwei Werte — das sind zwei echte Rollen (Kartenueberschrift in Normalschrift, kleine Beschriftung in Grossbuchstaben), kein Bruch.
 
 **Merksatz fuer kuenftige Aenderungen:** Wer eine Schriftgroesse fuer *eine* Seite aendert, hat mit hoher Wahrscheinlichkeit gerade ein zweites System aufgemacht. Groesse gehoert in die Rollen-Regel, seitenspezifisch duerfen nur Abstaende sein.
+
+
+### Der eigentliche Grund fuer das "goldige" Suchfeld (20. Aug. 2026)
+
+Christine hat nach der Anpassung des Suchfeld-Rahmens gemeldet, es wirke **immer noch** fremd. Die Pixel ihres Bildschirmfotos gemessen:
+
+| Element | Farbe | Rot minus Blau |
+|---|---|---|
+| Platzhalter "Meditation suchen …" | `162/163/164` | **-2** (neutralgrau) |
+| Lupensymbol | `140/161/182` | -41 |
+| "47 gefuehrte Meditationen" | `194/212/231` | -37 |
+| Zahl "47" | `195/212/232` | -37 |
+
+Der Platzhalter war das **einzige neutralgraue Element** auf einer Seite, deren Schrift durchgehend blaustichig ist — und ein neutrales Grau wirkt neben kuehlem Blau warm. Genau das hat sie als "goldig" wahrgenommen; die Beschreibung war treffend, auch wenn die Farbe kein Gold war.
+
+**Ursache:** `::placeholder` war **nie gesetzt**. Die Farbe kam vom Browser, und dessen Standard ist ein neutrales Grau — unabhaengig von allen Variablen der App. Deshalb hat auch die vorherige Anpassung von Fuellung, Rand und Radius nichts geholfen: Sie betraf das Feld, nicht den Text darin.
+
+Jetzt `input::placeholder, textarea::placeholder{ color:var(--ink-soft); opacity:.75; }` — gilt fuer alle vier Eingabefelder der App (Suche, Chat, Anmeldung).
+
+**Merksatz:** Bei "sieht fremd aus, ich weiss nicht warum" die Pixel messen statt raten. Und: Browser-Standardfarben (`::placeholder`, `::selection`, Fokusrahmen, Scrollbalken) folgen keiner Variablen — bei einem Farbwechsel muessen sie einzeln gesetzt werden, sonst bleiben sie als Fremdkoerper stehen.
