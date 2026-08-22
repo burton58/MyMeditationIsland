@@ -155,7 +155,7 @@
   .splash-badge{ width:52px; height:52px; margin:0 auto 14px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
   .splash-badge img{ width:100%; height:100%; object-fit:contain; }
   .splash h1{
-    font-family:var(--serif); font-size:3.1rem; margin:0 0 14px; line-height:1.06;
+    font-family:var(--serif); font-size:3.1rem; margin:0 0 16px; line-height:1.06;
     letter-spacing:-.01em;
     text-shadow:0 2px 18px rgba(0,0,0,.45);
   }
@@ -164,7 +164,7 @@
     text-shadow:0 2px 12px rgba(0,0,0,.45);
   }
   .splash-sub2{
-    margin:6px 0 0 !important; font-size:.92rem !important; line-height:1.55 !important;
+    margin:0 !important; font-size:.92rem !important; line-height:1.55 !important;
     opacity:.95 !important; text-wrap:balance; text-shadow:0 2px 12px rgba(0,0,0,.45);
   }
 
@@ -1556,7 +1556,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.120";
+    var AKTUELLE_VERSION = "2026-08-10.121";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

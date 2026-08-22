@@ -1463,3 +1463,21 @@ Ein leerer Kasten auf der Abo-Seite (`#trialBox`) stellte sich als **Test-Artefa
 ### Kontrolle
 
 Nach allen Aenderungen alle zwoelf Seiten erneut geoeffnet: keine Skriptfehler, kein Element ragt aus dem Bildschirm, alle Seiten per Screenshot gegengeprueft.
+
+
+### Untertitel der Titelseite: der eingestellte Rand ist nicht der sichtbare Abstand (20. Aug. 2026)
+
+Christine hat nach der Rhythmus-Korrektur gemeldet, die Untertitel-Abstaende seien **immer noch** inkonsistent. Der erste Messdurchgang lief bei 402 Punkten Breite und zeigte saubere Werte — auf ihrem iPhone (390 Punkte) sieht es anders aus. **Zweite Lehre daraus: bei ihrer Bildschirmbreite messen, nicht bei einer beliebigen.**
+
+Mit `Range.getClientRects()` jede einzelne Textzeile ausgemessen (auch die umgebrochenen), bei 390x844 und dreifacher Aufloesung:
+
+| | vorher | jetzt |
+|---|---|---|
+| Titel zur ersten Unterzeile | 16 Punkte | **18** |
+| zwischen den beiden Unterzeilen | 13 Punkte | **7** |
+
+**16 zu 13 war das Problem** — fast gleich. Dadurch bildeten die zwei Unterzeilen keine erkennbare Gruppe, und die knappe Ungleichheit faellt dem Auge staerker auf als ein klarer Unterschied. Ein Verhaeltnis muss deutlich sein oder gar nicht existieren.
+
+**Der eigentliche Fallstrick:** Der eingestellte Rand ist **nicht** der sichtbare Abstand. Die Zeilenhoehe (1,55) legt ober- und unterhalb jeder Zeile je gut drei Punkte dazu. Aus `margin-top:6px` wurden dadurch 13 sichtbare Punkte — mehr als das Doppelte. Wer Abstaende nach den CSS-Werten beurteilt, misst am Ergebnis vorbei.
+
+Loesung: Die zweite Unterzeile hat **gar keinen** eigenen Rand mehr (`margin:0`). Damit ruecken die beiden Zeilen auf denselben Abstand wie ein Umbruch **innerhalb** einer Zeile — der Untertitel ist dadurch **unabhaengig vom Umbruch** immer gleichmaessig gesetzt, egal ob er auf zwei oder drei Zeilen laeuft (auf Christines Geraet sind es drei, weil ihre Schrift groesser eingestellt ist). Der Abstand zum Titel wurde auf 16px erhoeht, sichtbar 18.
