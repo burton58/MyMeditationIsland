@@ -1538,3 +1538,25 @@ Dateien: `kat-neu-nord/sued/west/ost.jpg`, ersetzen in `LIB_KAT_FOTO` die bisher
 Die vier vorherigen `bg-*.jpg` als Kategoriebild sind damit abgeloest, bleiben aber unveraendert der Hintergrund der acht Uebungen, die ein eigenes `bg` tragen (`kat-neu-*.jpg` sind in `SHELL_FILES` ergaenzt, die alten vier bleiben ebenfalls drin).
 
 **Weiterhin offen:** Die kleinen runden Bilder in den Zeilen der acht Uebungen mit eigenem `bg` sind weiterhin warm-golden (siehe Offener Punkt in §14) — noch nicht bestellt.
+
+
+## 24. Kopf der Bibliothek vereinfacht, Bildfarben bestaetigt (22. Aug. 2026)
+
+Christine: *"Oben weniger ist mehr, einfach Meditationen und dann Filter."*
+
+Entfernt: die Unterzeile "Alle Übungen zum Stöbern" — sie sagte nur mit anderen Worten, was der Titel "Meditationen" bereits sagt. **"47 geführte Meditationen"** stand bisher als Dauertext fest ueber dem Filter, obwohl die Zahl fuer das Stoebern keine Rolle spielt. Sie bleibt nur noch stehen, wenn wirklich gesucht wird — dort zeigt sie sinnvoll die Trefferzahl ("3 Treffer fuer 'atem'"). `#libMeta` ist jetzt per Default `hidden` und wird nur bei aktivem Suchwort eingeblendet (`renderLibFilters()`).
+
+Ergebnis: **Titel → Suche → Filter**, direkt hintereinander, ohne die zwei Textzeilen dazwischen. Im Browser geprueft, leer und mit aktiver Suche.
+
+### Bildfarben gegen den blauen Untergrund gemessen
+
+Christine fragte, ob die vier neuen Kategoriebilder (§23) farblich zum blauen Hintergrund passen. Gemessen statt geraten — Farbton und Abstand zum Untergrund (211 Grad, Saettigung 0,54):
+
+| Bild | Farbton | Abstand zum Blau |
+|---|---|---|
+| Gedanken beruhigen (silbrig-weiss) | 36 Grad | 175 Grad |
+| Gefuehle verstehen (rose) | 16 Grad | 165 Grad |
+| Stress loesen (gruen) | 56 Grad | 155 Grad |
+| Entspannen (bernstein) | 28 Grad | 177 Grad |
+
+Alle vier liegen **150 bis 177 Grad vom Untergrund entfernt** — praktisch gegenueberliegend auf dem Farbkreis, also warm-komplementaer zu Blau. Das ist **kein Zufall und kein Problem, sondern genau der Kontrast**, den Christine zu Beginn des Bilder-Themas gefordert hatte ("es muss doch irgendwie einen Kontrast haben", siehe Bildfarben-Empfehlung). Warme Bilder auf kuehlem Grund heben sich klar ab, statt mit ihm zu verschmelzen — bestaetigt statt nur behauptet.

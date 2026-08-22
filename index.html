@@ -1573,7 +1573,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.124";
+    var AKTUELLE_VERSION = "2026-08-10.125";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2127,10 +2127,13 @@
     <!-- Der Zurueck-Knopf zum Profil ist entfallen (4. Aug. 2026): er
          gehoerte zur Menüzeile "Favoriten", die jetzt direkt auf "Mein
          Weg" steht (siehe dort) und nicht mehr hierher springt. -->
+    <!-- "Weniger ist mehr" (22. Aug. 2026, Christine): die Unterzeile
+         "Alle Übungen zum Stöbern" ist weg - sie sagte nur nochmal, was der
+         Titel schon sagt. Direkt danach kommt der Filter, mit der Suche
+         dazwischen. -->
     <div class="page-head">
       <div class="ttl">
         <h1>Meditationen</h1>
-        <p>Alle Übungen zum Stöbern</p>
       </div>
     </div>
     <div class="such-zeile">
@@ -2138,7 +2141,11 @@
       <input id="libSuche" type="search" placeholder="Meditation suchen …" autocomplete="off" aria-label="Meditationen durchsuchen">
       <button class="such-leeren" id="libSucheLeeren" type="button" title="Suche löschen" hidden>✕</button>
     </div>
-    <p class="lib-meta" id="libMeta"></p>
+    <!-- "47 geführte Meditationen" stand hier immer fest da - reine
+         Zusatzinfo, die niemand braucht, um zu stoebern. Bleibt jetzt nur
+         noch bei einer aktiven Suche stehen (dort ist die Trefferzahl
+         wirklich nuetzlich), siehe renderLibFilters(). -->
+    <p class="lib-meta" id="libMeta" hidden></p>
     <div class="lib-filters" id="libFilters"></div>
     <!-- Begleiter-Chat: 4. Aug. 2026 auf Christines Entscheid deaktiviert,
          NICHT geloescht (siehe SPEC.md §6a "Deaktiviert, nicht geloescht").
@@ -4704,9 +4711,13 @@
       });
     }
 
-    document.getElementById("libMeta").innerHTML = suchwort
-      ? ("<strong>" + pool.length + "</strong> " + (pool.length === 1 ? "Treffer" : "Treffer") + " für „" + suchwort + "“")
-      : ("<strong>" + pool.length + "</strong> geführte Meditationen");
+    // Steht nur noch bei aktiver Suche da (siehe HTML-Kommentar oben) -
+    // "47 geführte Meditationen" als Dauertext war ueberfluessige Information.
+    var metaEl = document.getElementById("libMeta");
+    metaEl.hidden = !suchwort;
+    if (suchwort){
+      metaEl.innerHTML = "<strong>" + pool.length + "</strong> " + (pool.length === 1 ? "Treffer" : "Treffer") + " für „" + suchwort + "“";
+    }
 
     // Beschriftung ueber der Liste - sagt in Worten, welche Kategorie
     // gerade gewaehlt ist (nicht nur am Foto oben erkennbar).
