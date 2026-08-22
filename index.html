@@ -37,6 +37,10 @@
     --cream:#16304f;
     --cream-2:#2b5b90;
     --card:rgba(0,0,0,.16);
+    /* Zweite Ebene: heller als der Untergrund statt dunkler. Fuer die
+       Bloecke, die den Inhalt einer Seite tragen (Zahlen, Wochenziel).
+       So entsteht Tiefe, ohne dass eine neue Farbe noetig waere. */
+    --flaeche-hoch:rgba(255,255,255,.08);
     --ink:#eef4fb;
     --ink-soft:#c3d4e8;
     --gold:#efe6d8;
@@ -783,8 +787,8 @@
   .goal-top .body{ flex:1; min-width:0; }
   .goal-top .name{ font-weight:600; font-size:.92rem; }
   .goal-top .sub{ font-size:.74rem; color:var(--ink-soft); margin-top:2px; }
-  .bar{ height:6px; background:rgba(255,255,255,.2); border-radius:4px; overflow:hidden; }
-  .bar span{ display:block; height:100%; background:var(--gold-grad); border-radius:4px; }
+  .bar{ height:9px; background:rgba(0,0,0,.28); border-radius:999px; overflow:hidden; }
+  .bar span{ display:block; height:100%; background:var(--gold-grad); border-radius:999px; min-width:9px; }
   /* Erreichtes Ziel: der Balken bekommt einen ruhigen goldenen Rand, damit
      "voll" sich von "fast voll" unterscheidet - allein an der Breite sieht
      man den Unterschied auf dem Handy kaum. */
@@ -878,7 +882,12 @@
 
   .stats-row{ display:flex; }
   button.stats-row{ width:100%; border:none; font-family:inherit; color:var(--ink); cursor:pointer; text-align:left; padding:0; }
-  .stat{ flex:1; padding:16px 8px; text-align:center; border-right:1px solid var(--line); }
+  /* Hervorgehoben: Diese drei Zahlen sind der Inhalt von "Mein Weg". */
+  .card.stats-row{
+    background:var(--flaeche-hoch);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 6px 20px rgba(0,0,0,.18);
+  }
+  .stat{ flex:1; padding:18px 8px; text-align:center; border-right:1px solid rgba(255,255,255,.14); }
   .stat:last-child{ border-right:none; }
   .stat .n{ font-size:1.85rem; font-weight:400; font-family:var(--serif); color:var(--gold); }
   .stat .l{ font-size:.66rem; color:var(--ink-soft); margin-top:3px; line-height:1.3; }
@@ -1164,7 +1173,11 @@
   /* #wochenzielCard ist nur "card" ohne eigene Innenabstands-Klasse - ohne
      dieses padding sass der volle Knopf ohne Rand direkt an der
      Kartenrundung an und wirkte "abgeschnitten". */
-  #wochenzielCard{ padding:16px; }
+  #wochenzielCard{
+    padding:16px;
+    background:var(--flaeche-hoch);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 6px 20px rgba(0,0,0,.18);
+  }
 
   /* Wochenraster, Inselweg und Begleiter-Karte (aus der Skizze) ---------- */
   .box-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
@@ -1560,7 +1573,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.122";
+    var AKTUELLE_VERSION = "2026-08-10.123";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

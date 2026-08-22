@@ -1496,3 +1496,25 @@ Das ist ein wiederkehrendes Muster seit dem Wechsel auf Blau: `--cream-2` war fr
 **3. "Sticht nicht ins Auge"** — die Seite hat als einzige kein Foto und bestand nur aus dunklen Karten auf dunklem Grund. Die drei Zahlen (Tage am Stueck, Meditationen, Minuten) **sind** der Inhalt dieser Seite, waren aber in gewoehnlicher weisser Schrift gesetzt. Jetzt in der Akzentfarbe und in der Serifenschrift, 1,85rem statt 1,35rem — derselbe Wert wie ein Seitentitel. Damit hat die Seite einen Blickfang, ohne dass ein Bild noetig waere, und es bleibt bei einem Hoehepunkt pro Seite.
 
 **Nebenbefund:** Die Unterzeile "Was du schon geschafft hast" brach mit dem Wort "hast" allein auf die zweite Zeile. `text-wrap:balance` auf `.page-head p` verteilt die Zeilen jetzt gleichmaessig — gilt fuer die Unterzeile jeder Seite, nicht nur hier.
+
+
+### Zweite Flaechen-Ebene: Tiefe statt neuer Farben (20. Aug. 2026)
+
+Christine nach der ersten Ueberarbeitung: *"Diese Seite immer noch lasch. Evtl. mit diversen Blautoenen arbeiten und gewisse Balken/Rechtecke farbig markieren?"*
+
+Die Diagnose dahinter ist richtig, die vorgeschlagene Loesung waere aber die zweitbeste gewesen. **Das Problem war nicht zu wenig Farbe, sondern zu wenig Tiefe:** Es gab genau **eine** Flaechen-Ebene. Karten waren dunkler als der Untergrund — und zwar alle gleich. Damit steht jeder Block auf derselben Stufe, nichts tritt hervor, nichts tritt zurueck. Mehr Blautoene haetten die Seite bunter gemacht, aber nicht geordnet.
+
+Neu gibt es zwei Ebenen:
+
+| Ebene | Wert | wofuer |
+|---|---|---|
+| zurueckgesetzt | `--card` = `rgba(0,0,0,.16)` | gewoehnliche Karten und Zeilen |
+| **hervorgehoben** | `--flaeche-hoch` = `rgba(255,255,255,.08)` | die Bloecke, die den Inhalt der Seite tragen |
+
+Auf "Mein Weg" sind das die **Zahlenreihe** und das **Wochenziel** — beide zusaetzlich mit einer feinen hellen Oberkante (`inset 0 1px 0 rgba(255,255,255,.14)`) und einem Schlagschatten, sodass sie sichtbar ueber der Seite liegen. Der Rest bleibt zurueck.
+
+Weil `--flaeche-hoch` **heller** als der Untergrund ist statt dunkler, entsteht der Eindruck von Licht, das von oben kommt — dieselbe Logik, mit der jede Oberflaeche in der echten Welt gelesen wird. Es braucht dafuer keine einzige neue Farbe.
+
+Ausserdem am Fortschrittsbalken: Hoehe von 6 auf 9 Punkte, vollrunde Enden, dunklere Schiene (`rgba(0,0,0,.28)`) fuer mehr Kontrast zur hellen Fuellung, und `min-width:9px` — damit ein angefangenes Ziel auch bei 1 % sichtbar ist statt als leerer Balken. Die Trennstriche zwischen den drei Zahlen waren so dunkel wie alles andere und sind jetzt hell (`rgba(255,255,255,.14)`).
+
+**Uebertragbar:** `--flaeche-hoch` steht jetzt allen Seiten zur Verfuegung. Wo eine Seite flach wirkt, ist die Frage zuerst "welcher Block traegt den Inhalt?" und dann, ob dieser Block eine Ebene hoeher gehoert — nicht, welche Farbe man ihm geben koennte.
