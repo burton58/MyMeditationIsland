@@ -909,10 +909,19 @@
     position:absolute; left:13px; width:17px; height:17px; color:var(--ink-soft);
     pointer-events:none; opacity:.7;
   }
+  /* Das Suchfeld sah als einziges Element auf der Seite anders aus als
+     alles andere (20. Aug. 2026, Christine gemeldet): sichtbarer Rand,
+     kleinerer Radius, und im Screenshot gemessen war seine Fuellung mit
+     24/57/84 praktisch identisch mit dem Untergrund (25/58/85) - es wirkte
+     dadurch wie ein leerer Umriss statt wie ein Feld. Jetzt genau wie die
+     Zeilen darunter (.lib-row): dieselbe Fuellung, derselbe Radius,
+     unsichtbarer Rand, gleicher Schatten. */
   .such-zeile input{
-    width:100%; border:1px solid var(--line); border-radius:14px; padding:12px 40px;
+    width:100%; border:1px solid transparent; border-radius:16px; padding:12px 40px;
     font-family:inherit; font-size:.88rem; background:var(--card); color:var(--ink);
+    box-shadow:0 3px 14px rgba(0,0,0,.07);
   }
+  .such-zeile input:focus{ outline:none; border-color:rgba(239,230,216,.45); }
   .such-zeile input::-webkit-search-cancel-button{ display:none; }  /* eigener Knopf statt des grauen System-Kreuzes */
   .such-zeile input:focus{ outline:2px solid var(--gold-soft); outline-offset:1px; border-color:var(--gold-soft); }
   .such-leeren{
@@ -1526,7 +1535,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.116";
+    var AKTUELLE_VERSION = "2026-08-10.117";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

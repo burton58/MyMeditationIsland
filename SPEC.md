@@ -1346,3 +1346,12 @@ Konkret geaendert: `.play-btn` von gefuellt auf Umriss (`1.5px rgba(239,230,216,
 Bewusst **nicht** geaendert: `.btn-dark` (Hauptknopf einer Seite), `.lib-chip.active`, `.opts .opt.active` und die uebrigen Auswahl-Zustaende — das sind genau die "eine Handlung bzw. eine Auswahl pro Zusammenhang", die die Regel hell laesst. Die Titelseite hat ihre eigene Ausnahme (§17-Nachtrag): dort ist auch der Hauptknopf nur Glas, weil der Markenauftritt vorgeht.
 
 Alle vier Tabs plus die laufende Meditation nach der Aenderung im Browser gegengeprueft.
+
+
+### Suchfeld angeglichen (20. Aug. 2026)
+
+Christine hat gemeldet, das Suchfeld auf der Bibliotheksseite passe nicht zum Rest. Im Screenshot nachgemessen: Seine Fuellung lag bei `24/57/84`, der Untergrund direkt daneben bei `25/58/85` — praktisch identisch. Es wirkte dadurch nicht wie ein Feld, sondern wie ein **leerer Umriss**, waehrend alle Zeilen und Karten darunter eine sichtbar dunklere Fuellung mit unsichtbarem Rand haben.
+
+Ursache: `.such-zeile input` hatte einen sichtbaren Rand (`var(--line)`), einen kleineren Radius (14px statt 16px) und keinen Schatten — es folgte noch dem Muster aus der hellen Gold-Zeit, wo ein Rand noetig war, um ein weisses Feld auf cremefarbenem Grund abzugrenzen. Auf dunklem Grund kehrt sich das um: Dort grenzt die **Fuellung** ab, nicht der Rand.
+
+Jetzt exakt wie `.lib-row`: gleiche Fuellung, Radius 16px, durchsichtiger Rand, gleicher Schatten. Beim Hineintippen erscheint ein zurueckhaltender Perle-Rand als Fokus-Hinweis.
