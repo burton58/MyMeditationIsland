@@ -252,7 +252,12 @@
   .home-page .page-head{ margin-bottom:12px; }
   .page-head .ttl{ flex:1; min-width:0; }
   .page-head .ttl.center{ text-align:center; }
-  .page-head h1{ font-family:var(--serif); font-size:1.65rem; margin:0 0 3px; }
+  /* SEITENTITEL - eine Groesse fuer ALLE Seiten, auch die Startseite
+     (.home-gruss h1 traegt denselben Wert). Leicht statt fett: In einer
+     Serifenschrift wirkt 400 bei dieser Groesse ruhiger, und Ruhe ist bei
+     dieser App das Thema. Einzige Ausnahme bleibt die Titelseite
+     (.splash h1, 3,1rem) - das ist der Markenauftritt, kein Seitentitel. */
+  .page-head h1{ font-family:var(--serif); font-size:1.85rem; font-weight:400; margin:0 0 3px; line-height:1.12; }
   /* Sonne / Palme / Mond neben der Begruessung. In em, damit das Bild mit
      der Ueberschrift mitwaechst; -3px setzt es auf die Schriftlinie, sonst
      haengt es zu hoch. Seit 7. Aug. 2026 statt ☀️ 🌴 🌙. */
@@ -266,7 +271,8 @@
   .icon-btn svg{ width:19px; height:19px; }
   .icon-btn.blank{ background:none; box-shadow:none; pointer-events:none; }
 
-  .section-label{ font-size:1.18rem; font-weight:700; font-family:var(--serif); margin:24px 0 10px; color:var(--ink); }
+  /* ZWISCHENTITEL - eine Groesse ueberall. */
+  .section-label{ font-size:1.05rem; font-weight:700; font-family:var(--serif); margin:28px 0 11px; color:var(--ink); }
   .section-label.first{ margin-top:6px; }
   /* Auf der Startseite muss alles zusammen ohne Scrollen passen - dort
      etwas knapper als auf den anderen Seiten, wo mehr Platz da ist. */
@@ -277,9 +283,10 @@
      (Christine, 8. Aug. 2026). Jetzt 28px - gemessen bleiben auf einem
      iPhone 14 danach immer noch rund 60px Luft unter der Karte.
      Die erste Ueberschrift behaelt margin-top:0 (Regel darunter). */
-  /* Kleiner als die Begruessung (1,85rem) - die Bereiche werden durch
-     Abstand getrennt, nicht durch Schriftgroesse. */
-  .home-page .section-label{ font-size:1rem; margin:34px 0 11px; }
+  /* Nur der Abstand ist auf der Startseite groesser - die GROESSE kommt
+     aus der allgemeinen Regel oben. Eine eigene Schriftgroesse hier war
+     genau der Grund, warum die Seiten nicht mehr zusammenpassten. */
+  .home-page .section-label{ margin:34px 0 11px; }
   /* Der erste Zwischentitel stand bis 20. Aug. 2026 direkt unter dem Foto
      und brauchte darum fast keinen Abstand. Jetzt steht die Begruessung
      dazwischen - ohne eigenen Abstand klebt er an ihr. */
@@ -545,7 +552,7 @@
      stand vorher das Emoji darin. */
   .readout-card .glyph img{ width:30px; height:30px; display:block; }
   .readout-card .k{
-    font-size:.68rem; color:var(--gold-deep); margin-bottom:4px; font-weight:800;
+    font-size:.74rem; color:var(--gold-deep); margin-bottom:4px; font-weight:800;
     text-transform:uppercase; letter-spacing:.08em;
   }
   .readout-card .body{ flex:1; min-width:0; }
@@ -606,7 +613,7 @@
   .pref-block{ margin-top:14px; }
   .pref-block:first-child{ margin-top:0; }
   .pref-block h3{
-    font-size:.7rem; margin:0 0 7px; font-weight:800; color:var(--gold-deep);
+    font-size:.74rem; margin:0 0 7px; font-weight:800; color:var(--gold-deep);
     text-transform:uppercase; letter-spacing:.08em;
   }
   .seg{ display:flex; gap:6px; position:relative; }
@@ -689,7 +696,7 @@
   .rec-modus[hidden]{ display:none; }
   .rec-result.show.in{ opacity:1; transform:translateY(0); }
   .rec-result .card{ background:linear-gradient(180deg, rgba(0,0,0,.13), rgba(0,0,0,.23) 180%); box-shadow:0 14px 34px rgba(0,0,0,.28); }
-  .rec-head{ font-size:.72rem; text-transform:uppercase; letter-spacing:.09em; color:var(--gold-deep); font-weight:800; margin-bottom:9px; }
+  .rec-head{ font-size:.74rem; text-transform:uppercase; letter-spacing:.09em; color:var(--gold-deep); font-weight:800; margin-bottom:9px; }
   .rec-item{ display:flex; align-items:center; gap:13px; padding:13px 14px; border-bottom:1px solid var(--line); width:100%;
     background:none; border-left:none; border-right:none; border-top:none; font-family:inherit; color:var(--ink); text-align:left; cursor:pointer; }
   .rec-item:last-of-type{ border-bottom:none; }
@@ -1273,7 +1280,7 @@
   .ueber-web{ font-size:.84rem !important; color:var(--gold-deep) !important; text-align:center !important; }
   .ueber-web a{ color:inherit; }
   .legal-karte{ text-align:left; }
-  .legal-karte h3{ font-size:.78rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--gold-deep); margin:22px 0 8px; }
+  .legal-karte h3{ font-size:.74rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--gold-deep); margin:22px 0 8px; }
   .legal-karte h3:first-child{ margin-top:0; }
   .legal-karte a{ color:var(--gold-deep); }
   /* "Über die App": der Einstiegssatz darf mittig und etwas groesser stehen,
@@ -1390,7 +1397,7 @@
   .layout{ display:flex; flex-direction:column; gap:16px; padding:0 16px 40px; max-width:520px; margin:0 auto; }
   .controls{ background:var(--card); border-radius:20px; padding:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); order:2; }
   .group{ margin-bottom:18px; }
-  .group h3{ margin:0 0 9px; font-size:.72rem; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft); font-weight:700; }
+  .group h3{ margin:0 0 9px; font-size:.74rem; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft); font-weight:700; }
   .opts{ display:flex; gap:8px; flex-wrap:wrap; }
   .opts .opt{
     border:1px solid var(--line); background:var(--card); padding:10px 14px; border-radius:12px;
@@ -1535,7 +1542,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.117";
+    var AKTUELLE_VERSION = "2026-08-10.118";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

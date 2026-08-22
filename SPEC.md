@@ -1355,3 +1355,37 @@ Christine hat gemeldet, das Suchfeld auf der Bibliotheksseite passe nicht zum Re
 Ursache: `.such-zeile input` hatte einen sichtbaren Rand (`var(--line)`), einen kleineren Radius (14px statt 16px) und keinen Schatten — es folgte noch dem Muster aus der hellen Gold-Zeit, wo ein Rand noetig war, um ein weisses Feld auf cremefarbenem Grund abzugrenzen. Auf dunklem Grund kehrt sich das um: Dort grenzt die **Fuellung** ab, nicht der Rand.
 
 Jetzt exakt wie `.lib-row`: gleiche Fuellung, Radius 16px, durchsichtiger Rand, gleicher Schatten. Beim Hineintippen erscheint ein zurueckhaltender Perle-Rand als Fokus-Hinweis.
+
+
+## 20. Schrift-Audit: eine Groesse je Rolle (20. Aug. 2026)
+
+Christine: *"Analysiere Schrift, Format, Farbe etc., ob alles stimmt. Ich finde die Titel der Seiten sind nicht immer gleich. Es muss aus einem Guss kommen."* Statt nach Augenmass zu urteilen wurde **mit einem Browser-Skript gemessen**: alle dreizehn Seiten geoeffnet und von jeder Ueberschrift Groesse, Gewicht, Schriftart, Farbe und Abstaende ausgelesen.
+
+### Befund: sieben Groessen fuer drei Rollen
+
+| Rolle | gefunden |
+|---|---|
+| Seitentitel | **26,4px/700** (zwoelf Seiten) und **29,6px/400** (Startseite) |
+| Zwischentitel | **16px** (Startseite) und **18,88px** (alle anderen) |
+| Kleine Grossbuchstaben-Beschriftung | **11,2px** (Kompass) und **12,48px** (Textseiten) |
+
+Beide Bruecke bei der Startseite waren **hausgemacht** und stammten aus den Aenderungen der Vortage: Am 20. Aug. bekam die Begruessung als neuer Seitentitel 1,85rem/400 (§18) — die anderen zwoelf Seiten blieben bei 1,65rem/700. Und die Zwischentitel wurden auf der Startseite eigens auf 1rem gesetzt, damit sie kleiner sind als die Begruessung, waehrend sie ueberall sonst 1,18rem behielten. Jede Aenderung fuer sich war richtig begruendet; zusammen ergaben sie zwei Systeme nebeneinander.
+
+### Jetzt gilt eine Skala
+
+| Rolle | Wert |
+|---|---|
+| Seitentitel (alle Seiten, inkl. Startseite) | **1,85rem / 400 / Serif** |
+| Zwischentitel | **1,05rem / 700 / Serif** |
+| Kartentitel | 0,92rem / 700 / Sans |
+| Kleine Grossbuchstaben-Beschriftung | **0,74rem / 800 / Sans** |
+
+**Leicht statt fett bei den Seitentiteln:** In einer Serifenschrift wirkt Gewicht 400 bei dieser Groesse ruhiger als 700 — und Ruhe ist bei dieser App das Thema. Die Groesse traegt die Rangfolge, nicht die Fettung.
+
+**Bewusste Ausnahme:** `.splash h1` auf der Titelseite bleibt bei 3,1rem. Das ist der Markenauftritt, kein Seitentitel — die Regel dort lautet "der Name ist das Groesste der Seite" (§17).
+
+**Die Sonderregel der Startseite ist ersatzlos entfallen.** `.home-page .section-label` setzt jetzt nur noch den groesseren Abstand, nicht mehr die Groesse. Genau diese doppelte Zustaendigkeit war die Ursache.
+
+Nach der Aenderung erneut gemessen: **eine** Variante bei Seitentiteln, **eine** bei Zwischentiteln. Bei "Kartentitel/Label" bleiben zwei Werte — das sind zwei echte Rollen (Kartenueberschrift in Normalschrift, kleine Beschriftung in Grossbuchstaben), kein Bruch.
+
+**Merksatz fuer kuenftige Aenderungen:** Wer eine Schriftgroesse fuer *eine* Seite aendert, hat mit hoher Wahrscheinlichkeit gerade ein zweites System aufgemacht. Groesse gehoert in die Rollen-Regel, seitenspezifisch duerfen nur Abstaende sein.
