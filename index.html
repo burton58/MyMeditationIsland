@@ -145,33 +145,33 @@
   .splash-anmelden{
     position:absolute; z-index:5; top:calc(14px + env(safe-area-inset-top, 0px)); right:16px;
     border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.14); cursor:pointer;
-    font-family:inherit; color:#fff; font-size:.78rem; font-weight:600; padding:7px 14px; border-radius:20px;
+    font-family:inherit; color:#fff; font-size:.78rem; font-weight:600; padding:7px 14px; border-radius:999px;
     backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); text-shadow:0 1px 6px rgba(0,0,0,.35);
   }
   .splash-top{ width:100%; max-width:366px; }
   .splash-frei{ flex:1; min-height:12vh; }
   .splash-bottom{ width:100%; max-width:360px; }
 
-  .splash-badge{ width:52px; height:52px; margin:0 auto 10px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
+  .splash-badge{ width:52px; height:52px; margin:0 auto 14px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
   .splash-badge img{ width:100%; height:100%; object-fit:contain; }
   .splash h1{
-    font-family:var(--serif); font-size:3.1rem; margin:0 0 16px; line-height:1.06;
+    font-family:var(--serif); font-size:3.1rem; margin:0 0 14px; line-height:1.06;
     letter-spacing:-.01em;
     text-shadow:0 2px 18px rgba(0,0,0,.45);
   }
   .splash-sub{
-    margin:0; font-size:.95rem; line-height:1.55; opacity:.95; text-wrap:balance;
+    margin:0; font-size:.92rem; line-height:1.55; opacity:.95; text-wrap:balance;
     text-shadow:0 2px 12px rgba(0,0,0,.45);
   }
   .splash-sub2{
-    margin:5px 0 0 !important; font-size:.95rem !important; line-height:1.55 !important;
+    margin:6px 0 0 !important; font-size:.92rem !important; line-height:1.55 !important;
     opacity:.95 !important; text-wrap:balance; text-shadow:0 2px 12px rgba(0,0,0,.45);
   }
 
   /* Der Hinweis auf die Ausbildung steht ganz unten und klein - er soll da
      sein, aber nichts überstrahlen. Antippen führt zu "Über mich". */
   .splash-vertrauen{
-    display:block; margin:7px auto 0; max-width:330px; border:none; background:none; cursor:pointer;
+    display:block; margin:10px auto 0; max-width:330px; border:none; background:none; cursor:pointer;
     font-family:inherit; color:#fff; font-size:.62rem; line-height:1.35; opacity:.6;
     font-style:italic; text-shadow:0 2px 10px rgba(0,0,0,.45); padding:2px 4px;
   }
@@ -181,12 +181,12 @@
      kleine, klar erkennbare Chips - derselbe Glas-Look wie der
      "Anmelden"-Knopf oben rechts auf dieser Seite, nur kleiner. */
   .splash-mikro{
-    display:flex; justify-content:center; gap:9px; margin:10px 0 0 !important;
+    display:flex; justify-content:center; gap:9px; margin:14px 0 0 !important;
   }
   .splash-preis, .splash-probe{
     border:1px solid rgba(255,255,255,.32); cursor:pointer; font-family:inherit; color:#fff;
     background:rgba(255,255,255,.14); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-    font-size:.72rem; font-weight:600; padding:6px 13px; border-radius:20px;
+    font-size:.74rem; font-weight:600; padding:6px 13px; border-radius:999px;
     text-shadow:0 1px 6px rgba(0,0,0,.3);
   }
   .splash-preis span{ display:inline-block; transition:transform .25s ease; }
@@ -197,9 +197,9 @@
     backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
     animation:splashAuf .35s ease both;
   }
-  .splash-preisbox p{ margin:0 0 5px !important; font-size:.8rem !important; line-height:1.45 !important; opacity:.95 !important; }
+  .splash-preisbox p{ margin:0 0 5px !important; font-size:.78rem !important; line-height:1.45 !important; opacity:.95 !important; }
   .splash-preisbox p:last-of-type{ margin-bottom:0 !important; }
-  .splash-preisbox .splash-link{ margin-top:8px; font-size:.76rem; }
+  .splash-preisbox .splash-link{ margin-top:8px; font-size:.74rem; }
 
   /* Sanftes Einblenden: erst das Bild, dann der Text, zuletzt die Knöpfe.
      Wer im Gerät weniger Bewegung eingestellt hat, sieht alles sofort. */
@@ -217,13 +217,16 @@
     background:rgba(255,255,255,.17); color:#fff;
     border:1px solid rgba(255,255,255,.42);
     backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-    font-weight:600; font-size:.92rem; padding:13px 30px; border-radius:26px;
+    font-weight:600; font-size:.92rem; padding:13px 30px; border-radius:999px;
     text-shadow:0 1px 8px rgba(8,18,32,.45);
     box-shadow:0 6px 18px rgba(8,18,32,.28);
   }
   .splash-cta:active{ transform:translateY(1px); }
+  /* Ergaenzt die Regel weiter oben (Abstand und Anordnung stehen dort) -
+     der Abstand wurde hier frueher ein zweites Mal gesetzt und hat den
+     oberen Wert still ueberschrieben. */
   .splash-mikro{
-    margin:9px 0 0 !important; font-size:.76rem !important; opacity:.9 !important;
+    font-size:.74rem !important; opacity:.9 !important;
     text-shadow:0 2px 10px rgba(0,0,0,.4);
   }
   .splash-link{
@@ -236,13 +239,13 @@
     .splash-badge{ width:44px; height:44px; margin-bottom:8px; }
     .splash-brand{ margin-bottom:10px; }
     .splash h1{ font-size:2.6rem; margin-bottom:12px; }
-    .splash-sub{ font-size:.88rem; }
-    .splash-sub2{ font-size:.88rem !important; }
-    .splash-cta{ padding:12px 26px; font-size:.9rem; }
+    .splash-sub{ font-size:.86rem; }
+    .splash-sub2{ font-size:.86rem !important; }
+    .splash-cta{ padding:12px 26px; font-size:.92rem; }
     .splash-vertrauen{ margin-top:8px; font-size:.66rem; }
     .splash-preisbox{ padding:11px 13px; }
-    .splash-preisbox p{ font-size:.76rem !important; }
-    .splash-mikro{ margin-top:9px !important; font-size:.72rem !important; }
+    .splash-preisbox p{ font-size:.74rem !important; }
+    .splash-mikro{ margin-top:12px !important; font-size:.74rem !important; }
     .splash-link{ margin-top:2px; font-size:.74rem; padding:4px 8px; }
     .splash-inner{ padding-bottom:calc(9px + var(--safe-bottom)); }
   }
@@ -262,7 +265,7 @@
      der Ueberschrift mitwaechst; -3px setzt es auf die Schriftlinie, sonst
      haengt es zu hoch. Seit 7. Aug. 2026 statt ☀️ 🌴 🌙. */
   .gruss-bild{ width:1.18em; height:1.18em; vertical-align:-4px; margin-left:2px; }
-  .page-head p{ margin:0; font-size:.88rem; color:var(--ink-soft); }
+  .page-head p{ margin:0; font-size:.86rem; color:var(--ink-soft); }
   .icon-btn{
     border:none; background:var(--card); width:38px; height:38px; border-radius:50%; cursor:pointer;
     display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.08);
@@ -292,19 +295,19 @@
      dazwischen - ohne eigenen Abstand klebt er an ihr. */
   .home-page .section-label.first{ margin-top:42px; }
 
-  .card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
+  .card{ background:var(--card); border-radius:16px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
 
   .btn-dark{
     border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26; font-family:inherit;
-    font-weight:700; font-size:.9rem; padding:12px 18px; border-radius:12px;
+    font-weight:700; font-size:.92rem; padding:12px 18px; border-radius:16px;
     display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 16px rgba(8,18,32,.30);
   }
-  .btn-dark.full{ width:100%; padding:16px; font-size:.98rem; border-radius:15px; }
+  .btn-dark.full{ width:100%; padding:16px; font-size:1rem; border-radius:16px; }
   .state-card .btn-dark.full{ padding:13px; font-size:.92rem; }
   .btn-dark:active{ transform:translateY(1px); }
   .btn-ghost{
     border:1px solid var(--line); cursor:pointer; background:var(--card); color:var(--ink); font-family:inherit;
-    font-weight:600; font-size:.88rem; padding:12px 18px; border-radius:12px;
+    font-weight:600; font-size:.86rem; padding:12px 18px; border-radius:16px;
   }
   .btn-ghost.full{ width:100%; }
   .btn-row{ display:flex; gap:10px; margin-top:16px; }
@@ -372,7 +375,7 @@
     font-family:var(--serif); font-size:1.85rem; font-weight:400; margin:0 0 4px;
     color:var(--ink); line-height:1.12;
   }
-  .home-gruss p{ margin:0; font-size:.88rem; color:var(--ink-soft); }
+  .home-gruss p{ margin:0; font-size:.86rem; color:var(--ink-soft); }
   .home-gruss .gruss-bild{ width:1.05em; height:1.05em; vertical-align:-3px; margin-left:3px; }
   /* Der Abstand nach oben rechnet den Bereich mit, den iPhones fuer Uhrzeit
      und Notch freihalten - sonst laege das Symbol unter der Uhr, seit das
@@ -395,11 +398,11 @@
   .focus-card{ display:flex; align-items:center; gap:13px; padding:13px 14px; width:100%; text-align:left;
     border:none; background:var(--card); font-family:inherit; color:var(--ink); cursor:pointer; }
   .focus-card .thumb{
-    width:52px; height:52px; border-radius:13px; flex:0 0 auto; background:var(--cream-2);
+    width:52px; height:52px; border-radius:16px; flex:0 0 auto; background:var(--cream-2);
     display:flex; align-items:center; justify-content:center; font-size:1.3rem;
   }
   .focus-card .body{ flex:1; min-width:0; }
-  .focus-card .name{ display:block; font-weight:600; font-size:.95rem; margin-bottom:3px; }
+  .focus-card .name{ display:block; font-weight:600; font-size:.92rem; margin-bottom:3px; }
   .focus-card .meta{ display:block; font-size:.78rem; color:var(--ink-soft); }
   /* Nur Umriss, nicht gefuellt (20. Aug. 2026, Christine: "die Icons, es
      macht farblich alles keinen Sinn"). Vorher waren die 47 Play-Knoepfe
@@ -411,7 +414,7 @@
   .play-btn{
     border:1.5px solid rgba(239,230,216,.55); background:transparent; color:var(--gold);
     width:38px; height:38px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center; flex:0 0 auto; font-size:.8rem;
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto; font-size:.78rem;
   }
 
   /* Aufbau der Karte, 8. Aug. 2026 (Christine: "zweite Box sieht nicht gut
@@ -428,7 +431,7 @@
   .state-card{ padding:15px; }
   .state-card .compass-wrap.mini{ float:right; margin:2px 0 6px 14px; }
   .state-card h3{ margin:0 0 5px; font-size:.92rem; font-weight:700; color:var(--ink); }
-  .state-card p{ margin:0 0 13px; font-size:.85rem; line-height:1.5; color:var(--ink-soft); }
+  .state-card p{ margin:0 0 13px; font-size:.86rem; line-height:1.5; color:var(--ink-soft); }
   /* Der Knopf muss unter den Kompass, nicht neben ihn. */
   .state-card .btn-dark.full{ clear:both; }
 
@@ -496,7 +499,7 @@
      Beschriftung direkt im Ziffernblatt (siehe .dial-label im SVG) - kein
      Kopfneigen mehr noetig, und der Ring darf dafuer die ganze Breite
      einnehmen statt Platz an seitliche Textspalten abzugeben. */
-  .compass-hint{ text-align:center; font-size:.83rem; color:var(--ink-soft); margin:10px 0 0; }
+  .compass-hint{ text-align:center; font-size:.86rem; color:var(--ink-soft); margin:10px 0 0; }
 
   .rose-needle{ stroke:#857d72; stroke-width:5.5; }
   .rose-needle-tip{ fill:var(--gold); stroke:#5f584e; stroke-width:2.5; transition:r .25s ease; }
@@ -558,7 +561,7 @@
   .readout-card .body{ flex:1; min-width:0; }
   .compass-readout .v{ font-weight:700; font-size:1.05rem; margin-bottom:6px; transition:opacity .15s ease; }
   .compass-readout .v.fading{ opacity:0; }
-  .compass-readout .why{ font-size:.85rem; line-height:1.5; color:var(--ink-soft); transition:opacity .15s ease; }
+  .compass-readout .why{ font-size:.86rem; line-height:1.5; color:var(--ink-soft); transition:opacity .15s ease; }
   .compass-readout .why.fading{ opacity:0; }
   .mood-emoji{ font-size:1.05rem; }   /* alt, seit 7. Aug. 2026 durch .mood-icon ersetzt */
   /* Zustandsbild mitten in einer Zeile ("Vorher: [Bild] ausgeglichen").
@@ -578,19 +581,19 @@
     transition:max-height .3s cubic-bezier(.22,.61,.36,1), opacity .25s ease, padding .3s ease, margin .3s ease;
   }
   .compass-info.open{ max-height:280px; padding:15px; margin-bottom:14px; opacity:1; box-shadow:0 3px 14px rgba(0,0,0,.07); }
-  .compass-info p{ margin:0 0 8px; font-size:.85rem; line-height:1.55; color:var(--ink-soft); }
+  .compass-info p{ margin:0 0 8px; font-size:.86rem; line-height:1.55; color:var(--ink-soft); }
   .compass-info p:last-child{ margin-bottom:0; }
 
   /* Leere Fokus-Karte, solange der Kompass noch nicht benutzt wurde */
   .empty-card{ padding:14px; }
-  .empty-card p{ margin:0 0 14px; font-size:.9rem; line-height:1.5; color:var(--ink-soft); }
+  .empty-card p{ margin:0 0 14px; font-size:.92rem; line-height:1.5; color:var(--ink-soft); }
   .empty-card p:last-child{ margin-bottom:0; }
 
   /* ---------- Dauer & Trainingsmodus: ruhige Randnotiz statt zweier
      eigener Formularblöcke - eine Zeile, die bei Bedarf aufklappt. ---------- */
   .prefs-summary{
     display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;
-    margin-top:22px; padding:13px 16px; border:1px solid var(--line); border-radius:14px;
+    margin-top:22px; padding:13px 16px; border:1px solid var(--line); border-radius:16px;
     background:var(--card); cursor:pointer; font-family:inherit; font-size:.86rem; font-weight:600;
     color:var(--ink); text-align:left;
   }
@@ -619,7 +622,7 @@
   .seg{ display:flex; gap:6px; position:relative; }
   .seg .opt{
     flex:1; min-width:0; border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit;
-    padding:11px 4px; border-radius:12px; font-size:.84rem; font-weight:600; color:var(--ink);
+    padding:11px 4px; border-radius:16px; font-size:.86rem; font-weight:600; color:var(--ink);
     display:flex; align-items:center; justify-content:center; user-select:none; transition:.15s ease;
     position:relative; z-index:1;
   }
@@ -648,7 +651,7 @@
      geben, sonst deckt er ihn wieder zu. */
   .seg-thumb{
     display:none;
-    position:absolute; top:0; bottom:0; left:0; width:calc((100% - 24px)/5); border-radius:12px;
+    position:absolute; top:0; bottom:0; left:0; width:calc((100% - 24px)/5); border-radius:16px;
     background:rgba(239,230,216,.14); border:1.5px solid var(--gold); pointer-events:none; z-index:0;
     transition:left .22s cubic-bezier(.22,.61,.36,1);
   }
@@ -663,8 +666,8 @@
   /* Trainingsmodus: zwei Zeilen zum Auswählen, wie in der Vorlage */
   .radio-row{ display:flex; flex-direction:column; gap:7px; }
   .radio-opt{
-    display:flex; align-items:center; gap:11px; padding:11px 14px; border:1px solid var(--line); border-radius:14px;
-    background:var(--card); cursor:pointer; font-size:.9rem; user-select:none; transition:.15s ease;
+    display:flex; align-items:center; gap:11px; padding:11px 14px; border:1px solid var(--line); border-radius:16px;
+    background:var(--card); cursor:pointer; font-size:.92rem; user-select:none; transition:.15s ease;
   }
   .radio-opt .mode-ico{ flex:0 0 auto; width:18px; height:18px; color:var(--ink-soft); opacity:.65; }
   .radio-opt .mode-ico svg{ width:100%; height:100%; }
@@ -674,7 +677,7 @@
   .radio-opt.on .dot{ border-color:var(--gold); }
   .radio-opt.on .dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--gold-grad); }
   .radio-opt .rtxt strong{ display:block; font-weight:600; }
-  .radio-opt .rtxt span{ font-size:.77rem; color:var(--ink-soft); }
+  .radio-opt .rtxt span{ font-size:.78rem; color:var(--ink-soft); }
 
   /* Empfehlung direkt auf der Kompass-Seite: blendet weich ein statt hart
      umzuschalten - die Antwort soll wie eine kurze, ruhige Ueberlegung
@@ -691,7 +694,7 @@
   .rec-modus{
     display:block; width:100%; margin-top:11px; padding:12px 4px;
     border:none; background:none; cursor:pointer; font-family:inherit;
-    font-size:.82rem; font-weight:600; color:var(--gold-deep); text-align:center;
+    font-size:.78rem; font-weight:600; color:var(--gold-deep); text-align:center;
   }
   .rec-modus[hidden]{ display:none; }
   .rec-result.show.in{ opacity:1; transform:translateY(0); }
@@ -701,14 +704,14 @@
     background:none; border-left:none; border-right:none; border-top:none; font-family:inherit; color:var(--ink); text-align:left; cursor:pointer; }
   .rec-item:last-of-type{ border-bottom:none; }
   .rec-item .num{
-    width:22px; height:22px; border-radius:50%; background:var(--gold-grad); color:#2a2a26; font-size:.7rem; font-weight:700;
+    width:22px; height:22px; border-radius:50%; background:var(--gold-grad); color:#2a2a26; font-size:.66rem; font-weight:700;
     display:flex; align-items:center; justify-content:center; flex:0 0 auto;
   }
   .rec-result.in .play-btn{ animation:playPop .3s .15s cubic-bezier(.34,1.56,.64,1) both; }
   @keyframes playPop{ 0%{ transform:scale(0); } 60%{ transform:scale(1.08); } 100%{ transform:scale(1); } }
   .rec-why{ padding:14px; margin-top:8px; }
-  .rec-why h4{ margin:0 0 6px; font-size:.82rem; }
-  .rec-why p{ margin:0; font-size:.83rem; line-height:1.55; color:var(--ink-soft); }
+  .rec-why h4{ margin:0 0 6px; font-size:.78rem; }
+  .rec-why p{ margin:0; font-size:.86rem; line-height:1.55; color:var(--ink-soft); }
   .rec-actions{ padding:14px; }
 
   /* ---------- Kompass: Feinschliff ---------- */
@@ -772,11 +775,11 @@
   .goal{ padding:14px; border-bottom:1px solid var(--line); }
   .goal:last-child{ border-bottom:none; }
   .goal-top{ display:flex; align-items:center; gap:11px; margin-bottom:9px; }
-  .goal-ico{ width:34px; height:34px; border-radius:10px; background:var(--cream-2); display:flex; align-items:center;
-    justify-content:center; flex:0 0 auto; font-size:.95rem; }
+  .goal-ico{ width:34px; height:34px; border-radius:9px; background:var(--cream-2); display:flex; align-items:center;
+    justify-content:center; flex:0 0 auto; font-size:.92rem; }
   .goal-top .body{ flex:1; min-width:0; }
-  .goal-top .name{ font-weight:600; font-size:.9rem; }
-  .goal-top .sub{ font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
+  .goal-top .name{ font-weight:600; font-size:.92rem; }
+  .goal-top .sub{ font-size:.74rem; color:var(--ink-soft); margin-top:2px; }
   .bar{ height:6px; background:var(--cream-2); border-radius:4px; overflow:hidden; }
   .bar span{ display:block; height:100%; background:var(--gold-grad); border-radius:4px; }
   /* Erreichtes Ziel: der Balken bekommt einen ruhigen goldenen Rand, damit
@@ -787,7 +790,7 @@
   /* Palme, wenn das Wochenziel erreicht ist - vorher 🌴. */
   .goal-haken img{ width:26px; height:26px; display:block; }
 
-  .fd-greeting{ margin:0; font-size:.88rem; color:var(--ink-soft); }
+  .fd-greeting{ margin:0; font-size:.86rem; color:var(--ink-soft); }
   /* Schweizerkreuz im Abzeichen "Schweizerdeutsch" - vorher 🇨🇭. Das
      gelieferte Bild hat keinen Kreis drum, was hier von Vorteil ist:
      weniger Linien, klarer neben dem kleinen Text. */
@@ -796,8 +799,8 @@
      Dasselbe Bild wie "Test beendet" auf der Zugangs-Karte. */
   .zeile-schloss{ width:.95em; height:.95em; vertical-align:-2px; opacity:.75; }
   .fd-badge{
-    background:var(--cream-2); color:var(--gold-deep); font-size:.68rem; font-weight:800;
-    padding:6px 10px; border-radius:10px; flex:0 0 auto;
+    background:var(--cream-2); color:var(--gold-deep); font-size:.66rem; font-weight:800;
+    padding:6px 10px; border-radius:9px; flex:0 0 auto;
   }
   .fd-state{ padding:16px; }
   .fd-state-top{ display:flex; align-items:center; gap:12px; margin-bottom:10px; }
@@ -805,21 +808,21 @@
   .fd-state-label{ font-size:.74rem; color:var(--ink-soft); }
   .fd-state-word{ font-family:var(--serif); font-size:1.25rem; font-weight:700; }
   .fd-state ul{ margin:0; padding-left:18px; }
-  .fd-state li{ font-size:.84rem; line-height:1.6; color:var(--ink-soft); }
-  .fd-why{ margin:10px 0 0; font-size:.84rem; line-height:1.55; }
+  .fd-state li{ font-size:.86rem; line-height:1.6; color:var(--ink-soft); }
+  .fd-why{ margin:10px 0 0; font-size:.86rem; line-height:1.55; }
 
   .fd-section-label{ display:flex; align-items:baseline; gap:8px; margin:24px 0 10px; }
-  .fd-section-label h3{ font-size:1.18rem; font-weight:700; font-family:var(--serif); margin:0; }
-  .fd-section-note{ font-size:.75rem; color:var(--ink-soft); }
-  .fd-hero-card{ background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); padding:18px; border:1px solid var(--gold-soft); }
-  .fd-hero-tag{ display:inline-block; background:var(--cream-2); color:var(--gold-deep); font-size:.68rem; font-weight:800; padding:5px 10px; border-radius:9px; }
+  .fd-section-label h3{ font-size:1.2rem; font-weight:700; font-family:var(--serif); margin:0; }
+  .fd-section-note{ font-size:.74rem; color:var(--ink-soft); }
+  .fd-hero-card{ background:var(--card); border-radius:16px; box-shadow:0 3px 14px rgba(0,0,0,.07); padding:18px; border:1px solid var(--gold-soft); }
+  .fd-hero-tag{ display:inline-block; background:var(--cream-2); color:var(--gold-deep); font-size:.66rem; font-weight:800; padding:5px 10px; border-radius:9px; }
   .fd-hero-name{ font-family:var(--serif); font-size:1.2rem; margin:10px 0 4px; }
   .fd-hero-meta{ font-size:.78rem; color:var(--ink-soft); }
   .fd-reasons{ margin:12px 0 14px; padding-left:18px; }
-  .fd-reasons li{ font-size:.83rem; line-height:1.6; color:var(--ink-soft); }
+  .fd-reasons li{ font-size:.86rem; line-height:1.6; color:var(--ink-soft); }
   .fd-hero-btn{
     width:100%; border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26; font-family:inherit;
-    font-weight:700; font-size:.95rem; padding:15px; border-radius:14px; box-shadow:0 6px 16px rgba(8,18,32,.30);
+    font-weight:700; font-size:.92rem; padding:15px; border-radius:16px; box-shadow:0 6px 16px rgba(8,18,32,.30);
   }
   .fd-card{
     width:100%; display:flex; align-items:center; gap:13px; text-align:left; cursor:pointer; font-family:inherit;
@@ -827,12 +830,12 @@
     box-shadow:0 3px 14px rgba(0,0,0,.07);
   }
   .fd-card-body{ flex:1; min-width:0; }
-  .fd-card-name{ display:block; font-weight:600; font-size:.93rem; }
-  .fd-card-meta{ display:block; font-size:.77rem; color:var(--ink-soft); margin-top:2px; }
-  .fd-card-reason{ display:block; font-size:.77rem; color:var(--gold-deep); margin-top:4px; }
+  .fd-card-name{ display:block; font-weight:600; font-size:.92rem; }
+  .fd-card-meta{ display:block; font-size:.78rem; color:var(--ink-soft); margin-top:2px; }
+  .fd-card-reason{ display:block; font-size:.78rem; color:var(--gold-deep); margin-top:4px; }
   .fd-card-play{
     width:34px; height:34px; border-radius:50%; background:var(--gold-grad); color:#2a2a26; flex:0 0 auto;
-    display:flex; align-items:center; justify-content:center; font-size:.8rem;
+    display:flex; align-items:center; justify-content:center; font-size:.78rem;
   }
   /* Der Pfeil auf der Inselbewohner-Karte dreht sich nach unten, wenn
      Insel-Woche und Inselreise aufgeklappt sind - so sieht man am Knopf
@@ -842,7 +845,7 @@
 
   .kat-icon{ width:1.55em; height:1.55em; object-fit:contain; vertical-align:middle; display:inline-block; }
 
-  .seit-hinweis{ margin:-6px 0 8px; font-size:.76rem; color:var(--ink-soft); }
+  .seit-hinweis{ margin:-6px 0 8px; font-size:.74rem; color:var(--ink-soft); }
   .grafik-hinweis{ margin:7px 0 0; font-size:.74rem; color:var(--gold-deep); text-align:center; }
 
   /* ---------- Fortschritts-Grafik ----------
@@ -855,8 +858,8 @@
      Unterschied behaupten, den es nicht gibt. */
   .grafik-karte{ padding:16px; margin-top:10px; }
   .grafik-block + .grafik-block{ margin-top:18px; }
-  .grafik-titel{ margin:0 0 2px; font-size:.82rem; font-weight:700; color:var(--ink); }
-  .grafik-lesart{ margin:0 0 8px; font-size:.72rem; color:var(--ink-soft); }
+  .grafik-titel{ margin:0 0 2px; font-size:.78rem; font-weight:700; color:var(--ink); }
+  .grafik-lesart{ margin:0 0 8px; font-size:.74rem; color:var(--ink-soft); }
   .grafik-karte svg{ width:100%; height:auto; display:block; overflow:visible; }
   .balken{ fill:var(--gold-deep); }
   .balken.aktiv{ fill:var(--ink); }
@@ -864,22 +867,22 @@
   .achs-text{ fill:var(--ink-soft); font-size:9px; font-family:var(--sans); }
   .wert-text{ fill:var(--ink); font-size:9px; font-weight:700; font-family:var(--sans); }
   .balken-feld{ fill:transparent; cursor:pointer; }
-  .grafik-auswahl{ margin:8px 0 0; font-size:.76rem; color:var(--ink); min-height:1.2em; }
+  .grafik-auswahl{ margin:8px 0 0; font-size:.74rem; color:var(--ink); min-height:1.2em; }
   .grafik-zu{ margin-top:14px; }
   .grafik-hinweis[hidden]{ display:none; }
-  .grafik-leer{ margin:0; font-size:.84rem; color:var(--ink-soft); line-height:1.5; }
+  .grafik-leer{ margin:0; font-size:.86rem; color:var(--ink-soft); line-height:1.5; }
 
   .stats-row{ display:flex; }
   button.stats-row{ width:100%; border:none; font-family:inherit; color:var(--ink); cursor:pointer; text-align:left; padding:0; }
   .stat{ flex:1; padding:16px 8px; text-align:center; border-right:1px solid var(--line); }
   .stat:last-child{ border-right:none; }
   .stat .n{ font-size:1.35rem; font-weight:700; }
-  .stat .l{ font-size:.7rem; color:var(--ink-soft); margin-top:3px; line-height:1.3; }
+  .stat .l{ font-size:.66rem; color:var(--ink-soft); margin-top:3px; line-height:1.3; }
 
   .hist-row{ display:flex; align-items:center; gap:13px; padding:12px 14px; border-bottom:1px solid var(--line); }
   .hist-row:last-child{ border-bottom:none; }
   .hist-row .thumb{
-    width:42px; height:42px; border-radius:12px; background:var(--cream-2); flex:0 0 auto;
+    width:42px; height:42px; border-radius:16px; background:var(--cream-2); flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.05rem;
   }
   .hist-row .body{ flex:1; min-width:0; }
@@ -891,12 +894,12 @@
      ist negativ gegen den 13px-Zeilenabstand, damit ✕ und ▶ als Paar
      zusammenstehen statt gleich weit auseinander wie Bild/Text/Knopf. */
   .verwerf-btn{
-    border:none; background:none; cursor:pointer; font-size:.95rem; padding:0; color:#b7c2bc;
+    border:none; background:none; cursor:pointer; font-size:.92rem; padding:0; color:#b7c2bc;
     flex:0 0 auto; width:38px; height:38px; display:flex; align-items:center; justify-content:center;
     margin-right:-7px;
   }
-  .hist-row .name{ display:block; font-weight:600; font-size:.9rem; }
-  .hist-row .meta{ display:block; font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
+  .hist-row .name{ display:block; font-weight:600; font-size:.92rem; }
+  .hist-row .meta{ display:block; font-size:.74rem; color:var(--ink-soft); margin-top:2px; }
   /* Startbare Zeile: soll sich auch anfassbar anfuehlen, sonst sieht sie
      aus wie die reinen Verlaufszeilen daneben. */
   .fokus-summe{ padding:10px 14px; font-size:.78rem; color:var(--ink-soft); border-top:1px solid var(--line); }
@@ -925,7 +928,7 @@
      unsichtbarer Rand, gleicher Schatten. */
   .such-zeile input{
     width:100%; border:1px solid transparent; border-radius:16px; padding:12px 40px;
-    font-family:inherit; font-size:.88rem; background:var(--card); color:var(--ink);
+    font-family:inherit; font-size:.86rem; background:var(--card); color:var(--ink);
     box-shadow:0 3px 14px rgba(0,0,0,.07);
   }
   .such-zeile input:focus{ outline:none; border-color:rgba(239,230,216,.45); }
@@ -940,11 +943,11 @@
   .such-zeile input:focus{ outline:2px solid var(--gold-soft); outline-offset:1px; border-color:var(--gold-soft); }
   .such-leeren{
     position:absolute; right:8px; width:28px; height:28px; border:none; background:none;
-    cursor:pointer; color:var(--ink-soft); font-size:.9rem; border-radius:50%;
+    cursor:pointer; color:var(--ink-soft); font-size:.92rem; border-radius:50%;
   }
   .such-leeren[hidden]{ display:none; }
 
-  .lib-meta{ margin:0 0 14px; font-size:.83rem; color:var(--ink-soft); }
+  .lib-meta{ margin:0 0 14px; font-size:.86rem; color:var(--ink-soft); }
   /* Bildkacheln statt Text-Chips fuer die vier Stimmungs-Kategorien
      (4. Aug. 2026, Christines Vorschlag): "Alle"/"Favoriten" bleiben kleine
      Chips oben, die vier eigentlichen Kategorien werden zu grossen,
@@ -954,7 +957,7 @@
   .lib-chips-row::-webkit-scrollbar{ display:none; }
   .lib-chip{
     border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit; white-space:nowrap;
-    padding:9px 14px; border-radius:20px; font-size:.8rem; font-weight:600; color:var(--ink); flex:0 0 auto;
+    padding:9px 14px; border-radius:999px; font-size:.78rem; font-weight:600; color:var(--ink); flex:0 0 auto;
     display:inline-flex; align-items:center; gap:6px;
   }
   .lib-chip.active{ background:var(--gold-grad); color:#2a2a26; border-color:var(--gold); }
@@ -971,7 +974,7 @@
      Ueberschrift traegt den Abstand, damit die Kacheln als eigener Block
      stehen und die Liste sichtbar neu anfaengt. */
   #libListLabel{ margin-top:30px; }
-  .lib-cat-tile{
+  .lib-cat-tile{ color:#fff;
     position:relative; border:none; padding:0; margin:0; border-radius:16px; overflow:hidden; cursor:pointer;
     aspect-ratio:4/3; box-shadow:0 3px 14px rgba(0,0,0,.14); font-family:inherit;
   }
@@ -982,7 +985,7 @@
   .lib-cat-check{
     position:absolute; top:8px; right:8px; z-index:2; width:22px; height:22px; border-radius:50%;
     background:var(--gold-grad); color:#2a2a26; display:none; align-items:center; justify-content:center;
-    font-size:.72rem; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.3);
+    font-size:.74rem; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.3);
   }
   .lib-cat-tile.active .lib-cat-check{ display:flex; }
   .lib-cat-foto{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
@@ -992,7 +995,7 @@
   }
   .lib-cat-label{
     position:absolute; left:10px; right:10px; bottom:9px; z-index:1; text-align:left;
-    display:flex; align-items:center; gap:6px; color:#fff; font-weight:700; font-size:.8rem;
+    display:flex; align-items:center; gap:6px; color:#fff; font-weight:700; font-size:.78rem;
     text-shadow:0 1px 5px rgba(0,0,0,.4);
   }
   /* Die Kategorie-Icons sind fest goldbraun (PNG) - auf dem Foto werden sie
@@ -1010,7 +1013,7 @@
      64px sind fuer eine 47 Zeilen lange Liste zu gross - der Titel bekommt
      die Breite besser als das Symbol. Bewusst NICHT .row-thumb allgemein
      aendern: dieselbe Klasse traegt auch die Verlaufs- und Chat-Zeilen. */
-  .lib-row .row-thumb{ width:52px; height:52px; border-radius:14px; }
+  .lib-row .row-thumb{ width:52px; height:52px; border-radius:16px; }
   /* Seit 10. Aug. 2026 steht in der Bibliotheks-Liste kein Bild mehr (siehe
      Begruendung bei renderMedListV2). Ohne das Bild wirkte der Name direkt
      an der Kante zu gedraengt - etwas mehr Luft links, sonst unveraendert. */
@@ -1018,10 +1021,10 @@
   .lib-row.locked{ opacity:.55; }
   .lib-row-body{ flex:1; min-width:0; }
   .lib-row-name{ display:block; font-weight:600; font-size:.92rem; }
-  .lib-row-desc{ display:block; font-size:.77rem; color:var(--ink-soft); margin-top:2px; }
+  .lib-row-desc{ display:block; font-size:.78rem; color:var(--ink-soft); margin-top:2px; }
   .lib-done{ display:inline-block; margin-left:6px; font-size:.62rem; font-weight:600; color:var(--ink-soft);
     background:transparent; border:1px solid rgba(255,255,255,.22); opacity:.85;
-    padding:2px 7px; border-radius:8px; vertical-align:middle; }
+    padding:2px 7px; border-radius:9px; vertical-align:middle; }
   .lib-leer{ font-size:.86rem; color:var(--ink-soft); text-align:center; }
   /* Die drei Knoepfe je Zeile als eigene Gruppe mit engem Innenabstand
      (4. Aug. 2026): so trennt der grosse 10px-Abstand nur noch Bild, Text
@@ -1032,7 +1035,7 @@
      daneben, mehr passt neben den Titel nicht). Das Zeichen selbst bleibt
      gleich gross, nur die antippbare Flaeche waechst. */
   .fav-btn{
-    border:none; background:none; cursor:pointer; font-size:1.05rem; padding:0; color:#c3cec8;
+    border:none; background:none; cursor:pointer; font-size:1.05rem; padding:0; color:var(--ink-soft);
     flex:0 0 auto; width:38px; height:38px; display:flex; align-items:center; justify-content:center;
   }
   .fav-btn.on{ color:var(--gold); }
@@ -1064,7 +1067,7 @@
     color:var(--ink); text-align:left;
   }
   .profil-avatar{
-    width:46px; height:46px; border-radius:14px; background:var(--cream-2); flex:0 0 auto;
+    width:46px; height:46px; border-radius:16px; background:var(--cream-2); flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.3rem;
     border:none; cursor:pointer; font-family:inherit; padding:0; position:relative; overflow:hidden;
   }
@@ -1077,19 +1080,19 @@
      aus - genau das hatte Christine bemaengelt. */
   .avatar-stift{
     position:absolute; right:0; bottom:0; width:17px; height:17px; border-radius:50%;
-    background:var(--gold); color:#2a2a26; font-size:.6rem;
+    background:var(--gold); color:#2a2a26; font-size:.62rem;
     display:flex; align-items:center; justify-content:center;
   }
   .profile-card .body{ flex:1; min-width:0; }
-  .profile-card .name{ display:block; font-weight:700; font-size:.94rem; }
+  .profile-card .name{ display:block; font-weight:700; font-size:.92rem; }
   .profile-card .sub{ display:block; font-size:.78rem; color:var(--ink-soft); margin-top:2px; }
 
   .avatar-karte{ text-align:left; max-width:340px; }
-  .avatar-karte h3{ margin:0 0 12px; font-family:var(--serif); font-size:1.08rem; text-align:center; }
+  .avatar-karte h3{ margin:0 0 12px; font-family:var(--serif); font-size:1.05rem; text-align:center; }
   .avatar-auswahl{ display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin-bottom:14px; }
   .avatar-wahl{
-    aspect-ratio:1/1; border-radius:14px; background:var(--cream-2); border:2px solid transparent;
-    cursor:pointer; font-size:1.4rem; display:flex; align-items:center; justify-content:center;
+    aspect-ratio:1/1; border-radius:16px; background:var(--cream-2); border:2px solid transparent;
+    cursor:pointer; font-size:1.35rem; display:flex; align-items:center; justify-content:center;
     font-family:inherit; overflow:hidden;
   }
   .avatar-wahl.aktiv{ border-color:var(--gold); }
@@ -1102,9 +1105,9 @@
   .chev{ color:#a9b8c9; font-size:1.1rem; }
 
   .status-card{ display:flex; align-items:flex-start; gap:13px; padding:15px; margin-bottom:12px;
-    background:var(--card); border-radius:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); flex-wrap:wrap; }
+    background:var(--card); border-radius:16px; box-shadow:0 3px 14px rgba(0,0,0,.07); flex-wrap:wrap; }
   .status-icon{
-    width:42px; height:42px; border-radius:12px; background:rgba(255,255,255,.14); flex:0 0 auto;
+    width:42px; height:42px; border-radius:16px; background:rgba(255,255,255,.14); flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.1rem;
   }
   /* Das gezeichnete Zustandsbild im Feld - 26 von 42px, damit der helle
@@ -1112,10 +1115,10 @@
   .status-bild{ width:26px; height:26px; display:block; }
   .status-body{ flex:1; min-width:0; }
   .status-title{ font-weight:700; font-size:.92rem; }
-  .status-detail{ font-size:.79rem; line-height:1.5; color:var(--ink-soft); margin-top:4px; }
+  .status-detail{ font-size:.78rem; line-height:1.5; color:var(--ink-soft); margin-top:4px; }
   .status-cta-btn{
     border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26; font-family:inherit;
-    font-weight:700; font-size:.83rem; padding:11px 16px; border-radius:12px; width:100%;
+    font-weight:700; font-size:.86rem; padding:11px 16px; border-radius:16px; width:100%;
   }
 
   .list-card{ overflow:hidden; }
@@ -1128,7 +1131,7 @@
   /* Seit 8. Aug. 2026 gezeichnete Bilder statt 💳 🏝️ 🔑 🙋‍♀️ ℹ️ 📜 🔒 🗑️.
      22px, damit die Zeile genauso hoch bleibt wie vorher. */
   .menu-row .row-icon img{ width:22px; height:22px; display:block; }
-  .menu-row .row-text{ flex:1; font-size:.9rem; font-weight:500; }
+  .menu-row .row-text{ flex:1; font-size:.92rem; font-weight:500; }
   .menu-row.danger .row-text{ color:#f0968a; }
 
   /* Eigene Bestaetigungs-Karte statt des grauen System-Dialogs */
@@ -1145,15 +1148,15 @@
   @media (prefers-reduced-motion: reduce){ .confirm-overlay{ transition:none; } }
 
   .wochenziel-card{ max-width:360px; text-align:left; }
-  .wochenziel-card h3{ margin:0 0 14px; font-family:var(--serif); font-size:1.08rem; text-align:center; }
+  .wochenziel-card h3{ margin:0 0 14px; font-family:var(--serif); font-size:1.05rem; text-align:center; }
   .wochenziel-card .radio-row{ margin-bottom:16px; }
   .wert-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
   .wert-chip{
     border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit;
-    padding:9px 14px; border-radius:20px; font-size:.85rem; font-weight:600; color:var(--ink);
+    padding:9px 14px; border-radius:999px; font-size:.86rem; font-weight:600; color:var(--ink);
   }
   .wert-chip.active{ background:var(--gold-grad); border-color:var(--gold); color:#2a2a26; }
-  .ziel-leer{ margin:0 0 14px; font-size:.85rem; color:var(--ink-soft); line-height:1.5; }
+  .ziel-leer{ margin:0 0 14px; font-size:.86rem; color:var(--ink-soft); line-height:1.5; }
   /* #wochenzielCard ist nur "card" ohne eigene Innenabstands-Klasse - ohne
      dieses padding sass der volle Knopf ohne Rand direkt an der
      Kartenrundung an und wirkte "abgeschnitten". */
@@ -1168,11 +1171,11 @@
   }
   .week-grid{ display:flex; gap:6px; margin-bottom:12px; }
   .week-cell{ flex:1; text-align:center; }
-  .week-cell .tag{ font-size:.68rem; font-weight:700; color:var(--ink-soft); margin-bottom:5px; }
+  .week-cell .tag{ font-size:.66rem; font-weight:700; color:var(--ink-soft); margin-bottom:5px; }
   .week-cell .kreis{
     width:100%; aspect-ratio:1/1; max-width:36px; margin:0 auto; border-radius:50%;
     border:1.5px solid var(--line); background:rgba(255,255,255,.10); display:flex; align-items:center;
-    justify-content:center; font-size:.85rem; color:transparent;
+    justify-content:center; font-size:.86rem; color:transparent;
   }
   .week-cell.on .kreis{ background:var(--gold-grad); border-color:var(--gold); color:#2a2a26; }
   .week-cell.heute .kreis{ box-shadow:0 0 0 2px rgba(239,230,216,.4); }
@@ -1205,7 +1208,7 @@
   .stufen-zeile:last-child{ border-bottom:none; }
   .stufen-liste{ margin-bottom:8px; }
   .stufen-zeile .name{ flex:1; min-width:0; font-weight:600; }
-  .stufen-zeile .ab{ font-size:.75rem; color:var(--ink-soft); flex:0 0 auto; }
+  .stufen-zeile .ab{ font-size:.74rem; color:var(--ink-soft); flex:0 0 auto; }
   .stufen-zeile.jetzt .name, .stufen-zeile.jetzt .ab{ color:var(--gold-deep); font-weight:700; }
   .stufe-bild{ width:19px; height:19px; flex:0 0 auto; }
   .journey-halt{ display:flex; flex-direction:column; align-items:center; gap:4px; }
@@ -1213,19 +1216,19 @@
   .journey-ab.jetzt{ color:var(--gold-deep); opacity:1; }
   .recap-row.jetzt .k, .recap-row.jetzt .v{ color:var(--gold-deep); font-weight:700; }
   .journey-stufe{ display:flex; align-items:baseline; gap:8px; margin-bottom:8px; }
-  .journey-stufe .name{ font-weight:700; font-size:.95rem; flex:1; }
-  .journey-stufe .zahl{ font-size:.76rem; color:var(--ink-soft); }
+  .journey-stufe .name{ font-weight:700; font-size:.92rem; flex:1; }
+  .journey-stufe .zahl{ font-size:.74rem; color:var(--ink-soft); }
 
   .ki-card{
     background:linear-gradient(140deg,rgba(0,0,0,.13),rgba(0,0,0,.21)); border:1px solid rgba(246,224,196,.45);
-    border-radius:18px; padding:16px; margin:16px 0; display:flex; gap:13px; align-items:flex-start;
+    border-radius:16px; padding:16px; margin:16px 0; display:flex; gap:13px; align-items:flex-start;
   }
   .ki-card .ki-ico{
-    width:44px; height:44px; border-radius:13px; background:rgba(255,255,255,.14); flex:0 0 auto;
+    width:44px; height:44px; border-radius:16px; background:rgba(255,255,255,.14); flex:0 0 auto;
     display:flex; align-items:center; justify-content:center; font-size:1.35rem;
   }
-  .ki-card h4{ margin:0 0 4px; font-family:var(--serif); font-size:1.02rem; }
-  .ki-card p{ margin:0 0 12px; font-size:.82rem; line-height:1.5; color:var(--ink-soft); }
+  .ki-card h4{ margin:0 0 4px; font-family:var(--serif); font-size:1rem; }
+  .ki-card p{ margin:0 0 12px; font-size:.78rem; line-height:1.5; color:var(--ink-soft); }
   /* Der Chat sitzt hier auf der goldenen Karte, nicht auf Weiss: die
      Antwort-Blasen haben sonst genau die Farbe des Kartenhintergrunds
      (beides --cream-2) und waeren unsichtbar. Darum hier hell auf Gold. */
@@ -1239,37 +1242,37 @@
   .recap h4{ margin:0 0 10px; font-family:var(--serif); font-size:1.05rem; }
   .recap-row{ padding:9px 0; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:3px; }
   .recap-row:last-child{ border-bottom:none; }
-  .recap-row .k{ font-size:.7rem; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); font-weight:700; }
-  .recap-row .v{ font-size:.9rem; line-height:1.45; }
+  .recap-row .k{ font-size:.66rem; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); font-weight:700; }
+  .recap-row .v{ font-size:.92rem; line-height:1.45; }
   .week-row{ padding:9px 0; border-bottom:1px solid var(--line); }
   .week-row:last-child{ border-bottom:none; }
-  .week-day{ display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); font-weight:700; margin-bottom:3px; }
-  .week-line{ display:block; font-size:.87rem; line-height:1.5; }
+  .week-day{ display:block; font-size:.66rem; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); font-weight:700; margin-bottom:3px; }
+  .week-line{ display:block; font-size:.86rem; line-height:1.5; }
   .week-line .lbl{ color:var(--ink-soft); font-size:.78rem; }
-  .journey-lead, .journey-hint{ margin:0 0 10px; font-size:.83rem; line-height:1.55; color:var(--ink-soft); }
+  .journey-lead, .journey-hint{ margin:0 0 10px; font-size:.86rem; line-height:1.55; color:var(--ink-soft); }
   .journey-hint{ margin:10px 0 0; }
 
   /* ---------- Konto / Anmelden ---------- */
   .konto-hinweis{ padding:15px; margin-bottom:12px; font-size:.86rem; line-height:1.55; }
   .konto-form{ padding:18px; position:relative; }
   .konto-badge{
-    display:inline-block; background:rgba(255,255,255,.14); color:var(--gold); font-size:.65rem; font-weight:800;
+    display:inline-block; background:rgba(255,255,255,.14); color:var(--gold); font-size:.66rem; font-weight:800;
     padding:4px 9px; border-radius:9px; margin-bottom:14px;
   }
   .konto-form label{ display:block; font-size:.78rem; font-weight:600; color:var(--ink-soft); margin-bottom:12px; }
   .konto-form input{
-    display:block; width:100%; margin-top:5px; padding:12px; border:1px solid var(--line); border-radius:12px;
-    font-family:inherit; font-size:.9rem; background:rgba(0,0,0,.22); color:var(--ink);
+    display:block; width:100%; margin-top:5px; padding:12px; border:1px solid var(--line); border-radius:16px;
+    font-family:inherit; font-size:.92rem; background:rgba(0,0,0,.22); color:var(--ink);
   }
   .konto-form input:disabled{ opacity:.7; }
   .konto-form .btn-dark[disabled], .konto-form .btn-ghost[disabled]{ opacity:.45; cursor:default; box-shadow:none; }
-  .konto-fuss{ margin:14px 0 0; font-size:.79rem; line-height:1.55; color:var(--ink-soft); }
+  .konto-fuss{ margin:14px 0 0; font-size:.78rem; line-height:1.55; color:var(--ink-soft); }
   .konto-schritte{ padding:6px 16px; }
   .schritt{ display:flex; gap:12px; padding:13px 0; border-bottom:1px solid var(--line); font-size:.86rem; line-height:1.55; }
   .schritt:last-child{ border-bottom:none; }
   .schritt .nr{
     width:24px; height:24px; border-radius:50%; background:var(--gold-grad); color:#2a2a26; flex:0 0 auto;
-    display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center; font-size:.74rem; font-weight:700;
   }
 
   /* ---------- Über mich ---------- */
@@ -1282,29 +1285,33 @@
   }
   .ueber-bild img{ width:66%; height:66%; object-fit:contain; }
   .ueber-gruss{ margin:0 0 12px; font-family:var(--serif); font-size:1.15rem; }
-  .ueber-karte p{ margin:0 0 12px; font-size:.9rem; line-height:1.6; color:var(--ink-soft); text-align:left; }
+  .ueber-karte p{ margin:0 0 12px; font-size:.92rem; line-height:1.6; color:var(--ink-soft); text-align:left; }
   .ueber-karte p:last-child{ margin-bottom:0; }
-  .ueber-web{ font-size:.84rem !important; color:var(--gold-deep) !important; text-align:center !important; }
+  .ueber-web{ font-size:.86rem !important; color:var(--gold-deep) !important; text-align:center !important; }
   .ueber-web a{ color:inherit; }
   .legal-karte{ text-align:left; }
   .legal-karte h3{ font-size:.74rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--gold-deep); margin:22px 0 8px; }
   .legal-karte h3:first-child{ margin-top:0; }
+  /* Gilt fuer JEDEN Link in der App. Ohne diese Regel nimmt der Browser
+     sein Standardblau (0,0,238) - auf blauem Grund unlesbar. Genau das war
+     bei der Mailadresse auf "Ueber die App" der Fall. */
+  a{ color:var(--gold-deep); text-underline-offset:3px; }
   .legal-karte a{ color:var(--gold-deep); }
   /* "Über die App": der Einstiegssatz darf mittig und etwas groesser stehen,
      der Rest der Seite liest sich wie Impressum/Datenschutz. */
-  .appinfo-lead{ text-align:center !important; font-size:.98rem !important; line-height:1.55 !important; color:var(--ink) !important; }
+  .appinfo-lead{ text-align:center !important; font-size:1rem !important; line-height:1.55 !important; color:var(--ink) !important; }
   /* Drei nachpruefbare Zahlen nebeneinander - keine Werbeaussagen, sondern
      das, was die App selbst weiss (Anzahl Meditationen, Themen, Stand). */
   .appinfo-zahlen{ display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; padding:16px 12px; }
   .appinfo-zahlen .z{ text-align:center; }
   .appinfo-zahlen .z b{ display:block; font-size:1.15rem; font-weight:800; color:var(--gold-deep); font-variant-numeric:tabular-nums; }
-  .appinfo-zahlen .z span{ display:block; margin-top:2px; font-size:.72rem; color:var(--ink-soft); }
+  .appinfo-zahlen .z span{ display:block; margin-top:2px; font-size:.74rem; color:var(--ink-soft); }
   .legal-links{ text-align:center; margin:14px 0 0; font-size:.78rem; color:var(--ink-soft); }
   .legal-links button{ border:none; background:none; font:inherit; color:var(--gold-deep); cursor:pointer; padding:0; text-decoration:underline; }
 
   /* ---------- Abo ---------- */
   .abo-vorteile{ padding:15px; margin-bottom:14px; }
-  .abo-vorteile p{ margin:0 0 9px; font-size:.85rem; line-height:1.5; color:var(--ink-soft);
+  .abo-vorteile p{ margin:0 0 9px; font-size:.86rem; line-height:1.5; color:var(--ink-soft);
     padding-left:22px; position:relative; }
   .abo-vorteile p:last-child{ margin-bottom:0; }
   .abo-vorteile span{ position:absolute; left:0; top:0; color:var(--gold-deep); font-weight:800; }
@@ -1313,31 +1320,31 @@
     background:var(--card); border-radius:16px; box-shadow:0 3px 14px rgba(0,0,0,.07); }
   .plan{
     display:block; width:100%; text-align:left; cursor:pointer; font-family:inherit; color:var(--ink);
-    background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:10px;
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:10px;
   }
   .plan.best{ border-color:var(--gold); }
-  .plan-badge{ display:inline-block; background:var(--gold-grad); color:#2a2a26; font-size:.65rem; font-weight:800;
+  .plan-badge{ display:inline-block; background:var(--gold-grad); color:#2a2a26; font-size:.66rem; font-weight:800;
     padding:4px 9px; border-radius:9px; margin-bottom:8px; }
   .plan-name{ display:block; font-family:var(--serif); font-size:1.1rem; font-weight:700; }
   .plan-price{ display:block; font-size:1.35rem; font-weight:700; margin:3px 0 5px; color:var(--gold-deep); }
-  .plan-note{ display:block; font-size:.79rem; line-height:1.5; color:var(--ink-soft); }
-  .pay-note{ padding:14px; font-size:.8rem; line-height:1.55; color:var(--ink-soft);
-    background:var(--cream-2); border-radius:14px; margin-top:6px; }
+  .plan-note{ display:block; font-size:.78rem; line-height:1.5; color:var(--ink-soft); }
+  .pay-note{ padding:14px; font-size:.78rem; line-height:1.55; color:var(--ink-soft);
+    background:var(--cream-2); border-radius:16px; margin-top:6px; }
 
   /* ---------- Abschluss ---------- */
-  .shift-box{ padding:15px; font-size:.88rem; line-height:1.55; margin-top:10px; }
+  .shift-box{ padding:15px; font-size:.86rem; line-height:1.55; margin-top:10px; }
   /* Zustand festhalten: der Knopf steht direkt unter dem Kompass, der
      Hinweis darunter erklaert in einem Satz, was zu tun ist. Nach dem
      Bestaetigen verschwindet beides und der Rueckblick nimmt seinen Platz. */
   .outro-bestaetigen{ margin-top:16px; }
   .outro-hinweis{ margin:9px 2px 0; font-size:.78rem; line-height:1.5; color:var(--ink-soft); text-align:center; }
-  .outro-aendern{ margin-top:2px; font-size:.8rem; }
+  .outro-aendern{ margin-top:2px; font-size:.78rem; }
   /* Festgehaltener Kompass: die Nadel reagiert nicht mehr, das soll man
      auch sehen - der Punkt verliert seinen Greif-Zeiger und die Scheibe
      wirkt einen Hauch ruhiger. */
   /* Kurzes Winken, wenn jemand eine Empfehlung will, ohne den Zeiger
      gesetzt zu haben - zeigt hin, statt nur einen Satz zu schreiben. */
-  .rec-fehlt{ margin:10px 2px 0; font-size:.82rem; line-height:1.5; color:var(--gold-deep); text-align:center; }
+  .rec-fehlt{ margin:10px 2px 0; font-size:.78rem; line-height:1.5; color:var(--gold-deep); text-align:center; }
   @keyframes winken{ 0%,100%{ transform:none; } 25%{ transform:rotate(-2.5deg); } 75%{ transform:rotate(2.5deg); } }
   .compass-wrap.winkt{ animation:winken .5s ease-in-out 2; }
   @media (prefers-reduced-motion: reduce){ .compass-wrap.winkt{ animation:none; } }
@@ -1349,7 +1356,7 @@
      "Zum Ausprobieren freischalten" nutzen die Klasse. */
   .mini-btn{
     border:1px solid var(--line); background:var(--card); cursor:pointer; font-family:inherit;
-    padding:11px 14px; border-radius:12px; font-size:.83rem; font-weight:600; color:var(--ink);
+    padding:11px 14px; border-radius:16px; font-size:.86rem; font-weight:600; color:var(--ink);
   }
   .mini-btn.primary{ background:var(--gold-grad); border-color:var(--gold); color:#2a2a26; font-weight:700; }
 
@@ -1371,22 +1378,22 @@
   /* pre-line: bei mehrschichtigen Antworten (erst ankommen, dann die
      weiteren Wege) setzt der Begleiter Zeilenumbrueche - sonst stuenden
      drei Vorschlaege als ein einziger Fliesstext-Block da. */
-  .bubble{ padding:10px 13px; border-radius:14px; font-size:.85rem; line-height:1.5; max-width:85%; white-space:pre-line; }
+  .bubble{ padding:10px 13px; border-radius:16px; font-size:.86rem; line-height:1.5; max-width:85%; white-space:pre-line; }
   .bubble.ai{ background:var(--cream-2); align-self:flex-start; border-bottom-left-radius:5px; }
   .bubble.me{ background:var(--gold-grad); color:#2a2a26; align-self:flex-end; border-bottom-right-radius:5px; }
   .bubble.typing{ opacity:.6; }
   /* Die vom Begleiter vorgeschlagene Uebung, direkt im Gespraech startbar. */
   .chat-vorschlag{ align-self:stretch; }
-  .chat-vorschlag .focus-card{ background:var(--card); border:1px solid var(--gold-soft); border-radius:14px; }
-  .chat-vorschlag .row-thumb{ width:44px; height:44px; border-radius:11px; }
+  .chat-vorschlag .focus-card{ background:var(--card); border:1px solid var(--gold-soft); border-radius:16px; }
+  .chat-vorschlag .row-thumb{ width:44px; height:44px; border-radius:9px; }
   .chat-row{ display:flex; gap:8px; }
   .chat-row input{
-    flex:1; min-width:0; border:1px solid var(--line); border-radius:12px; padding:12px;
-    font-family:inherit; font-size:.88rem; background:rgba(0,0,0,.20); color:var(--ink);
+    flex:1; min-width:0; border:1px solid var(--line); border-radius:16px; padding:12px;
+    font-family:inherit; font-size:.86rem; background:rgba(0,0,0,.20); color:var(--ink);
   }
   .chat-row button{
     border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26; font-family:inherit;
-    font-weight:700; font-size:.85rem; padding:12px 16px; border-radius:12px;
+    font-weight:700; font-size:.86rem; padding:12px 16px; border-radius:16px;
   }
 
   /* ---------- Insel gestalten (bleibt erhalten, neu eingefärbt) ---------- */
@@ -1397,18 +1404,18 @@
   /* Gleiche Grösse wie .page-head h1/p auf allen anderen Seiten - vorher
      war der Insel-Konfigurator (einzige Stelle mit .topbar) die einzige
      Seite mit einem sichtbar kleineren Titel. */
-  .topbar h1{ font-family:var(--serif); font-size:1.65rem; margin:0 0 3px; }
-  .topbar .subtitle{ margin:0; color:var(--ink-soft); font-size:.88rem; }
-  .stepper{ text-align:center; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  .topbar h1{ font-family:var(--serif); font-size:1.85rem; font-weight:400; margin:0 0 3px; }
+  .topbar .subtitle{ margin:0; color:var(--ink-soft); font-size:.86rem; }
+  .stepper{ text-align:center; font-size:.66rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
     color:var(--gold-deep); margin:0 0 8px; }
   .layout{ display:flex; flex-direction:column; gap:16px; padding:0 16px 40px; max-width:520px; margin:0 auto; }
-  .controls{ background:var(--card); border-radius:20px; padding:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); order:2; }
+  .controls{ background:var(--card); border-radius:999px; padding:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); order:2; }
   .group{ margin-bottom:18px; }
   .group h3{ margin:0 0 9px; font-size:.74rem; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft); font-weight:700; }
   .opts{ display:flex; gap:8px; flex-wrap:wrap; }
   .opts .opt{
-    border:1px solid var(--line); background:var(--card); padding:10px 14px; border-radius:12px;
-    cursor:pointer; font-size:.85rem; font-weight:600; display:flex; align-items:center; gap:6px;
+    border:1px solid var(--line); background:var(--card); padding:10px 14px; border-radius:16px;
+    cursor:pointer; font-size:.86rem; font-weight:600; display:flex; align-items:center; gap:6px;
     transition:.15s ease; user-select:none;
   }
   /* Bilder in den Auswahlzeilen und in der Ueberschrift der Insel-Seite -
@@ -1435,16 +1442,16 @@
   .swatch.active{ border-color:var(--gold-deep); transform:scale(1.12); }
   .enter-btn{
     width:100%; margin-top:4px; border:none; cursor:pointer; background:var(--gold-grad); color:#2a2a26;
-    font-family:inherit; font-weight:700; font-size:1rem; padding:16px; border-radius:15px;
+    font-family:inherit; font-weight:700; font-size:1rem; padding:16px; border-radius:16px;
     box-shadow:0 6px 16px rgba(8,18,32,.30);
   }
-  .summary{ margin-top:14px; font-size:.8rem; color:var(--ink-soft); line-height:1.5; }
+  .summary{ margin-top:14px; font-size:.78rem; color:var(--ink-soft); line-height:1.5; }
   .stage-wrap{ position:relative; order:1; }
   .stage{
     position:relative; width:100%; aspect-ratio:4/3; border-radius:22px; overflow:hidden;
     box-shadow:0 10px 28px rgba(0,0,0,.18); background:#bfeef2;
   }
-  .hint{ text-align:center; font-size:.7rem; color:var(--ink-soft); opacity:.7; margin-top:6px; }
+  .hint{ text-align:center; font-size:.66rem; color:var(--ink-soft); opacity:.7; margin-top:6px; }
   body.entered .layout{ display:block; padding:0; max-width:none; }
   body.entered .controls, body.entered .hint{ display:none; }
   body.entered .stage-wrap{ position:fixed; inset:0; z-index:70; }
@@ -1497,9 +1504,9 @@
     padding:calc(64px + env(safe-area-inset-top, 0px)) 20px calc(30px + var(--safe-bottom)); color:#fff;
   }
   body.in-session .session{ display:flex; }
-  .player-pos{ text-align:center; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; opacity:.7; font-weight:700; margin-bottom:10px; }
-  .med-name{ font-family:var(--serif); font-size:1.4rem; text-align:center; }
-  .player-cat{ text-align:center; font-size:.8rem; opacity:.7; margin-top:6px; }
+  .player-pos{ text-align:center; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; opacity:.7; font-weight:700; margin-bottom:10px; }
+  .med-name{ font-family:var(--serif); font-size:1.35rem; text-align:center; }
+  .player-cat{ text-align:center; font-size:.78rem; opacity:.7; margin-top:6px; }
   .guide{
     flex:1; font-size:1.05rem; line-height:1.6; text-align:center; margin:0 auto; max-width:22em;
     display:flex; align-items:center; justify-content:center;
@@ -1511,10 +1518,10 @@
   .progress{ height:5px; background:rgba(255,255,255,.2); border-radius:3px; overflow:hidden; margin-bottom:10px; }
   .progress span{ display:block; height:100%; background:var(--gold-soft); border-radius:3px; transition:width .9s linear; }
   .session-row{ display:flex; align-items:center; gap:9px; }
-  .session-row .time{ font-size:.76rem; opacity:.8; flex:0 0 auto; }
+  .session-row .time{ font-size:.74rem; opacity:.8; flex:0 0 auto; }
   .session-row .mini-btn{
-    flex:1; border:none; background:rgba(255,255,255,.16); color:#fff; padding:14px 10px; border-radius:13px;
-    font-size:.85rem; font-weight:600;
+    flex:1; border:none; background:rgba(255,255,255,.16); color:#fff; padding:14px 10px; border-radius:16px;
+    font-size:.86rem; font-weight:600;
   }
   .session-row .mini-btn.primary{ background:var(--gold-grad); color:#2a2a26; font-weight:700; }
 
@@ -1536,7 +1543,7 @@
     color:#9fb3c9; padding:0 2px;
   }
   .tab-item svg{ width:20px; height:20px; }
-  .tab-item span{ font-size:.58rem; font-weight:600; text-align:center; line-height:1.05; }
+  .tab-item span{ font-size:.62rem; font-weight:600; text-align:center; line-height:1.05; }
   .tab-item.active{ color:var(--gold-deep); }
 </style>
 </head>
@@ -1549,7 +1556,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.119";
+    var AKTUELLE_VERSION = "2026-08-10.120";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

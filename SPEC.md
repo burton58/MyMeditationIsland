@@ -1409,3 +1409,57 @@ Der Platzhalter war das **einzige neutralgraue Element** auf einer Seite, deren 
 Jetzt `input::placeholder, textarea::placeholder{ color:var(--ink-soft); opacity:.75; }` — gilt fuer alle vier Eingabefelder der App (Suche, Chat, Anmeldung).
 
 **Merksatz:** Bei "sieht fremd aus, ich weiss nicht warum" die Pixel messen statt raten. Und: Browser-Standardfarben (`::placeholder`, `::selection`, Fokusrahmen, Scrollbalken) folgen keiner Variablen — bei einem Farbwechsel muessen sie einzeln gesetzt werden, sonst bleiben sie als Fremdkoerper stehen.
+
+
+## 21. Vollstaendiges Design-Audit (20. Aug. 2026)
+
+Christine: *"Analysiere ganze Seiten auf Design, Farbe, Schriftgroesse, Abstaende und suche nach Inkonsistenzen, schlechtem Design, Optimierungspotenzial — fasse es zusammen mit Vorschlaegen und entscheide."*
+
+Vorgehen: Ein Browser-Skript oeffnet alle dreizehn Seiten und liest von **720 sichtbaren Elementen** Eckenrundung, Polster, Textfarbe, Schriftgroesse, Gewicht und Abstaende aus. Bewertet wurde also gemessen, nicht geschaetzt.
+
+### Befund 1 — drei falsche Farben
+
+| Farbe | wo | Bewertung |
+|---|---|---|
+| `rgb(195,206,200)` graugruen | `.fav-btn`, **47x** (jede Zeile der Bibliothek) | Rest aus der Zeit vor dem Blau. Behoben: `var(--ink-soft)` |
+| `rgb(0,0,238)` Browserblau | Mailadresse auf "Ueber die App" | Der Link hatte **keine** Regel, also nahm der Browser sein Standardblau — auf blauem Grund unlesbar. Behoben mit einer Regel fuer **alle** `a` |
+| `rgb(0,0,0)` schwarz | `.lib-cat-tile` u. a. | Knoepfe erben die Textfarbe nicht; ohne Angabe stehen sie auf Schwarz. Noch nicht sichtbar, aber eine Falle — vorbeugend gesetzt |
+
+Dasselbe Muster wie beim Platzhaltertext: **Was der Browser selbst faerbt, folgt keiner Variablen.** Diese Stellen muessen bei einem Farbwechsel einzeln nachgezogen werden.
+
+### Befund 2 — neun Eckenrundungen
+
+Gefunden: 50%, 16px (53x), 18px (23x), 12px (16px), 15px, 20px, 14px, 9px, 10px. Reduziert auf **vier**:
+
+| Rolle | Wert |
+|---|---|
+| Kreise (Symbolknoepfe, Avatare) | `50%` |
+| Flaechen und Bedienelemente (Karten, Zeilen, Felder, Kacheln, Knoepfe) | **16px** |
+| Abzeichen (Badges) | **9px** |
+| Pillen (Filter-Chips, Titelseiten-Knopf) | **999px** |
+
+### Befund 3 — 45 verschiedene Schriftgroessen
+
+Der groesste Einzelbefund. Werte wie 0,82 / 0,83 / 0,84 / 0,85 / 0,86 / 0,87 / 0,88rem lagen nebeneinander — Unterschiede von Bruchteilen eines Pixels, die keine Rolle ausdruecken, aber verhindern, dass die App wie aus einem Guss wirkt.
+
+Programmatisch auf eine Skala gezogen: **0,62 / 0,66 / 0,74 / 0,78 / 0,86 / 0,92 / 1,0 / 1,05 / 1,2 / 1,35 / 1,85 / 3,1rem**. Verschoben wurde nur, wo der Unterschied **hoechstens 0,05rem (0,8 Pixel)** betraegt — dadurch bleibt jede bewusste Groessenentscheidung erhalten und keine einzelne Aenderung ist mit blossem Auge zu sehen. Ergebnis: **45 Werte auf 19**.
+
+Die verbliebenen groesseren Werte wurden einzeln geprueft und **bewusst behalten**: 1,1 bis 1,7rem sitzen auf Symbol- und Emoji-Behaeltern (`.row-thumb`, `.profil-avatar`, `.fd-state-emoji`) — das ist eine andere Rolle als Text; 2,6rem ist die Titelseite auf kleinen Bildschirmen. **Korrigiert** wurde dabei `.topbar h1` (Insel-Gestaltung): stand noch auf 1,65rem/fett, ist aber ein Seitentitel wie jeder andere — jetzt 1,85rem/400.
+
+Damit ist die frühere Entscheidung aus §7.13 ("die vielen minimal unterschiedlichen `font-size`-Werte bewusst nicht anfassen") aufgehoben. Sie war damals richtig begruendet (viel Aufwand, hohes Risiko, kein sichtbarer Gewinn) — mit einem messenden Skript und einer Toleranzgrenze faellt beides weg.
+
+### Befund 4 — die Abstaende der Titelseite
+
+Christines konkreter Hinweis. Gemessen ergab die Titelseite von oben nach unten: **10 / 16 / 5 / 9 / 7** Punkte — kein System, und die beiden Unterzeilen klebten mit 5 Punkten aneinander, waehrend darueber 16 standen.
+
+Jetzt zwei Werte: **6 Punkte innerhalb einer Gruppe** (zusammengehoerende Zeilen), **14 Punkte zwischen Gruppen**. Gemessen: 14 / 14 / 6 / 14 / 10.
+
+**Dabei einen echten Fehler gefunden:** `.splash-mikro` war **zweimal** definiert, beide Male mit `!important` — die zweite Regel setzte den Abstand still auf 9px zurueck, waehrend die erste 14px vorgab. Genau so entstehen Abstaende, die niemand erklaeren kann. Die zweite Regel enthaelt jetzt nur noch, was sie wirklich beitraegt (Schriftgroesse, Deckkraft, Schatten).
+
+### Geprueft, aber kein Fehler
+
+Ein leerer Kasten auf der Abo-Seite (`#trialBox`) stellte sich als **Test-Artefakt** heraus: Er wird von `renderAbo()` gefuellt, und alle sechs Wege zu dieser Seite rufen `renderAbo()` vorher auf — nur der direkte Sprung im Testskript nicht.
+
+### Kontrolle
+
+Nach allen Aenderungen alle zwoelf Seiten erneut geoeffnet: keine Skriptfehler, kein Element ragt aus dem Bildschirm, alle Seiten per Screenshot gegengeprueft.
