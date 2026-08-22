@@ -1560,3 +1560,16 @@ Christine fragte, ob die vier neuen Kategoriebilder (§23) farblich zum blauen H
 | Entspannen (bernstein) | 28 Grad | 177 Grad |
 
 Alle vier liegen **150 bis 177 Grad vom Untergrund entfernt** — praktisch gegenueberliegend auf dem Farbkreis, also warm-komplementaer zu Blau. Das ist **kein Zufall und kein Problem, sondern genau der Kontrast**, den Christine zu Beginn des Bilder-Themas gefordert hatte ("es muss doch irgendwie einen Kontrast haben", siehe Bildfarben-Empfehlung). Warme Bilder auf kuehlem Grund heben sich klar ab, statt mit ihm zu verschmelzen — bestaetigt statt nur behauptet.
+
+
+## 25. Suche wirkte tot (22. Aug. 2026, Christine gemeldet: "Bringt das was? Finde nicht")
+
+Nachgeprueft statt vermutet: Die Suche selbst funktionierte technisch einwandfrei (Titel, Kurzbeschreibung und Bereichsname werden durchsucht, Trefferzahl stimmt, leere Suche zeigt korrekt "Nichts gefunden zu ... Versuch ein anderes Wort."). **Das Problem war die Wahrnehmung, nicht die Funktion.**
+
+Beim Tippen aenderte sich oben auf dem Bildschirm nichts: Die vier grossen Kategoriebilder (§14/§15/§23) blieben immer stehen, egal was gesucht wurde — nur die kleine Zeile "X Treffer" und die Liste weit darunter aenderten sich. Auf einem Telefon-Bildschirm sieht man nach dem Tippen praktisch denselben Anblick wie vorher; die eigentliche Wirkung der Suche stand ausserhalb des sichtbaren Bereichs.
+
+**Loesung:** Die vier Kacheln blenden sich jetzt aus, sobald ein Suchwort eingegeben ist (`renderLibFilters()`, `suchAktiv = !!libSuche.trim()`). Damit folgt die gefilterte Liste direkt auf das Suchfeld — der Erfolg der Suche ist ohne Scrollen sichtbar. Beim Leeren des Suchfelds (Eingabe geloescht oder ✕ angetippt) erscheinen die Kacheln wieder.
+
+Die Chips "Alle"/"Favoriten" bleiben waehrend der Suche sichtbar und wirken weiterhin zusaetzlich zum Suchwort (z. B. nur Favoriten durchsuchen) — geprueft, dass beides zusammen korrekt filtert.
+
+**Lehre:** Eine Funktion kann fehlerfrei arbeiten und trotzdem "kaputt wirken", wenn ihre Wirkung ausserhalb des sichtbaren Bereichs bleibt, waehrend der dominante Teil des Bildschirms (hier: die vier grossen Fotos) unveraendert stehen bleibt. Bei "das bringt nichts"-Meldungen zuerst pruefen, was der Nutzer nach der Aktion tatsaechlich zu sehen bekommt, nicht nur, ob die Daten stimmen.

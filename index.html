@@ -1573,7 +1573,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.125";
+    var AKTUELLE_VERSION = "2026-08-10.126";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4681,9 +4681,18 @@
       '</button>';
     }).join("");
 
+    // Waehrend einer Suche verschwinden die vier grossen Kacheln (22. Aug.
+    // 2026, Christine: "bringt das was? Finde nicht"). Sie aendern sich beim
+    // Tippen nie - nur die Liste weiter unten wird gefiltert. Dadurch wirkte
+    // die Suche wie tot: man sah oben denselben Bildschirm wie vorher und
+    // musste erst daran vorbeischauen, um die (viel kleinere) Trefferzahl
+    // und die gefilterte Liste zu finden. Ohne die Kacheln folgt die Liste
+    // direkt auf das Suchfeld - der Erfolg der Suche ist sofort sichtbar,
+    // kein Scrollen noetig.
+    var suchAktiv = !!libSuche.trim();
     host.innerHTML =
       '<div class="lib-chips-row">' + chipsHtml + '</div>' +
-      '<div class="lib-cat-grid">' + gridHtml + '</div>';
+      (suchAktiv ? '' : '<div class="lib-cat-grid">' + gridHtml + '</div>');
 
     Array.prototype.forEach.call(host.querySelectorAll("button"), function(btn){
       btn.addEventListener("click", function(){
