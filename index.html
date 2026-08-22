@@ -1573,7 +1573,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.123";
+    var AKTUELLE_VERSION = "2026-08-10.124";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -4044,11 +4044,16 @@
   // herausgenommen und die Schatten Richtung App-Blau gezogen, das Motiv
   // und der jeweils eigene Farbcharakter bleiben (Tuerkis / Rose / Gruen /
   // Blaugrau). Die Ausgangsdateien liegen unveraendert in bilder-gold/.
+  // Ersetzt durch vier eigens per ChatGPT erzeugte Bilder (22. Aug. 2026,
+  // Prompt aus SPEC.md §-Bilderfarben): eine Serie im gleichen Malstil, vier
+  // klar unterschiedene Farbwelten. Auf dieselbe Helligkeit normiert wie
+  // die bg-*.jpg (Ziel 112, siehe §19) - sonst wiederholt sich der Fehler
+  // von damals (2,49x bis 1,43x heller als der Untergrund).
   var LIB_KAT_FOTO = {
-    nord:"bg-lichtraum.jpg",       // Gedanken beruhigen - helle Wellen, tuerkis
-    sued:"bg-herzraum.jpg",        // Gefuehle verstehen - Bluetenhuegel, rose
-    west:"bg-waldlichtung.jpg",    // Stress loesen - Waldlichtung, gruen
-    ost:"bg-bergsee.jpg"           // Entspannen - stiller See, blaugrau
+    nord:"kat-neu-nord.jpg",  // Gedanken beruhigen - silbrig-weisser Nebelsee
+    sued:"kat-neu-sued.jpg",  // Gefuehle verstehen - altrosa Huegel
+    west:"kat-neu-west.jpg",  // Stress loesen - moosgruener Wald
+    ost:"kat-neu-ost.jpg"     // Entspannen - Bernstein-Abendlicht
   };
 
   // Die vier grossen Fotokacheln oben in der Bibliothek zeigten vom

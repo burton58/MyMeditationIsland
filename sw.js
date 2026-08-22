@@ -8,7 +8,7 @@
 //
 // CACHE_NAME bei jeder wichtigen Aenderung mit hochzaehlen (gleiche Idee
 // wie AKTUELLE_VERSION in index.html) - das raeumt alte Speicherstaende auf.
-const CACHE_NAME = "myisland-cache-v114";
+const CACHE_NAME = "myisland-cache-v115";
 const SHELL_FILES = [
   "./",
   "./index.html",
@@ -34,6 +34,14 @@ const SHELL_FILES = [
   "./kat-ost.jpg",
   "./logo.png",
   "./icon-180.png",
+  // Die vier Kategoriebilder - jetzt kat-neu-*.jpg statt bg-lichtraum/
+  // herzraum/waldlichtung/bergsee (22. Aug. 2026, siehe LIB_KAT_FOTO in
+  // index.html). Die vier bg-*.jpg bleiben unten in der Liste, weil sie
+  // weiterhin der Hintergrund von acht einzelnen Uebungen sind.
+  "./kat-neu-nord.jpg",
+  "./kat-neu-sued.jpg",
+  "./kat-neu-west.jpg",
+  "./kat-neu-ost.jpg",
   "./bg-waldlichtung.jpg",
   "./bg-bergspitze.jpg",
   "./bg-winterlandschaft.jpg",

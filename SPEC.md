@@ -1518,3 +1518,23 @@ Weil `--flaeche-hoch` **heller** als der Untergrund ist statt dunkler, entsteht 
 Ausserdem am Fortschrittsbalken: Hoehe von 6 auf 9 Punkte, vollrunde Enden, dunklere Schiene (`rgba(0,0,0,.28)`) fuer mehr Kontrast zur hellen Fuellung, und `min-width:9px` — damit ein angefangenes Ziel auch bei 1 % sichtbar ist statt als leerer Balken. Die Trennstriche zwischen den drei Zahlen waren so dunkel wie alles andere und sind jetzt hell (`rgba(255,255,255,.14)`).
 
 **Uebertragbar:** `--flaeche-hoch` steht jetzt allen Seiten zur Verfuegung. Wo eine Seite flach wirkt, ist die Frage zuerst "welcher Block traegt den Inhalt?" und dann, ob dieser Block eine Ebene hoeher gehoert — nicht, welche Farbe man ihm geben koennte.
+
+
+## 23. Die vier Kategoriebilder ersetzt: ChatGPT-Serie in vier Farbwelten (22. Aug. 2026)
+
+Christine hat den Prompt aus dem Bildfarben-Vorschlag (silbrig-weiss / altrosa / moosgruen / bernstein, kein Blau) bei ChatGPT eingegeben und alle vier Bilder geliefert. Vor dem Einbauen wie immer gemessen statt nach Augenmass beurteilt:
+
+| Bild | Groesse | Helligkeit roh | Verhaeltnis zum Untergrund |
+|---|---|---|---|
+| weiss (Gedanken beruhigen) | 1448x1086 | 211 | 2,49x |
+| rose (Gefuehle verstehen) | 1448x1086 | 179 | 2,11x |
+| gruen (Stress loesen) | 1448x1086 | 122 | 1,43x |
+| bernstein (Entspannen) | 1448x1086 | 148 | 1,75x |
+
+**Derselbe Fehler wie beim ersten Versuch in §14/§19** waere fast wieder passiert: vier Bilder, die zwar farblich einer Regel folgen, aber unterschiedlich hell sind — das erste haette geleuchtet, das dritte waere im Untergrund fast verschwunden. Diesmal **vor** dem Einbauen normiert, mit derselben Methode und demselben Zielwert wie bei den `bg-*.jpg` (§19): Gammakurve auf Zielhelligkeit 112, Saettigung 1,15 zum Ausgleich. Ergebnis: alle vier zwischen 113 und 118, also 1,33x bis 1,39x — praktisch gleich.
+
+Dateien: `kat-neu-nord/sued/west/ost.jpg`, ersetzen in `LIB_KAT_FOTO` die bisherigen `bg-lichtraum/herzraum/waldlichtung/bergsee.jpg`. Gilt wie gehabt an drei Stellen gleichzeitig (Kacheln, Listenzeilen ohne eigenes Bild, Vollbild-Hintergrund waehrend der Meditation — siehe §14) — im Browser gegengeprueft, dass eine gestartete Uebung ohne eigenes `bg` jetzt `kat-neu-nord.jpg` zieht und der Begleittext darauf gut lesbar bleibt.
+
+Die vier vorherigen `bg-*.jpg` als Kategoriebild sind damit abgeloest, bleiben aber unveraendert der Hintergrund der acht Uebungen, die ein eigenes `bg` tragen (`kat-neu-*.jpg` sind in `SHELL_FILES` ergaenzt, die alten vier bleiben ebenfalls drin).
+
+**Weiterhin offen:** Die kleinen runden Bilder in den Zeilen der acht Uebungen mit eigenem `bg` sind weiterhin warm-golden (siehe Offener Punkt in §14) — noch nicht bestellt.
