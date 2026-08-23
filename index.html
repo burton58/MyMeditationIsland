@@ -100,8 +100,7 @@
   html,body{ margin:0; padding:0; }
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
-    background-attachment:fixed;
+    background:var(--cream);
     color:var(--ink);
     min-height:100vh;
     /* "dvh" rechnet mit der Bildschirmhoehe, die gerade wirklich sichtbar
@@ -111,6 +110,29 @@
     min-height:100dvh;
     padding-bottom:calc(var(--tabbar-h) + var(--safe-bottom));
   }
+  /* Der Farbverlauf liegt seit 23. Aug. 2026 in einer eigenen, fest
+     stehenden Ebene statt direkt am <body>.
+     WARUM: Vorher stand am body "background-attachment: fixed". Genau das
+     ist auf dem iPhone die bekannteste Ursache dafuer, dass fest stehende
+     Elemente (hier: die Leiste unten) nach einer AENDERUNG DER SEITENHOEHE
+     an der falschen Stelle gezeichnet werden. Christine hat es dreimal
+     gemeldet, und beim vierten Mal die Bedingung genannt, die alles
+     erklaert: "wenn ich Mein Insel-Aufenthalt aufklappe". Genau dann wird
+     die Seite ploetzlich hoeher. Ihre frueheren Meldungen passen dazu -
+     einmal, nachdem der Kompass eine Empfehlung eingeblendet hatte, einmal
+     in der langen Liste der Bibliothek.
+     Diese Ebene sieht exakt gleich aus (der Verlauf bleibt am Bildschirm
+     stehen, nicht am Seiteninhalt), umgeht aber den Fehler: eine fest
+     stehende Ebene mit gewoehnlichem Hintergrund geht einen anderen Weg
+     durch den Zeichner als "background-attachment: fixed".
+     z-index:-1 legt sie hinter allen Inhalt, aber vor die Hintergrundfarbe
+     des body. */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+  }
+  /* Die Titelseite hat ihre eigene, ruhige Farbe - dort keine Ebene. */
+  body[data-step="splash"]::before{ display:none; }
   body[data-step="splash"]{ padding-bottom:0; background:var(--deep); }
   body.entered{ padding-bottom:0; overflow:hidden; }
 
@@ -1659,7 +1681,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.139";
+    var AKTUELLE_VERSION = "2026-08-10.140";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -7729,6 +7751,34 @@
   // ruhig bleibt; ein Tipp zeigt sie, der naechste versteckt sie wieder. Der
   // Pfeil dreht sich mit, damit man den Zustand sieht.
   var inselbewohnerOffen = false;
+  // Sicherheitsgurt zur Leiste unten (23. Aug. 2026). Auf dem iPhone kann
+  // Safari eine fest stehende Leiste an der alten Stelle stehen lassen,
+  // wenn die Seite ploetzlich hoeher oder niedriger wird - genau das hat
+  // Christine beim Aufklappen von "Mein Insel-Aufenthalt" gesehen. Die
+  // eigentliche Ursache ist mit der eigenen Hintergrund-Ebene behoben
+  // (siehe dort); dies hier stupst die Leiste zusaetzlich an, damit sie
+  // im naechsten Bild sicher neu gezeichnet wird. Sichtbar passiert
+  // nichts: die Deckkraft geht fuer ein einziges Bild auf 0,999.
+  function leisteAuffrischen(){
+    var leiste = document.getElementById("tabbar");
+    if (!leiste) return;
+    leiste.style.opacity = "0.999";
+    requestAnimationFrame(function(){ leiste.style.opacity = ""; });
+  }
+  // Dasselbe fuer JEDE Stelle, an der die Seite ploetzlich hoeher oder
+  // niedriger wird - Christine hat es an drei verschiedenen berichtet
+  // (Insel-Aufenthalt aufklappen, Empfehlung im Kompass, lange Liste in
+  // der Bibliothek). Statt jede einzeln anzufassen, wird die Hoehe des
+  // Seiteninhalts beobachtet. Das Anstupsen aendert die Groesse nicht,
+  // kann sich also nicht selbst ausloesen.
+  if (window.ResizeObserver){
+    var letzteSeitenhoehe = 0;
+    new ResizeObserver(function(){
+      var h = document.body.scrollHeight;
+      if (h !== letzteSeitenhoehe){ letzteSeitenhoehe = h; leisteAuffrischen(); }
+    }).observe(document.body);
+  }
+
   function setInselbewohnerOffen(offen){
     inselbewohnerOffen = offen;
     var karte = document.getElementById("profilInselbewohnerBtn");
@@ -7742,6 +7792,7 @@
     });
     var hinweis = document.getElementById("inselbewohnerHinweis");
     if (hinweis) hinweis.textContent = offen ? "Weniger anzeigen" : "Tippen zum Anzeigen";
+    leisteAuffrischen();
   }
   // ---- Profilbild ------------------------------------------------------
   // Ein paar Zeichen zur Auswahl plus eigenes Foto. Beides liegt nur auf

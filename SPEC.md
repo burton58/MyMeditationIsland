@@ -1859,3 +1859,45 @@ Christine: *"mein weg mehr abstand zwischen den abschnitten"*. Der Abstand ueber
 Der Grund, warum ausgerechnet diese Seite ihn braucht: sie traegt vier Bloecke (Insel-Aufenthalt, Fortschritt, Wochenziel, letzte Meditationen) und ist die einzige, die man dafuer scrollen muss. Bei 28 Punkten stand ein Zwischentitel fast gleich weit von der Karte darueber wie von der darunter — er sah dann aus, als gehoere er nach oben.
 
 Das Verhaeltnis ist jetzt **46 zu 11**: viermal so viel Luft zwischen zwei Abschnitten wie zwischen einem Titel und dem, was zu ihm gehoert. Nur auf dieser Seite gesetzt; die uebrigen sind kuerzer und kommen mit 28 aus, die Startseite mit 34 (dort muss alles ohne Scrollen aufs Bild).
+
+
+## 34. Die Leiste unten: Ursache gefunden und behoben (23. Aug. 2026)
+
+In §32 war die Meldung "die Leiste steht mitten auf der Seite" als Foto-Artefakt eingeordnet worden — belegt durch Messung und durch die iPhone-Statusleiste, die in denselben Bildern quer ueber dem Inhalt lag. Das stimmt fuer die Bilder. Es war aber nicht die ganze Geschichte.
+
+Beim vierten Mal hat Christine die **Bedingung** genannt: *"wenn ich mein insel aufenthalt aufklappe ist die menuleiste auf meinem Natel wieder in der mitte"*. Damit passt plotzlich alles zusammen — auch ihre frueheren Meldungen:
+
+| Gemeldet auf | Was kurz davor passiert war |
+|---|---|
+| Mein Weg | "Mein Insel-Aufenthalt" aufgeklappt — zwei Karten kommen dazu |
+| Kompass | Der Zeiger war gesetzt, die Empfehlung eingeblendet |
+| Bibliothek | Lange Liste, Kacheln erscheinen und verschwinden beim Suchen |
+
+Der gemeinsame Nenner ist nicht die Seite, sondern das Ereignis: **die Seite wird ploetzlich hoeher oder niedriger.**
+
+### Die Ursache
+
+`background-attachment: fixed` am `<body>`. Auf iPhones ist das die bekannteste Ursache dafuer, dass fest stehende Elemente nach einer Aenderung der Seitenhoehe an der alten Stelle gezeichnet werden: Safari behandelt einen so befestigten Hintergrund als eigene, teure Ebene und rastert bei jeder Hoehenaenderung neu — fest stehende Nachbarn bleiben dabei fuer einen Moment zurueck.
+
+Das erklaert auch, warum es sich hier nie nachstellen liess: die Messung im Testbrowser stimmte jedes Mal, weil dieser Zeichenfehler nur unter Safari auf dem Geraet auftritt.
+
+### Die Loesung
+
+Der Farbverlauf liegt jetzt in einer **eigenen fest stehenden Ebene** statt am body:
+
+```css
+body{ background:var(--cream); }
+body::before{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+}
+body[data-step="splash"]::before{ display:none; }
+```
+
+Sichtbar ist das **identisch** — der Verlauf steht weiterhin am Bildschirm, nicht am Seiteninhalt. Aber eine fest stehende Ebene mit gewoehnlichem Hintergrund geht einen anderen Weg durch den Zeichner als `background-attachment: fixed` und loest den Fehler nicht aus. Alle Seiten nachgeprueft, einschliesslich Titelseite (die ihre eigene ruhige Farbe behaelt, darum die Ausnahme).
+
+### Sicherheitsgurt dazu
+
+Zusaetzlich wird die Leiste angestupst, sobald sich die Hoehe des Seiteninhalts aendert — ueber einen `ResizeObserver` am body, damit nicht jede einzelne Auf- und Zuklapp-Stelle angefasst werden muss. Das Anstupsen setzt die Deckkraft fuer ein einziges Bild auf 0,999 und danach zurueck: unsichtbar, und es aendert keine Groesse, kann sich also nicht selbst ausloesen.
+
+**Lehre:** Eine Messung, die den Fehler nicht reproduziert, widerlegt die Meldung nicht — sie sagt nur, dass die Bedingung fehlt. In §32 war die Erklaerung zum Foto richtig und trotzdem unvollstaendig. Die entscheidende Frage waere frueher gewesen: *was hast du unmittelbar davor getan?*
