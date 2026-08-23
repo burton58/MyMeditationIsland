@@ -1628,3 +1628,37 @@ Behoben: alle vier auf **Helligkeit 56 % und Saettigung 46 %** gebracht — Hell
 Die von Christine gelieferten Originale liegen unveraendert in **`bilder-original/`**.
 
 **Lehre:** Eine einmal aufgestellte Regel muss beim naechsten Bildwechsel aktiv wieder angewendet werden — sie gilt nicht von selbst weiter. Beim Einbau neuer Bilder immer gegen die bestehenden messen, nicht nur gegen den Untergrund.
+
+
+## 28. Ein Farbverlauf statt vier Einzelfarben (22. Aug. 2026)
+
+Christines Einwand nach dem Ausgleich von Helligkeit und Saettigung (§27): *"Für mich passt es gar nicht. Farben sollten [sich] gleichen und im Kontrast — oder passend."*
+
+Der Einwand trifft einen Punkt, den §27 nicht geloest hatte: Dort wurden nur **Helligkeit und Saettigung** angeglichen, die vier **Farbtoene** blieben weit auseinander (silbrig 36 / rose 15 / gruen 56 / bernstein 27 Grad). Vier verschiedene Farbfamilien nebeneinander sind weder ein Satz noch ein bewusster Kontrast — es ist der schwache Mittelweg. Christine hat das treffend formuliert: **entweder gleichen oder kontrastieren, nicht dazwischen.**
+
+Zwei saubere Wege gebaut und gezeigt:
+- **A — alle in der Blaufamilie der App:** die Bilder gehoeren zur selben Welt wie der Untergrund, unterscheiden sich nur in Motiv und Helligkeit.
+- **B — alle in einer warmen Familie:** die vier stehen **gemeinsam** im Kontrast zum Blau statt jede fuer sich in eine andere Richtung.
+
+Christine waehlte **A** und fragte nach mehr Violett; daraufhin drei Abstufungen gezeigt und **A2** gewaehlt.
+
+### Umgesetzt: A2
+
+Statt vier Einzelfarben laeuft jetzt ein **Verlauf ueber die vier Kacheln**:
+
+| Kachel | Farbton | Saettigung | Helligkeit |
+|---|---|---|---|
+| Gedanken beruhigen | 201 Grad (Blau) | 42 % | 50 % |
+| Gefuehle verstehen | 219 Grad | 42 % | 53 % |
+| Stress loesen | 237 Grad | 42 % | 50 % |
+| Entspannen | 255 Grad (Violett) | 42 % | 57 % |
+
+Gleichmaessige Schritte von **18 Grad**, alle bei identischer Saettigung. Die erste Kachel liegt noch in der Farbe des App-Untergrunds (211 Grad), die letzte setzt einen violetten Akzent — die Reihe hat dadurch eine Richtung, statt zufaellig verschieden zu sein.
+
+**Technisch:** Der Farbton jeder Kachel wird auf den Zielwert gezogen, aber die **Binnenstreuung des Bildes bleibt erhalten** (`Zielton + Abweichung vom Bildmittel * 0.45`, begrenzt auf ±30 Grad). Ohne das wuerde ein flacher Anstrich entstehen statt eines Bildes mit Tiefe. Helligkeit wieder ueber eine Gammakurve, nicht ueber einen Faktor.
+
+**A3 (Violett als Hauptrichtung) wurde abgeraten und nicht genommen:** Dort loest sich die obere Reihe vom Untergrund, und das Lila der letzten Kachel waere der lauteste Punkt der Seite geworden — genau der Fehler, der in §27 beim Orange behoben wurde.
+
+Die von Christine gelieferten Originale bleiben unveraendert in `bilder-original/`; alle Umfaerbungen gehen immer von dort aus, nie von einer bereits bearbeiteten Fassung.
+
+**Nebenbefund, mitgeprueft:** Da `LIB_KAT_FOTO` auch den Vollbild-Hintergrund waehrend der Meditation liefert (§14), wurde eine Uebung gestartet und geprueft — der Hintergrund passt jetzt ebenfalls zur App-Farbwelt, statt warm dagegen zu stehen.
