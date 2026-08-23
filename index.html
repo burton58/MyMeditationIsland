@@ -1627,7 +1627,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.134";
+    var AKTUELLE_VERSION = "2026-08-10.135";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2092,10 +2092,15 @@
          einem Zahnrad. Das Zahnrad hier fuehrt zu "Einstellungen"
          (vorher: die Profil-Seite, siehe dort). -->
     <div class="page-head">
-      <div class="ttl">
-        <h1>Mein Weg</h1>
-        <p class="fd-greeting" id="fdGreeting">Was du schon geschafft hast</p>
-      </div>
+      <!-- Titel und Untertitel sind am 23. Aug. 2026 auf Christines Wunsch
+           heraus ("mein weg und untertitel weg"). Der leere Kasten bleibt
+           stehen, damit Abzeichen und Zahnrad weiterhin rechts sitzen.
+           Nicht geloescht, nur stillgelegt - zum Zurueckholen einfach die
+           beiden Zeilen wieder hereinnehmen:
+             <h1>Mein Weg</h1>
+             <p class="fd-greeting" id="fdGreeting">Was du schon geschafft hast</p>
+      -->
+      <div class="ttl"></div>
       <span class="fd-badge"><img class="badge-bild" src="icon-schweizerkreuz.png" alt="" aria-hidden="true"> Schweizerdeutsch</span>
       <button class="icon-btn" id="meinWegEinstellungenBtn" title="Einstellungen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
