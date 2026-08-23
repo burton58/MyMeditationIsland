@@ -1826,3 +1826,28 @@ Christine hat die Meldung nach der Erklaerung noch zweimal wiederholt. Die Messu
 - **`transform: translateZ(0)` ergaenzt.** Damit bekommt die Leiste eine eigene Ebene und das Geraet uebernimmt das Stehenbleiben selbst, statt es bei jedem Einzelbild neu zu rechnen.
 
 **Falls es erneut gemeldet wird:** der naechste Hebel waere `background-attachment: fixed` am Untergrund — auf iPhones die zweite bekannte Quelle solcher Zeichenfehler. Das aendert allerdings das Aussehen (der Farbverlauf wuerde sich dann ueber die ganze Seitenlaenge ziehen statt ueber die Bildschirmhoehe), darum nicht ohne Christines Zustimmung.
+
+
+## 33. Keine goldene Schrift mehr (23. Aug. 2026, Christines Entscheid)
+
+Nachdem die drei Zahlen auf "Mein Weg" von Perle auf Weiss gewechselt sind (§32-Umfeld), fiel Christine der Rest auf: *"bei mein weg hat es wieder goldige schrift / ist nicht schoen"*. Gemessen wurde daraufhin die ganze App — jedes sichtbare Textelement auf allen elf Seiten, gesucht nach Schriftfarben, die waermer als neutral sind. Ergebnis: **24 Regeln**, verteilt ueber jede Seite.
+
+Christine hat sich fuer "in der ganzen App" entschieden. Die Trennlinie:
+
+**Schrift wird weiss** (`var(--ink)`) — kleine Grossbuchstaben-Labels, Zwischentitel auf den Info-Seiten, Links, Preise, Abzeichen, der Hinweistext unter den Zahlen, die Hervorhebung der aktuellen Stufe der Inselreise, die "Details"-Knoepfe, das Zeichen ▶ und der aktive Reiter unten.
+
+**Perle bleibt**, wo sie kein Text ist, sondern eine Flaeche oder ein Zustand:
+- gefuellte Knoepfe und aktive Filter (`--gold-grad`) samt ihrer dunklen Schrift
+- der Fortschrittsbalken und die Balken der Grafik
+- alle Raender, die eine Auswahl markieren (`border-color`)
+- der **Stern** fuer Favoriten. Er ist der einzige bewusst behaltene Text-Fall: sein Gegenstueck (nicht gemerkt) steht auf `--ink-soft`, und zwischen `--ink-soft` und `--ink` waere der Unterschied zu klein, um "gemerkt" von "nicht gemerkt" zu unterscheiden.
+
+Damit ist Perle nur noch das Zeichen fuer **die eine Haupthandlung** und fuer **ausgewaehlt** — genau die Rolle, die §22 dem Akzent zugedacht hatte, jetzt konsequent.
+
+### Eine Folge, die mitbedacht werden musste
+
+Der aktive Reiter unten war allein an der Farbe zu erkennen. Weiss neben dem hellen Blaugrau der uebrigen drei reicht dafuer nicht. Er ist darum jetzt zusaetzlich **fett** (`font-weight:800`) — sonst waere nach dem Farbwechsel nicht mehr zu sehen gewesen, auf welcher Seite man gerade ist.
+
+Der Ring um das ▶ war ebenfalls in Perle (`rgba(239,230,216,.55)`) und ist auf denselben hellen Ton gezogen worden — ein weisses Zeichen in einem warmen Ring waere schlechter gewesen als beides warm.
+
+**Nicht angeruehrt:** "Verlauf loeschen" steht auf `#f0968a`. Das ist kein Gold, sondern die Warnfarbe, und soll warm bleiben.
