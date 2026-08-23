@@ -1798,3 +1798,22 @@ Seite oben und unten, Insel-Woche und Inselreise aufgeklappt, Fortschritts-Grafi
 Christine hat die weissen Karten **abgelehnt** — *"gefaellt mir gar nicht mit weiss"*, *"bitte stoppen ich finde diese varianten haesslich"*. Die Seite steht wieder auf dem Stand von §30: violetter Verlauf, helle Karten als Schleier darauf. Der Abschnitt bleibt hier stehen, damit der Weg nachvollziehbar ist und niemand denselben Vorschlag ein zweites Mal macht.
 
 **Behalten wurde nur der Nebenbefund:** der mintgruene Ring am Auswahlpunkt (`.radio-opt .dot`) haengt jetzt an `var(--ink-soft)`. Das war ein Fehler aus der ersten Farbfassung und hat mit Weiss nichts zu tun.
+
+
+## 32. Kein Fehler: die Leiste im iPhone-Ganzseiten-Bild (23. Aug. 2026)
+
+Christine hat zweimal gemeldet, die untere Leiste stehe mitten auf der Seite und scrolle mit — *"das war gestern nicht so"*. Nachgeprueft, beides widerlegt:
+
+**1. Seit gestern hat sich an der Leiste nichts geaendert.** Der Vergleich des Standes von gestern Abend mit heute zeigt in allen Regeln zu Position, Hoehe, Ueberlauf und Abstand nach unten **keine einzige Aenderung**. Die einzige Zeile, die den Suchbegriff `position:` enthaelt, ist der Auswahlpunkt aus §31 — dessen `position:relative` hat mit der Leiste nichts zu tun.
+
+**2. Die Leiste bleibt auf jeder Seite unten.** Gemessen bei 390 mal 844 Punkten, auf allen elf Seiten, jeweils bei 0 %, 50 % und 100 % Scrollhoehe: Unterkante der Leiste = Unterkante des Fensters, immer, `position: fixed`.
+
+| Seite | bleibt unten |
+|---|---|
+| Startseite, Kompass, Meditationen, Mein Weg | ja |
+| Einstellungen, Abo, Ueber, Konto | ja |
+| Impressum, Datenschutz, App-Info | ja |
+
+**Was sie wirklich sieht:** ein Ganzseiten-Bildschirmfoto des iPhones. Bei einer langen Seite setzt iOS mehrere Aufnahmen zu einem Bild zusammen und klebt fest stehende Elemente an der Stelle hinein, an der sie im Moment der Aufnahme standen — also mittendrin. Der eindeutige Beleg steckt in denselben Bildern: die **Uhrzeit und die Statusleiste des iPhones** liegen quer ueber dem Seiteninhalt. Auch die stehen dort in Wirklichkeit nicht.
+
+**Lehre fuer kuenftige Meldungen:** Zeigt ein gemeldetes Bild die iPhone-Statusleiste ueber dem Inhalt, ist es ein zusammengesetztes Ganzseiten-Foto — fest stehende Elemente darin nie als Fehler lesen. Vor jeder Aenderung erst messen.
