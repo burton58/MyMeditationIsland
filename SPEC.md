@@ -1593,3 +1593,38 @@ Blau plus Warmton ergibt **kein kraeftigeres Blau**, sondern ein trübes Oliv �
 **Behoben:** `.lib-cat-tile::after` von `rgba(13,28,47,…)` auf **neutrales Schwarz** `rgba(0,0,0,…)`. Die vier Bilder behalten jetzt ihre eigene Farbe bis zum unteren Rand, der Titel bleibt genauso lesbar wie vorher (gleiche Deckkraft-Kurve, nur ohne Blaustich).
 
 **Verwandter, aber (noch) nicht angefasster Fund:** Derselbe dunkelblaue Ton liegt auch als Schleier waehrend der laufenden Meditation ueber dem Hintergrundfoto (`.stage::after`, sogar bis 92 % Deckkraft). Dort faellt es weniger auf, weil die acht `bg-*.jpg` in §21 bereits Richtung Blau umgefaerbt wurden und daher weniger Eigenfarbe zu verlieren haben — trotzdem derselbe Mechanismus. Nicht geaendert, da nicht gemeldet; bei Bedarf dieselbe Loesung anwendbar.
+
+
+## 27. Gruen und Orange auf Blau — und ein uebersehener eigener Fehler (22. Aug. 2026)
+
+Christines Frage: *"Aber Gruen/Orange passt auf Blau?"* Zwei getrennte Antworten, und beim Nachmessen kam ein eigener Fehler ans Licht.
+
+### Zur Farbenlehre
+
+| Kachel | Farbton | Abstand zum Untergrund (211 Grad) | Bewertung |
+|---|---|---|---|
+| Entspannen (orange) | 27 Grad | **176 Grad** | Praktisch exakt gegenueber — Blau/Orange ist das klassische Komplementaerpaar und der staerkste harmonische Kontrast ueberhaupt |
+| Gedanken (silbrig) | 36 Grad | 175 Grad | dito, nur sehr blass |
+| Gefuehle (rose) | 15 Grad | 164 Grad | nah am Komplementaerpunkt |
+| Stress loesen (gruen) | **56 Grad** | 155 Grad | Entscheidend: Es ist ein **Moos-/Gelbgruen**, kein Blaugruen. Ein Tuerkis (etwa 180 Grad) waere nachbarschaftlich zu Blau und wuerde verschwimmen — dieses Gruen liegt weit genug weg und wirkt warm |
+
+**Beides passt also**, und das ist keine Geschmacksfrage: Alle vier liegen 155-176 Grad vom Untergrund entfernt, also im komplementaeren Bereich.
+
+### Der eigentliche Fehler war meiner
+
+In §21 wurde die Regel aufgestellt: **"Die Farbe darf verschieden sein, die Helligkeit nicht"** — und alle acht `bg-*.jpg` entsprechend auf eine gemeinsame Helligkeit normiert. Als spaeter die vier neuen Kategoriebilder (§23) eingebaut wurden, **wurde diese Regel nicht auf sie angewendet**. Gemessen:
+
+| | Saettigung | Helligkeit |
+|---|---|---|
+| Gedanken (silbrig) | 25 % | 50 % |
+| Gefuehle (rose) | 53 % | 68 % |
+| Stress (gruen) | 42 % | 46 % |
+| **Entspannen (orange)** | **83 %** | **73 %** |
+
+Die Saettigung lag um **Faktor 3,4** auseinander, die Helligkeit um 27 Punkte. Das Orange war damit mehr als dreimal so farbstark wie das Silbrige — es schrie, waehrend die Nachbarkachel fluesterte. **Nicht "Orange passt nicht auf Blau" war das Problem, sondern dass diese eine Kachel alle anderen erschlug.**
+
+Behoben: alle vier auf **Helligkeit 56 % und Saettigung 46 %** gebracht — Helligkeit ueber eine Gammakurve (kein Faktor, sonst brennen die Lichter aus), Saettigung proportional skaliert. **Der Farbton jedes Bildes bleibt exakt unveraendert** (36 / 15 / 56 / 27 Grad), jede Kategorie behaelt also ihre Eigenfarbe — nur die Lautstaerke ist jetzt bei allen gleich.
+
+Die von Christine gelieferten Originale liegen unveraendert in **`bilder-original/`**.
+
+**Lehre:** Eine einmal aufgestellte Regel muss beim naechsten Bildwechsel aktiv wieder angewendet werden — sie gilt nicht von selbst weiter. Beim Einbau neuer Bilder immer gegen die bestehenden messen, nicht nur gegen den Untergrund.
