@@ -82,11 +82,14 @@
      an sich. Beim Nachjustieren wieder nachrechnen: schon eine Stufe
      heller faellt der Zweittext auf den hellen Karten unter 4,5. */
   body[data-step="meditation"]{   --cream:#1e2950; --cream-2:#4d4291; }
-  /* Alles, was auf dieser Seite NICHT in einer Karte steckt (z. B. der
-     Knopf "Zurueck zum Kompass"), liegt hell auf dem violetten Grund
-     statt als dunkler Schleier darin. Die Karten selbst sind seit dem
-     zweiten Anlauf ganz weiss - siehe den Block "Weisse Karten auf
-     Mein Weg" weiter unten. */
+  /* Und die Bloecke liegen auf dieser Seite HELLER als der Untergrund
+     statt dunkler. Vorher war jede Karte ein schwarzer Schleier; nach
+     unten hin, wo der Untergrund heller wird, verschwand der Unterschied
+     fast ganz und die Seite wirkte stumpf. Die zwei Stufen bleiben:
+     ruhige Karten .07, die beiden wichtigen Bloecke (Zahlenreihe,
+     Wochenziel) .14. Nur ueber die Variablen gesetzt - dadurch ziehen
+     alle Karten automatisch mit, ohne dass eine Regel die andere
+     ueberholt. */
   body[data-step="meditation"]{
     --card:rgba(255,255,255,.07);
     --flaeche-hoch:rgba(255,255,255,.14);
@@ -815,72 +818,18 @@
   .goal-top .sub{ font-size:.74rem; color:var(--ink-soft); margin-top:2px; }
   .bar{ height:9px; background:rgba(0,0,0,.28); border-radius:999px; overflow:hidden; }
   .bar span{ display:block; height:100%; background:var(--gold-grad); border-radius:999px; min-width:9px; }
-  /* ---------- Weisse Karten auf "Mein Weg" (23. Aug. 2026) ----------
-     Christine zweimal hintereinander: "immer noch duester" - "kann man was
-     mit weiss machen?". Ein hellerer Schleier haette wieder nur ein paar
-     Prozent gebracht; hier sind die Karten deshalb WIRKLICH weiss, mit
-     dunkler Schrift darin. Der Rahmen der Seite bleibt violett, damit
-     "Mein Weg" weiter zur uebrigen App gehoert.
-     Umgesetzt ueber die Variablen INNERHALB der Karte: Farbvariablen
-     vererben sich, dadurch stellt dieser eine Block Schrift, Zweittext,
-     Akzent, Linien und Balken in jeder Karte zugleich um - ohne dass ein
-     Dutzend Einzelregeln nachgezogen werden muessten.
-     Der Akzent wird darin von Perle (hell) auf Violett (dunkel)
-     umgestellt: Perle auf Weiss waere praktisch unsichtbar. */
-  body[data-step="meditation"] .card{
-    background:#faf9fd;
-    --card:#ffffff;
-    --flaeche-hoch:#ffffff;
-    --ink:#241f3d;
-    --ink-soft:#5d5678;
-    --gold:#4a3f8a;
-    --gold-soft:#7566c4;
-    --gold-deep:#4a3f8a;
-    --gold-grad:linear-gradient(135deg,#7566c4,#4a3f8a);
-    --line:rgba(36,31,61,.13);
-    color:#241f3d;
-    box-shadow:0 6px 20px rgba(10,8,30,.22);
-  }
-  /* Die zwei wichtigen Bloecke bleiben eine Stufe darueber: reines Weiss
-     und ein tieferer Schatten - dieselbe Rangfolge wie vorher, nur jetzt
-     im Hellen. */
-  body[data-step="meditation"] .card.stats-row,
-  body[data-step="meditation"] #wochenzielCard{
-    background:#ffffff;
-    box-shadow:0 10px 28px rgba(10,8,30,.28);
-  }
-  /* Knoepfe und Punkte, die den Akzent als FLAECHE tragen: deren Schrift
-     stand auf Dunkelbraun (#2a2a26), was auf dem neuen violetten Akzent
-     untergeht. Aufgezaehlt sind alle, die auf dieser Seite vorkommen
-     koennen - auch die aus dem Fenster "Ziel festlegen". */
-  body[data-step="meditation"] .card .btn-dark,
-  body[data-step="meditation"] .card .fd-card-play,
-  body[data-step="meditation"] .card .avatar-stift,
-  body[data-step="meditation"] .card .week-cell.on .kreis,
-  body[data-step="meditation"] .card .wert-chip.active,
-  body[data-step="meditation"] .card .mini-btn.primary,
-  body[data-step="meditation"] .card .schritt .nr,
-  body[data-step="meditation"] .card .status-cta-btn{ color:#fff; }
-  /* Der Ring um "heute" war in Perle gezeichnet - auf Weiss unsichtbar. */
-  body[data-step="meditation"] .card .week-cell.heute .kreis{ box-shadow:0 0 0 2px rgba(74,63,138,.35); }
-  body[data-step="meditation"] .card .bar{ background:rgba(36,31,61,.12); }
-  body[data-step="meditation"] .card .goal-ico{ background:rgba(74,63,138,.12); }
-  /* Die gezeichneten Symbole sind alle in Perle angelegt (fuer dunkle
-     Untergruende). Auf einer weissen Karte waeren sie unsichtbar, darum
-     werden sie dort abgedunkelt - auf den violetten Feldern (Profilbild,
-     Miniaturbild einer Zeile) bleiben sie hell, dort stimmen sie ja. */
-  body[data-step="meditation"] .card img[src^="icon-"]{ filter:brightness(.30) saturate(.35); }
-  body[data-step="meditation"] .profil-avatar,
-  body[data-step="meditation"] .row-thumb{ background:#4a3f8a; }
-  body[data-step="meditation"] .profil-avatar img[src^="icon-"],
-  body[data-step="meditation"] .row-thumb img[src^="icon-"]{ filter:none; }
-  /* Die Fortschritts-Grafik zeichnet in SVG und erbt keine Textfarbe. */
-  body[data-step="meditation"] .balken{ fill:#4a3f8a; }
-  body[data-step="meditation"] .balken.aktiv{ fill:#241f3d; }
-  body[data-step="meditation"] .achs-text{ fill:#5d5678; }
-  body[data-step="meditation"] .wert-text{ fill:#241f3d; }
-  /* Ausserhalb der Karten bleibt alles hell auf Violett - nur das
-     Abzeichen oben rechts war zu blass. */
+  /* Auf den hellen Karten von "Mein Weg" (23. Aug. 2026) sah die schwarze
+     Rille aus wie ein Loch. Dort eine helle Spur, damit der Balken auf der
+     Karte liegt statt in ihr zu versinken. Dasselbe fuer das kleine
+     Symbolfeld links und das Abzeichen oben rechts, die sonst als einzige
+     Teile der Seite blass geblieben waeren.
+     Hier stand am 23. Aug. 2026 kurz ein Versuch mit WEISSEN Karten und
+     dunkler Schrift darin (Christine: "kann man was mit weiss machen?").
+     Sie hat ihn abgelehnt - "gefaellt mir gar nicht mit weiss", "haesslich"
+     - und er ist wieder heraus. Nicht erneut vorschlagen. Wer es doch
+     einmal nachlesen will: SPEC.md, Abschnitt 31. */
+  body[data-step="meditation"] .bar{ background:rgba(255,255,255,.16); }
+  body[data-step="meditation"] .goal-ico{ background:rgba(255,255,255,.18); }
   body[data-step="meditation"] .fd-badge{ opacity:1; border-color:rgba(255,255,255,.30); }
   /* Erreichtes Ziel: der Balken bekommt einen ruhigen goldenen Rand, damit
      "voll" sich von "fast voll" unterscheidet - allein an der Breite sieht
@@ -1678,7 +1627,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.133";
+    var AKTUELLE_VERSION = "2026-08-10.134";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){

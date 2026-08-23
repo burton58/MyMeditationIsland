@@ -1792,3 +1792,9 @@ Beim Testen des Fensters "Ziel festlegen" fiel ein **mintgruener** Ring am nicht
 ### Geprueft wurde
 
 Seite oben und unten, Insel-Woche und Inselreise aufgeklappt, Fortschritts-Grafik geoeffnet, Fenster "Mein Bild", Fenster "Ziel festlegen" — jeweils bei 390 mal 844 Punkten, dreifache Aufloesung.
+
+### Nachtrag, gleicher Tag: wieder entfernt
+
+Christine hat die weissen Karten **abgelehnt** — *"gefaellt mir gar nicht mit weiss"*, *"bitte stoppen ich finde diese varianten haesslich"*. Die Seite steht wieder auf dem Stand von §30: violetter Verlauf, helle Karten als Schleier darauf. Der Abschnitt bleibt hier stehen, damit der Weg nachvollziehbar ist und niemand denselben Vorschlag ein zweites Mal macht.
+
+**Behalten wurde nur der Nebenbefund:** der mintgruene Ring am Auswahlpunkt (`.radio-opt .dot`) haengt jetzt an `var(--ink-soft)`. Das war ein Fehler aus der ersten Farbfassung und hat mit Weiss nichts zu tun.
