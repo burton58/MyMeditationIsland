@@ -1749,3 +1749,46 @@ Der Fortschrittsbalken lag in einer schwarzen Rille (`rgba(0,0,0,.28)`) — auf 
 ### Nebenbefund beim Nachbauen
 
 Beim Testen erschienen die beiden Insel-Karten (`profilWeekBox`, `profilJourneyBox`) als leere helle Balken. Kein Fehler der App: die Testfassung hatte den Verlauf im falschen Format im Speicher, `renderMeinWeg()` brach mit einem Fehler ab und `setInselbewohnerOffen()` kam nie dazu, die leeren Karten auszublenden. Mit echtem Verlaufsformat (`ts`, `before`, `after`, `bestaetigt`, `meds`) ist das Verhalten korrekt. Festgehalten, damit dieselbe Verwechslung nicht noch einmal als Fehler gemeldet wird.
+
+
+## 31. Weisse Karten auf "Mein Weg" (23. Aug. 2026, zweiter Anlauf)
+
+Christine nach §30: *"Ich finde es immer noch duester / Kann man was mit weiss machen?"*
+
+Der erste Anlauf hatte die Karten von einem dunklen auf einen hellen Schleier umgestellt (7 % bzw. 14 % Weiss). Messbar heller, gefuehlt kaum — ein Schleier bleibt ein Schleier. Jetzt sind die Karten **wirklich weiss**, mit dunkler Schrift darin. Der Rahmen der Seite bleibt violett, damit "Mein Weg" weiter zur uebrigen App gehoert.
+
+### Umgesetzt ueber Variablen innerhalb der Karte
+
+```css
+body[data-step="meditation"] .card{
+  background:#faf9fd;
+  --card:#ffffff; --flaeche-hoch:#ffffff;
+  --ink:#241f3d; --ink-soft:#5d5678;
+  --gold:#4a3f8a; --gold-soft:#7566c4; --gold-deep:#4a3f8a;
+  --gold-grad:linear-gradient(135deg,#7566c4,#4a3f8a);
+  --line:rgba(36,31,61,.13);
+  color:#241f3d;
+}
+```
+
+Farbvariablen vererben sich — dieser eine Block stellt Schrift, Zweittext, Akzent, Linien und Balken in **jeder** Karte zugleich um. Ohne ihn haetten ein Dutzend Einzelregeln nachgezogen werden muessen, jede mit eigener Spezifitaet und eigener Reihenfolge.
+
+Wichtig darin: der Akzent wechselt von Perle (hell) auf Violett (dunkel). Perle auf Weiss waere praktisch unsichtbar gewesen — dieselbe Falle wie beim Zweittext in §26.
+
+### Was ausserhalb der Variablen nachgezogen werden musste
+
+Drei Gruppen, die ihre Farbe **nicht** aus einer Variablen beziehen:
+
+1. **Fest verdrahtetes `#2a2a26`** — die Schriftfarbe auf allen Flaechen, die den Akzent tragen (`.btn-dark`, `.fd-card-play`, `.avatar-stift`, `.week-cell.on .kreis`, `.wert-chip.active`, `.mini-btn.primary`, `.schritt .nr`, `.status-cta-btn`). Dunkelbraun auf hellem Perle war richtig, auf dunklem Violett nicht. Alle auf Weiss gestellt.
+2. **Die gezeichneten Symbole** — alle 43 sind in Perle angelegt, fuer dunkle Untergruende. Auf einer weissen Karte verschwinden sie. Sie werden dort per `filter:brightness(.30) saturate(.35)` abgedunkelt; auf den violetten Feldern (Profilbild, Miniaturbild einer Zeile) bleiben sie hell. Damit die Ausnahme greift, muss sie **dieselbe Spezifitaet** tragen wie die Regel — `img[src^="icon-"]` gehoert also auch in den Ausnahme-Selektor, sonst verliert sie.
+3. **Die Fortschritts-Grafik** — SVG erbt keine Textfarbe; `.balken`, `.achs-text` und `.wert-text` brauchen eigene Werte.
+
+### Nebenbefund: ein gruener Ring aus der ersten Farbfassung
+
+Beim Testen des Fensters "Ziel festlegen" fiel ein **mintgruener** Ring am nicht gewaehlten Auswahlpunkt auf: `.radio-opt .dot` stand seit jeher auf dem festen Wert `#c3d1c9`, folgte keiner Variablen und hatte darum alle Farbwechsel (Creme, Grau, Denim, Meerestiefe, Violett) unbeschadet ueberstanden. Jetzt `var(--ink-soft)`, damit er ueberall mitzieht — auf dunklen Seiten hell, in den weissen Karten dunkel.
+
+**Lehre, zum dritten Mal in diesem Projekt (nach §24 und §27):** Was keine Variable hat, aendert sich nie mit. Nach einem Farbwechsel gezielt nach festen Farbwerten im Stylesheet suchen, nicht nur nach den Variablen.
+
+### Geprueft wurde
+
+Seite oben und unten, Insel-Woche und Inselreise aufgeklappt, Fortschritts-Grafik geoeffnet, Fenster "Mein Bild", Fenster "Ziel festlegen" — jeweils bei 390 mal 844 Punkten, dreifache Aufloesung.
