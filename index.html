@@ -98,17 +98,31 @@
 
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; padding:0; }
+  /* ---------- Aufbau der App (23. Aug. 2026 umgestellt) ----------
+     Die Seite scrollt NICHT mehr als Ganzes. Stattdessen ist der Bildschirm
+     ein fester Rahmen in zwei Reihen: oben der Inhalt, der fuer sich
+     scrollt, unten die Leiste. Die Leiste ist damit nicht mehr "fest
+     angeheftet", sondern schlicht die letzte Reihe - sie KANN gar nicht
+     mehr an der falschen Stelle landen.
+     Vorgeschichte: Christine hat viermal gemeldet, dass die Leiste beim
+     Scrollen in der Mitte auftaucht. Zwei Anlaeufe mit angeheftetem
+     Element (Weichzeichner entfernt, eigene Hintergrund-Ebene) haben es
+     jeweils nur gemildert. Der Fehler steckt in der Art, wie Safari auf
+     dem iPhone angeheftete Elemente waehrend des Scrollens zeichnet -
+     dagegen hilft nur, gar nichts mehr anzuheften. So bauen es auch
+     richtige Apps.
+     "dvh" rechnet mit der Bildschirmhoehe, die gerade wirklich sichtbar
+     ist - "vh" rechnet auf dem iPhone teils mit der Hoehe bei versteckter
+     Adressleiste. Die Zeile davor ist der Ersatz fuer aeltere Browser. */
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--cream);
     color:var(--ink);
-    min-height:100vh;
-    /* "dvh" rechnet mit der Bildschirmhoehe, die gerade wirklich sichtbar
-       ist - "vh" rechnet auf dem iPhone teils mit der Hoehe bei versteckter
-       Adressleiste, wodurch Inhalte (z. B. das Insel-Foto) auf dem echten
-       Geraet anders abschneiden koennen als in einer Vorschau. */
-    min-height:100dvh;
-    padding-bottom:calc(var(--tabbar-h) + var(--safe-bottom));
+    height:100vh;
+    height:100dvh;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
   }
   /* Der Farbverlauf liegt seit 23. Aug. 2026 in einer eigenen, fest
      stehenden Ebene statt direkt am <body>.
@@ -133,11 +147,17 @@
   }
   /* Die Titelseite hat ihre eigene, ruhige Farbe - dort keine Ebene. */
   body[data-step="splash"]::before{ display:none; }
-  body[data-step="splash"]{ padding-bottom:0; background:var(--deep); }
-  body.entered{ padding-bottom:0; overflow:hidden; }
+  body[data-step="splash"]{ background:var(--deep); }
 
   /* ---------- Seiten-Wechsel ---------- */
-  .page{ display:none; max-width:520px; margin:0 auto; padding:18px 16px 34px; }
+  /* Die gerade sichtbare Seite ist der Scroll-Bereich: sie nimmt die Hoehe,
+     die zwischen Bildschirmkante und Leiste uebrig bleibt, und scrollt in
+     sich selbst. "min-height:0" ist noetig, weil ein Flex-Element sonst
+     nicht kleiner wird als sein Inhalt und dann gar nicht scrollt. */
+  .page{
+    display:none; max-width:520px; margin:0 auto; padding:18px 16px 34px;
+    flex:1 1 auto; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  }
   /* Startseite: KEIN Abstand nach oben (18. Aug. 2026, Christine: "das Bild
      ganz oben sein ohne Farbe"). Vorher stand ueber dem Foto ein schmaler
      Streifen Hintergrundfarbe - jetzt beginnt das Foto direkt an der
@@ -164,10 +184,11 @@
      Spielraum und fuellt automatisch, was auf dem jeweiligen Bildschirm
      uebrig bleibt - so passt alles ohne Scrollen, auf kurzen wie auf
      langen Bildschirmen, ohne dass unten Leerraum entsteht. */
+  /* Die Rechnung "Bildschirm minus Leiste" braucht es seit dem Umbau nicht
+     mehr - die Seite bekommt genau diese Hoehe ohnehin als Reihe des
+     Rahmens. */
   body:not(.entered)[data-step="home"] .home-page{
     display:flex; flex-direction:column;
-    min-height:calc(100vh - var(--tabbar-h) - var(--safe-bottom));
-    min-height:calc(100dvh - var(--tabbar-h) - var(--safe-bottom));
   }
   body.entered .page, body.entered .topbar, body.entered .stepper{ display:none; }
   .splash-page{ padding:0; max-width:none; }
@@ -1515,7 +1536,9 @@
   .topbar .subtitle{ margin:0; color:var(--ink-soft); font-size:.86rem; }
   .stepper{ text-align:center; font-size:.66rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
     color:var(--ink); margin:0 0 8px; }
-  .layout{ display:flex; flex-direction:column; gap:16px; padding:0 16px 40px; max-width:520px; margin:0 auto; }
+  /* Wie .page: eigener Scroll-Bereich zwischen Kopf und Leiste. */
+  .layout{ display:flex; flex-direction:column; gap:16px; padding:0 16px 40px; max-width:520px; margin:0 auto;
+    flex:1 1 auto; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; }
   .controls{ background:var(--card); border-radius:999px; padding:18px; box-shadow:0 3px 14px rgba(0,0,0,.07); order:2; }
   .group{ margin-bottom:18px; }
   .group h3{ margin:0 0 9px; font-size:.74rem; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft); font-weight:700; }
@@ -1645,11 +1668,15 @@
      "translateZ(0)" gibt der Leiste eine eigene Ebene; damit uebernimmt das
      Geraet das Stehenbleiben selbst, statt es bei jedem Bild neu zu rechnen.
      Beides ist reine Vorsorge und kostet nichts. */
+  /* Die Leiste ist seit dem Umbau NICHT mehr angeheftet, sondern die
+     untere Reihe des Rahmens (siehe body ganz oben). "flex:0 0 auto"
+     heisst: sie behaelt ihre Hoehe, egal wie viel Inhalt darueber steht.
+     Damit gibt es nichts mehr, was beim Scrollen an der falschen Stelle
+     gezeichnet werden koennte. */
   .tabbar{
-    position:fixed; left:0; right:0; bottom:0; height:calc(var(--tabbar-h) + var(--safe-bottom)); z-index:50;
+    flex:0 0 auto; height:calc(var(--tabbar-h) + var(--safe-bottom)); z-index:50;
     display:flex; background:#0a1a2c; border-top:1px solid var(--line);
     padding-bottom:var(--safe-bottom);
-    transform:translateZ(0); -webkit-transform:translateZ(0); will-change:transform;
   }
   body[data-step="splash"] .tabbar, body.entered .tabbar{ display:none; }
   /* Wird die Konto-Seite direkt von der Titelseite aus geoeffnet (ueber
@@ -1681,7 +1708,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.140";
+    var AKTUELLE_VERSION = "2026-08-10.141";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -3804,6 +3831,13 @@
     var activeTab = TAB_FOR_STEP[step] || null;
     document.querySelectorAll(".tab-item").forEach(function(btn){
       btn.classList.toggle("active", btn.getAttribute("data-tab") === activeTab);
+    });
+    // Seit dem Umbau scrollt nicht mehr die ganze Seite, sondern der
+    // Block der jeweiligen Seite. Beim Wechsel wird darum dieser Block
+    // nach oben gesetzt - sonst landet man dort, wo man ihn zuletzt
+    // verlassen hat. window.scrollTo bewirkt hier nichts mehr.
+    document.querySelectorAll(".page, .layout").forEach(function(el){
+      if (el.scrollTop) el.scrollTop = 0;
     });
     window.scrollTo(0,0);
   }
@@ -7751,34 +7785,6 @@
   // ruhig bleibt; ein Tipp zeigt sie, der naechste versteckt sie wieder. Der
   // Pfeil dreht sich mit, damit man den Zustand sieht.
   var inselbewohnerOffen = false;
-  // Sicherheitsgurt zur Leiste unten (23. Aug. 2026). Auf dem iPhone kann
-  // Safari eine fest stehende Leiste an der alten Stelle stehen lassen,
-  // wenn die Seite ploetzlich hoeher oder niedriger wird - genau das hat
-  // Christine beim Aufklappen von "Mein Insel-Aufenthalt" gesehen. Die
-  // eigentliche Ursache ist mit der eigenen Hintergrund-Ebene behoben
-  // (siehe dort); dies hier stupst die Leiste zusaetzlich an, damit sie
-  // im naechsten Bild sicher neu gezeichnet wird. Sichtbar passiert
-  // nichts: die Deckkraft geht fuer ein einziges Bild auf 0,999.
-  function leisteAuffrischen(){
-    var leiste = document.getElementById("tabbar");
-    if (!leiste) return;
-    leiste.style.opacity = "0.999";
-    requestAnimationFrame(function(){ leiste.style.opacity = ""; });
-  }
-  // Dasselbe fuer JEDE Stelle, an der die Seite ploetzlich hoeher oder
-  // niedriger wird - Christine hat es an drei verschiedenen berichtet
-  // (Insel-Aufenthalt aufklappen, Empfehlung im Kompass, lange Liste in
-  // der Bibliothek). Statt jede einzeln anzufassen, wird die Hoehe des
-  // Seiteninhalts beobachtet. Das Anstupsen aendert die Groesse nicht,
-  // kann sich also nicht selbst ausloesen.
-  if (window.ResizeObserver){
-    var letzteSeitenhoehe = 0;
-    new ResizeObserver(function(){
-      var h = document.body.scrollHeight;
-      if (h !== letzteSeitenhoehe){ letzteSeitenhoehe = h; leisteAuffrischen(); }
-    }).observe(document.body);
-  }
-
   function setInselbewohnerOffen(offen){
     inselbewohnerOffen = offen;
     var karte = document.getElementById("profilInselbewohnerBtn");
@@ -7792,7 +7798,6 @@
     });
     var hinweis = document.getElementById("inselbewohnerHinweis");
     if (hinweis) hinweis.textContent = offen ? "Weniger anzeigen" : "Tippen zum Anzeigen";
-    leisteAuffrischen();
   }
   // ---- Profilbild ------------------------------------------------------
   // Ein paar Zeichen zur Auswahl plus eigenes Foto. Beides liegt nur auf

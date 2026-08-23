@@ -1901,3 +1901,43 @@ Sichtbar ist das **identisch** — der Verlauf steht weiterhin am Bildschirm, ni
 Zusaetzlich wird die Leiste angestupst, sobald sich die Hoehe des Seiteninhalts aendert — ueber einen `ResizeObserver` am body, damit nicht jede einzelne Auf- und Zuklapp-Stelle angefasst werden muss. Das Anstupsen setzt die Deckkraft fuer ein einziges Bild auf 0,999 und danach zurueck: unsichtbar, und es aendert keine Groesse, kann sich also nicht selbst ausloesen.
 
 **Lehre:** Eine Messung, die den Fehler nicht reproduziert, widerlegt die Meldung nicht — sie sagt nur, dass die Bedingung fehlt. In §32 war die Erklaerung zum Foto richtig und trotzdem unvollstaendig. Die entscheidende Frage waere frueher gewesen: *was hast du unmittelbar davor getan?*
+
+
+## 35. Die Leiste ist nicht mehr angeheftet (23. Aug. 2026)
+
+Christine nach dem Versuch aus §34: *"war vorher okay und jetzt wieder da, wenn man raufscrollt, erscheint irgendwann in der Mitte die Leiste, scrollt irgendwie mit. Bitte loese das, dass es nicht immer wieder kommt."*
+
+Damit war klar, dass Nachbessern am angehefteten Element nicht reicht. Drei Anlaeufe, drei Mal gemildert und wiedergekommen:
+
+1. Weichzeichner entfernt, eigene Ebene fuer die Leiste (§32-Nachtrag)
+2. Farbverlauf in eine eigene fest stehende Ebene, `background-attachment: fixed` weg (§34)
+3. Anstupsen bei jeder Hoehenaenderung (§34)
+
+Alle drei arbeiten daran, dass Safari ein **angeheftetes** Element richtig zeichnet. Das ist auf dem iPhone eine Wette, kein Verlass.
+
+### Jetzt: gar nichts mehr angeheftet
+
+Der Bildschirm ist ein **fester Rahmen aus zwei Reihen**:
+
+```css
+body{ height:100dvh; display:flex; flex-direction:column; overflow:hidden; }
+.page, .layout{ flex:1 1 auto; min-height:0; overflow-y:auto; }
+.tabbar{ flex:0 0 auto; }
+```
+
+Die Seite als Ganzes scrollt nicht mehr — es scrollt nur der Inhaltsblock zwischen Bildschirmkante und Leiste. Die Leiste ist keine angeheftete Ebene mehr, sondern schlicht **die letzte Reihe**. Sie kann gar nicht mehr an der falschen Stelle landen, weil an ihrer Stelle nichts mehr gerechnet wird. So bauen es auch richtige Apps.
+
+Nachgemessen auf allen elf Seiten: `position` der Leiste ist ueberall `static`, ihre Unterkante liegt auf der Fensterunterkante, und das Dokument selbst hat **keine** Scrollhoehe mehr.
+
+### Was mitgezogen werden musste
+
+- `min-height` am body wird zu `height` — der Rahmen muss eine feste Hoehe haben, sonst waechst er mit dem Inhalt.
+- Das `padding-bottom` am body (frueher der Platz unter der angehefteten Leiste) faellt weg; die Leiste braucht ihren Platz jetzt selbst.
+- Die Startseite rechnete ihre Hoehe als "Bildschirm minus Leiste". Diese Rechnung ist weg — sie bekommt genau diese Hoehe ohnehin als Reihe des Rahmens.
+- `window.scrollTo(0,0)` beim Seitenwechsel bewirkt nichts mehr, weil das Dokument nicht scrollt. Stattdessen wird der Block der Seite auf `scrollTop = 0` gesetzt.
+- `.layout` (die Ansicht waehrend einer Meditation) ist ebenfalls ein eigener Scroll-Bereich.
+- `will-change`, `translateZ(0)` und der `ResizeObserver` aus den frueheren Anlaeufen sind wieder heraus — ohne angeheftetes Element haben sie keinen Zweck mehr, und `will-change` auf einem angehefteten Element steht selbst im Verdacht, solche Zeichenfehler auszuloesen.
+
+**Nebenwirkung, bewusst in Kauf genommen:** Weil das Dokument nicht mehr scrollt, blendet Safari auf dem iPhone seine Adressleiste beim Scrollen nicht mehr weg. Es bleibt also etwas weniger Bildschirm. Dafuer springt nichts mehr. Wer die App ueber "Zum Home-Bildschirm" ablegt, hat die Adressleiste ohnehin nicht.
+
+**Lehre:** Wenn dieselbe Meldung nach zwei Reparaturversuchen ein drittes Mal kommt, ist die Bauweise das Problem und nicht ihre Ausfuehrung. Dann die Bauweise wechseln, statt ein drittes Mal nachzubessern.
