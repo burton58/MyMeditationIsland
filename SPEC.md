@@ -1817,3 +1817,12 @@ Christine hat zweimal gemeldet, die untere Leiste stehe mitten auf der Seite und
 **Was sie wirklich sieht:** ein Ganzseiten-Bildschirmfoto des iPhones. Bei einer langen Seite setzt iOS mehrere Aufnahmen zu einem Bild zusammen und klebt fest stehende Elemente an der Stelle hinein, an der sie im Moment der Aufnahme standen — also mittendrin. Der eindeutige Beleg steckt in denselben Bildern: die **Uhrzeit und die Statusleiste des iPhones** liegen quer ueber dem Seiteninhalt. Auch die stehen dort in Wirklichkeit nicht.
 
 **Lehre fuer kuenftige Meldungen:** Zeigt ein gemeldetes Bild die iPhone-Statusleiste ueber dem Inhalt, ist es ein zusammengesetztes Ganzseiten-Foto — fest stehende Elemente darin nie als Fehler lesen. Vor jeder Aenderung erst messen.
+
+### Nachtrag: Vorsorge an der Leiste selbst
+
+Christine hat die Meldung nach der Erklaerung noch zweimal wiederholt. Die Messung bleibt, wie sie ist — nachstellen liess sich nichts. Es gibt aber eine bekannte Schwaeche von Safari auf dem iPhone, die genau so aussieht wie das Gemeldete: ein fest stehendes Element mit `backdrop-filter` wird beim Schwung-Scrollen zu spaet neu gezeichnet und bleibt fuer den Bruchteil einer Sekunde dort stehen, wo es vorher war. Zwei Aenderungen an der Leiste, beide ohne sichtbare Wirkung:
+
+- **`backdrop-filter: blur(10px)` entfernt.** Der Untergrund war ohnehin zu 97 % deckend; er ist jetzt ganz deckend (`#0a1a2c`). Der Weichzeichner hat also nie etwas gezeigt, aber bei jedem Bild Rechenzeit gekostet — genau die Kombination, die den Fehler ausloest.
+- **`transform: translateZ(0)` ergaenzt.** Damit bekommt die Leiste eine eigene Ebene und das Geraet uebernimmt das Stehenbleiben selbst, statt es bei jedem Einzelbild neu zu rechnen.
+
+**Falls es erneut gemeldet wird:** der naechste Hebel waere `background-attachment: fixed` am Untergrund — auf iPhones die zweite bekannte Quelle solcher Zeichenfehler. Das aendert allerdings das Aussehen (der Farbverlauf wuerde sich dann ueber die ganze Seitenlaenge ziehen statt ueber die Bildschirmhoehe), darum nicht ohne Christines Zustimmung.

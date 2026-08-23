@@ -1602,10 +1602,23 @@
   .session-row .mini-btn.primary{ background:var(--gold-grad); color:#2a2a26; font-weight:700; }
 
   /* ---------- Tabbar ---------- */
+  /* 23. Aug. 2026: Christine meldet mehrfach, die Leiste stehe beim Scrollen
+     an der falschen Stelle. Nachgemessen bleibt sie auf allen elf Seiten bei
+     jeder Scrollhoehe exakt an der Unterkante (siehe Abschnitt 32) - hier
+     liess es sich also nicht nachstellen. Es gibt aber eine bekannte
+     Schwaeche von Safari auf dem iPhone, die genau so aussieht: ein fest
+     stehendes Element mit "backdrop-filter" wird beim Schwung-Scrollen zu
+     spaet neu gezeichnet und bleibt kurz dort stehen, wo es vorher war.
+     Darum ist der Weichzeichner heraus. Sichtbar aendert das nichts - der
+     Untergrund war ohnehin zu 97 % deckend, jetzt ist er ganz deckend. Und
+     "translateZ(0)" gibt der Leiste eine eigene Ebene; damit uebernimmt das
+     Geraet das Stehenbleiben selbst, statt es bei jedem Bild neu zu rechnen.
+     Beides ist reine Vorsorge und kostet nichts. */
   .tabbar{
     position:fixed; left:0; right:0; bottom:0; height:calc(var(--tabbar-h) + var(--safe-bottom)); z-index:50;
-    display:flex; background:rgba(10,26,44,.97); border-top:1px solid var(--line);
-    backdrop-filter:blur(10px); padding-bottom:var(--safe-bottom);
+    display:flex; background:#0a1a2c; border-top:1px solid var(--line);
+    padding-bottom:var(--safe-bottom);
+    transform:translateZ(0); -webkit-transform:translateZ(0); will-change:transform;
   }
   body[data-step="splash"] .tabbar, body.entered .tabbar{ display:none; }
   /* Wird die Konto-Seite direkt von der Titelseite aus geoeffnet (ueber
@@ -1632,7 +1645,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.136";
+    var AKTUELLE_VERSION = "2026-08-10.137";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
