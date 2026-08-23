@@ -1662,3 +1662,37 @@ Gleichmaessige Schritte von **18 Grad**, alle bei identischer Saettigung. Die er
 Die von Christine gelieferten Originale bleiben unveraendert in `bilder-original/`; alle Umfaerbungen gehen immer von dort aus, nie von einer bereits bearbeiteten Fassung.
 
 **Nebenbefund, mitgeprueft:** Da `LIB_KAT_FOTO` auch den Vollbild-Hintergrund waehrend der Meditation liefert (§14), wurde eine Uebung gestartet und geprueft — der Hintergrund passt jetzt ebenfalls zur App-Farbwelt, statt warm dagegen zu stehen.
+
+
+## 29. Die letzten warmen Bilder gefunden (22. Aug. 2026, Christine gemeldet: "Hier ist noch altes Bild orange")
+
+Nach der Umstellung der vier Kacheln auf Blau-Violett (§28) waren auf "Mein Weg" in "Meine letzten Meditationen" weiterhin **orange Miniaturbilder** zu sehen. Zwei getrennte Ursachen, beide beim Nachmessen gefunden:
+
+### 1. Die acht `bg-*.jpg` waren nie im Blau angekommen
+
+Sie wurden in §15 "umgefaerbt" und in §21 auf gleiche Helligkeit gebracht — aber **der Farbton blieb warm**. Nachgemessen lagen alle acht zwischen **9 und 72 Grad** (Orange bis Gelbgruen), waehrend die App bei 211 Grad steht. Die Umfaerbung von §15 hatte nur das Goldgelb *gedaempft*, nicht die Farbfamilie gewechselt — das faellt bei einem grossen Vollbild-Hintergrund kaum auf, bei einem 44px-Miniaturbild neben blauen Karten sofort.
+
+Jetzt bekommt jede Datei den Farbton **der Kategorie, in der sie hauptsaechlich verwendet wird** — dieselbe Skala wie die Kacheln (nord 201 / sued 219 / west 237 / ost 255):
+
+| Datei | vorher | jetzt | Zuordnung |
+|---|---|---|---|
+| `bg-herzraum.jpg` | 16 | 219 | nur "Gefuehle verstehen" |
+| `bg-waldlichtung.jpg` | 40 | 237 | nur "Stress loesen" |
+| `bg-bergspitze.jpg` | 15 | 238 | nur "Stress loesen" |
+| `bg-bergsee.jpg` | 22 | 238 | geteilt sued/ost, daher dazwischen |
+| `bg-lichtraum.jpg` | 72 | 244 | ueberwiegend ost |
+| `bg-reinigend.jpg` | 16 | 255 | nur "Entspannen" |
+| `bg-warmeszuhause.jpg` | 9 | 256 | nur "Entspannen" |
+| `bg-winterlandschaft.jpg` | 355 | 229 | derzeit ungenutzt, mittig eingeordnet |
+
+### 2. Die Miniaturbilder sind eigene Dateien
+
+Der eigentliche Grund, warum die Zeilen auch nach Schritt 1 noch orange blieben: `rowFoto()` laedt **nicht** `bg-*.jpg`, sondern `thumb-*.jpg` — dasselbe Motiv, quadratisch zugeschnitten auf 160px (rund 5 KB statt 100 KB, bei 47 Zeilen ein spuerbarer Unterschied). Diese acht Dateien wurden bei **keiner** frueheren Umfaerbung mitgezogen und lagen noch bei 19 bis 61 Grad.
+
+Sie sind jetzt **aus den umgefaerbten grossen Bildern neu erzeugt** (mittiger quadratischer Zuschnitt, 160px, Qualitaet 82) statt separat eingefaerbt — so koennen sie gar nicht mehr auseinanderlaufen. Ergebnis: alle acht zwischen 219 und 257 Grad, Dateigroesse unveraendert bei rund 5 KB.
+
+Originale liegen in **`bilder-original/bg/`** und **`bilder-original/thumb/`**.
+
+**Lehre:** Bei einem Bildwechsel nach **allen** Ableitungen desselben Motivs suchen. Hier existierte eine zweite, verkleinerte Kopie jeder Datei, die per Namensersetzung (`datei.replace("bg-", "thumb-")`) geladen wird und deshalb bei einer Suche nach dem Dateinamen im Code nicht auftaucht.
+
+**Bekannt, nicht geaendert:** Uebungen ohne eigenes `bg` laden ueber denselben Weg `kat-neu-*.jpg` als Miniaturbild — die Namensersetzung greift dort nicht, es wird also das volle 1448px-Bild auf 44px angezeigt. Funktioniert, ist aber unnoetig gross. Eigene `thumb-kat-*.jpg` waeren die saubere Loesung.
