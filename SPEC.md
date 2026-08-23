@@ -1573,3 +1573,23 @@ Beim Tippen aenderte sich oben auf dem Bildschirm nichts: Die vier grossen Kateg
 Die Chips "Alle"/"Favoriten" bleiben waehrend der Suche sichtbar und wirken weiterhin zusaetzlich zum Suchwort (z. B. nur Favoriten durchsuchen) — geprueft, dass beides zusammen korrekt filtert.
 
 **Lehre:** Eine Funktion kann fehlerfrei arbeiten und trotzdem "kaputt wirken", wenn ihre Wirkung ausserhalb des sichtbaren Bereichs bleibt, waehrend der dominante Teil des Bildschirms (hier: die vier grossen Fotos) unveraendert stehen bleibt. Bei "das bringt nichts"-Meldungen zuerst pruefen, was der Nutzer nach der Aktion tatsaechlich zu sehen bekommt, nicht nur, ob die Daten stimmen.
+
+
+## 26. Der wahre Grund fuer "Farben passen nicht zum Hintergrund" (22. Aug. 2026)
+
+Christine hatte bei den vier neuen Kategoriebildern (§23) schon einmal gefragt, ob die Farben zum blauen Untergrund passen — damals wurde nur der Farbton der Bilder selbst gegen den Untergrund gemessen (§24, 150-177 Grad Abstand, also warm-komplementaer, als Kontrast-Absicht bestaetigt). Sie blieb dabei: *"Aus meiner Sicht passen die Farben nicht zum Hintergrund."* Diesmal wurde tiefer gemessen, direkt an ihrem Bildschirmfoto — und der erste Befund war falsch.
+
+**Der Fehler lag nicht in den Bildern, sondern im Schleier darueber.** Jede Kachel hat einen Verlauf von durchsichtig zu dunkel, damit der weisse Titel unten lesbar bleibt (`.lib-cat-tile::after`). Dieser Schleier war **dunkelblau** (`rgba(13,28,47,…)`) — dieselbe Blaufamilie wie der App-Untergrund. Nachgerechnet, was das mit einem warmen Foto macht:
+
+| Bild | Farbton pur | Farbton mit blauem Schleier |
+|---|---|---|
+| Stress lösen (Wald, gruen) | 56 Grad | **80 Grad** (Sumpfoliv) |
+| Entspannen (Bernstein) | 27 Grad | **51 Grad** (schmutziges Gelbgruen), Saettigung von 83 % auf 67 % |
+
+Blau plus Warmton ergibt **kein kraeftigeres Blau**, sondern ein trübes Oliv — genau der unentschiedene, unpassende Farbton, den Christine gesehen, aber nicht benennen konnte.
+
+**Gegengeprueft mit Fachliteratur** (auf ihren Wunsch, mit anderen Apps/Standards zu vergleichen): Fuer Text auf Bildern gilt ein **neutraler schwarzer Schleier** als verlaesslicher Standard — ein farbiger Schleier ist nur dann richtig, wenn er die Bildfarbe bewusst neutralisieren soll. Hier war das Gegenteil beabsichtigt: die vier Eigenfarben (weiss/rose/gruen/bernstein) sollen ja gerade erhalten bleiben.
+
+**Behoben:** `.lib-cat-tile::after` von `rgba(13,28,47,…)` auf **neutrales Schwarz** `rgba(0,0,0,…)`. Die vier Bilder behalten jetzt ihre eigene Farbe bis zum unteren Rand, der Titel bleibt genauso lesbar wie vorher (gleiche Deckkraft-Kurve, nur ohne Blaustich).
+
+**Verwandter, aber (noch) nicht angefasster Fund:** Derselbe dunkelblaue Ton liegt auch als Schleier waehrend der laufenden Meditation ueber dem Hintergrundfoto (`.stage::after`, sogar bis 92 % Deckkraft). Dort faellt es weniger auf, weil die acht `bg-*.jpg` in §21 bereits Richtung Blau umgefaerbt wurden und daher weniger Eigenfarbe zu verlieren haben — trotzdem derselbe Mechanismus. Nicht geaendert, da nicht gemeldet; bei Bedarf dieselbe Loesung anwendbar.
