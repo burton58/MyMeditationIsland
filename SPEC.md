@@ -1696,3 +1696,56 @@ Originale liegen in **`bilder-original/bg/`** und **`bilder-original/thumb/`**.
 **Lehre:** Bei einem Bildwechsel nach **allen** Ableitungen desselben Motivs suchen. Hier existierte eine zweite, verkleinerte Kopie jeder Datei, die per Namensersetzung (`datei.replace("bg-", "thumb-")`) geladen wird und deshalb bei einer Suche nach dem Dateinamen im Code nicht auftaucht.
 
 **Bekannt, nicht geaendert:** Uebungen ohne eigenes `bg` laden ueber denselben Weg `kat-neu-*.jpg` als Miniaturbild — die Namensersetzung greift dort nicht, es wird also das volle 1448px-Bild auf 44px angezeigt. Funktioniert, ist aber unnoetig gross. Eigene `thumb-kat-*.jpg` waeren die saubere Loesung.
+
+
+## 30. "Mein Weg" in Violett, mit hellen Bloecken (23. Aug. 2026, Christines Auftrag)
+
+Christine: *"Evtl auch mit violett hier arbeiten dass nicht alles langweilig im blau ist?"* — danach zur ersten Fassung: *"2 aber sehr duester / Wuerde hellere Elemente einbauen?"*
+
+### Der Untergrund
+
+"Mein Weg" laeuft jetzt oben blau an und geht nach unten ins Violett:
+
+```css
+body[data-step="meditation"]{ --cream:#1e2950; --cream-2:#4d4291; }
+```
+
+Der alte blaue Verlauf (`#172c46` / `#294f83`) steht als Kommentar direkt darueber — Rueckweg offen, wie ueberall in diesem Projekt.
+
+Drei Fassungen wurden gebaut und nachgemessen, bevor eine eingebaut wurde: blau (unveraendert), blau nach violett, durchgehend violett. **Beide violetten Fassungen lagen ueber dem Blau**, die Zielkarte oben zum Beispiel bei 5,10 und 4,96 statt 4,44. Violett kostet hier also keine Lesbarkeit.
+
+Christines Rueckmeldung "sehr duester" kam nicht vom Violett, sondern von der Helligkeit: die gezeigte Fassung (`#1b2547` / `#453a80`) lag rund eine halbe Stufe unter dem bisherigen Blau. Der eingebaute Ton ist darum so gewaehlt, dass die Lesbarkeitswerte Zeile fuer Zeile **exakt** denen des alten Blaus entsprechen: 12,3 oben, 9,9 in der Mitte, 7,9 unten. Violett ja, dunkler nein.
+
+Beim Nachjustieren wieder rechnen: schon eine Stufe heller (`#212d57` / `#554a9d`) faellt der Zweittext auf den hellen Karten am unteren Rand auf 4,07 und damit unter die Grenze von 4,5.
+
+### Die Bloecke liegen jetzt heller als der Untergrund
+
+Das war der eigentliche Punkt hinter "hellere Elemente". Bisher war jede Karte auf der Seite ein schwarzer Schleier (`--card: rgba(0,0,0,.16)`). Nach unten hin, wo der Untergrund heller wird, schrumpft der Unterschied zwischen Karte und Untergrund — die Seite wirkt dort stumpf, obwohl formal alles stimmt.
+
+Auf dieser Seite sind die beiden Flaechen darum umgedreht, und zwar **nur ueber die Variablen**:
+
+```css
+body[data-step="meditation"]{
+  --card:rgba(255,255,255,.07);
+  --flaeche-hoch:rgba(255,255,255,.14);
+  --line:rgba(255,255,255,.20);
+}
+```
+
+Warum ueber Variablen und nicht ueber eigene Regeln: `.card.stats-row` und `#wochenzielCard` (§26) setzen ihren Hintergrund selbst auf `--flaeche-hoch`. Eine seitenweite Regel wie `body[data-step="meditation"] .card` haette diese beiden wegen hoeherer Spezifitaet ueberholt und die zwei Stufen wieder eingeebnet. Ueber die Variablen ziehen alle Karten automatisch mit, und die Rangfolge bleibt: ruhige Karten .07, die zwei wichtigen Bloecke .14.
+
+### Drei Stellen, die sonst blass geblieben waeren
+
+```css
+body[data-step="meditation"] .bar{ background:rgba(255,255,255,.16); }
+body[data-step="meditation"] .goal-ico{ background:rgba(255,255,255,.18); }
+body[data-step="meditation"] .fd-badge{ opacity:1; border-color:rgba(255,255,255,.30); }
+```
+
+Der Fortschrittsbalken lag in einer schwarzen Rille (`rgba(0,0,0,.28)`) — auf einer hellen Karte sieht das aus wie ein Loch statt wie eine Spur.
+
+**Lehre, dieselbe wie in §27:** Eine Farbentscheidung ist nie nur die Grundfarbe. Wer den Untergrund umdreht, muss jede Flaeche mitnehmen, die ihren Kontrast aus ihm bezieht — schwarze Schleier, Rillen, gedaempfte Abzeichen.
+
+### Nebenbefund beim Nachbauen
+
+Beim Testen erschienen die beiden Insel-Karten (`profilWeekBox`, `profilJourneyBox`) als leere helle Balken. Kein Fehler der App: die Testfassung hatte den Verlauf im falschen Format im Speicher, `renderMeinWeg()` brach mit einem Fehler ab und `setInselbewohnerOffen()` kam nie dazu, die leeren Karten auszublenden. Mit echtem Verlaufsformat (`ts`, `before`, `after`, `bestaetigt`, `meds`) ist das Verhalten korrekt. Festgehalten, damit dieselbe Verwechslung nicht noch einmal als Fehler gemeldet wird.

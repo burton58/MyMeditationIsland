@@ -71,7 +71,30 @@
      helleren Unterton bei 4,21 und fiel damit durch. */
   body[data-step="compass"]{      --cream:#172d55; --cream-2:#2c5796; }
   body[data-step="meditation2"]{  --cream:#153651; --cream-2:#2b5c90; }
-  body[data-step="meditation"]{   --cream:#172c46; --cream-2:#294f83; }
+  /* "Mein Weg" laeuft seit 23. Aug. 2026 oben blau an und geht nach unten
+     ins Violett (Christines Wunsch: "nicht alles langweilig im Blau").
+     Der alte blaue Verlauf steht als Kommentar daneben - Rueckweg offen:
+       body[data-step="meditation"]{ --cream:#172c46; --cream-2:#294f83; }
+     Der Violettton ist BEWUSST genau so hell wie das Blau vorher: die
+     Lesbarkeitswerte sind Zeile fuer Zeile identisch (12,3 oben / 9,9
+     Mitte / 7,9 unten). Christines Rueckmeldung zur ersten Fassung war
+     "aber sehr duester" - die kam vom dunkleren Violett, nicht vom Violett
+     an sich. Beim Nachjustieren wieder nachrechnen: schon eine Stufe
+     heller faellt der Zweittext auf den hellen Karten unter 4,5. */
+  body[data-step="meditation"]{   --cream:#1e2950; --cream-2:#4d4291; }
+  /* Und die Bloecke liegen auf dieser Seite HELLER als der Untergrund
+     statt dunkler. Vorher war jede Karte ein schwarzer Schleier; nach
+     unten hin, wo der Untergrund heller wird, verschwand der Unterschied
+     fast ganz und die Seite wirkte stumpf. Die zwei Stufen bleiben:
+     ruhige Karten .07, die beiden wichtigen Bloecke (Zahlenreihe,
+     Wochenziel) .14. Nur ueber die Variablen gesetzt - dadurch ziehen
+     alle Karten automatisch mit, ohne dass eine Regel die andere
+     ueberholt. */
+  body[data-step="meditation"]{
+    --card:rgba(255,255,255,.07);
+    --flaeche-hoch:rgba(255,255,255,.14);
+    --line:rgba(255,255,255,.20);
+  }
 
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; padding:0; }
@@ -789,6 +812,14 @@
   .goal-top .sub{ font-size:.74rem; color:var(--ink-soft); margin-top:2px; }
   .bar{ height:9px; background:rgba(0,0,0,.28); border-radius:999px; overflow:hidden; }
   .bar span{ display:block; height:100%; background:var(--gold-grad); border-radius:999px; min-width:9px; }
+  /* Auf den hellen Karten von "Mein Weg" (23. Aug. 2026) sah die schwarze
+     Rille aus wie ein Loch. Dort eine helle Spur, damit der Balken auf der
+     Karte liegt statt in ihr zu versinken. Dasselbe fuer das kleine
+     Symbolfeld links und das Abzeichen oben rechts, die sonst als einzige
+     Teile der Seite blass geblieben waeren. */
+  body[data-step="meditation"] .bar{ background:rgba(255,255,255,.16); }
+  body[data-step="meditation"] .goal-ico{ background:rgba(255,255,255,.18); }
+  body[data-step="meditation"] .fd-badge{ opacity:1; border-color:rgba(255,255,255,.30); }
   /* Erreichtes Ziel: der Balken bekommt einen ruhigen goldenen Rand, damit
      "voll" sich von "fast voll" unterscheidet - allein an der Breite sieht
      man den Unterschied auf dem Handy kaum. */
@@ -1585,7 +1616,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.131";
+    var AKTUELLE_VERSION = "2026-08-10.132";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
