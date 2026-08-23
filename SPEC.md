@@ -1851,3 +1851,11 @@ Der aktive Reiter unten war allein an der Farbe zu erkennen. Weiss neben dem hel
 Der Ring um das ▶ war ebenfalls in Perle (`rgba(239,230,216,.55)`) und ist auf denselben hellen Ton gezogen worden — ein weisses Zeichen in einem warmen Ring waere schlechter gewesen als beides warm.
 
 **Nicht angeruehrt:** "Verlauf loeschen" steht auf `#f0968a`. Das ist kein Gold, sondern die Warnfarbe, und soll warm bleiben.
+
+### Nachtrag: mehr Luft zwischen den Abschnitten (23. Aug. 2026)
+
+Christine: *"mein weg mehr abstand zwischen den abschnitten"*. Der Abstand ueber jedem Zwischentitel auf "Mein Weg" geht von **28 auf 46 Punkte**.
+
+Der Grund, warum ausgerechnet diese Seite ihn braucht: sie traegt vier Bloecke (Insel-Aufenthalt, Fortschritt, Wochenziel, letzte Meditationen) und ist die einzige, die man dafuer scrollen muss. Bei 28 Punkten stand ein Zwischentitel fast gleich weit von der Karte darueber wie von der darunter — er sah dann aus, als gehoere er nach oben.
+
+Das Verhaeltnis ist jetzt **46 zu 11**: viermal so viel Luft zwischen zwei Abschnitten wie zwischen einem Titel und dem, was zu ihm gehoert. Nur auf dieser Seite gesetzt; die uebrigen sind kuerzer und kommen mit 28 aus, die Startseite mit 34 (dort muss alles ohne Scrollen aufs Bild).

@@ -320,6 +320,15 @@
      aus der allgemeinen Regel oben. Eine eigene Schriftgroesse hier war
      genau der Grund, warum die Seiten nicht mehr zusammenpassten. */
   .home-page .section-label{ margin:34px 0 11px; }
+  /* "Mein Weg" traegt am meisten Stoff auf einer Seite: Insel-Aufenthalt,
+     Fortschritt, Wochenziel, letzte Meditationen. Mit 28px sassen die vier
+     Bloecke so dicht beieinander, dass man beim Herunterscrollen nicht
+     merkte, wo einer aufhoert (Christine, 23. Aug. 2026: "mehr abstand
+     zwischen den abschnitten"). Jetzt 46px - viermal so viel wie die 11px
+     zwischen Titel und Inhalt darunter, damit klar ist, was zusammengehoert
+     und was nicht. Nur hier: die anderen Seiten sind kuerzer und brauchen
+     es nicht. */
+  body[data-step="meditation"] .section-label{ margin-top:46px; }
   /* Der erste Zwischentitel stand bis 20. Aug. 2026 direkt unter dem Foto
      und brauchte darum fast keinen Abstand. Jetzt steht die Begruessung
      dazwischen - ohne eigenen Abstand klebt er an ihr. */
@@ -1650,7 +1659,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.138";
+    var AKTUELLE_VERSION = "2026-08-10.139";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
