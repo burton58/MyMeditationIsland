@@ -1941,3 +1941,33 @@ Nachgemessen auf allen elf Seiten: `position` der Leiste ist ueberall `static`, 
 **Nebenwirkung, bewusst in Kauf genommen:** Weil das Dokument nicht mehr scrollt, blendet Safari auf dem iPhone seine Adressleiste beim Scrollen nicht mehr weg. Es bleibt also etwas weniger Bildschirm. Dafuer springt nichts mehr. Wer die App ueber "Zum Home-Bildschirm" ablegt, hat die Adressleiste ohnehin nicht.
 
 **Lehre:** Wenn dieselbe Meldung nach zwei Reparaturversuchen ein drittes Mal kommt, ist die Bauweise das Problem und nicht ihre Ausfuehrung. Dann die Bauweise wechseln, statt ein drittes Mal nachzubessern.
+
+
+## 36. Ein Bild auf "Mein Weg" (23. Aug. 2026, Christines Wahl)
+
+Christine: *"Kann man eines der 4 Bilder der Meditationen irgendwie auf der Seite Mein Weg einbauen? Zeig mir Alternativen oder auch eine mit dem Titelbild."*
+
+Vier Moeglichkeiten wurden gebaut und gezeigt:
+
+| | Vorschlag | Beurteilung |
+|---|---|---|
+| 1 | Bildstreifen oben, Kategorie "Entspannen" | farblich nahtlos, das Bild kommt zur Geltung |
+| 2 | Bildstreifen oben, ihr Einstiegsbild `titel.jpg` | Farbsprung zum violetten Untergrund |
+| 3 | Foto als Untergrund der Insel-Karte | leise, macht die Seite nicht laenger |
+| 4 | Foto hinter den drei Zahlen | schwach — das Foto ist kaum zu erkennen, die Zahlen werden unruhig |
+
+Empfohlen war 1. **Gewaehlt hat sie 2** — *"mit meinem Einstiegsbild aber mit weniger Lila"*. Der Einwand gegen 2 war ja der Farbsprung; sie loest ihn von der anderen Seite, indem der Untergrund zum Bild passt statt umgekehrt.
+
+### Umgesetzt
+
+**Der Streifen** ist im Aufbau bewusst identisch zur Startseite: Foto ganz oben ohne Rand (16:9, `margin:0 -16px`), darunter der Seitentitel. Die zwei Seiten, auf denen es um sie selbst geht, fuehlen sich dadurch gleich an. `object-position:50% 46%` haelt die sitzende Person im Ausschnitt.
+
+**Der Farbton** von "Mein Weg" liegt jetzt auf halbem Weg zwischen dem alten Blau und dem Violett:
+
+```css
+body[data-step="meditation"]{ --cream:#1a2a4a; --cream-2:#3a4796; }
+```
+
+Gerechnet wurde in Farbton und Saettigung gemischt, die **Helligkeit aber gleich gehalten** — die Lesbarkeitswerte sind Zeile fuer Zeile dieselben wie vorher (12,4 oben / 9,9 Mitte / 7,9 unten). Die kraeftige Fassung steht als Kommentar daneben.
+
+`titel.jpg` liegt bereits in der Liste der Dateien, die der Zwischenspeicher vorhaelt — es kommt also kein neuer Ladevorgang dazu.

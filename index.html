@@ -81,7 +81,16 @@
      "aber sehr duester" - die kam vom dunkleren Violett, nicht vom Violett
      an sich. Beim Nachjustieren wieder nachrechnen: schon eine Stufe
      heller faellt der Zweittext auf den hellen Karten unter 4,5. */
-  body[data-step="meditation"]{   --cream:#1e2950; --cream-2:#4d4291; }
+  /* Am 23. Aug. 2026 zurueckgenommen: Christine hat den Bildstreifen mit
+     ihrem Einstiegsbild gewaehlt ("2 mit meinem Einstiegsbild aber mit
+     weniger Lila"). Das Foto ist blau; gegen das kraeftige Violett
+     stand es sichtbar an. Der Ton liegt jetzt auf halbem Weg zwischen
+     dem alten Blau und dem Violett - erkennbar violett, aber ohne
+     Bruch zum Bild. Die Helligkeit ist unveraendert (Lesbarkeit Zeile
+     fuer Zeile gleich: 12,4 oben / 9,9 Mitte / 7,9 unten).
+     Die kraeftige Fassung als Rueckweg:
+       body[data-step="meditation"]{ --cream:#1e2950; --cream-2:#4d4291; } */
+  body[data-step="meditation"]{   --cream:#1a2a4a; --cream-2:#3a4796; }
   /* Und die Bloecke liegen auf dieser Seite HELLER als der Untergrund
      statt dunkler. Vorher war jede Karte ein schwarzer Schleier; nach
      unten hin, wo der Untergrund heller wird, verschwand der Unterschied
@@ -164,6 +173,22 @@
      Bildschirmkante. Nur hier, nicht auf den anderen Seiten: dort ist der
      Abstand ueber der Ueberschrift richtig. */
   .home-page{ padding-top:0; }
+  /* Seit 23. Aug. 2026 traegt "Mein Weg" oben denselben Bildstreifen wie
+     die Startseite - darum auch hier kein Abstand nach oben. */
+  .med-page{ padding-top:0; }
+  /* Der Streifen selbst: 16:9 wie auf der Startseite, ueber die
+     Seitenraender hinaus bis an die Bildschirmkante. "object-position"
+     schiebt den Ausschnitt etwas nach unten, damit die sitzende Person
+     im Bild bleibt und nicht nur Himmel zu sehen ist. Der Schleier laesst
+     das Foto nach unten weich in die Seite laufen statt mit harter
+     Kante zu enden. */
+  .weg-band{ position:relative; margin:0 -16px 20px; overflow:hidden; }
+  .weg-band-foto{ aspect-ratio:16 / 9; display:block; width:100%; }
+  .weg-band-foto img{ width:100%; height:100%; object-fit:cover; object-position:50% 46%; display:block; }
+  .weg-band-schleier{
+    position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(26,42,74,0) 58%, rgba(26,42,74,.55) 100%);
+  }
   body:not(.entered)[data-step="splash"]      .splash-page,
   body:not(.entered)[data-step="home"]        .home-page,
   body:not(.entered)[data-step="compass"]     .compass-page,
@@ -1708,7 +1733,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.141";
+    var AKTUELLE_VERSION = "2026-08-10.142";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
@@ -2172,6 +2197,18 @@
          Seite ueber einen selbst, und alles Verwaltende sitzt hinter
          einem Zahnrad. Das Zahnrad hier fuehrt zu "Einstellungen"
          (vorher: die Profil-Seite, siehe dort). -->
+    <!-- Bildstreifen oben (23. Aug. 2026, Christines Wahl). Aufbau bewusst
+         genau wie auf der Startseite: Foto ganz oben ohne Rand, darunter
+         der Seitentitel. Dadurch fuehlen sich die beiden Seiten, auf denen
+         es um DICH geht, gleich an.
+         Es ist ihr Einstiegsbild - dasselbe wie auf der Titelseite. Damit
+         das blaue Foto nicht gegen den Untergrund steht, ist der Violett-
+         Anteil der Seite zurueckgenommen worden (siehe die Farbregel). -->
+    <div class="weg-band">
+      <span class="weg-band-foto"><img src="titel.jpg" alt="" aria-hidden="true"></span>
+      <span class="weg-band-schleier" aria-hidden="true"></span>
+    </div>
+
     <div class="page-head">
       <!-- Der Untertitel "Was du schon geschafft hast" ist am 23. Aug. 2026
            auf Christines Wunsch heraus - der Titel bleibt. Nicht geloescht,
