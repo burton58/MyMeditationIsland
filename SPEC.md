@@ -1971,3 +1971,15 @@ body[data-step="meditation"]{ --cream:#1a2a4a; --cream-2:#3a4796; }
 Gerechnet wurde in Farbton und Saettigung gemischt, die **Helligkeit aber gleich gehalten** — die Lesbarkeitswerte sind Zeile fuer Zeile dieselben wie vorher (12,4 oben / 9,9 Mitte / 7,9 unten). Die kraeftige Fassung steht als Kommentar daneben.
 
 `titel.jpg` liegt bereits in der Liste der Dateien, die der Zwischenspeicher vorhaelt — es kommt also kein neuer Ladevorgang dazu.
+
+### Nachtrag: Ausschnitt und Hoehe des Streifens
+
+Drei Runden Feinschliff mit Christine, alle am selben Bild:
+
+1. *"man sieht mich oben im Bild schlecht, muesste ganzer Koerper sein mit wenig Sand unten"* — der Ausschnitt lag zu weit oben und schnitt sie unten ab. Im Bild nachgemessen: Kopf ab Zeile 750, Koerper bis rund 1040 (von 1594).
+2. *"leicht zentriert, bisschen weiter unten, auch mit Fokus Meer — den gesunden Mix"* — `object-position` auf 57 %. Waagrecht war nichts zu tun: das Bild ist hochkant, im Streifen wird nur oben und unten beschnitten, und die Person sitzt ohnehin bei 49,8 % der Breite.
+3. *"geht das auch von weiter weg, dass ich kleiner bin?"* — seitlich nicht: die volle Breite ist bereits zu sehen, mehr Bild gibt es nicht. Stattdessen wurde der Streifen **hoeher** (3:2 statt 16:9). Dadurch kommen oben Meer und unten Sand dazu und die Person fuellt einen kleineren Teil des Bildes — dieselbe Wirkung wie "weiter weg".
+
+**Warum 3:2 und nicht 4:3:** gemessen auf einem iPhone waechst der Streifen bei 3:2 um 41 Punkte, bei 4:3 um 74. Bei 4:3 rutscht "Mein Wochenziel" unter den Bildschirmrand — der Kern der Seite waere nur noch nach dem Scrollen zu sehen. Der Zugewinn an Weite zwischen 3:2 und 4:3 ist ausserdem deutlich kleiner als der zwischen 16:9 und 3:2.
+
+**Abgeraten und nicht gebaut:** das Bild "einfrieren", also oben stehen lassen, waehrend der Inhalt darueber gleitet. Genau solche stehenbleibenden Ebenen waren die Ursache des Leisten-Fehlers (§35), der gerade dadurch geloest wurde, dass **nichts** mehr stehen bleibt. Dazu braeuchte Text ueber einem Foto einen dunklen Schleier, der das Bild die meiste Zeit verdeckt. Christine hat den Rat angenommen.

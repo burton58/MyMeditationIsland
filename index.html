@@ -184,15 +184,23 @@
      das Foto nach unten weich in die Seite laufen statt mit harter
      Kante zu enden. */
   .weg-band{ position:relative; margin:0 -16px 20px; overflow:hidden; }
-  .weg-band-foto{ aspect-ratio:16 / 9; display:block; width:100%; }
+  /* Hoeher als der Streifen auf der Startseite (dort 16:9): Christine
+     wollte "von weiter weg, dass ich kleiner bin". Seitlich ging das
+     nicht - das Foto ist hochkant und die volle Breite ist ohnehin schon
+     zu sehen. Also mehr Hoehe: oben mehr Meer, unten mehr Sand, die
+     Person fuellt einen kleineren Teil des Bildes.
+     3:2 statt 4:3 mit Absicht - gemessen auf einem iPhone waechst der
+     Streifen dadurch nur um 41 Punkte statt um 74, und "Mein Wochenziel"
+     bleibt noch ohne Scrollen sichtbar. Das ist der Kern der Seite. */
+  .weg-band-foto{ aspect-ratio:3 / 2; display:block; width:100%; }
   /* 23. Aug. 2026, Christine: "man sieht mich oben im Bild schlecht,
      muesste ganzer Koerper sein mit wenig Sand unten". Nachgemessen
      im Bild selbst: der Kopf beginnt bei Zeile 750, der Koerper endet
      bei rund 1040 (von 1594 insgesamt). Der sichtbare Ausschnitt des
-     Streifens ist 461 Zeilen hoch - die Person passt also ganz hinein,
-     sie war nur falsch platziert. Bei 57 % liegt der Ausschnitt auf 646
-     bis 1107: rund 100 Zeilen Meer ueber dem Kopf, knapp 70 Zeilen Sand
-     darunter. Damit sitzt sie etwas unterhalb der Bildmitte und das Meer
+     Streifens ist bei 3:2 rund 547 Zeilen hoch - die Person passt also
+     ganz hinein, sie war nur falsch platziert. Bei 57 % liegt der
+     Ausschnitt auf 597 bis 1144: rund 150 Zeilen Meer ueber dem Kopf,
+     gut 100 Zeilen Sand darunter. Damit sitzt sie etwas unterhalb der Bildmitte und das Meer
      kommt mit zur Geltung - Christines "gesunder Mix". Wer verschiebt:
      eine kleinere Zahl gibt mehr Meer, eine groessere mehr Sand.
      WAAGRECHT ist nichts einzustellen: das Bild ist hochkant, im Streifen
@@ -1748,7 +1756,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.146";
+    var AKTUELLE_VERSION = "2026-08-10.147";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
