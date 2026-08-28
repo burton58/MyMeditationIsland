@@ -190,12 +190,16 @@
      im Bild selbst: der Kopf beginnt bei Zeile 750, der Koerper endet
      bei rund 1040 (von 1594 insgesamt). Der sichtbare Ausschnitt des
      Streifens ist 461 Zeilen hoch - die Person passt also ganz hinein,
-     sie war nur falsch platziert. Bei 61 % liegt der Ausschnitt auf 690
-     bis 1151: rund 60 Zeilen Luft ueber dem Kopf, gut 110 Zeilen Sand
-     darunter. Wer den Ausschnitt verschiebt, muss beides im Blick
-     behalten - eine kleinere Zahl gibt mehr Himmel, eine groessere mehr
-     Sand. */
-  .weg-band-foto img{ width:100%; height:100%; object-fit:cover; object-position:50% 61%; display:block; }
+     sie war nur falsch platziert. Bei 57 % liegt der Ausschnitt auf 646
+     bis 1107: rund 100 Zeilen Meer ueber dem Kopf, knapp 70 Zeilen Sand
+     darunter. Damit sitzt sie etwas unterhalb der Bildmitte und das Meer
+     kommt mit zur Geltung - Christines "gesunder Mix". Wer verschiebt:
+     eine kleinere Zahl gibt mehr Meer, eine groessere mehr Sand.
+     WAAGRECHT ist nichts einzustellen: das Bild ist hochkant, im Streifen
+     wird nur oben und unten beschnitten, die volle Breite ist immer zu
+     sehen. Nachgemessen sitzt die Person bei 49,8 % der Breite, also
+     ohnehin mittig. */
+  .weg-band-foto img{ width:100%; height:100%; object-fit:cover; object-position:50% 57%; display:block; }
   .weg-band-schleier{
     position:absolute; inset:0; pointer-events:none;
     background:linear-gradient(180deg, rgba(26,42,74,0) 58%, rgba(26,42,74,.55) 100%);
@@ -1744,7 +1748,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.145";
+    var AKTUELLE_VERSION = "2026-08-10.146";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
