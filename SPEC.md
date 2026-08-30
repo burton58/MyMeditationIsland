@@ -1983,3 +1983,23 @@ Drei Runden Feinschliff mit Christine, alle am selben Bild:
 **Warum 3:2 und nicht 4:3:** gemessen auf einem iPhone waechst der Streifen bei 3:2 um 41 Punkte, bei 4:3 um 74. Bei 4:3 rutscht "Mein Wochenziel" unter den Bildschirmrand — der Kern der Seite waere nur noch nach dem Scrollen zu sehen. Der Zugewinn an Weite zwischen 3:2 und 4:3 ist ausserdem deutlich kleiner als der zwischen 16:9 und 3:2.
 
 **Abgeraten und nicht gebaut:** das Bild "einfrieren", also oben stehen lassen, waehrend der Inhalt darueber gleitet. Genau solche stehenbleibenden Ebenen waren die Ursache des Leisten-Fehlers (§35), der gerade dadurch geloest wurde, dass **nichts** mehr stehen bleibt. Dazu braeuchte Text ueber einem Foto einen dunklen Schleier, der das Bild die meiste Zeit verdeckt. Christine hat den Rat angenommen.
+
+
+## 37. Ein kuehleres Rot fuer die Warnung (23. Aug. 2026)
+
+Christine: *"Einstellungen Verlauf loeschen / Rot passt nicht auf Blau / Alternativen?"*
+
+Der Grund war messbar: `#f0968a` liegt bei Farbton 13 Grad, also im Orange — dem Gegenspieler von Blau auf dem Farbkreis. Seit §33 alle goldene Schrift auf Weiss gestellt hat, war dieses eine Wort ausserdem die **einzige farbige Schrift der ganzen App** und stach dadurch zusaetzlich heraus.
+
+Vier Fassungen gezeigt: 1 unveraendert, 2 weiss wie jede andere Zeile, 3 ein kuehles Rose, 4 ein noch gedaempfteres Altrosa. **Gewaehlt: 3.**
+
+```css
+.menu-row.danger .row-text{ color:#f0a0ae; }
+.btn-dark.danger{ background:#a94f68; color:#fff; box-shadow:0 6px 16px rgba(90,42,58,.3); }
+```
+
+Der neue Ton liegt bei Farbton 350 Grad — ins Violette statt ins Orange, also im selben kuehlen Bereich wie die Seite selbst. Als Warnung bleibt er klar erkennbar (Kontrast auf dem dunkelsten Blau 6,6:1, auf dem hellsten noch 4,1:1).
+
+**Mitgezogen:** der "Loeschen"-Knopf im Bestaetigungsfenster stand auf demselben Orange-Rot (`#c2503f`) und ist auf den passenden Ton derselben Familie gestellt worden — sonst haette es zwei verschiedene Warnfarben in derselben App gegeben.
+
+**Begruendung fuer 3 statt 2 (weiss):** "Verlauf loeschen" ist die einzige Zeile in den Einstellungen, die etwas unwiederbringlich entfernt. Sie soll sich schon vor dem Antippen von den uebrigen, harmlosen Zeilen (Impressum, Datenschutz) unterscheiden lassen.

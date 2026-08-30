@@ -1304,7 +1304,16 @@
      22px, damit die Zeile genauso hoch bleibt wie vorher. */
   .menu-row .row-icon img{ width:22px; height:22px; display:block; }
   .menu-row .row-text{ flex:1; font-size:.92rem; font-weight:500; }
-  .menu-row.danger .row-text{ color:#f0968a; }
+  /* War #f0968a - ein Rot mit starkem Orange-Anteil (Farbton 13 Grad),
+     also fast der Gegenspieler von Blau auf dem Farbkreis. Seit alle
+     goldene Schrift weiss ist (siehe oben), war das ausserdem die
+     EINZIGE farbige Schrift der ganzen App und stach entsprechend heraus
+     (Christine, 23. Aug. 2026: "rot passt nicht auf blau"). Jetzt ein
+     kuehleres Rose (Farbton 350 Grad, ins Violette statt ins Orange) -
+     als Warnung weiterhin klar erkennbar, aber im selben kuehlen Bereich
+     wie der Rest der Seite. Der Knopf im Bestaetigungsfenster darunter
+     ist aus demselben Grund mitgezogen worden. */
+  .menu-row.danger .row-text{ color:#f0a0ae; }
 
   /* Eigene Bestaetigungs-Karte statt des grauen System-Dialogs */
   .confirm-overlay{
@@ -1316,7 +1325,9 @@
   .confirm-overlay.show{ opacity:1; }
   .confirm-card{ padding:22px; max-width:340px; width:100%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,.25); }
   .confirm-card p{ margin:0 0 18px; font-size:.92rem; line-height:1.5; color:var(--ink); }
-  .btn-dark.danger{ background:#c2503f; color:#fff; box-shadow:0 6px 16px rgba(163,59,44,.3); }
+  /* War #c2503f, dasselbe Orange-Rot wie oben - mitgezogen auf denselben
+     kuehlen Ton (siehe .menu-row.danger .row-text). */
+  .btn-dark.danger{ background:#a94f68; color:#fff; box-shadow:0 6px 16px rgba(90,42,58,.3); }
   @media (prefers-reduced-motion: reduce){ .confirm-overlay{ transition:none; } }
 
   .wochenziel-card{ max-width:360px; text-align:left; }
@@ -1756,7 +1767,7 @@
   // ueberein, laedt das Handy die Seite einmal ganz frisch nach, mit einer
   // Handynummer in der Adresse, die ein Zwischenspeichern verhindert.
   (function(){
-    var AKTUELLE_VERSION = "2026-08-10.147";
+    var AKTUELLE_VERSION = "2026-08-10.148";
     try {
       var gemerkt = localStorage.getItem("myisland.version");
       if (gemerkt !== AKTUELLE_VERSION){
